@@ -1,6 +1,6 @@
 /*
- * ArcScripts for ArcEmu MMORPG Server
- * Copyright (C) 2009 ArcEmu Team <http://www.arcemu.org/>
+ * ArcScripts2 for ArcEmu MMORPG Server
+ * Copyright (C) 2011 ArcScripts2 Team <http://www.arcemu.org/>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,7 +27,31 @@ extern "C" SCRIPT_DECL uint32 _exp_get_script_type()
 
 extern "C" SCRIPT_DECL void _exp_script_register(ScriptMgr* mgr)	// Comment any script to disable it
 {
-	//Instances
+	//EVENTS
+	SetupWinterVeil(mgr);
+	SetupHalloween(mgr);
+
+	//EXTRA
+	SetupNeutralGuards(mgr);
+
+	//GOSSIP
+	SetupInnkeepers(mgr);
+	SetupGuardGossip(mgr);
+	SetupTrainerScript(mgr);
+	SetupMulgoreGossip(mgr);
+	SetupShattrathGossip(mgr);
+	SetupTanarisGossip(mgr);
+	SetupMoongladeGossip(mgr);
+	SetupStormwindGossip(mgr);
+	SetupTheramoreGossip(mgr);
+	SetupTeldrassilGossip(mgr);
+	SetupDarkmoonFaireGossip(mgr);
+	SetupDarkmoonFaireBarker(mgr);
+	SetupBoreanTundraGossip(mgr);
+	SetupWyrmrestTempleGossip(mgr);
+	SetupXpEliminatorGossip(mgr);
+
+	//INSTANCES
 	SetupArcatraz(mgr);
 	SetupAuchenaiCrypts(mgr);
 	SetupAzjolNerub(mgr);
@@ -66,7 +90,6 @@ extern "C" SCRIPT_DECL void _exp_script_register(ScriptMgr* mgr)	// Comment any 
 	SetupTheStockade(mgr);
 	SetupWailingCaverns(mgr);
 	SetupMagistersTerrace(mgr);
-	//Raids
 	SetupBlackTemple(mgr);
 	SetupBlackwingLair(mgr);
 	SetupBattleOfMountHyjal(mgr);
@@ -85,8 +108,66 @@ extern "C" SCRIPT_DECL void _exp_script_register(ScriptMgr* mgr)	// Comment any 
 	SetupSunwellPlateau(mgr);
 	SetupWorldBosses(mgr);
 	SetupZulAman(mgr);
-	//Other
-	//SetupGenericAI(mgr);
+
+	//MISC
+	SetupGoHandlers(mgr);
+	SetupRandomScripts(mgr);
+	SetupMiscCreatures(mgr);
+	SetupDarkmoonFaireObjects(mgr);
+
+	//QUEST
+	SetupDruid(mgr);
+	SetupMage(mgr);
+	SetupPaladin(mgr);
+	SetupWarrior(mgr);
+	SetupFirstAid(mgr);
+	SetupArathiHighlands(mgr);
+	SetupAzshara(mgr);
+	SetupAzuremystIsle(mgr);
+	SetupBladeEdgeMountains(mgr);
+	SetupBlastedLands(mgr);
+	SetupBloodmystIsle(mgr);
+	SetupBurningSteppes(mgr);
+	SetupDeathKnight(mgr);
+	SetupDesolace(mgr);
+	SetupDragonblight(mgr);
+	SetupDuskwood(mgr);
+	SetupDustwallowMarsh(mgr);
+	SetupEasternPlaguelands(mgr);
+	SetupEversongWoods(mgr);
+	SetupGhostlands(mgr);
+	SetupHellfirePeninsula(mgr);
+	SetupHillsbradFoothills(mgr);
+	SetupHowlingFjord(mgr);
+	SetupIsleOfQuelDanas(mgr);
+	SetupLochModan(mgr);
+	SetupMulgore(mgr);
+	SetupNagrand(mgr);
+	SetupNetherstorm(mgr);
+	SetupRedrigeMountains(mgr);
+	SetupShadowmoon(mgr);
+	SetupSilithus(mgr);
+	SetupSilvermoonCity(mgr);
+	SetupSilverpineForest(mgr);
+	SetupStormwind(mgr);
+	SetupStranglethornVale(mgr);
+	SetupTanaris(mgr);
+	SetupTeldrassil(mgr);
+	SetupTerrokarForest(mgr);
+	SetupTheStormPeaks(mgr);
+	SetupThousandNeedles(mgr);
+	SetupTirisfalGlades(mgr);
+	SetupUndercity(mgr);
+	SetupUnGoro(mgr);
+	SetupWestfall(mgr);
+	SetupWinterspring(mgr);
+	SetupZangarmarsh(mgr);
+	SetupBarrens(mgr);
+	SetupBoreanTundra(mgr);
+	SetupSholazarBasin(mgr);
+	SetupQuestGossip(mgr);
+	SetupQuestHooks(mgr);
+	SetupUnsorted(mgr);
 }
 
 #ifdef WIN32

@@ -1,0 +1,1 @@
+events temporally has been removed, preparing another sql based event system - simple, will not require core patching, only config change(not sure about custom servers).

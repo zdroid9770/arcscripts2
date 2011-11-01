@@ -18,7 +18,6 @@
  */
 
 #include "Setup.h"
-#include "../Common/EasyFunctions.h"
 
 class ScourgeGryphonOne : public GossipScript
 {

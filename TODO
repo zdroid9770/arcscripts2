@@ -1,8 +1,7 @@
+Remove items from this file if it has been completed.
+Recruitmen is open <url> (temporally forums are not set)
+
 - Add door handling for all bosses/scripts
-- Imrpove Instance Script class(m4ksiu?)
-- Fix few crashes(No idea if any left)
-- Start some ai_agents scripts? 
-- Add spell handlers for some spells
 - Wotlk Instances:
       * Gundrak
       * Halls of Stone( Current script is not so good, needs rewrite )
@@ -16,5 +15,12 @@
 - 3.1 aspire support, please
 - 3.1 Ulduar raid, i started some work on my pc, done Assembly of iron and Fyera, plans on yoggi and general, flame levi wont be hard either
 
-Recruitment is open:
-http://www.arcemu.org/ 
+New features:
+	* Add DoScriptText, LoadScriptText
+	* Add waypoints loads
+	* Add Gossip loads
+	* Add new config
+
+General:
+	* Add event's scripts handling
+	* Back server status plugin compile

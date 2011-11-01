@@ -96,7 +96,7 @@ void ZuluhedtheWhacked(Player* pPlayer, Object* pObject)
 }
 //=================================================================================================
 
-void OnQuestAccept(Player* pPlayer, Quest* pQuest, Object* pObject)
+void scriptOnQuestAccept(Player* pPlayer, Quest* pQuest, Object* pObject)
 {
 	if(pPlayer == NULL || pQuest == NULL || pObject == NULL || !pObject->IsInWorld() || !pPlayer->IsInWorld() || !pObject->IsCreature())
 		return;
@@ -187,7 +187,7 @@ void MaybellComplete(Player* pPlayer, Object* pObject)
 
 //========================================================================================
 
-void OnQuestFinished(Player* pPlayer, Quest* pQuest, Object* pObject)
+void scriptOnQuestFinished(Player* pPlayer, Quest* pQuest, Object* pObject)
 {
 	if(pPlayer == NULL || pQuest == NULL || pObject == NULL || !pObject->IsCreature())
 		return;
@@ -233,7 +233,7 @@ void ZuluhedtheWhackedCancel(Player* pPlayer)
 
 //========================================================================================
 
-void OnQuestCancelled(Player* pPlayer, Quest* pQuest)
+void scriptOnQuestCancelled(Player* pPlayer, Quest* pQuest)
 {
 	if(pPlayer == NULL || pQuest == NULL)
 		return;
@@ -351,7 +351,7 @@ void InnkeeperChicken(Player* pPlayer, Unit* pUnit)
 }
 //=========================================================================================
 
-void OnEmote(Player* pPlayer, uint32 Emote, Unit* pUnit)
+void scriptOnEmote(Player* pPlayer, uint32 Emote, Unit* pUnit)
 {
 	pUnit = pPlayer->GetMapMgr()->GetUnit(pPlayer->GetSelection());
 	if(!pUnit || !pUnit->isAlive() || pUnit->GetAIInterface()->getNextTarget())
@@ -412,7 +412,7 @@ void Scratches(Player* pPlayer, uint32 AreaTrigger)
 
 //=========================================================================================
 
-void OnAreaTrigger(Player* pPlayer, uint32 AreaTrigger)
+void scriptOnAreaTrigger(Player* pPlayer, uint32 AreaTrigger)
 {
 	switch(AreaTrigger)
 	{
@@ -433,9 +433,9 @@ void OnAreaTrigger(Player* pPlayer, uint32 AreaTrigger)
 
 void SetupQuestHooks(ScriptMgr* mgr)
 {
-	mgr->register_hook(SERVER_HOOK_EVENT_ON_QUEST_ACCEPT, (void*)&OnQuestAccept);
-	mgr->register_hook(SERVER_HOOK_EVENT_ON_QUEST_FINISHED, (void*)&OnQuestFinished);
-	mgr->register_hook(SERVER_HOOK_EVENT_ON_QUEST_CANCELLED, (void*)&OnQuestCancelled);
-	mgr->register_hook(SERVER_HOOK_EVENT_ON_EMOTE, (void*)&OnEmote);
-	mgr->register_hook(SERVER_HOOK_EVENT_ON_AREATRIGGER, (void*)&OnAreaTrigger);
+	mgr->register_hook(SERVER_HOOK_EVENT_ON_QUEST_ACCEPT, (void*)&scriptOnQuestAccept);
+	mgr->register_hook(SERVER_HOOK_EVENT_ON_QUEST_FINISHED, (void*)&scriptOnQuestFinished);
+	mgr->register_hook(SERVER_HOOK_EVENT_ON_QUEST_CANCELLED, (void*)&scriptOnQuestCancelled);
+	mgr->register_hook(SERVER_HOOK_EVENT_ON_EMOTE, (void*)&scriptOnEmote);
+	mgr->register_hook(SERVER_HOOK_EVENT_ON_AREATRIGGER, (void*)&scriptOnAreaTrigger);
 }

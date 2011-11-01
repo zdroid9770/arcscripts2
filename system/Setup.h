@@ -1,6 +1,6 @@
 /*
- * ArcScripts for ArcEmu MMORPG Server
- * Copyright (C) 2009 ArcEmu Team <http://www.arcemu.org/>
+ * ArcScripts2 for ArcEmu MMORPG Server
+ * Copyright (C) 2011 ArcScripts2 Team <http://www.arcemu.org/>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,14 +17,37 @@
  */
 
 #include "StdAfx.h"
-#include "../Common/EasyFunctions.h"
-#include "../Common/Instance_Base.h"
-#include "../Common/Base.h"
+#include "../base/EasyFunctions.h"
+#include "../base/Instance_Base.h"
+#include "../base/Base.h"
 
-#ifndef INSTANCE_SCRIPTS_SETUP_H
-#define INSTANCE_SCRIPTS_SETUP_H
+#ifndef SETUP
+#define SETUP
+//EVENT
+void SetupWinterVeil(ScriptMgr* mgr);
+void SetupHalloween(ScriptMgr* mgr);
 
-//Instances
+//EXTRA
+void SetupNeutralGuards(ScriptMgr* mgr);
+
+//GOSSIP
+void SetupInnkeepers(ScriptMgr* mgr);
+void SetupGuardGossip(ScriptMgr* mgr);
+void SetupTrainerScript(ScriptMgr* mgr);
+void SetupMulgoreGossip(ScriptMgr* mgr);
+void SetupShattrathGossip(ScriptMgr* mgr);
+void SetupTanarisGossip(ScriptMgr* mgr);
+void SetupMoongladeGossip(ScriptMgr* mgr);
+void SetupStormwindGossip(ScriptMgr* mgr);
+void SetupTheramoreGossip(ScriptMgr* mgr);
+void SetupDarkmoonFaireGossip(ScriptMgr* mgr);
+void SetupDarkmoonFaireBarker(ScriptMgr* mgr);
+void SetupTeldrassilGossip(ScriptMgr* mgr);
+void SetupBoreanTundraGossip(ScriptMgr* mgr);
+void SetupWyrmrestTempleGossip(ScriptMgr* mgr);
+void SetupXpEliminatorGossip(ScriptMgr* mgr);
+
+//INSTANCE
 void SetupArcatraz(ScriptMgr* mgr);
 void SetupAuchenaiCrypts(ScriptMgr* mgr);
 void SetupAzjolNerub(ScriptMgr* mgr) ;
@@ -63,7 +86,6 @@ void SetupUtgardeKeep(ScriptMgr* mgr);
 void SetupTheStockade(ScriptMgr* mgr);
 void SetupWailingCaverns(ScriptMgr* mgr);
 void SetupMagistersTerrace(ScriptMgr* mgr);
-//Raids
 void SetupBlackTemple(ScriptMgr* mgr);
 void SetupBlackwingLair(ScriptMgr* mgr);
 void SetupBattleOfMountHyjal(ScriptMgr* mgr);
@@ -82,8 +104,70 @@ void SetupMagtheridonsLair(ScriptMgr* mgr);
 void SetupSunwellPlateau(ScriptMgr* pScriptMgr);
 void SetupWorldBosses(ScriptMgr* mgr);
 void SetupZulAman(ScriptMgr* mgr);
-//other
-//void SetupGenericAI(ScriptMgr * mgr);
+
+//MISC
+void SetupGoHandlers(ScriptMgr* mgr);
+void SetupQDGoHandlers(ScriptMgr* mgr);
+void SetupRandomScripts(ScriptMgr* mgr);
+void SetupMiscCreatures(ScriptMgr* mgr);
+void SetupDarkmoonFaireObjects(ScriptMgr* mgr);
+void InitializeGameObjectTeleportTable(ScriptMgr* mgr);
+
+//QUEST
+void SetupDruid(ScriptMgr* mgr);
+void SetupMage(ScriptMgr* mgr);
+void SetupPaladin(ScriptMgr* mgr);
+void SetupWarrior(ScriptMgr* mgr);
+void SetupFirstAid(ScriptMgr* mgr);
+void SetupArathiHighlands(ScriptMgr* mgr);
+void SetupAzshara(ScriptMgr* mgr);
+void SetupAzuremystIsle(ScriptMgr* mgr);
+void SetupBladeEdgeMountains(ScriptMgr* mgr);
+void SetupBlastedLands(ScriptMgr* mgr);
+void SetupBloodmystIsle(ScriptMgr* mgr);
+void SetupBurningSteppes(ScriptMgr* mgr);
+void SetupDeathKnight(ScriptMgr* mgr);
+void SetupDesolace(ScriptMgr* mgr);
+void SetupDragonblight(ScriptMgr* mgr);
+void SetupDuskwood(ScriptMgr* mgr);
+void SetupDustwallowMarsh(ScriptMgr* mgr);
+void SetupEasternPlaguelands(ScriptMgr* mgr);
+void SetupEversongWoods(ScriptMgr* mgr);
+void SetupGhostlands(ScriptMgr* mgr);
+void SetupHellfirePeninsula(ScriptMgr* mgr);
+void SetupHillsbradFoothills(ScriptMgr* mgr);
+void SetupHowlingFjord(ScriptMgr* mgr);
+void SetupIsleOfQuelDanas(ScriptMgr* mgr);
+void SetupLochModan(ScriptMgr* mgr);
+void SetupMulgore(ScriptMgr* mgr);
+void SetupNagrand(ScriptMgr* mgr);
+void SetupNetherstorm(ScriptMgr* mgr);
+void SetupRedrigeMountains(ScriptMgr* mgr);
+void SetupShadowmoon(ScriptMgr* mgr);
+void SetupSilithus(ScriptMgr* mgr);
+void SetupSilvermoonCity(ScriptMgr* mgr);
+void SetupSilverpineForest(ScriptMgr* mgr);
+void SetupStormwind(ScriptMgr* mgr);
+void SetupStranglethornVale(ScriptMgr* mgr);
+void SetupTanaris(ScriptMgr* mgr);
+void SetupTeldrassil(ScriptMgr* mgr);
+void SetupTerrokarForest(ScriptMgr* mgr);
+void SetupTheStormPeaks(ScriptMgr* mgr);
+void SetupThousandNeedles(ScriptMgr* mgr);
+void SetupTirisfalGlades(ScriptMgr* mgr);
+void SetupUndercity(ScriptMgr* mgr);
+void SetupUnGoro(ScriptMgr* mgr);
+void SetupWestfall(ScriptMgr* mgr);
+void SetupWinterspring(ScriptMgr* mgr);
+void SetupZangarmarsh(ScriptMgr* mgr);
+void SetupBarrens(ScriptMgr* mgr);
+void SetupBoreanTundra(ScriptMgr* mgr);
+void SetupSholazarBasin(ScriptMgr* mgr);
+void SetupQuestGossip(ScriptMgr* mgr);
+void SetupQuestHooks(ScriptMgr* mgr);
+void SetupUnsorted(ScriptMgr* mgr);
+
+
 
 struct ScriptSpell
 {
@@ -142,5 +226,4 @@ enum
 
     //.....add
 };
-
 #endif
