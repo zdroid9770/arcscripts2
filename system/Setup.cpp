@@ -43,6 +43,9 @@ extern "C" SCRIPT_DECL void _exp_script_register(ScriptMgr* mgr)	// Comment any 
 	SetupTanarisGossip(mgr);
 	SetupMoongladeGossip(mgr);
 	SetupStormwindGossip(mgr);
+	SetupDarnassusGossip(mgr);
+	SetupUndercityGossip(mgr);
+	SetupIronforgeGossip(mgr);
 	SetupTheramoreGossip(mgr);
 	SetupTeldrassilGossip(mgr);
 	SetupDarkmoonFaireGossip(mgr);

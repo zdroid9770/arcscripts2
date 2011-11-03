@@ -17,6 +17,9 @@ ${SCRIPTS_PATH}/src/GossipScripts/Gossip_Moonglade.cpp
 ${SCRIPTS_PATH}/src/GossipScripts/Gossip_Mulgore.cpp
 ${SCRIPTS_PATH}/src/GossipScripts/Gossip_Shattrath.cpp
 ${SCRIPTS_PATH}/src/GossipScripts/Gossip_Stormwind.cpp
+${SCRIPTS_PATH}/src/GossipScripts/Gossip_Darnassus.cpp
+${SCRIPTS_PATH}/src/GossipScripts/Gossip_Undercity.cpp
+${SCRIPTS_PATH}/src/GossipScripts/Gossip_Ironforge.cpp
 ${SCRIPTS_PATH}/src/GossipScripts/Gossip_Tanaris.cpp
 ${SCRIPTS_PATH}/src/GossipScripts/Gossip_Teldrassil.cpp
 ${SCRIPTS_PATH}/src/GossipScripts/Gossip_Theramore.cpp

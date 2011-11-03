@@ -24,3 +24,4 @@ New features:
 General:
 	* Add event's scripts handling
 	* Back server status plugin compile
+	* Rewrite signup php script
