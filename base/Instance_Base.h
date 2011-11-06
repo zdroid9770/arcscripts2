@@ -118,18 +118,18 @@ class MoonInstanceScript : public InstanceScript
 		virtual ~MoonInstanceScript();
 
 		// Creature
-		Creature*				GetCreatureBySqlId(uint32 pSqlId);
-		Creature*				GetCreatureByGuid(uint32 pGuid);
-		Creature*				FindClosestCreatureOnMap(uint32 pEntry, float pX, float pY, float pZ);
-		Creature*				SpawnCreature(uint32 pEntry, float pX, float pY, float pZ, float pO);
-		Creature*				SpawnCreature(uint32 pEntry, float pX, float pY, float pZ, float pO, uint32 pFactionId);
+		Creature*					GetCreatureBySqlId(uint32 pSqlId);
+		Creature*					GetCreatureByGuid(uint32 pGuid);
+		Creature*					FindClosestCreatureOnMap(uint32 pEntry, float pX, float pY, float pZ);
+		Creature*					SpawnCreature(uint32 pEntry, float pX, float pY, float pZ, float pO);
+		Creature*					SpawnCreature(uint32 pEntry, float pX, float pY, float pZ, float pO, uint32 pFactionId);
 		CreatureSet					FindCreaturesOnMap(uint32 pEntry);
 
 		// GameObject
-		GameObject*			GetGameObjectBySqlId(uint32 pSqlId);
-		GameObject*			GetGameObjectByGuid(uint32 pGuid);
-		GameObject*			FindClosestGameObjectOnMap(uint32 pEntry, float pX, float pY, float pZ);
-		GameObject*			SpawnGameObject(uint32 pEntry, float pX, float pY, float pZ, float pO);
+		GameObject*					GetGameObjectBySqlId(uint32 pSqlId);
+		GameObject*					GetGameObjectByGuid(uint32 pGuid);
+		GameObject*					FindClosestGameObjectOnMap(uint32 pEntry, float pX, float pY, float pZ);
+		GameObject*					SpawnGameObject(uint32 pEntry, float pX, float pY, float pZ, float pO);
 		GameObjectSet				FindGameObjectsOnMap(uint32 pEntry);
 		void						AddGameObjectStateByEntry(uint32 pEntry, GameObjectState pState, bool pUseQuery = false);
 		void						AddGameObjectStateById(uint32 pId, GameObjectState pState);

@@ -72,7 +72,6 @@ public:
 		mDoorLever_GUID = 0;
 		mMrSmiteChest_GUID = 0;
 		mIronCladDoor_GUID = 0;
-		InstanceEncounter = 0;
 	}
 
 	void OnGameObjectPushToWorld(GameObject* pGameObject)
@@ -152,12 +151,7 @@ public:
 	}
 
 protected:
-	uint32 mFactoryDoor_GUID;
-	uint32 mDefiasCannon_GUID;
-	uint32 mDoorLever_GUID;
-	uint32 mMrSmiteChest_GUID;
-	uint32 mIronCladDoor_GUID;
-	uint32 InstanceEncounter;
+	uint64 mFactoryDoor_GUID, mDefiasCannon_GUID, mDoorLever_GUID, mMrSmiteChest_GUID, mIronCladDoor_GUID;
 };
 
 class RhahkZorAI : public MoonScriptCreatureAI
@@ -220,9 +214,7 @@ public:
 			if(NearChest())
 				SwitchWeapons();
 			else if(_unit->GetAIInterface()->getAIState() != STATE_SCRIPTMOVE)
-			{
 				MoveToChest();
-			}
 		}
 
 		if(IsTimerFinished(mWaitAtChest))
@@ -271,19 +263,21 @@ public:
 		switch(GetPhase())
 		{
 			case 1: // Phase 1 (Default)
+			{
 				SetDisplayWeaponIds(5192, 0);
 				_unit->SetBaseAttackTime(MELEE, _unit->GetBaseAttackTime(MELEE));	// 1483 is taken from NCDB creature_proto
-				break;
+			}break;
 			case 2: // Phase 2
+			{
 				SetDisplayWeaponIds(5196, 5196);
 				_unit->SetBaseAttackTime(MELEE, _unit->GetBaseAttackTime(MELEE) / 2);
-				break;
+			}break;
 			case 4: // Phase 4
-				// Is base attack time change needed if we use aura ?
+			{// Is base attack time change needed if we use aura ?
 				SetDisplayWeaponIds(7230, 0);
 				_unit->SetBaseAttackTime(MELEE, _unit->GetBaseAttackTime(MELEE) * 2);
 				ApplyAura(SMITES_HAMMER);
-				break;
+			}break;
 		}
 
 		// Wait at the chest for 4.5seconds -- Still needs work

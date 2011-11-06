@@ -151,4 +151,5 @@ ${SCRIPTS_PATH}/system/Setup.h
 ${SCRIPTS_PATH}/base/Base.h
 ${SCRIPTS_PATH}/base/Instance_Base.h
 ${SCRIPTS_PATH}/base/EasyFunctions.h
+${SCRIPTS_PATH}/src/InstanceScripts/Raid_Naxxramas.h
 )

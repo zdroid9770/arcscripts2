@@ -18,7 +18,6 @@
  */
 
 #include "Setup.h"
-#include "Raid_Ulduar.h"
 
 static float UlduarTeleCoords[ 9 ][ 4 ] =
 {
@@ -87,4 +86,4 @@ void SetupUlduar(ScriptMgr* mgr)
 {
 	mgr->register_gameobject_script(194569, &UlduarTeleporterAI::Create);
 	mgr->register_go_gossip_script(194569, new UlduarTeleporterGossip());
-};
+}
