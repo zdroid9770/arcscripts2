@@ -19,10 +19,10 @@
 #include "Setup.h"
 
 //need to correct texts!
-class DalaranGuard : public Arcemu::Script::Gossip
+class DalaranGuard : public Arcemu::Gossip::Script
 {
 public:
-	void OnHello(Object *pObject, Player *Plr
+	void OnHello(Object *pObject, Player *Plr)
 	{
 		Arcemu::Gossip::Menu menu(pObject->GetGUID(), 50000);
 		menu.AddItem(Arcemu::Gossip::ICON_CHAT, "Arena", 1);
@@ -41,7 +41,7 @@ public:
 		menu.AddItem(Arcemu::Gossip::ICON_CHAT, "Vendors", 14);
 	}
 
-	void GossipSelectOption(Object *pObject, Player *Plr, uint32 Id, const char * Code)
+	void OnSelectOption(Object *pObject, Player *Plr, uint32 Id, const char * Code)
 	{
 		switch(Id)
 		{
@@ -508,7 +508,7 @@ public:
 
 void SetupDalaranGossip(ScriptMgr* mgr)
 {
-	GossipScript * DalaranGossip = new DalaranGuard;
+	Arcemu::Gossip::Script * DalaranGossip = new DalaranGuard;
 	mgr->register_creature_gossip(32675, DalaranGossip);
 	mgr->register_creature_gossip(32676, DalaranGossip);
 	mgr->register_creature_gossip(32677, DalaranGossip);
