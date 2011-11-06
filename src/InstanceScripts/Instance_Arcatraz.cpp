@@ -155,7 +155,7 @@ public:
 
 		AddSpell(SEED_OF_C, Target_RandomPlayer, 6.0f, 2, 20, 0, 100.0f);
 		AddSpell(SHADOW_NOVA, Target_Self, 15, 2, 15);
-		AddSpell(VOID_ZONE, Target_RandomPlayer, 20, 0, (rand()%10+30)*1000);
+		AddSpell(VOID_ZONE, Target_RandomPlayer, 20, 0, rand()%10+30);
 	}
 
 	void OnCombatStart(Unit* mTarget)
