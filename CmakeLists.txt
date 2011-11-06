@@ -20,6 +20,7 @@ ${SCRIPTS_PATH}/src/GossipScripts/Gossip_Stormwind.cpp
 ${SCRIPTS_PATH}/src/GossipScripts/Gossip_Darnassus.cpp
 ${SCRIPTS_PATH}/src/GossipScripts/Gossip_Undercity.cpp
 ${SCRIPTS_PATH}/src/GossipScripts/Gossip_Ironforge.cpp
+${SCRIPTS_PATH}/src/GossipScripts/Gossip_Dalaran.cpp
 ${SCRIPTS_PATH}/src/GossipScripts/Gossip_Tanaris.cpp
 ${SCRIPTS_PATH}/src/GossipScripts/Gossip_Teldrassil.cpp
 ${SCRIPTS_PATH}/src/GossipScripts/Gossip_Theramore.cpp

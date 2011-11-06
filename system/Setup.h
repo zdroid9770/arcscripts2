@@ -42,6 +42,7 @@ void SetupStormwindGossip(ScriptMgr* mgr);
 void SetupDarnassusGossip(ScriptMgr* mgr);
 void SetupUndercityGossip(ScriptMgr* mgr);
 void SetupIronforgeGossip(ScriptMgr* mgr);
+void SetupDalaranGossip(ScriptMgr* mgr);
 void SetupTheramoreGossip(ScriptMgr* mgr);
 void SetupDarkmoonFaireGossip(ScriptMgr* mgr);
 void SetupDarkmoonFaireBarker(ScriptMgr* mgr);
