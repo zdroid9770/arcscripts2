@@ -48,8 +48,8 @@ void SetupDarkmoonFaireGossip(ScriptMgr* mgr);
 void SetupDarkmoonFaireBarker(ScriptMgr* mgr);
 void SetupTeldrassilGossip(ScriptMgr* mgr);
 void SetupBoreanTundraGossip(ScriptMgr* mgr);
-void SetupWyrmrestTempleGossip(ScriptMgr* mgr);
-void SetupXpEliminatorGossip(ScriptMgr* mgr);
+void SetupDragonblightGossip(ScriptMgr* mgr);
+void SetupGeneralGossip(ScriptMgr* mgr);
 
 //INSTANCE
 void SetupArcatraz(ScriptMgr* mgr);

@@ -22,7 +22,7 @@
 #define GOSSIP_BOTTOM_TO_MIDDLE "Can you spare a drake to take me to Lord Afrasastrasz in the middle of the temple?"
 #define NPCTEXT_BOTTOM 12713
 
-class SCRIPT_DECL WyrmrestTemple_FlightGossip : public Arcemu::Gossip::Script
+class WyrmrestTemple_FlightGossip : public Arcemu::Gossip::Script
 {
 	public:
 		void OnHello(Object* pObject, Player* plr)
@@ -86,7 +86,7 @@ class SCRIPT_DECL WyrmrestTemple_FlightGossip : public Arcemu::Gossip::Script
 
 };
 
-void SetupWyrmrestTempleGossip(ScriptMgr* mgr)
+void SetupDragonblightGossip(ScriptMgr* mgr)
 {
 	Arcemu::Gossip::Script* WyrmrestTempleFlightGossip = new WyrmrestTemple_FlightGossip;
 

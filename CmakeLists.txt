@@ -25,8 +25,8 @@ ${SCRIPTS_PATH}/src/GossipScripts/Gossip_Tanaris.cpp
 ${SCRIPTS_PATH}/src/GossipScripts/Gossip_Teldrassil.cpp
 ${SCRIPTS_PATH}/src/GossipScripts/Gossip_Theramore.cpp
 ${SCRIPTS_PATH}/src/GossipScripts/Gossip_Trainer.cpp
-${SCRIPTS_PATH}/src/GossipScripts/Gossip_WyrmrestTemple.cpp
-${SCRIPTS_PATH}/src/GossipScripts/Gossip_XpEliminator.cpp
+${SCRIPTS_PATH}/src/GossipScripts/Gossip_Dragonblight.cpp
+${SCRIPTS_PATH}/src/GossipScripts/Gossip_General.cpp
 #instances
 ${SCRIPTS_PATH}/src/InstanceScripts/Instance_Arcatraz.cpp 
 ${SCRIPTS_PATH}/src/InstanceScripts/Instance_AuchenaiCrypts.cpp 

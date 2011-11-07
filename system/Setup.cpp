@@ -52,8 +52,8 @@ extern "C" SCRIPT_DECL void _exp_script_register(ScriptMgr* mgr)	// Comment any 
 	SetupDarkmoonFaireGossip(mgr);
 	SetupDarkmoonFaireBarker(mgr);
 	SetupBoreanTundraGossip(mgr);
-	SetupWyrmrestTempleGossip(mgr);
-	SetupXpEliminatorGossip(mgr);
+	SetupDragonblightGossip(mgr);
+	SetupGeneralGossip(mgr);
 
 	//INSTANCES
 	SetupArcatraz(mgr);
