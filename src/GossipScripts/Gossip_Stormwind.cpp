@@ -33,11 +33,13 @@ class StormwindGuard : public Arcemu::Gossip::Script
 			menu.AddItem(Arcemu::Gossip::ICON_CHAT, "Gryphon Master"		, 6);
 			menu.AddItem(Arcemu::Gossip::ICON_CHAT, "Guild Master"			, 7);
 			menu.AddItem(Arcemu::Gossip::ICON_CHAT, "Mailbox"				, 8);
+			menu.AddItem(Arcemu::Gossip::ICON_CHAT, "Locksmith"				, 38);
 			menu.AddItem(Arcemu::Gossip::ICON_CHAT, "Stable Master"			, 9);
 			menu.AddItem(Arcemu::Gossip::ICON_CHAT, "Weapons Trainer"		, 10);
 			menu.AddItem(Arcemu::Gossip::ICON_CHAT, "Officers' Lounge"		, 11);
 			menu.AddItem(Arcemu::Gossip::ICON_CHAT, "Battlemaster"			, 12);
 			menu.AddItem(Arcemu::Gossip::ICON_CHAT, "Barber"				, 13);
+			menu.AddItem(Arcemu::Gossip::ICON_CHAT, "Lexicon of Power"		, 39);
 			menu.AddItem(Arcemu::Gossip::ICON_CHAT, "Class Trainer"			, 14);
 			menu.AddItem(Arcemu::Gossip::ICON_CHAT, "Profession Trainer"	, 15);
 			menu.Send(Plr);
@@ -255,6 +257,16 @@ class StormwindGuard : public Arcemu::Gossip::Script
 						Plr->Gossip_SendPOI(-8938.0f, 800.7f, 7, 99, 0, "Duncan`s Textiles");
 						Arcemu::Gossip::Menu::SendSimpleMenu(pObject->GetGUID(), 929, Plr);
 					}break;
+				case 38:	// Locksmith
+					{
+						Plr->Gossip_SendPOI(-8425.0f, 627.621f, 7, 99, 0, "Stormwind Locksmith");
+						Arcemu::Gossip::Menu::SendSimpleMenu(pObject->GetGUID(), 14249, Plr);
+					}break;
+				case 39:	// Lexicon of Power
+					{
+						Plr->Gossip_SendPOI(-8851.0f, 856.599f, 7, 99, 0, "Stormwind Inscription");
+						Arcemu::Gossip::Menu::SendSimpleMenu(pObject->GetGUID(), 14174, Plr);
+					}break;
 			}
 		}
 };
@@ -349,22 +361,22 @@ class GoldshireGuard : public Arcemu::Gossip::Script
 				}break;
 			case 10: //Mage
 				{
-					Plr->Gossip_SendPOI(-9471.12f, 33.44f, 7, 6, 0, "Zaldimar Wefhellt");
+					Plr->Gossip_SendPOI(-9471.12f, 33.44f, 7, 99, 0, "Zaldimar Wefhellt");
 					Arcemu::Gossip::Menu::SendSimpleMenu(pObject->GetGUID(), 4268, Plr);
 				}break;
 			case 11: //Paladin
 				{
-					Plr->Gossip_SendPOI(-9469.0f, 108.05f, 7, 6, 0, "Brother Wilhelm");
+					Plr->Gossip_SendPOI(-9469.0f, 108.05f, 7, 99, 0, "Brother Wilhelm");
 					Arcemu::Gossip::Menu::SendSimpleMenu(pObject->GetGUID(), 4269, Plr);
 				}break;
 			case 12: //Priest
 				{
-					Plr->Gossip_SendPOI(-9461.07f, 32.6f, 7, 6, 0, "Priestess Josetta");
+					Plr->Gossip_SendPOI(-9461.07f, 32.6f, 7, 99, 0, "Priestess Josetta");
 					Arcemu::Gossip::Menu::SendSimpleMenu(pObject->GetGUID(), 4267, Plr);
 				}break;
 			case 13: //Rogue
 				{
-					Plr->Gossip_SendPOI(-9465.13f, 13.29f, 7, 6, 0, "Keryn Sylvius");
+					Plr->Gossip_SendPOI(-9465.13f, 13.29f, 7, 99, 0, "Keryn Sylvius");
 					Arcemu::Gossip::Menu::SendSimpleMenu(pObject->GetGUID(), 4270, Plr);
 				}break;
 			case 14: //Shaman
@@ -374,27 +386,27 @@ class GoldshireGuard : public Arcemu::Gossip::Script
 				}break;
 			case 15: //Warlock
 				{
-					Plr->Gossip_SendPOI(-9473.21f, -4.08f, 7, 6, 0, "Maximillian Crowe");
+					Plr->Gossip_SendPOI(-9473.21f, -4.08f, 7, 99, 0, "Maximillian Crowe");
 					Arcemu::Gossip::Menu::SendSimpleMenu(pObject->GetGUID(), 4272, Plr);
 				}break;
 			case 16: //Warrior
 				{
-					Plr->Gossip_SendPOI(-9461.82f, 109.50f, 7, 6, 0, "Lyria Du Lac");
+					Plr->Gossip_SendPOI(-9461.82f, 109.50f, 7, 99, 0, "Lyria Du Lac");
 					Arcemu::Gossip::Menu::SendSimpleMenu(pObject->GetGUID(), 4271, Plr);
 				}break;
 			case 17: //Alchemy
 				{
-					Plr->Gossip_SendPOI(-9057.04f, 153.63f, 7, 6, 0, "Alchemist Mallory");
+					Plr->Gossip_SendPOI(-9057.04f, 153.63f, 7, 99, 0, "Alchemist Mallory");
 					Arcemu::Gossip::Menu::SendSimpleMenu(pObject->GetGUID(), 4274, Plr);
 				}break;
 			case 18: //Blacksmithing
 				{
-					Plr->Gossip_SendPOI(-9456.58f, 87.90f, 7, 6, 0, "Smith Argus");
+					Plr->Gossip_SendPOI(-9456.58f, 87.90f, 7, 99, 0, "Smith Argus");
 					Arcemu::Gossip::Menu::SendSimpleMenu(pObject->GetGUID(), 4275, Plr);
 				}break;
 			case 19: //Cooking
 				{
-					Plr->Gossip_SendPOI(-9467.54f, -3.16f, 7, 6, 0, "Tomas");
+					Plr->Gossip_SendPOI(-9467.54f, -3.16f, 7, 99, 0, "Tomas");
 					Arcemu::Gossip::Menu::SendSimpleMenu(pObject->GetGUID(), 4276, Plr);
 				}break;
 			case 20: //Enchanting
@@ -409,27 +421,27 @@ class GoldshireGuard : public Arcemu::Gossip::Script
 				}break;
 			case 22: //First Aid
 				{
-					Plr->Gossip_SendPOI(-9456.82f, 30.49f, 7, 6, 0, "Michelle Belle");
+					Plr->Gossip_SendPOI(-9456.82f, 30.49f, 7, 99, 0, "Michelle Belle");
 					Arcemu::Gossip::Menu::SendSimpleMenu(pObject->GetGUID(), 4279, Plr);
 				}break;
 			case 23: //Fishing
 				{
-					Plr->Gossip_SendPOI(-9386.54f, -118.73f, 7, 6, 0, "Lee Brown");
+					Plr->Gossip_SendPOI(-9386.54f, -118.73f, 7, 99, 0, "Lee Brown");
 					Arcemu::Gossip::Menu::SendSimpleMenu(pObject->GetGUID(), 4280, Plr);
 				}break;
 			case 24: //Herbalism
 				{
-					Plr->Gossip_SendPOI(-9060.7f, 149.23f, 7, 6, 0, "Herbalist Pomeroy");
+					Plr->Gossip_SendPOI(-9060.7f, 149.23f, 7, 99, 0, "Herbalist Pomeroy");
 					Arcemu::Gossip::Menu::SendSimpleMenu(pObject->GetGUID(), 4281, Plr);       
 				}break;
 			case 25: //Inscription
 				{
-					Plr->Gossip_SendPOI(-8853.33f, 857.66f, 7, 6, 0, "Stormwind Inscription");
+					Plr->Gossip_SendPOI(-8853.33f, 857.66f, 7, 99, 0, "Stormwind Inscription");
 					Arcemu::Gossip::Menu::SendSimpleMenu(pObject->GetGUID(), 13881, Plr);
 				}break;
 			case 26: //Leatherworking
 				{
-					Plr->Gossip_SendPOI(-9376.12f, -75.23f, 7, 6, 0, "Adele Fielder");
+					Plr->Gossip_SendPOI(-9376.12f, -75.23f, 7, 99, 0, "Adele Fielder");
 					Arcemu::Gossip::Menu::SendSimpleMenu(pObject->GetGUID(), 4282, Plr);
 				}break;
 			case 27: //Mining
@@ -439,13 +451,18 @@ class GoldshireGuard : public Arcemu::Gossip::Script
 				}break;
 			case 28: //Skinning
 				{
-					Plr->Gossip_SendPOI(-9536.91f, -1212.76f, 7, 6, 0, "Helene Peltskinner");
+					Plr->Gossip_SendPOI(-9536.91f, -1212.76f, 7, 99, 0, "Helene Peltskinner");
 					Arcemu::Gossip::Menu::SendSimpleMenu(pObject->GetGUID(), 4284, Plr);
 				}break;
 			case 29: //Tailoring
 				{
-					Plr->Gossip_SendPOI(-9376.12f, -75.23f, 7, 6, 0, "Eldrin");
+					Plr->Gossip_SendPOI(-9376.12f, -75.23f, 7, 99, 0, "Eldrin");
 					Arcemu::Gossip::Menu::SendSimpleMenu(pObject->GetGUID(), 4285, Plr);
+				}break;
+			case 39:	// Lexicon of Power
+				{
+					Plr->Gossip_SendPOI(-8851.0f, 856.599f, 7, 99, 0, "Stormwind Inscription");
+					Arcemu::Gossip::Menu::SendSimpleMenu(pObject->GetGUID(), 14174, Plr);
 				}break;
 			}
 		}
