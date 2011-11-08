@@ -131,8 +131,8 @@ struct LootDesc
 struct AllDiffSpell
 {
 	uint32 man10normal;
-	uint32 man10heroic;
 	uint32 man25normal;
+	uint32 man10heroic;
 	uint32 man25heroic;
 };
 
