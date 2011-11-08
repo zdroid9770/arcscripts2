@@ -108,6 +108,10 @@ void SetupMagtheridonsLair(ScriptMgr* mgr);
 void SetupSunwellPlateau(ScriptMgr* pScriptMgr);
 void SetupWorldBosses(ScriptMgr* mgr);
 void SetupZulAman(ScriptMgr* mgr);
+void SetupIcecrownCitadel(ScriptMgr* mgr);
+void SetupRubySanctum(ScriptMgr* mgr);
+void SetupTempleOfAhnQiraj(ScriptMgr* mgr);
+void SetupRuinsOfAhnQiraj(ScriptMgr* mgr);
 
 //MISC
 void SetupGoHandlers(ScriptMgr* mgr);

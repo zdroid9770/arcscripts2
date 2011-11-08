@@ -84,6 +84,10 @@ ${SCRIPTS_PATH}/src/InstanceScripts/Raid_Magtheridons_Lair.cpp
 ${SCRIPTS_PATH}/src/InstanceScripts/SUNWELL_PLAT/Raid_SunwellPlateau.cpp 
 ${SCRIPTS_PATH}/src/InstanceScripts/Raid_WorldBosses.cpp 
 ${SCRIPTS_PATH}/src/InstanceScripts/Raid_ZulAman.cpp 
+${SCRIPTS_PATH}/src/InstanceScripts/Raid_IcecrownCitadel.cpp 
+${SCRIPTS_PATH}/src/InstanceScripts/Raid_RubySanctum.cpp 
+${SCRIPTS_PATH}/src/InstanceScripts/Raid_RuinsOfAhnQiraj.cpp 
+${SCRIPTS_PATH}/src/InstanceScripts/Raid_TempleOfAhnQiraj.cpp
 #misc scripts
 ${SCRIPTS_PATH}/src/MiscScripts/Creatures.cpp
 ${SCRIPTS_PATH}/src/MiscScripts/DarkmoonFaireObjects.cpp

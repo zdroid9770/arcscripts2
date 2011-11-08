@@ -112,6 +112,11 @@ extern "C" SCRIPT_DECL void _exp_script_register(ScriptMgr* mgr)	// Comment any 
 	SetupSunwellPlateau(mgr);
 	SetupWorldBosses(mgr);
 	SetupZulAman(mgr);
+	SetupIcecrownCitadel(mgr);
+	SetupRubySanctum(mgr);
+	SetupRuinsOfAhnQiraj(mgr);
+	SetupTempleOfAhnQiraj(mgr);
+	SetupRuinsOfAhnQiraj(mgr);
 
 	//MISC
 	SetupGoHandlers(mgr);
