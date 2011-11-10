@@ -27,6 +27,7 @@ ${SCRIPTS_PATH}/src/GossipScripts/Gossip_Theramore.cpp
 ${SCRIPTS_PATH}/src/GossipScripts/Gossip_Trainer.cpp
 ${SCRIPTS_PATH}/src/GossipScripts/Gossip_Dragonblight.cpp
 ${SCRIPTS_PATH}/src/GossipScripts/Gossip_General.cpp
+${SCRIPTS_PATH}/src/GossipScripts/Gossip_BlastedLands.cpp
 #instances
 ${SCRIPTS_PATH}/src/InstanceScripts/Instance_Arcatraz.cpp 
 ${SCRIPTS_PATH}/src/InstanceScripts/Instance_AuchenaiCrypts.cpp 

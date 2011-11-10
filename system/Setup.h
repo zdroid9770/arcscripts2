@@ -50,6 +50,7 @@ void SetupTeldrassilGossip(ScriptMgr* mgr);
 void SetupBoreanTundraGossip(ScriptMgr* mgr);
 void SetupDragonblightGossip(ScriptMgr* mgr);
 void SetupGeneralGossip(ScriptMgr* mgr);
+void SetupBlastedLandsGossip(ScriptMgr* mgr);
 
 //INSTANCE
 void SetupArcatraz(ScriptMgr* mgr);

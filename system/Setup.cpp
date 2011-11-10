@@ -54,6 +54,7 @@ extern "C" SCRIPT_DECL void _exp_script_register(ScriptMgr* mgr)	// Comment any 
 	SetupBoreanTundraGossip(mgr);
 	SetupDragonblightGossip(mgr);
 	SetupGeneralGossip(mgr);
+	SetupBlastedLandsGossip(mgr);
 
 	//INSTANCES
 	SetupArcatraz(mgr);
