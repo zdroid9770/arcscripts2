@@ -58,7 +58,6 @@ enum IcecrownCitadel
 	
 	GO_BLOODWING_DOOR	= 201920,
 	GO_FROSTWING_DOOR	= 201919
-	
 };
 
 class IcecrownCitadelInstanceScript : public MoonInstanceScript
@@ -189,7 +188,6 @@ enum Spells
 
     // Coldflame
 	NPC_COLD_FLAME				= 36672,
-    SPELL_COLDFLAME_PASSIVE     = 69145,
     SPELL_COLDFLAME_SUMMON      = 69147
 };
 
@@ -235,7 +233,6 @@ public:
 		BoneStormTimer = AddTimer(30000);
 		EnrageTimer = AddTimer(600000);	//10min
 		BoneSliceTimer = AddTimer(10000);
-
 		ParentClass::OnCombatStart(pUnit);
 	}
 
@@ -272,7 +269,7 @@ public:
 
 	void RandomChargeToUnit()
 	{
-		if(!IsSpawnedColdFlameXForm)
+		if(!IsSpawnedColdFlameXForm && !_unit->HasAura(MarrowgarSpells[2][pMode]))
 		{
 			SpawnColdFlameXForm();
 			IsSpawnedColdFlameXForm = true;
@@ -360,6 +357,35 @@ protected:
 	MoonInstanceScript* mInstance;
 };
 
+class ColdFlame : public MoonScriptCreatureAI
+{
+public:
+	MOONSCRIPT_FACTORY_FUNCTION(ColdFlame, MoonScriptCreatureAI);
+	ColdFlame(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
+	{}
+
+	void AIUpdate()
+	{
+		_unit->CastSpell(_unit, SPELL_COLDFLAME_SUMMON, true);
+		_unit->Despawn(5000, 0);
+		ParentClass::AIUpdate();
+	}
+};
+
+bool BoneStorm(uint32 i, Spell* s)
+{
+	if(s->u_caster == NULL)
+		return true;
+
+	SpellEntry* pSpell;
+	if(s)
+		pSpell = dbcSpell.LookupEntry((uint32)s);
+
+	s->u_caster->HandleProc(PROC_ON_SPELL_HIT, s->u_caster, pSpell, false, s->u_caster->GetSpellDidHitResult(s->u_caster, s->GetType(), s->GetProto()) / 10.0f);
+
+	return true;
+};
+
 void SetupIcecrownCitadel(ScriptMgr* mgr)
 {
 	mgr->register_instance_script(631, &IcecrownCitadelInstanceScript::Create);
@@ -367,11 +393,15 @@ void SetupIcecrownCitadel(ScriptMgr* mgr)
 	mgr->register_go_gossip_script(202235, new ScourgeTeleporterGossip);
 	mgr->register_gameobject_script(202223, &ScourgeTeleporterAI::Create);
 	mgr->register_go_gossip_script(202223, new ScourgeTeleporterGossip);
-	for(uint8 i = 0; i<4; i++)
+
+	for(uint8 i = 0; i<5; i++)
 	{
 		mgr->register_gameobject_script(202242+i, &ScourgeTeleporterAI::Create);
 		mgr->register_go_gossip(202242+i, new ScourgeTeleporterGossip);
 	}
 
+	//Lord marrowgar event related
 	mgr->register_creature_script(36612, &LordMarrowgar::Create);
+	mgr->register_creature_script(NPC_COLD_FLAME, &ColdFlame::Create);
+	mgr->register_dummy_spell(69075, &BoneStorm);
 }
