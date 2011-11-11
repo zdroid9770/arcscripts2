@@ -367,6 +367,84 @@ class SCRIPT_DECL EasyFunctions
 				pQuest->UpdatePlayerFields();
 			};
 		};
+
+	// Return the nearest creature with the specified id
+	Creature *GetNearestCreature(Object *pObj, uint32 npcid = 0)
+	{
+		PrintMessage("Function call: GetNearestCreature()");
+		if( pObj == NULL )
+			return NULL;
+
+		return pObj->GetMapMgr()->GetInterface()->GetCreatureNearestCoords( pObj->GetPositionX(), pObj->GetPositionY(), pObj->GetPositionZ(), npcid );
+	}
+
+	// Return the nearest creature with the specified array of ids
+	Creature *GetNearestCreature(Object *pObj, uint32 *npcid)
+	{
+		PrintMessage("Function call: GetNearestCreature() with array");
+		if( pObj == NULL )
+			return NULL;
+
+		Creature *ClosestCreature = NULL;
+		float ClosestDist = 999999.0f;
+		float CurrentDist = 0.0f;
+		for( set<Object*>::iterator iter = pObj->GetInRangeSetBegin(); iter != pObj->GetInRangeSetEnd(); ++iter ) 
+		{
+			CurrentDist = (*iter)->CalcDistance( pObj );
+			if( CurrentDist < ClosestDist && (*iter)->IsCreature() )
+			{
+				for( uint32 i = 0; npcid[i] != 0; ++i )
+				{
+					if( (*iter)->GetEntry() == npcid[i] )
+					{
+						ClosestDist = CurrentDist;
+						ClosestCreature = TO_CREATURE( (*iter) );
+					}
+				}
+			}
+		}
+
+		return ClosestCreature;
+	}
+
+	// Return the nearest gameobject with the specified id
+	GameObject *GetNearestGameObject(Object *pObj, uint32 goid = 0)
+	{
+		PrintMessage("Function call: GetNearestGameObject()");
+		if( pObj == NULL )
+			return NULL;
+
+		return pObj->GetMapMgr()->GetInterface()->GetGameObjectNearestCoords( pObj->GetPositionX(), pObj->GetPositionY(), pObj->GetPositionZ(), goid );
+	}
+
+	// Return the nearest gameobject with the specified array of ids
+	GameObject *GetNearestGameObject(Object *pObj, uint32 *goid)
+	{
+		PrintMessage("Function call: GetNearestCreature() with array");
+		if( pObj == NULL )
+			return NULL;
+
+		GameObject *ClosestGameObject = NULL;
+		float ClosestDist = 999999.0f;
+		float CurrentDist = 0.0f;
+		for( set<Object*>::iterator iter = pObj->GetInRangeSetBegin(); iter != pObj->GetInRangeSetEnd(); ++iter ) 
+		{
+			CurrentDist = (*iter)->CalcDistance( pObj );
+			if( CurrentDist < ClosestDist && (*iter)->IsGameObject() )
+			{
+				for( uint32 i = 0; goid[i] != 0; ++i )
+				{
+					if( (*iter)->GetEntry() == goid[i] )
+					{
+						ClosestDist = CurrentDist;
+						ClosestGameObject = TO_GAMEOBJECT( (*iter) );
+					}
+				}
+			}
+		}
+
+		return ClosestGameObject;
+	}
 };
 
 #define sEAS EasyFunctions::GetInstance()
