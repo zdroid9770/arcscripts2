@@ -1,4 +1,4 @@
-        <?php
+		<?php
 		include('config/config.php');
            session_start();
            function reg()
