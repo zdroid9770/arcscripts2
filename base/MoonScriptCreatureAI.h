@@ -17,8 +17,12 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef _INSTANCE_SCRIPTS_BASE_H_
-#define _INSTANCE_SCRIPTS_BASE_H_
+#ifndef MOON_SCRIPT_CREATURE_AI
+#define MOON_SCRIPT_CREATURE_AI
+
+//Default time defines
+#define MINUTE	60				//1 min = 60 seconds
+#define SECOND_IN_MS	1000	//1 sec = 1000 milliseconds
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //Macros-- Start
@@ -128,14 +132,6 @@ struct LootDesc
 	uint32 mFFA;
 };
 
-struct AllDiffSpell
-{
-	uint32 man10normal;
-	uint32 man25normal;
-	uint32 man10heroic;
-	uint32 man25heroic;
-};
-
 enum TargetGenerator
 {
     // Self
@@ -196,7 +192,6 @@ enum RangeStatus
 class TargetType;
 class SpellDesc;
 class MoonScriptCreatureAI;
-class MoonScriptBossAI;
 struct EventStruct;
 
 typedef void(*EventFunc)(MoonScriptCreatureAI* pCreatureAI, int32 pMiscVal);
@@ -206,8 +201,6 @@ typedef std::vector<Player*> PlayerArray;
 typedef std::vector<Unit*> UnitArray;
 typedef std::vector<SpellDesc*> SpellDescArray;
 typedef std::list<SpellDesc*> SpellDescList;
-typedef std::pair<int32, SpellDesc*> PhaseSpellPair;
-typedef std::vector<PhaseSpellPair> PhaseSpellArray;
 typedef std::pair<int32, int32> TimerPair;
 typedef std::vector<TimerPair> TimerArray;
 typedef std::vector<LootDesc> LootTable;
@@ -375,13 +368,13 @@ class MoonScriptCreatureAI : public CreatureAIScript
 
 		void					CastOnAllInrangePlayers(uint32 pSpellId, bool pTriggered = false);
 		void					CastOnInrangePlayers(float pDistanceMin, float pDistanceMax, uint32 pSpellId, bool pTriggered = false);
-		Player* 			GetNearestPlayer();
-		GameObject*		GetNearestGameObject(uint32 pGameObjectId = 0);
+		Player* 				GetNearestPlayer();
+		GameObject*				GetNearestGameObject(uint32 pGameObjectId = 0);
 		MoonScriptCreatureAI*	GetNearestCreature(uint32 pCreatureId = 0);
 		MoonScriptCreatureAI*	SpawnCreature(uint32 pCreatureId, bool pForceSameFaction = false);
 		MoonScriptCreatureAI*	SpawnCreature(uint32 pCreatureId, float pX, float pY, float pZ, float pO = 0, bool pForceSameFaction = false, uint32 pPhase = 1);
-		Unit*				ForceCreatureFind(uint32 pCreatureId);
-		Unit*				ForceCreatureFind(uint32 pCreatureId, float pX, float pY, float pZ);
+		Unit*					ForceCreatureFind(uint32 pCreatureId);
+		Unit*					ForceCreatureFind(uint32 pCreatureId, float pX, float pY, float pZ);
 		void					Despawn(uint32 pDelay = 0, uint32 pRespawnTime = 0);
 
 		//Spells
@@ -437,7 +430,7 @@ class MoonScriptCreatureAI : public CreatureAIScript
 
 		//Others
 		void					SetTargetToChannel(Unit* pTarget, uint32 pSpellId);
-		Unit*				GetTargetToChannel();
+		Unit*					GetTargetToChannel();
 
 		//Options
 		void					SetAIUpdateFreq(uint32 pUpdateFreq);
@@ -468,12 +461,12 @@ class MoonScriptCreatureAI : public CreatureAIScript
 		void					CancelAllSpells();
 
 		RangeStatusPair			GetSpellRangeStatusToUnit(Unit* pTarget, SpellDesc* pSpell);
-		Unit*				GetTargetForSpell(SpellDesc* pSpell);
-		Unit*				GetBestPlayerTarget(TargetFilter pFilter = TargetFilter_None, float pMinRange = 0.0f, float pMaxRange = 0.0f);
-		Unit*				GetBestUnitTarget(TargetFilter pFilter = TargetFilter_None, float pMinRange = 0.0f, float pMaxRange = 0.0f);
-		Unit*				ChooseBestTargetInArray(UnitArray & pTargetArray, TargetFilter pFilter);
-		Unit*				GetNearestTargetInArray(UnitArray & pTargetArray);
-		Unit*				GetSecondMostHatedTargetInArray(UnitArray & pTargetArray);
+		Unit*					GetTargetForSpell(SpellDesc* pSpell);
+		Unit*					GetBestPlayerTarget(TargetFilter pFilter = TargetFilter_None, float pMinRange = 0.0f, float pMaxRange = 0.0f);
+		Unit*					GetBestUnitTarget(TargetFilter pFilter = TargetFilter_None, float pMinRange = 0.0f, float pMaxRange = 0.0f);
+		Unit*					ChooseBestTargetInArray(UnitArray & pTargetArray, TargetFilter pFilter);
+		Unit*					GetNearestTargetInArray(UnitArray & pTargetArray);
+		Unit*					GetSecondMostHatedTargetInArray(UnitArray & pTargetArray);
 		bool					IsValidUnitTarget(Object* pObject, TargetFilter pFilter, float pMinRange = 0.0f, float pMaxRange = 0.0f);
 		void					PushRunToTargetCache(Unit* pTarget, SpellDesc* pSpell, RangeStatusPair pRangeStatus = make_pair(RangeStatus_TooFar, 0.0f));
 		void					PopRunToTargetCache();
@@ -484,7 +477,7 @@ class MoonScriptCreatureAI : public CreatureAIScript
 		SpellDescList			mQueuedSpells;
 		SpellDescList			mScheduledSpells;
 
-		Unit*				mRunToTargetCache;
+		Unit*					mRunToTargetCache;
 		SpellDesc*				mRunToTargetSpellCache;
 
 		EmoteArray				mOnCombatStartEmotes;
@@ -500,33 +493,6 @@ class MoonScriptCreatureAI : public CreatureAIScript
 		uint32					mBaseAttackTime;
 		bool					mDespawnWhenInactive;
 		EventArray				mEvents;
-};
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//Class MoonScriptBossAI
-class MoonScriptBossAI : public MoonScriptCreatureAI
-{
-	public:
-		MoonScriptBossAI(Creature* pCreature);
-		virtual ~MoonScriptBossAI();
-
-		//Basic Interface
-		SpellDesc*		AddPhaseSpell(int32 pPhase, SpellDesc* pSpell);
-		int32			GetPhase();
-		void			SetPhase(int32 pPhase, SpellDesc* pPhaseChangeSpell = NULL);
-		void			SetEnrageInfo(SpellDesc* pSpell, int32 pTriggerMilliseconds);
-
-		//Reimplemented Events
-		virtual void	OnCombatStart(Unit* pTarget);
-		virtual void	OnCombatStop(Unit* pTarget);
-		virtual void	AIUpdate();
-
-	protected:
-		int32			mPhaseIndex;
-		PhaseSpellArray	mPhaseSpells;
-		SpellDesc*		mEnrageSpell;
-		int32			mEnrageTimerDuration;
-		int32			mEnrageTimer;
 };
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -564,4 +530,4 @@ template <class Type> inline void DeleteItem(std::vector<Type> pVector, Type pIt
 	}
 }
 
-#endif /* _INSTANCE_SCRIPTS_BASE_H_ */
+#endif MOON_SCRIPT_CREATURE_AI

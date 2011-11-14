@@ -18,8 +18,9 @@
 
 #include "StdAfx.h"
 #include "../base/EasyFunctions.h"
-#include "../base/Instance_Base.h"
-#include "../base/Base.h"
+#include "../base/MoonInstanceScript.h"
+#include "../base/MoonScriptBossAI.h"
+#include "../base/MoonScriptCreatureAI.h"
 
 #ifndef SETUP
 #define SETUP
