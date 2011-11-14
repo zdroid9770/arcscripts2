@@ -261,6 +261,7 @@ class TargetType
 #define Target_RandomPlayer TargetType( TargetGen_RandomPlayer )
 #define Target_RandomPlayerNotCurrent TargetType( TargetGen_RandomPlayer, TargetFilter_NotCurrent )
 #define Target_RandomPlayerDestination TargetType( TargetGen_RandomPlayerDestination )
+#define Target_RandomPlayerDestNotCurrent TargetType( TargetGen_RandomPlayerDestination, TargetFilter_NotCurrent)
 #define Target_RandomPlayerApplyAura TargetType( TargetGen_RandomPlayerApplyAura )
 #define Target_RandomUnit TargetType( TargetGen_RandomUnit )
 #define Target_RandomUnitNotCurrent TargetType( TargetGen_RandomUnit, TargetFilter_NotCurrent )
