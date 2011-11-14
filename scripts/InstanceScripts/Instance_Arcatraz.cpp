@@ -83,6 +83,11 @@ public:
 		}
 	}
 
+	GetInstanceData(uint32 pType, uint32 pIndex)
+	{
+		return mEncounters[pIndex];
+	}
+
 	void SetInstanceData(uint32 pType, uint32 pIndex, uint32 pData)
 	{
 		if(pIndex == WARDEN_MELLICHAR)
@@ -109,28 +114,22 @@ public:
 				}break;
 				case 4:	//third orb
 				{
-					GameObject* pGo4 = GetGameObjectByGuid(OrbGuid[1]);
+					GameObject* pGo4 = GetGameObjectByGuid(OrbGuid[2]);
 					if(pGo4 != NULL)
 						pGo4->SetState(State_Active);
 				}break;
 				case 5:	//four orb
 				{
-					GameObject* pGo5 = GetGameObjectByGuid(OrbGuid[1]);
+					GameObject* pGo5 = GetGameObjectByGuid(OrbGuid[3]);
 					if(pGo5 != NULL)
 						pGo5->SetState(State_Active);
-				}break;
-				case 6:	//last orb
-				{
-					GameObject* pGo6 = GetGameObjectByGuid(OrbGuid[1]);
-					if(pGo6 != NULL)
-						pGo6->SetState(State_Active);
 				}break;
 			}
 		}
 	}
 
 protected:
-	uint64 WardenShieldGuid, CoreSecurityAlphaGuid, CoreSecurityBetaGuid, OrbGuid[3];
+	uint64 WardenShieldGuid, CoreSecurityAlphaGuid, CoreSecurityBetaGuid, OrbGuid[3], mEncounters[1];
 };
 
 // Zereketh the UnboundAI
@@ -498,8 +497,6 @@ class WardenMellicharAI : public MoonScriptBossAI
 					Emote("Yes, O great one, right away!", Text_Yell, 11228);
 			}
 			ParentClass::AIUpdate();
-
-
 }
 	protected:
 
