@@ -20,6 +20,34 @@
  */
 
 #include "Setup.h"
+#define CN_FENRUS 4274
+#define CN_NENDOS 3927
+#define CN_VOIDWALKER 4627
+class ShadowfangKeepInstanceScript : public MoonInstanceScript
+{
+public:
+	MOONSCRIPT_INSTANCE_FACTORY_FUNCTION(ShadowfangKeepInstanceScript, MoonInstanceScript);
+	ShadowfangKeepInstanceScript(MapMgr* pMapMgr) : MoonInstanceScript(pMapMgr){}
+
+	void OnGameObjectActivate(GameObject* pGo, Player* Plr)
+	{
+		switch(pGo->GetEntry())
+		{
+			case 18900: AddLeverStateByEntry(18934); break;	//adamant lever
+			case 18901: AddLeverStateByEntry(18936); break;	//?
+			case 101811: AddLeverStateByEntry(18935); break;//?
+		}
+	}
+
+	void OnCreatureDeath(Creature* c, Unit* pUnit)
+	{
+		switch(c->GetEntry())
+		{
+			case CN_VOIDWALKER: AddGameObjectStateByEntry(18972, State_Active); break;
+			case CN_NENDOS: AddGameObjectStateByEntry(18971, State_Active); break;
+		}
+	}
+};
 
 // Commander Springvale AI
 #define CN_SPRINGVALE 4278
@@ -90,13 +118,10 @@ public:
 	}
 
 protected:
-	SpellDesc* HowlingRage1;
-	SpellDesc* HowlingRage2;
-	SpellDesc* HowlingRage3;
+	SpellDesc* HowlingRage1,* HowlingRage2,* HowlingRage3;
 };
 
 // Fenrus the Devourer AI
-#define CN_FENRUS 4274
 static Location VWSpawns[] =
 {
 	{ -154.274368f, 2177.196533f, 128.448517f, 5.760980f},
@@ -116,8 +141,8 @@ public:
 
 	void OnDied(Unit*  pKiller)
 	{
-		GetUnit()->SendChatMessageAlternateEntry(4275, CHAT_MSG_MONSTER_YELL, LANG_UNIVERSAL, "Who dares interfere with the Sons of Arugal?");
-		GetUnit()->PlaySoundToSet(5791);
+		_unit->SendChatMessageAlternateEntry(4275, CHAT_MSG_MONSTER_YELL, LANG_UNIVERSAL, "Who dares interfere with the Sons of Arugal?");
+		_unit->PlaySoundToSet(5791);
 
 		MoonScriptCreatureAI* voidwalker = NULL;
 		// Spawn 4 x Arugal's Voidwalkers
@@ -130,27 +155,6 @@ public:
 				voidwalker = NULL;
 			}
 		}
-		ParentClass::OnDied(pKiller);
-	}
-};
-
-//Arugals Voidwalkers
-#define CN_VOIDWALKER 4627
-class VoidWalkerAI : public MoonScriptCreatureAI
-{
-public:
-	MOONSCRIPT_FACTORY_FUNCTION(VoidWalkerAI, MoonScriptCreatureAI);
-	VoidWalkerAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
-	{
-		AddSpell(7154, Target_WoundedFriendly, 5, 0, 7);
-	}
-
-	void OnDied(Unit*  pKiller)
-	{
-		GameObject* pDoor = GetUnit()->GetMapMgr()->GetInterface()->GetGameObjectNearestCoords(-129.034f, 2166.16f, 129.187f, 18972);
-		if(pDoor != NULL)
-			pDoor->SetState(State_Active);
-
 		ParentClass::OnDied(pKiller);
 	}
 };
@@ -173,23 +177,6 @@ public:
 	}
 };
 
-//Wolf Master Nandos AI
-#define CN_NENDOS 3927
-class NandosAI : public MoonScriptCreatureAI
-{
-public:
-	MOONSCRIPT_FACTORY_FUNCTION(NandosAI, MoonScriptCreatureAI);
-	NandosAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature) {}
-
-	void OnDied(Unit*  pKiller)
-	{
-		GameObject*  pDoor = GetUnit()->GetMapMgr()->GetInterface()->GetGameObjectNearestCoords(-118.11f, 2161.86f, 155.678f, 18971);
-		if(pDoor!=NULL)
-			pDoor->SetState(State_Active);
-
-		ParentClass::OnDied(pKiller);
-	}
-};
 //Deathstalker Adamant
 #define CN_ADAMANT 3849
 
@@ -211,12 +198,12 @@ public:
 
 void SetupShadowfangKeep(ScriptMgr* mgr)
 {
+	mgr->register_instance_script(33, &ShadowfangKeepInstanceScript::Create);
+
 	//creature scripts
-	mgr->register_creature_script(CN_NENDOS, &NandosAI::Create);
-	mgr->register_creature_script(CN_VOIDWALKER, &VoidWalkerAI::Create);
-	mgr->register_creature_script(CN_RETHILGORE, &RETHILGOREAI::Create);
 	mgr->register_creature_script(CN_SPRINGVALE, &SpringvaleAI::Create);
 	mgr->register_creature_script(CN_BLINDWATCHER, &BlindWatcherAI::Create);
 	mgr->register_creature_script(CN_FENRUS, &FenrusAI::Create);
 	mgr->register_creature_script(CN_ARUGAL, &ArugalAI::Create);
+	mgr->register_creature_script(CN_RETHILGORE, &RETHILGOREAI::Create);
 }
