@@ -26,7 +26,7 @@ enum IccEncounters
 	ICC_SAURFANG,
 	ICC_SINDRAGOSA,
 	ICC_LICH_KING,
-    ICC_END,
+    ICC_END
 };
 
 enum IcecrownCitadel
@@ -168,30 +168,35 @@ public:
 	}
 };
 
-uint32 MarrowgarSpells[6][4]=
+//special thanks for rsa and TrinityCore for information
+enum LM_SpellEnum
+{
+	SPELL_LM_BERSERK	= 0,
+	SPELL_LM_BONE_SLICE,
+	SPELL_LM_BONESTORM,
+	SPELL_LM_BONESTORM_EFFECT,
+	SPELL_LM_BONE_SPIKE_GRAVEYARD,
+	SPELL_LM_COLDFLAME
+};
+
+uint32 MarrowgarSpells[7][4]=
 {
 	//10man 25man  10manhc 25manhc
 	{47008,	47008, 47008, 47008},	//Berserk
-	{69055, 70814, 69055, 70814},	//Bone Slice
-	{69076, 69076, 69076, 69076},	//Bone Storm
-	{69057, 70826, 69057, 70826},	//Bone Spike Graveyard
-	{69140, 69140, 69140, 69140},	//ColdFlame normal (todo: added correct other difficulties entries)
-	{72705, 72705, 72705, 72705}	//ColdFlame (bone storm phase) (todo: added correct other difficulties entries)
+	{69055, 69055, 70814, 70814},	//Bone Slice
+	{69076, 69076, 70835, 70835},	//Bone Storm
+	{69075, 69075, 69075, 69075},	//Bone Storm effect
+	{69057, 69057, 70826, 70826},	//Bone Spike Graveyard
+	{69138, 69138, 69138, 69138}	//Call ColdFlame
 };
 
-enum Spells
+enum LM_Summons
 {
-    // Bone Spike
-	NPC_BONE_SPIKE              = 38711,
-    SPELL_IMPALED               = 69065,
-    SPELL_RIDE_VEHICLE          = 46598,
-
-    // Coldflame
-	NPC_COLD_FLAME				= 36672,
-    SPELL_COLDFLAME_SUMMON      = 69147
+	MAX_COLDFLAMES_XFORM	= 20,
+    NPC_BONE_SPIKE			= 38711,
+    NPC_COLD_FLAME			= 36672
 };
 
-#define	MAX_COLDFLAMES_XFORM	20
 class LordMarrowgar : public MoonScriptCreatureAI
 {
 public:
@@ -199,190 +204,158 @@ public:
 	LordMarrowgar(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 	{
 		mInstance = GetInstanceScript();
-		pMode = _unit->GetMapMgr()->iInstanceMode;
-		if(pMode == NULL)
-			return;
 
 		Emote("This is the beginning AND the end, mortals. None may enter the master's sanctum!", Text_Yell, 16950);
 		AddEmote(Event_OnCombatStart, "The Scourge will wash over this world as a swarm of death and destruction!", Text_Yell, 16941);
 		AddEmote(Event_OnTargetDied, "More bones for the offering!", Text_Yell, 16942);
 		AddEmote(Event_OnTargetDied, "Languish in damnation!", Text_Yell, 16943);
 		AddEmote(Event_OnDied, "I see... only darkness...", Text_Yell, 16944);
-		//normal phase
-		sBoneSlice = AddSpell(MarrowgarSpells[1][pMode], Target_Current, 100.0f, 0, 1);
-		sBoneSlice->mEnabled = false;	//should be casted after 10 seconds of encounter start
-		AddSpell(MarrowgarSpells[4][pMode], Target_RandomPlayerNotCurrent, 100.0f, 0, rand()%6+6);
-		SpellDesc* sBoneSpike = AddSpell(MarrowgarSpells[3][pMode], Target_Self, 100.0f, 0, rand()%17+10);
-			sBoneSpike->AddEmote("Bound by bone!", Text_Yell, 16947);
-			sBoneSpike->AddEmote("Stick Around!", Text_Yell, 16948);
-			sBoneSpike->AddEmote("The only escape is death!", Text_Yell, 16949);
 
-		//bone storm phase
-		sBoneStorm = AddSpell(MarrowgarSpells[2][pMode], Target_Self, 0, 3, 0, 0, 0, false, "BONE STORM!", Text_Yell, 16946);
+		pMode = _unit->GetMapMgr()->iInstanceMode;
+		if(pMode == NULL)
+			return;	//spells can't be casted without this
 
-		ChargesMaxCount = 4;
-		Phase=1;
-		IsSpawnedColdFlameXForm = false;
-		SetAllowMelee(true);	//melee damage should be replaced by Bone Slice after 10 sec
-		sEnrage = AddSpell(MarrowgarSpells[0][pMode], Target_Self, 0, 0, 0, 0, 0, false, "THE MASTER'S RAGE COURSES THROUGH ME!", Text_Yell, 16945);	//10 min
+		sEnrage = AddSpell(MarrowgarSpells[SPELL_LM_BERSERK][pMode], Target_Self, 0, 0, 0, 0, 0, false, "THE MASTER'S RAGE COURSES THROUGH ME!", Text_Yell, 16945);	//10 min
+		//sBoneStorm = AddSpell(MarrowgarSpells[SPELL_LM_BONESTORM][pMode], Target_Self, 0, 3, 0, 0, 0, false, "BONE STORM!", Text_Yell, 16946, "BONE STORM!");
+		sBoneSlice = AddSpell(MarrowgarSpells[SPELL_LM_BONE_SLICE][pMode], Target_Current, 25.0f, 0, -1);
+		sColdFlame = AddSpell(MarrowgarSpells[SPELL_LM_COLDFLAME][pMode], Target_RandomPlayer, 100.0f, 0, -1);
+		//SpellDesc* sBoneSpike = AddSpell(MarrowgarSpells[SPELL_LM_BONE_SPIKE_GRAVEYARD][pMode], Target_Self, 25.0f, 0, rand()%17+10);
+			//sBoneSpike->AddEmote("Bound by bone!", Text_Yell, 16947);
+			//sBoneSpike->AddEmote("Stick Around!", Text_Yell, 16948);
+			//sBoneSpike->AddEmote("The only escape is death!", Text_Yell, 16949);
+		Reset();
+	}
+
+	void Reset()
+	{
+		Enraged = IsBoneStormPhase = SpawnXColdFlame = false;
+		SetCanMove(true);
 	}
 
 	void OnCombatStart(Unit* pUnit)
 	{
 		mInstance->SetInstanceData(Data_EncounterState, ICC_LORD_MARROWGAR, State_InProgress);
-		BoneStormTimer = AddTimer(30000);
+		//BoneStormTimer = AddTimer(30000);
 		EnrageTimer = AddTimer(600000);	//10min
-		BoneSliceTimer = AddTimer(10000);
+		Reset();
 		ParentClass::OnCombatStart(pUnit);
 	}
 
 	void OnCombatStop(Unit* mTarget)
 	{
 		mInstance->SetInstanceData(Data_EncounterState, ICC_LORD_MARROWGAR, State_NotStarted);
+		Reset();
 		ParentClass::OnCombatStop(mTarget);
-	}
-
-	void SpawnColdFlameXForm()
-	{
-        float PosX = _unit->GetPositionX();
-		float PosY = _unit->GetPositionY();
-		float PosZ = _unit->GetPositionZ();
-		float IncrValue = 5.0f;
-		uint8 ColdFlameCount = 0;
-		for(uint8 i = 0; i<MAX_COLDFLAMES_XFORM; i++)
-		{
-			SpawnCreature(NPC_COLD_FLAME, PosX+IncrValue, PosY, PosZ);
-			SpawnCreature(NPC_COLD_FLAME, PosX, PosY+IncrValue, PosZ);
-			SpawnCreature(NPC_COLD_FLAME, PosX-IncrValue, PosY, PosZ);
-			SpawnCreature(NPC_COLD_FLAME, PosX, PosY-IncrValue, PosZ);
-			IncrValue = IncrValue+5.0f;
-			ColdFlameCount++;
-		}
-		
-		if(ColdFlameCount == MAX_COLDFLAMES_XFORM)
-		{
-			RemoveAura(MarrowgarSpells[2][pMode]);	//BoneStorm
-			ResetTimer(BoneStormTimer, 30000);
-			ColdFlameCount = 0;
-		}
-	}
-
-	void RandomChargeToUnit()
-	{
-		if(!IsSpawnedColdFlameXForm && !_unit->HasAura(MarrowgarSpells[2][pMode]))
-		{
-			SpawnColdFlameXForm();
-			IsSpawnedColdFlameXForm = true;
-		}
-
-		uint8 i = 0;
-		while(i<ChargesMaxCount)
-		{
-			if(IsTimerFinished(ChargeTimer))
-			{
-				IsSpawnedColdFlameXForm = false;
-				Unit* pTarget = GetBestUnitTarget(TargetFilter_ClosestNotCurrent);
-				if(pTarget!=NULL)
-				{
-					ClearHateList();
-					_unit->GetAIInterface()->setNextTarget(pTarget);
-					_unit->GetAIInterface()->AttackReaction(pTarget, 100.0f);
-				}
-				ResetTimer(ChargeTimer, 3000);
-				i++;
-			}
-
-			if(!_unit->HasAura(MarrowgarSpells[2][pMode]))	//BoneStorm
-				i=ChargesMaxCount;
-		}
 	}
 
 	void AIUpdate()
 	{
-		switch(Phase)
+		/*
+		if(!_unit->HasAura(MarrowgarSpells[SPELL_LM_BONESTORM][pMode]) && IsBoneStormPhase)
 		{
-			case 1:	//normal phase
-			{
-				if(IsTimerFinished(BoneStormTimer))
-					Phase++;
-			}break;
-			case 2://preparation
-			{
-				SetAllowMelee(true);
-				sBoneSlice->mEnabled = false;
-				ClearHateList();
-				RemoveAllAuras();
-				SetBehavior(Behavior_Spell);
-				CastSpellNowNoScheduling(sBoneStorm);
-				_unit->SetSpeeds(RUN, 18.0f);
-				Phase++;
-			}break;
-			case 3://BONE STORM!
-			{
-				ChargeTimer = AddTimer(4000);
-				RandomChargeToUnit();
-				if(!_unit->HasAura(MarrowgarSpells[2][pMode]))	//BoneStorm
-				{
-					_unit->SetSpeeds(RUN, 8.0f);
-					SetBehavior(Behavior_Default);
-					Phase=1;
-					ResetTimer(BoneStormTimer, 30000);
-					ResetTimer(BoneSliceTimer, 10000);
-				}
-			}break;
+			RemoveTimer(ChargeTimer);
+			SetCanMove(true);
+			_unit->InterruptSpell();
+			_unit->SetSpeeds(RUN, 8.0f);
+			ClearHateList();
+			sBoneSlice->mEnabled = true;	
+			ResetTimer(BoneStormTimer, 30000);
+			SpawnXColdFlame = IsBoneStormPhase = false;
 		}
+
+		if(IsTimerFinished(BoneStormTimer))
+		{
+			_unit->InterruptSpell();
+			SetCanMove(false);	//he moves only on charge
+			_unit->SetSpeeds(RUN, 18.0f);
+			sBoneSlice->mEnabled = false;
+			ClearHateList();
+			CastSpellNowNoScheduling(sBoneStorm);
+			ChargeTimer = AddTimer(4000);
+			IsBoneStormPhase = true;
+			SpawnXColdFlame = true;
+		}
+
+		if(IsTimerFinished(ChargeTimer) && SpawnXColdFlame)
+		{
+			Unit* pTarget = GetBestUnitTarget(TargetFilter_ClosestNotCurrent);
+			if(pTarget!=NULL)
+			{
+				ClearHateList();
+				_unit->GetAIInterface()->setNextTarget(pTarget);
+				_unit->GetAIInterface()->AttackReaction(pTarget, 100.0f);
+				MoveTo(pTarget->GetPositionX(), pTarget->GetPositionY(), pTarget->GetPositionZ(), true);
+
+				//Spawn cold flame x form
+				float PosX = _unit->GetPositionX();
+				float PosY = _unit->GetPositionY();
+				float PosZ = _unit->GetPositionZ();
+				float IncrValue = 5.0f;
+				uint8 ColdFlameCount = 0;
+				for(uint8 i = 0; i<MAX_COLDFLAMES_XFORM; i++)
+				{
+					SpawnCreature(NPC_COLD_FLAME, PosX+IncrValue, PosY, PosZ);
+					SpawnCreature(NPC_COLD_FLAME, PosX, PosY+IncrValue, PosZ);
+					SpawnCreature(NPC_COLD_FLAME, PosX-IncrValue, PosY, PosZ);
+					SpawnCreature(NPC_COLD_FLAME, PosX, PosY-IncrValue, PosZ);
+					IncrValue = IncrValue+5.0f;
+					ColdFlameCount++;
+				}
+			}
+			ResetTimer(ChargeTimer, 3000);
+		}*/
 
 		//ENRAGE!
-		if(IsTimerFinished(EnrageTimer))
+		if(IsTimerFinished(EnrageTimer) && !Enraged)
 		{
-			RemoveAllAuras();
 			CastSpellNowNoScheduling(sEnrage);
-		}
-
-		if(IsTimerFinished(BoneSliceTimer) && !sBoneSlice->mEnabled)
-		{
-			SetAllowMelee(false);
-			CastSpellNowNoScheduling(sBoneSlice);
-			sBoneSlice->mEnabled = true;
+			Enraged = true;
 		}
 
 		ParentClass::AIUpdate();
 	}
 
 protected:
-	SpellDesc *sBoneStorm, *sBoneStormStrike, *sEnrage, *sBoneSlice;
-	uint32 EnrageTimer, BoneStormTimer, ChargeTimer, BoneSliceTimer;
+	SpellDesc *sBoneStorm, *sEnrage, *sBoneSlice, *sColdFlame;
+	int32 EnrageTimer, BoneStormTimer, ChargeTimer;
 	uint8 Phase, ChargesMaxCount, pMode;
-    bool BoneStorm, IsSpawnedColdFlameXForm;
+    bool IsBoneStormPhase, SpawnXColdFlame, Enraged;
 	MoonInstanceScript* mInstance;
+};
+
+enum ColdFlameSpells
+{
+    SPELL_COLD_FLAME_0	= 69145,
+    SPELL_COLD_FLAME_1	= 69147
 };
 
 class ColdFlame : public MoonScriptCreatureAI
 {
 public:
 	MOONSCRIPT_FACTORY_FUNCTION(ColdFlame, MoonScriptCreatureAI);
-	ColdFlame(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
-	{}
+	ColdFlame(Creature* pCreature) : MoonScriptCreatureAI(pCreature){}
 
-	void AIUpdate()
+	void OnLoad()
 	{
-		_unit->CastSpell(_unit, SPELL_COLDFLAME_SUMMON, true);
 		_unit->Despawn(5000, 0);
-		ParentClass::AIUpdate();
+		ApplyAura(SPELL_COLD_FLAME_0);
 	}
 };
 
 bool BoneStorm(uint32 i, Spell* s)
 {
-	if(s->u_caster == NULL)
+/*	comented temporally
+if(s->u_caster == NULL)
 		return true;
 
 	SpellEntry* pSpell;
 	if(s)
 		pSpell = dbcSpell.LookupEntry((uint32)s);
 
-	s->u_caster->HandleProc(PROC_ON_SPELL_HIT, s->u_caster, pSpell, false, s->u_caster->GetSpellDidHitResult(s->u_caster, s->GetType(), s->GetProto()) / 10.0f);
-
+	uint32 Dmg = s->u_caster->GetSpellDidHitResult(s->u_caster, s->GetType(), s->GetProto());
+	Dmg += Dmg/10.0f;
+	s->u_caster->HandleProc(PROC_ON_SPELL_HIT, s->u_caster, pSpell, false, Dmg);
+*/
 	return true;
 };
 
