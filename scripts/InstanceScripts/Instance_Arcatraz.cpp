@@ -83,7 +83,7 @@ public:
 		}
 	}
 
-	GetInstanceData(uint32 pType, uint32 pIndex)
+	uint32 GetInstanceData(uint32 pType, uint32 pIndex)
 	{
 		return mEncounters[pIndex];
 	}

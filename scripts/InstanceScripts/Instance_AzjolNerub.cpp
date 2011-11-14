@@ -76,9 +76,9 @@ protected:
 
 //boss Hadronox
 #define BOSS_HADRONOX 28921
-#define HADRONOX_WEBGRAB HeroicInt(59421, 53406);
-#define HADRONOX_PIERCEARMOR HeroicInt(59417, 53418);
-#define HADRONOX_LEECHPOISON HeroicInt(59419, 53030);
+#define HADRONOX_WEBGRAB HeroicInt(59421, 53406)
+#define HADRONOX_PIERCEARMOR HeroicInt(59417, 53418)
+#define HADRONOX_LEECHPOISON HeroicInt(59419, 53030)
 #define HADRONOX_ACIDCLOUD 53400
 
 class HadronoxAI : public MoonScriptCreatureAI
@@ -87,17 +87,16 @@ public:
 	MOONSCRIPT_FACTORY_FUNCTION(HadronoxAI, MoonScriptCreatureAI);
 	HadronoxAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 	{
-		AddSpell(HADRONOX_WEBGRAB, Target_RandomPlayer, 22, 0, 14, 0, 0);
-		AddSpell(HADRONOX_LEECHPOISON, Target_Self, 14, 0, 25, 0, 20);
-		AddSpell(HADRONOX_ACIDCLOUD, Target_RandomPlayer, 18, 0, 20, 0, 60);
-		AddSpell(HADRONOX_PIERCEARMOR, Target_ClosestPlayer, 20, 0, 5, 0, 0);
+		AddSpell(HADRONOX_WEBGRAB, Target_RandomPlayer, 22.0f, 0, 14);
+		AddSpell(HADRONOX_LEECHPOISON, Target_Self, 14.0f, 0, 25, 0, 20);
+		AddSpell(HADRONOX_ACIDCLOUD, Target_RandomPlayer, 18.0f, 0, 20, 0, 60);
+		AddSpell(HADRONOX_PIERCEARMOR, Target_ClosestPlayer, 20.0f, 0, 5);
 	}
 
 	void OnTargetDied(Unit* pTarget)
 	{
-		if(pTarget!=NULL && pTarget->HasAura(HADRONOX_LEECHPOISON))
-			if(_unit->IsAlive())
-				_unit->SetHealthPct(_unit->GetHealthPct()+10.0f);
+		if(pTarget!=NULL && pTarget->HasAura(HADRONOX_LEECHPOISON) && IsAlive())
+			_unit->SetHealthPct(_unit->GetHealthPct()+10.0f);
 
 		ParentClass::OnTargetDied(pTarget);
 	}
