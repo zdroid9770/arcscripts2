@@ -217,11 +217,11 @@ public:
 #define SLEEP			31298	// 12098
 #define BERSERK			26662
 
-class AnetheronAI : public MoonScriptCreatureAI
+class AnetheronAI : public MoonScriptBossAI
 {
 public:
-	MOONSCRIPT_FACTORY_FUNCTION(AnetheronAI, MoonScriptCreatureAI);
-	AnetheronAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
+	MOONSCRIPT_FACTORY_FUNCTION(AnetheronAI, MoonScriptBossAI);
+	AnetheronAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
 	{
 		AddEmote(Event_OnCombatStart, "You are defenders of a doomed world. Flee here and perhaps you will prolong your pathetic lives!", Text_Yell, 10977);
 		AddEmote(Event_OnTargetDied, "Your hopes are lost.", Text_Yell, 10981);
@@ -233,23 +233,9 @@ public:
 		AddSpell(VAMPIRIC_AURA, Target_Self, 8.0f, 0, 8);
 		AddSpell(INFERNO, Target_Self, 6.0f, 3, rand()%30+50, 0, 60.0f, false, "Hit he, no time for a slow death", Text_Yell, 11039);
 		AddSpell(VAMPIRIC_AURA, Target_RandomPlayer, 5.0f, 0, 7, 0, 30.0f);
+		SpellDesc* pEnrageSpell = AddSpell(BERSERK, Target_Self, 0, 0, 0);
+		SetEnrageInfo(pEnrageSpell, 600*1000);
 	}
-
-	void OnCombatStart(Unit* mTarget)
-	{
-		EnrageTimer = AddTimer(600*1000);
-		ParentClass::OnCombatStart(mTarget);
-	}
-
-	void AIUpdate()
-	{
-		if(IsTimerFinished(EnrageTimer))
-			ApplyAura(BERSERK);
-		ParentClass::AIUpdate();
-	}
-
-protected:
-	int32 EnrageTimer;
 };
 
 // KazrogalAI

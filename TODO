@@ -16,12 +16,14 @@ Recruitmen is open <url> (temporally forums are not set)
 - 3.1 Ulduar raid, i started some work on my pc, done Assembly of iron and Fyera, plans on yoggi and general, flame levi wont be hard either
 
 New features:
-	* Add DoScriptText, LoadScriptText
-	* Add waypoints loads
-	* Add Gossip loads
-	* Add new config
+	* Add DoScriptText, LoadScriptText (in progress)
+	* Add waypoints loads (not in progress)
+	* Add Gossip loads	(not in progress)
+	* MoonScriptEscortAI (in progress)
 
 General:
-	* Add event's scripts handling
-	* Back server status plugin compile
+	* Get back serverstatusplugin and lua builds
 	* Rewrite signup php script
+	* Add base documentation
+	* Drop CreatureAIScript use from scripts
+	* Update timer's functions
