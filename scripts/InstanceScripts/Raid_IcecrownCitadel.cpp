@@ -250,22 +250,22 @@ public:
 
 	void OnCombatStart(Unit* pUnit)
 	{
-		if(mInstance!=NULL)
-			mInstance->SetInstanceData(Data_EncounterState, ICC_LORD_MARROWGAR, State_InProgress);
-
 		BoneSliceTimer = AddTimer(10*SEC_IN_MS);
 		BoneStormTimer = AddTimer(30*SEC_IN_MS);
 
 		ParentClass::OnCombatStart(pUnit);
+
+		if(mInstance!=NULL)
+			mInstance->SetInstanceData(Data_EncounterState, ICC_LORD_MARROWGAR, State_InProgress);
 	}
 
 	void OnCombatStop(Unit* mTarget)
 	{
-		if(mInstance!=NULL)
-			mInstance->SetInstanceData(Data_EncounterState, ICC_LORD_MARROWGAR, State_NotStarted);
-
 		Reset();
 		ParentClass::OnCombatStop(mTarget);
+
+		if(mInstance!=NULL)
+			mInstance->SetInstanceData(Data_EncounterState, ICC_LORD_MARROWGAR, State_NotStarted);
 	}
 
 	void AIUpdate()
