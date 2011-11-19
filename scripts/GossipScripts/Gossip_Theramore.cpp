@@ -48,10 +48,15 @@ class CaptainGarranVimes_Gossip : public Arcemu::Gossip::Script
 	public:
 		void OnHello(Object* pObject, Player* plr)
 		{
-			Arcemu::Gossip::Menu::SendQuickMenu(pObject->GetGUID(), 1793, plr, 1, Arcemu::Gossip::ICON_CHAT, "What have you heard of the Shady Rest Inn?");
+			Arcemu::Gossip::Menu menu(pObject->GetGUID(), 1793, 0);
+			sQuestMgr.FillQuestMenu(TO_CREATURE(pObject), plr, menu);
+			if(plr->GetQuestLogForEntry(11123)!=NULL)
+				menu.AddItem(Arcemu::Gossip::ICON_CHAT, "What have you heard of the Shady Rest Inn?", 1794);
+
+			menu.Send(plr);		
 		}
 
-		void GossipSelectOption(Object* pObject, Player* plr, uint32 Id, uint32 IntId, const char* Code)
+		void OnSelectOption(Object* pObject, Player* plr, uint32 Id, const char* Code)
 		{
 			Arcemu::Gossip::Menu::SendSimpleMenu(pObject->GetGUID(), 1794, plr);
 		}
