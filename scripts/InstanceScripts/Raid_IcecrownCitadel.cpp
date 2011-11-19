@@ -241,7 +241,6 @@ public:
 
 	void Reset()
 	{
-		Enraged = false;
 		BoneStormPhase = false;
 		sBoneSlice->mEnabled = false;	//will eanbled after 10 sec and it will replace melee attacks ONLY in normal phase
 		SetCanMove(true);
@@ -326,7 +325,7 @@ protected:
 	SpellDesc *sBoneStorm, *sBoneSlice;
 	int32 BoneStormTimer, BoneSliceTimer, ChargeTimer;
 	uint8 pMode;
-    bool Enraged, BoneStormPhase;
+    bool BoneStormPhase;
 	MoonInstanceScript* mInstance;
 };
 
