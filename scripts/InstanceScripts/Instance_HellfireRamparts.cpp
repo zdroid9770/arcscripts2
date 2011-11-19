@@ -21,78 +21,60 @@
 
 #include "Setup.h"
 
-/************************************************************************/
-/* Instance_HellfireRamparts.cpp Script		                            */
-/************************************************************************/
-
-/*****************************/
-/*                           */
-/*         Boss AIs          */
-/*                           */
-/*****************************/
-
 // Watchkeeper GargolmarAI
 // "Do you smell that? Fresh meat has somehow breached our citadel. Be wary of any intruders." should be on some areatrigger
 
 #define CN_WATCHKEEPER_GARGOLMAR 17306
 
 #define SURGE			34645
-#define MORTAL_WOUND	30641
-#define MORTAL_WOUND_H	36814
+#define MORTAL_WOUND	HeroicInt(36814, 30641)
 #define	OVERPOWER		32154
 #define RETALIATION		22857
 
 class WatchkeeperGargolmarAI : public MoonScriptBossAI
 {
-		MOONSCRIPT_FACTORY_FUNCTION(WatchkeeperGargolmarAI, MoonScriptBossAI);
-		WatchkeeperGargolmarAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
+public:
+	MOONSCRIPT_FACTORY_FUNCTION(WatchkeeperGargolmarAI, MoonScriptBossAI);
+	WatchkeeperGargolmarAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
+	{
+		AddSpell(SURGE, Target_RandomUnit, 20.0f, 0, 15, 5, 40, false, "Back off, pup!", Text_Yell, 10330);
+		AddSpell(OVERPOWER, Target_Current, 10.0f, 0, 5);
+		mRetaliation = AddSpell(RETALIATION, Target_Self, 0, 0, 0);
+		AddSpell(MORTAL_WOUND, Target_Current, 15.0f, 0, 12);
+
+		AddEmote(Event_OnCombatStart, "What do we have here? ...", Text_Yell, 10331);
+		AddEmote(Event_OnCombatStart, "Heh... this may hurt a little.", Text_Yell, 10332);
+		AddEmote(Event_OnCombatStart, "I'm gonna enjoy this!", Text_Yell, 10333);
+		AddEmote(Event_OnTargetDied, "Say farewell!", Text_Yell, 10334);
+		AddEmote(Event_OnTargetDied, "Much too easy!", Text_Yell, 10335);
+		AddEmote(Event_OnDied, "", Text_Yell, 10336);
+
+		mCalledForHelp = 0;
+		_retaliation = false;
+	}
+
+	void AIUpdate()
+	{
+		if(_unit->GetHealthPct() <= 40.0f && !mCalledForHelp)
 		{
-			AddSpell(SURGE, Target_RandomUnit, 20, 0, 15, 5, 40, false, "Back off, pup!", Text_Yell, 10330);
-			AddSpell(OVERPOWER, Target_Current, 10, 0, 5);
-			mRetaliation = AddSpell(RETALIATION, Target_Self, 0, 0, 0);
+			Emote("Heal me! QUICKLY!", Text_Yell, 10329);
+			mCalledForHelp = true;
+		}
 
-			if(IsHeroic())
-				AddSpell(MORTAL_WOUND_H, Target_Current, 15, 0, 12);
-			else
-				AddSpell(MORTAL_WOUND, Target_Current, 15, 0, 12);
-
-			AddEmote(Event_OnCombatStart, "What do we have here? ...", Text_Yell, 10331);
-			AddEmote(Event_OnCombatStart, "Heh... this may hurt a little.", Text_Yell, 10332);
-			AddEmote(Event_OnCombatStart, "I'm gonna enjoy this!", Text_Yell, 10333);
-			AddEmote(Event_OnTargetDied, "Say farewell!", Text_Yell, 10334);
-			AddEmote(Event_OnTargetDied, "Much too easy!", Text_Yell, 10335);
-
-			mCalledForHelp = 0;
-			_retaliation = false;
-		};
-
-		void OnDied(Unit* mKiller)
+		if(_unit->GetHealthPct() <= 20.0f && !_retaliation)
 		{
-			_unit->PlaySoundToSet(10336);
-			ParentClass::OnDied(mKiller);
-		};
+			_retaliation = true;
+			_unit->setAttackTimer(1500, false);
+			CastSpellNowNoScheduling(mRetaliation);
+		}
 
-		void AIUpdate()
-		{
-			if(_unit->GetHealthPct() <= 40 && !mCalledForHelp)
-			{
-				Emote("Heal me! QUICKLY!", Text_Yell, 10329);
-				mCalledForHelp = true;
-			};
+		ParentClass::AIUpdate();
+	}
 
-			if(_unit->GetHealthPct() <= 20 && !_retaliation)
-			{
-				_retaliation = true;
-				_unit->setAttackTimer(1500, false);
-				CastSpellNowNoScheduling(mRetaliation);
-			};
-
-			ParentClass::AIUpdate();
-		};
-
-		bool		mCalledForHelp;
-		bool		_retaliation;
-		SpellDesc*	mRetaliation;
+protected:
+	bool		mCalledForHelp;
+	bool		_retaliation;
+	SpellDesc*	mRetaliation;
 };
 
 
@@ -100,104 +82,49 @@ class WatchkeeperGargolmarAI : public MoonScriptBossAI
 #define CN_OMOR_THE_UNSCARRED						17308
 #define OMOR_THE_UNSCARRED_DEMONIC_SHIELD			31901
 #define OMOR_THE_UNSCARRED_SUMMON_FIENDISH_HOUND	30707
-#define OMOR_THE_UNSCARRED_SHADOW_WHIP				30638
-#define OMOR_THE_UNSCARRED_SHADOW_BOLT				30686
-#define OMOR_THE_UNSCARRED_SHADOW_BOLT2				39297
+#define OMOR_THE_UNSCARRED_SHADOW_BOLT				HeroicInt(39297, 30686)		
 #define OMOR_THE_UNSCARRED_TREACHEROUS_AURA			30695
 #define OMOR_THE_UNSCARRED_BANE_OF_TREACHERY		37566
 
 class OmorTheUnscarredAI : public MoonScriptCreatureAI
 {
-	public:
-		MOONSCRIPT_FACTORY_FUNCTION(OmorTheUnscarredAI, MoonScriptCreatureAI);
-		OmorTheUnscarredAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
-		{
-			SpellDesc* pShield = AddSpell(OMOR_THE_UNSCARRED_DEMONIC_SHIELD, Target_Self, 30, 0, 25);
-			pShield->mEnabled = false;
-			SpellDesc* pSummon = AddSpell(OMOR_THE_UNSCARRED_SUMMON_FIENDISH_HOUND, Target_Self, 8, 1, 20);
-			pSummon->AddEmote("Achor-she-ki! Feast my pet! Eat your fill!", Text_Yell, 10277);
-			AddSpell(OMOR_THE_UNSCARRED_SHADOW_WHIP, Target_RandomPlayer, 10, 0, 30);
-			if(_unit->GetMapMgr()->iInstanceMode != MODE_HEROIC)
-			{
-				AddSpell(OMOR_THE_UNSCARRED_SHADOW_BOLT, Target_RandomPlayer, 8, 3, 15, 10, 60, true);
-				SpellDesc* pAura = AddSpell(OMOR_THE_UNSCARRED_TREACHEROUS_AURA, Target_RandomPlayer, 8, 2, 35, 0, 60, true);
-				pAura->AddEmote("A-Kreesh!", Text_Yell, 10278);
-			}
-			else
-			{
-				AddSpell(OMOR_THE_UNSCARRED_SHADOW_BOLT2, Target_RandomPlayer, 8, 3, 15, 10, 60, true);
-				SpellDesc* pAura = AddSpell(OMOR_THE_UNSCARRED_BANE_OF_TREACHERY, Target_RandomPlayer, 8, 2, 35, 0, 60, true);
-				pAura->AddEmote("A-Kreesh!", Text_Yell, 10278);
-			}
+public:
+	MOONSCRIPT_FACTORY_FUNCTION(OmorTheUnscarredAI, MoonScriptCreatureAI);
+	OmorTheUnscarredAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
+	{
+		AddEmote(Event_OnCombatStart, "I will not be defeated!", Text_Yell, 10279);
+		AddEmote(Event_OnCombatStart, "You dare stand against me?", Text_Yell, 10280);	// corrections
+		AddEmote(Event_OnCombatStart, "Your incidents will be your death!", Text_Yell, 10281);
+		AddEmote(Event_OnTargetDied, "Die weakling!", Text_Yell, 10282);
+		AddEmote(Event_OnDied, "It is... not over.", Text_Yell, 10284);
 
-			AddEmote(Event_OnCombatStart, "I will not be defeated!", Text_Yell, 10279);
-			AddEmote(Event_OnCombatStart, "You dare stand against me?", Text_Yell, 10280);	// corrections
-			AddEmote(Event_OnCombatStart, "Your incidents will be your death!", Text_Yell, 10281);
-			AddEmote(Event_OnTargetDied, "Die weakling!", Text_Yell, 10282);
-			AddEmote(Event_OnDied, "It is... not over.", Text_Yell, 10284);
-		}
+		pShield = AddSpell(OMOR_THE_UNSCARRED_DEMONIC_SHIELD, Target_Self, 30.0f, 0, 25);
+		pShield->mEnabled = false;
 
-		void OnCombatStart(Unit* pTarget)
-		{
-			ParentClass::OnCombatStart(pTarget);
-			SetCanMove(false);
-		}
+		SpellDesc* pSummon = AddSpell(OMOR_THE_UNSCARRED_SUMMON_FIENDISH_HOUND, Target_Self, 8.0f, 1, 20, 0, 5.0f, true, "Achor-she-ki! Feast my pet! Eat your fill!", Text_Yell, 10277);
+		AddSpell(OMOR_THE_UNSCARRED_SHADOW_BOLT, Target_RandomPlayer, 8.0f, 3, 15, 10, 60, true);
+		AddSpell(HeroicInt(OMOR_THE_UNSCARRED_BANE_OF_TREACHERY, OMOR_THE_UNSCARRED_TREACHEROUS_AURA), Target_RandomPlayer, 8.0f, 2, 35, 0, 60, true, "A-Kreesh!", Text_Yell, 10278);
+		SetCanMove(false);
+	}
 
-		void OnCombatStop(Unit* pTarget)
-		{
-			ParentClass::OnCombatStop(pTarget);
-			if(IsAlive())
-			{
-				Emote("I am victorious!", Text_Yell, 10283);
-			}
-		}
+	void OnCombatStop(Unit* pTarget)
+	{
+		if(IsAlive())
+			Emote("I am victorious!", Text_Yell, 10283);
 
-		void AIUpdate()
-		{
-			SpellDesc* pShield = FindSpellById(OMOR_THE_UNSCARRED_DEMONIC_SHIELD);
-			if(GetHealthPercent() <= 20 && pShield != NULL && !pShield->mEnabled)
-			{
-				pShield->mEnabled = true;
-			}
+		ParentClass::OnCombatStop(pTarget);
+	}
 
-			Unit* pTarget = _unit->GetAIInterface()->getNextTarget();
-			if(pTarget != NULL)
-			{
-				if(GetRangeToUnit(pTarget) > 10.0f)
-				{
-					pTarget = GetBestPlayerTarget(TargetFilter_Closest);
-					if(pTarget != NULL)
-					{
-						if(GetRangeToUnit(pTarget) > 10.0f)
-						{
-							pTarget = NULL;
-						}
-						else
-						{
-							ClearHateList();
-							_unit->GetAIInterface()->AttackReaction(pTarget, 500);
-							_unit->GetAIInterface()->setNextTarget(pTarget);
-						}
-					}
-					else
-						return;
-				}
+	void AIUpdate()
+	{
+		if(GetHealthPercent() <= 20.0f && !pShield->mEnabled)
+			pShield->mEnabled = true;
 
-				if(pTarget == NULL)
-				{
-					SpellDesc* pWhip = FindSpellById(OMOR_THE_UNSCARRED_SHADOW_WHIP);	// used for now
-					if(pWhip != NULL)
-					{
-						pWhip->mLastCastTime = 0;
-						CastSpellNowNoScheduling(pWhip);
-						return;
-					}
-				}
-			}
+		ParentClass::AIUpdate();
+	}
 
-			ParentClass::AIUpdate();
-			SetCanMove(false);
-		}
+protected:
+	SpellDesc* pShield;
 };
 
 void SetupHellfireRamparts(ScriptMgr* mgr)

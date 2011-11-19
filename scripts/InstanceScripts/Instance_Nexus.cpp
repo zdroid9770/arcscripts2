@@ -64,7 +64,7 @@ public:
 		AddEmote(Event_OnCombatStart, "Chaos beckons.", Text_Yell, 13186);
 
 		mInstance = GetInstanceScript();
-		AddSpell(SPARK, Target_RandomPlayer, 80, 0, 3);
+		AddSpell(SPARK, Target_RandomPlayer, 80.0f, 0, 3);
 
 		mSummon = 0;
 	}
@@ -73,7 +73,7 @@ public:
 	{
 		mSummon = 0;
 		mRift = false;
-		mSummonTimer = AddTimer(IsHeroic() ? 14000 : 18000);   // check heroic
+		mSummonTimer = AddTimer(HeroicInt(14000, 18000));
 
 		if(mInstance)
 			mInstance->SetInstanceData(Data_EncounterState, NEXUS_ANOMALUS, State_InProgress);
@@ -83,7 +83,7 @@ public:
 
 	void AIUpdate()
 	{
-		if((GetHealthPercent() <= 50 && mSummon == 0))
+		if((GetHealthPercent() <= 50.0f && mSummon == 0))
 			mSummon += 1;
 
 		if(mSummon == 1)
@@ -155,55 +155,54 @@ private:
 	MoonInstanceScript*		mInstance;
 };
 
-class ChaoticRiftAI : public MoonScriptBossAI
+class ChaoticRiftAI : public MoonScriptCreatureAI
 {
-	public:
-		MOONSCRIPT_FACTORY_FUNCTION(ChaoticRiftAI, MoonScriptBossAI);
-		ChaoticRiftAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
-		{
-			_unit->GetAIInterface()->SetAllowedToEnterCombat(false);
-			AddSpell(SUMMON_MANA_WRAITH, Target_Self, 30, 0, dbcSpell.LookupEntryForced(SUMMON_MANA_WRAITH)->RecoveryTime);
-			AddSpell(CHAOTIC_ENERGY_BURST, Target_RandomPlayer, 30, 0, dbcSpell.LookupEntryForced(CHAOTIC_ENERGY_BURST)->RecoveryTime);
-		}
+public:
+	MOONSCRIPT_FACTORY_FUNCTION(ChaoticRiftAI, MoonScriptCreatureAI);
+	ChaoticRiftAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
+	{
+		SetCanEnterCombat(false);
+		AddSpell(SUMMON_MANA_WRAITH, Target_Self, 30, 0, dbcSpell.LookupEntryForced(SUMMON_MANA_WRAITH)->RecoveryTime);
+		AddSpell(CHAOTIC_ENERGY_BURST, Target_RandomPlayer, 30, 0, dbcSpell.LookupEntryForced(CHAOTIC_ENERGY_BURST)->RecoveryTime);
+	}
 
-		void OnLoad()
-		{
-			ApplyAura(CHAOTIC_RIFT_AURA);
-			Despawn(40000, 0);
-			ParentClass::OnLoad();
-		}
+	void OnLoad()
+	{
+		ApplyAura(CHAOTIC_RIFT_AURA);
+		Despawn(40000, 0);
+		ParentClass::OnLoad();
+	}
 
-		void OnDied(Unit*  mKiller)
-		{
-			Despawn(2000, 0);
-			ParentClass::OnDied(mKiller);
-		}
+	void OnDied(Unit*  mKiller)
+	{
+		Despawn(2000, 0);
+		ParentClass::OnDied(mKiller);
+	}
 
-		void OnCombatStop(Unit* pTarget)
-		{
-			Despawn(2000, 0);
-			ParentClass::OnCombatStop(pTarget);
-		}
+	void OnCombatStop(Unit* pTarget)
+	{
+		Despawn(2000, 0);
+		ParentClass::OnCombatStop(pTarget);
+	}
 };
 
-class CraziedManaWrathAI : public MoonScriptBossAI
+class CraziedManaWrathAI : public MoonScriptCreatureAI
 {
-	public:
-		MOONSCRIPT_FACTORY_FUNCTION(CraziedManaWrathAI, MoonScriptBossAI);
-		CraziedManaWrathAI(Creature* pCreature) : MoonScriptBossAI(pCreature) {};
+public:
+	MOONSCRIPT_FACTORY_FUNCTION(CraziedManaWrathAI, MoonScriptCreatureAI);
+	CraziedManaWrathAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature) {};
 
-		void OnCombatStop(Unit* pTarget)
-		{
-			Despawn(2000, 0);
-			ParentClass::OnCombatStop(pTarget);
-		}
+	void OnCombatStop(Unit* pTarget)
+	{
+		Despawn(2000, 0);
+		ParentClass::OnCombatStop(pTarget);
+	}
 
-		void OnDied(Unit*  mKiller)
-		{
-			Despawn(2000, 0);
-			ParentClass::OnDied(mKiller);
-		}
-
+	void OnDied(Unit*  mKiller)
+	{
+		Despawn(2000, 0);
+		ParentClass::OnDied(mKiller);
+	}
 };
 
 
@@ -247,12 +246,11 @@ public:
 	TelestraBossAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
 	{
 		mInstance = GetInstanceScript();
-			AddSpell(ICE_NOVA, Target_Self, 25, 2.0, 15);
-			AddSpell(FIREBOMB, Target_RandomPlayer, 35, 1.5, 5);
-			AddSpell(GRAVITY_WELL, Target_Self, 15, 0.5, 20);
+		AddSpell(ICE_NOVA, Target_Self, 25.0f, 2.0, 15);
+		AddSpell(FIREBOMB, Target_RandomPlayer, 35.0f, 1.5, 5);
+		AddSpell(GRAVITY_WELL, Target_Self, 15.0f, 0.5, 20);
 
 		mAddCount = 0;
-		mPhaseRepeat = 2;
 
 		AddEmote(Event_OnCombatStart, "You know what they say about curiosity. ", Text_Yell, 13319);
 		AddEmote(Event_OnDied, "Damn the... luck.", Text_Yell, 13320);
@@ -262,7 +260,7 @@ public:
 
 	void AIUpdate()
 	{
-		if(GetPhase() == 1 && GetHealthPercent() <= (mPhaseRepeat * 25))
+		if(GetPhase() == 1 && GetHealthPercent() <= 25.0f)
 		{
 			switch(rand() % 2)
 			{
@@ -303,8 +301,7 @@ public:
 			Emote("Now to finish the job!", Text_Yell, 13323);
 			RemoveAura(60191);
 			SetCanMove(true);
-			mPhaseRepeat = 1;
-			SetPhase(mHeroic  ? 1 : 3);   //3 disables p2
+			SetPhase(HeroicInt(1, 3));   //3 disables p2
 		}
 
 		ParentClass::AIUpdate();
@@ -355,19 +352,18 @@ public:
 private:
 	Creature*   mAddArray[3];
 	bool        mHeroic;
-	int32       mPhaseRepeat;
 	int32       mAddCount;
 	MoonInstanceScript* mInstance;
 };
 
-class TelestraFireAI : public MoonScriptBossAI
+class TelestraFireAI : public MoonScriptCreatureAI
 {
 public:
-	MOONSCRIPT_FACTORY_FUNCTION(TelestraFireAI, MoonScriptBossAI);
-	TelestraFireAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
+	MOONSCRIPT_FACTORY_FUNCTION(TelestraFireAI, MoonScriptCreatureAI);
+	TelestraFireAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 	{
-		AddSpell(FIRE_BLAST, Target_RandomPlayer, 30, 0, 14);
-		AddSpell(SCORCH, Target_Current, 100, 1, 3);
+		AddSpell(FIRE_BLAST, Target_RandomPlayer, 30.0f, 0, 14);
+		AddSpell(SCORCH, Target_Current, 100.0f, 1, 3);
 	}
 
 	void OnLoad()
@@ -377,14 +373,14 @@ public:
 	}
 };
 
-class TelestraFrostAI : public MoonScriptBossAI
+class TelestraFrostAI : public MoonScriptCreatureAI
 {
 public:
-	MOONSCRIPT_FACTORY_FUNCTION(TelestraFrostAI, MoonScriptBossAI);
-	TelestraFrostAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
+	MOONSCRIPT_FACTORY_FUNCTION(TelestraFrostAI, MoonScriptCreatureAI);
+	TelestraFrostAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 	{
-		AddSpell(BLIZZARD, Target_RandomPlayerDestination, 20, 0, 20);
-		AddSpell(ICE_BARB, Target_RandomPlayer, 25, 0.5, 6);
+		AddSpell(BLIZZARD, Target_RandomPlayerDestination, 20.0f, 0, 20);
+		AddSpell(ICE_BARB, Target_RandomPlayer, 25.0f, 0.5, 6);
 	}
 
 	void OnLoad()
@@ -394,14 +390,14 @@ public:
 	}
 };
 
-class TelestraArcaneAI : public MoonScriptBossAI
+class TelestraArcaneAI : public MoonScriptCreatureAI
 {
 public:
-	MOONSCRIPT_FACTORY_FUNCTION(TelestraArcaneAI, MoonScriptBossAI);
-	TelestraArcaneAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
+	MOONSCRIPT_FACTORY_FUNCTION(TelestraArcaneAI, MoonScriptCreatureAI);
+	TelestraArcaneAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 	{
-		AddSpell(TIME_STOP, Target_Self, 30, 1.5, 30);
-		AddSpell(CRITTER, Target_RandomPlayer, 25, 0, 20);
+		AddSpell(TIME_STOP, Target_Self, 30.0f, 1.5, 30);
+		AddSpell(CRITTER, Target_RandomPlayer, 25.0f, 0, 20);
 	}
 
 	void OnLoad()
@@ -430,19 +426,19 @@ public:
 #define SPELL_CRYSTAL_SPIKE_VISUAL	50442
 #define SPELL_CRYSTAL_SPIKE			HeroicInt(57067, 47944)	
 
-class OrmorokAI : public MoonScriptBossAI
+class OrmorokAI : public MoonScriptCreatureAI
 {
 public:
-	MOONSCRIPT_FACTORY_FUNCTION(OrmorokAI, MoonScriptBossAI);
-	OrmorokAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
+	MOONSCRIPT_FACTORY_FUNCTION(OrmorokAI, MoonScriptCreatureAI);
+	OrmorokAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 	{
 		AddEmote(Event_OnCombatStart, "Noo!", Text_Yell, 13328);
 		AddEmote(Event_OnDied, "Aaggh!", Text_Yell, 13330);
 
 		mInstance = GetInstanceScript();
-		AddSpell(TRAMPLE, Target_Current, 30, 0, 9);
-		AddSpell(SPELL_REFLECTION, Target_Self, 35, 2.0f, 15);
-		AddSpell(CRYSTAL_SPIKES, Target_Self, 25, 0, 12, 0, 0, false, "Bleed!", Text_Yell, 13332);
+		AddSpell(TRAMPLE, Target_Current, 30.0f, 0, 9);
+		AddSpell(SPELL_REFLECTION, Target_Self, 35.0f, 2.0f, 15);
+		AddSpell(CRYSTAL_SPIKES, Target_Self, 25.0f, 0, 12, 0, 0, false, "Bleed!", Text_Yell, 13332);
 
 		mEnraged = false;
 	}
@@ -455,7 +451,7 @@ public:
 
 	void AIUpdate()
 	{
-		if(GetHealthPercent() <= 25 && mEnraged == false)
+		if(GetHealthPercent() <= 25 && !mEnraged)
 		{
 			ApplyAura(FRENZY);
 			Announce("Ormorok the Tree-Shaper goes into a frenzy!");
@@ -502,7 +498,7 @@ class CrystalSpikeAI : public MoonScriptBossAI
 			m_part += 1;
 
 			if(m_part == 1)
-				_unit->CastSpell(_unit, SPELL_CRYSTAL_SPIKE_VISUAL, true);
+				ApplyAura(SPELL_CRYSTAL_SPIKE_VISUAL);
 			else if(m_part == 5)
 				ApplyAura(SPELL_CRYSTAL_SPIKE);
 		}
@@ -524,21 +520,21 @@ private:
 // normal mode
 #define CRYSTALFIRE_BREATH			HeroicInt(57091, 48096)
 
-class KeristraszaAI : public MoonScriptBossAI
+class KeristraszaAI : public MoonScriptCreatureAI
 {
 public:
-	MOONSCRIPT_FACTORY_FUNCTION(KeristraszaAI, MoonScriptBossAI);
-	KeristraszaAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
+	MOONSCRIPT_FACTORY_FUNCTION(KeristraszaAI, MoonScriptCreatureAI);
+	KeristraszaAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 	{
 		AddEmote(Event_OnCombatStart, "Preserve? Why? There's no truth in it. No no no... only in the taking! I see that now!", Text_Yell, 13450);
 		AddEmote(Event_OnTargetDied, "Now we've come to the truth!", Text_Yell, 13453);
 		AddEmote(Event_OnDied, "Dragonqueen... Life-Binder... preserve... me.", Text_Yell, 13454);
 
-		AddSpell(CRYSTALFIRE_BREATH, Target_Self, 30, 1, 14);
-		AddSpell(CRYSTAL_CHAINS, Target_RandomPlayer, 30, 0, 12);
-		AddSpell(TAIL_SWEEP, Target_Self, 40, 0, 8);
+		AddSpell(CRYSTALFIRE_BREATH, Target_Self, 30.0f, 1, 14);
+		AddSpell(CRYSTAL_CHAINS, Target_RandomPlayer, 30.0f, 0, 12);
+		AddSpell(TAIL_SWEEP, Target_Self, 40.0f, 0, 8);
 
-		AddSpell(CRYSTALLIZE, Target_Self, 25, 0, 22, 0, 0, false, "Stay. Enjoy your final moments.", Text_Yell, 13451);
+		AddSpell(CRYSTALLIZE, Target_Self, 25.0f, 0, 22, 0, 0, false, "Stay. Enjoy your final moments.", Text_Yell, 13451);
 
 		mEnraged = false;
 		SetCanEnterCombat(false);
@@ -562,8 +558,8 @@ public:
 	void Release()
 	{
 		SetCanEnterCombat(true);
-			RemoveAura(47543);
-			ApplyAura(INTENSE_COLD);
+		RemoveAura(47543);
+		ApplyAura(INTENSE_COLD);
 	}
 
 private:
