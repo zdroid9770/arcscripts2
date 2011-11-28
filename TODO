@@ -22,7 +22,6 @@ New features:
 	* MoonScriptEscortAI (in progress)
 
 General:
-	* Get back serverstatusplugin and lua builds
 	* Rewrite signup php script
 	* Add base documentation
 	* Drop CreatureAIScript use from scripts
