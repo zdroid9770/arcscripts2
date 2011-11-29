@@ -27,12 +27,57 @@ extern "C" SCRIPT_DECL uint32 _exp_get_script_type()
 
 extern "C" SCRIPT_DECL void _exp_script_register(ScriptMgr* mgr)	// Comment any script to disable it
 {
+	//CREATURE
+	SetupArathiHighlandsCreature(mgr);
+	SetupBladeEdgeMountainsCreature(mgr);
+	SetupBlastedLandsCreature(mgr);
+	SetupBloodmystIsleCreature(mgr);
+	SetupBoreanTundraCreature(mgr);
+	SetupDarkmoonFaireCreatures(mgr);
+	SetupDurotarCreature(mgr);
+	SetupEmoteCreatures(mgr);
+	SetupFlightMasterCreatures(mgr);
+	SetupHellfireCreatures(mgr);
+	SetupMiscCreatures(mgr);
+	SetupOrgrimmarCreature(mgr);
+	SetupShadowmoonValleyCreature(mgr);
+	SetupSilverpineForestCreature(mgr);
+	SetupSoundCreature(mgr);
+	SetupTanarisCreature(mgr);
+	SetupTheBarrensCreature(mgr);
+	SetupTheScarletEnclaveCreature(mgr);
+	SetupWesternPlaguelandsCreature(mgr);
+	SetupTransportCreatureScripts(mgr);
+
 	//EVENTS
 	SetupWinterVeil(mgr);
 	SetupHalloween(mgr);
 
 	//EXTRA
 	SetupNeutralGuards(mgr);
+
+	//GAME OBJECT
+	SetupAzuremystIsleGameobjects(mgr);
+	SetupBlackrockMountainGameobjects(mgr);
+	SetupBladeEdgeMountainsGameobjects(mgr);
+	SetupBloodmystIsleGameobjects(mgr);
+	SetupBoreanTundraGameobjects(mgr);
+	SetupBurningSteppesGameobjects(mgr);
+	SetupDarkshoreGameobjects(mgr);
+	SetupDesolaceGameobjects(mgr);
+	SetupHellfirePeninsulaGameobjects(mgr);
+	SetupMiscGameobjects(mgr);
+	SetupNagrandGameobjects(mgr);
+	SetupNetherstormGameobjects(mgr);
+	SetupSilverpineForestGameobjects(mgr);
+	SetupTanarisGameobjects(mgr);
+	SetupTerokkarForestGameobjects(mgr);
+	SetupTheHinterlandsGameobjects(mgr);
+	SetupTheScarletEnclaveGameObject(mgr);
+	SetupThousandNeedlesGameobjects(mgr);
+	SetupTirisfalGladesGameobjects(mgr);
+	SetupWesternPlaguelandsGameobjects(mgr);
+	SetupZulDrakGameobjects(mgr);
 
 	//GOSSIP
 	SetupInnkeepers(mgr);
@@ -95,6 +140,8 @@ extern "C" SCRIPT_DECL void _exp_script_register(ScriptMgr* mgr)	// Comment any 
 	SetupTheStockade(mgr);
 	SetupWailingCaverns(mgr);
 	SetupMagistersTerrace(mgr);
+
+	//RAIDS
 	SetupBlackTemple(mgr);
 	SetupBlackwingLair(mgr);
 	SetupBattleOfMountHyjal(mgr);

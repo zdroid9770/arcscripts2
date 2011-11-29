@@ -24,12 +24,58 @@
 
 #ifndef SETUP
 #define SETUP
+
+//CREATURES
+void SetupArathiHighlandsCreature(ScriptMgr * mgr);
+void SetupBladeEdgeMountainsCreature(ScriptMgr * mgr);
+void SetupBlastedLandsCreature(ScriptMgr * mgr);
+void SetupBloodmystIsleCreature(ScriptMgr * mgr);
+void SetupBoreanTundraCreature(ScriptMgr * mgr);
+void SetupDarkmoonFaireCreatures(ScriptMgr * mgr);
+void SetupDurotarCreature(ScriptMgr * mgr);
+void SetupEmoteCreatures(ScriptMgr * mgr);
+void SetupFlightMasterCreatures(ScriptMgr * mgr);
+void SetupHellfireCreatures(ScriptMgr * mgr);
+void SetupMiscCreatures(ScriptMgr * mgr);
+void SetupOrgrimmarCreature(ScriptMgr * mgr);
+void SetupShadowmoonValleyCreature(ScriptMgr * mgr);
+void SetupSilverpineForestCreature(ScriptMgr * mgr);
+void SetupSoundCreature(ScriptMgr * mgr);
+void SetupTanarisCreature(ScriptMgr * mgr);
+void SetupTheBarrensCreature(ScriptMgr * mgr);
+void SetupTheScarletEnclaveCreature(ScriptMgr * mgr);
+void SetupWesternPlaguelandsCreature(ScriptMgr * mgr);
+void SetupTransportCreatureScripts(ScriptMgr * mgr);
+
 //EVENT
 void SetupWinterVeil(ScriptMgr* mgr);
 void SetupHalloween(ScriptMgr* mgr);
 
 //EXTRA
 void SetupNeutralGuards(ScriptMgr* mgr);
+
+//GAME OBJECTS
+void SetupAzuremystIsleGameobjects(ScriptMgr * mgr);
+void SetupBlackrockMountainGameobjects(ScriptMgr * mgr);
+void SetupBladeEdgeMountainsGameobjects(ScriptMgr * mgr);
+void SetupBloodmystIsleGameobjects(ScriptMgr * mgr);
+void SetupBoreanTundraGameobjects(ScriptMgr * mgr);
+void SetupBurningSteppesGameobjects(ScriptMgr * mgr);
+void SetupDarkshoreGameobjects(ScriptMgr * mgr);
+void SetupDesolaceGameobjects(ScriptMgr * mgr);
+void SetupHellfirePeninsulaGameobjects(ScriptMgr * mgr);
+void SetupMiscGameobjects(ScriptMgr * mgr);
+void SetupNagrandGameobjects(ScriptMgr * mgr);
+void SetupNetherstormGameobjects(ScriptMgr * mgr);
+void SetupSilverpineForestGameobjects(ScriptMgr * mgr);
+void SetupTanarisGameobjects(ScriptMgr * mgr);
+void SetupTerokkarForestGameobjects(ScriptMgr * mgr);
+void SetupTheHinterlandsGameobjects(ScriptMgr * mgr);
+void SetupTheScarletEnclaveGameObject(ScriptMgr * mgr);
+void SetupThousandNeedlesGameobjects(ScriptMgr * mgr);
+void SetupTirisfalGladesGameobjects(ScriptMgr * mgr);
+void SetupWesternPlaguelandsGameobjects(ScriptMgr * mgr);
+void SetupZulDrakGameobjects(ScriptMgr * mgr);
 
 //GOSSIP
 void SetupInnkeepers(ScriptMgr* mgr);
@@ -92,6 +138,8 @@ void SetupUtgardeKeep(ScriptMgr* mgr);
 void SetupTheStockade(ScriptMgr* mgr);
 void SetupWailingCaverns(ScriptMgr* mgr);
 void SetupMagistersTerrace(ScriptMgr* mgr);
+
+//RAIDS
 void SetupBlackTemple(ScriptMgr* mgr);
 void SetupBlackwingLair(ScriptMgr* mgr);
 void SetupBattleOfMountHyjal(ScriptMgr* mgr);
