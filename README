@@ -1,12 +1,10 @@
-INSTALL GUIDE:
+Copyright 2011 ArcScripts2
+Development goes under GPL GNU v3 licenze
 
-1. Windows: Compile ArcEmu
-1. Linux: Skip to step 3, then read step 4. Linux:
-2. Compile ArcScripts (make sure you use the same build as ArcEmu, ex. debug, release, release-x64 etc)
-3. Create /scripts/ inside /trunk/src/ (/trunk/src/scripts/)
-4. Windows: Open the Visual Studio solution and build ArcScripts (as you did ArcEmu)
-4. Linux: Compile ArcEmu as usual (make sure you've completed step 3)
-5. Apply /arcscripts/trunk/sql/ to your ArcEmu database
+ArcScripts2 is opensource and learning project for arcemu emulator (http://www.arcemu.org).
 
-
-http://twitter.com/arcemulator
+Main wishes are:
+* increase stability
+* make scripts good quality.
+* focus on development
+* work in team.

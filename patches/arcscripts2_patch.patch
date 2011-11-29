@@ -1,15 +1,13 @@
-From 961e48c577f26f81e65c1ca11fa47f347cbc2b8f Mon Sep 17 00:00:00 2001
+From da69bcabee8f489ed380b99b32f3af6f3ac856b8 Mon Sep 17 00:00:00 2001
 From: sanctum32 <andriuspel@gmail.com>
 Date: Tue, 8 Nov 2011 12:37:30 +0200
-Subject: [PATCH] enabled lua engine, lua bridge and serverstatusplugin You
- need to repatch your arcemu source
+Subject: [PATCH] arcscripts2 patch
 
-patch v1
 ---
  cmake/CMakeLists.txt             |    4 ++-
- cmake/arcscripts2/CMakeLists.txt |   58 ++++++++++++++++++++++++++++++++++++++
+ cmake/arcscripts2/CMakeLists.txt |   57 ++++++++++++++++++++++++++++++++++++++
  cmake/scripts/CMakeLists.txt     |   34 +++++++++++-----------
- 3 files changed, 78 insertions(+), 18 deletions(-)
+ 3 files changed, 77 insertions(+), 18 deletions(-)
  create mode 100644 cmake/arcscripts2/CMakeLists.txt
 
 diff --git a/cmake/CMakeLists.txt b/cmake/CMakeLists.txt
@@ -36,10 +34,10 @@ index 0790f98..614660b 100644
  	add_subdirectory(tools)
 diff --git a/cmake/arcscripts2/CMakeLists.txt b/cmake/arcscripts2/CMakeLists.txt
 new file mode 100644
-index 0000000..36c4a76
+index 0000000..8724c28
 --- /dev/null
 +++ b/cmake/arcscripts2/CMakeLists.txt
-@@ -0,0 +1,58 @@
+@@ -0,0 +1,57 @@
 +#
 +# Arcscripts2 Scripts for Arcemu MMORPG Server
 +# Copyright (C) 2011 Arscripts2 Team
@@ -79,8 +77,7 @@ index 0000000..36c4a76
 +include(${SCRIPTS_PATH}/CmakeLists.txt OPTIONAL)
 +
 +# DO NOT TOUCH THESE BELOW!
-+include_directories( ${include_dirs} ${SCRIPTS_PATH}/system ${SCRIPTS_PATH}/base)
-+add_library(${PROJECT_NAME} SHARED ${source} ${header})
++add_library(${PROJECT_NAME} SHARED ${source})
 +add_dependencies(${PROJECT_NAME} ${dependancies})
 +target_link_libraries(${PROJECT_NAME} ${linkages})
 +
