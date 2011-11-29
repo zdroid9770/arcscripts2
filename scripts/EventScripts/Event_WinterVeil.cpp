@@ -8,26 +8,24 @@ Team  : Sun++
 
 class PX238WinterWondervolt : public GameObjectAIScript
 {
-	public:
-		PX238WinterWondervolt(GameObject*  goinstance) : GameObjectAIScript(goinstance) {}
-		static GameObjectAIScript* Create(GameObject* GO) { return new PX238WinterWondervolt(GO); }
+public:
+	PX238WinterWondervolt(GameObject*  goinstance) : GameObjectAIScript(goinstance) {}
+	static GameObjectAIScript* Create(GameObject* GO) { return new PX238WinterWondervolt(GO); }
 
-		void OnSpawn()
-		{
-			RegisterAIUpdateEvent(1);
-		}
+	void OnSpawn()
+	{
+		RegisterAIUpdateEvent(1);
+	}
 
-		void AIUpdate()
-		{
-			Player* plr = _gameobject->GetMapMgr()->GetInterface()->GetPlayerNearestCoords(_gameobject->GetPositionX(), _gameobject->GetPositionY(), _gameobject->GetPositionZ());
-			if(!plr)
-				return;
+	void AIUpdate()
+	{
+		Player* plr = _gameobject->GetMapMgr()->GetInterface()->GetPlayerNearestCoords(_gameobject->GetPositionX(), _gameobject->GetPositionY(), _gameobject->GetPositionZ());
+		if(!plr)
+			return;
 
-			if(_gameobject->CalcDistance(_gameobject, plr) <= 1.050000f && !plr->HasAura(26274))       // aura given by the PX-238 Winter Wondervolt
-			{
-				plr->CastSpell(plr, 26275 , true);   // Spell that change into random gnome dispalyid (respect male & female)
-			}
-		}
+		if(_gameobject->CalcDistance(_gameobject, plr) <= 1.050000f && !plr->HasAura(26274))       // aura given by the PX-238 Winter Wondervolt
+			plr->CastSpell(plr, 26275 , true);   // Spell that change into random gnome dispalyid (respect male & female)
+	}
 };
 
 void WinterReveler(Player* pPlayer, Unit* pUnit)
@@ -37,50 +35,42 @@ void WinterReveler(Player* pPlayer, Unit* pUnit)
 		uint32 Winteritem = 0;
 		SlotResult slotresult;
 
-		uint32 chance = RandomUInt(2);
-		switch(chance)
+		switch(rand()%3)
 		{
 			case 0:
-				{
-					ItemPrototype* proto = ItemPrototypeStorage.LookupEntry(21212);
-					if(!proto)
-						return;
+			{
+				ItemPrototype* proto = ItemPrototypeStorage.LookupEntry(21212);
+				if(!proto)
+					return;
 
-					slotresult = pPlayer->GetItemInterface()->FindFreeInventorySlot(proto);
-					Winteritem = 21212;
-				}
-				break;
-
+				slotresult = pPlayer->GetItemInterface()->FindFreeInventorySlot(proto);
+				Winteritem = 21212;
+			}break;
 			case 1:
-				{
-					ItemPrototype* proto = ItemPrototypeStorage.LookupEntry(21519);
-					if(!proto)
-						return;
+			{
+				ItemPrototype* proto = ItemPrototypeStorage.LookupEntry(21519);
+				if(!proto)
+					return;
 
-					slotresult = pPlayer->GetItemInterface()->FindFreeInventorySlot(proto);
-					Winteritem = 21519;
-				}
-				break;
-
+				slotresult = pPlayer->GetItemInterface()->FindFreeInventorySlot(proto);
+				Winteritem = 21519;
+			}break;
 			case 2:
-				{
-					ItemPrototype* proto = ItemPrototypeStorage.LookupEntry(34191);
-					if(!proto)
-						return;
+			{
+				ItemPrototype* proto = ItemPrototypeStorage.LookupEntry(34191);
+				if(!proto)
+					return;
 
-					slotresult = pPlayer->GetItemInterface()->FindFreeInventorySlot(proto);
-					Winteritem = 34191;
-				}
-				break;
-
+				slotresult = pPlayer->GetItemInterface()->FindFreeInventorySlot(proto);
+				Winteritem = 34191;
+			}break;
 		}
 
 		if(!slotresult.Result)
 		{
 			pPlayer->GetItemInterface()->BuildInventoryChangeError(NULL, NULL, INV_ERR_INVENTORY_FULL);
 			return;
-		}
-		else
+		}else
 		{
 			Item* itm = objmgr.CreateItem(Winteritem, pPlayer);
 			itm->SetStackCount(5);
