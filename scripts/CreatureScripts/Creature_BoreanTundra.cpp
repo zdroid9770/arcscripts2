@@ -30,7 +30,7 @@ public:
 		{
 			GetUnit()->GetAIInterface()->deleteWaypoints();
 			GetUnit()->SendChatMessage( CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, "Thanks, I found the fact that, it searched" );
-			GetUnit()->Despawn( DESPAWN_TIME, 1000 );
+			GetUnit()->Despawn( DEFAULT_DESPAWN_TIMER, 1000 );
 
 			if( GetUnit()->m_escorter != NULL )
 			{

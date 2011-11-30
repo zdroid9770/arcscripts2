@@ -33,10 +33,10 @@ public:
 		GetUnit()->GetAIInterface()->disable_melee = true;
 		GetUnit()->GetAIInterface()->m_canMove = false;
 
-		sEAS.EventSay( GetUnit(), "Muahahahahaha! You fool! you've released me from my banishment in the interstices between space and time!", 5000 );
-		sEAS.EventSay( GetUnit(), "All of Draenor shall quake beneath my feet! i Will destroy this world and reshape it in my immage!", 10000 );
-		sEAS.EventSay( GetUnit(), "Where shall i Begin? i cannot bother myself with a worm such as yourself. Theres a World to be Conquered!", 15000 );
-		sEAS.EventSay( GetUnit(), "No doubt the fools that banished me are long dead. i shall take the wing and survey my new demense, Pray to whatever gods you hold dear that we do not meet again.", 20000 );
+		sEAS.EventCreatureSay( GetUnit(), "Muahahahahaha! You fool! you've released me from my banishment in the interstices between space and time!", 5000 );
+		sEAS.EventCreatureSay( GetUnit(), "All of Draenor shall quake beneath my feet! i Will destroy this world and reshape it in my immage!", 10000 );
+		sEAS.EventCreatureSay( GetUnit(), "Where shall i Begin? i cannot bother myself with a worm such as yourself. Theres a World to be Conquered!", 15000 );
+		sEAS.EventCreatureSay( GetUnit(), "No doubt the fools that banished me are long dead. i shall take the wing and survey my new demense, Pray to whatever gods you hold dear that we do not meet again.", 20000 );
 
 		GetUnit()->Despawn( 25000, 0 );
 	}
@@ -65,7 +65,7 @@ public:
 	BrutebaneStoutTrigger(Creature *pCreature) : CreatureAIScript(pCreature)
 	{
 		GetUnit()->Root();
-		Plr = sEAS.GetNearestPlayer( GetUnit() );
+		Plr = _unit->GetMapMgr()->GetInterface()->GetPlayerNearestCoords( _unit->GetPositionX(), _unit->GetPositionY(), _unit->GetPositionZ() );
 
 		uint32 BladespireOgres[] = { 19995, 19998, 20756, 0 };
 		Ogre = sEAS.GetNearestCreature( GetUnit(), BladespireOgres );

@@ -27,7 +27,7 @@ public:
 	void OnActivate(Player *pPlayer)
 	{
 		if( pPlayer->HasQuest(10915) )
-			sEAS.SpawnCreature( pPlayer, 22452, -3365.9f, 5143.19f, -9.00132f, 3.05f, DESPAWN_TIME );
+			sEAS.SpawnCreature( pPlayer, 22452, -3365.9f, 5143.19f, -9.00132f, 3.05f, DEFAULT_DESPAWN_TIMER );
 	}
 };
 

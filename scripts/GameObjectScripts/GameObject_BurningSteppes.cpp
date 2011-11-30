@@ -28,7 +28,7 @@ public:
 	{
 		LocationVector vect( pPlayer->GetPositionX()+RandomFloat(2.0f), pPlayer->GetPositionY()+RandomFloat(2.0f), pPlayer->GetPositionZ(), pPlayer->GetOrientation() );
 		if( pPlayer->HasQuest(3821) && sEAS.GetNearestCreature(pPlayer, 9136) == NULL )
-			sEAS.SpawnCreature( pPlayer, 9136, vect, DESPAWN_TIME );
+			sEAS.SpawnCreature( pPlayer, 9136, vect.x, vect.y, vect.z, vect.o, DEFAULT_DESPAWN_TIMER );
 	}
 };
 
@@ -40,8 +40,8 @@ public:
 
 	void OnActivate(Player * pPlayer)
 	{
-		if( pPlayer->HasQuest(4296) && !pPlayer->GetItemInterface()->GetItemCount(11470, true) )
-			_gameobject->CastSpell( pPlayer, 15065, true ); // Cast spell: "Create Tablet Transcript".
+		/*if( pPlayer->HasQuest(4296) && !pPlayer->GetItemInterface()->GetItemCount(11470, true) )
+			_gameobject->CastSpell( pPlayer, 15065, true ); // Cast spell: "Create Tablet Transcript".*/
 	}
 };
 

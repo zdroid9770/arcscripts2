@@ -32,7 +32,7 @@ public:
 		if( !pPlayer->HasQuest(1819) || !pDoor || Ulag )
 			return;
 
-		Ulag = sEAS.SpawnCreature(pPlayer, 6390, 2390.101807f, 336.676788f, 40.015614f, 2.259590f, DESPAWN_TIME);
+		Ulag = sEAS.SpawnCreature(pPlayer, 6390, 2390.101807f, 336.676788f, 40.015614f, 2.259590f, DEFAULT_DESPAWN_TIMER);
 		Ulag->GetAIInterface()->setNextTarget(pPlayer);
 		Ulag->GetAIInterface()->AttackReaction(pPlayer, 1);
 		pDoor->SetUInt32Value(GAMEOBJECT_FLAGS, 0x21); // GO_FLAG_NODESPAWN|GO_FLAG_IN_USE

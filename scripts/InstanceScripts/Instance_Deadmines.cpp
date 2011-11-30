@@ -175,7 +175,7 @@ enum MrSmiteSpells
 class MrSmiteAI : public MoonScriptBossAI
 {
 public:
-	MOONSCRIPT_FACTORY_FUNCTION(MrSmiteAI, MoonScriptBossAI);
+	static CreatureAIScript * Create(Creature * c) { return new MrSmiteAI(c); }
 	MrSmiteAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
 	{
 		AddSpell(SMITE_SLAM, Target_Current, 25, 0.0f, 15, 0.0f, 8.0f, true);
@@ -194,7 +194,6 @@ public:
 		SetPhase(1);
 		SwitchWeapons();
 		RemoveTimer(mWaitAtChest);
-		ParentClass::OnCombatStop(pTarget);
 	}
 
 	void AIUpdate()
@@ -219,8 +218,6 @@ public:
 
 		if(IsTimerFinished(mWaitAtChest))
 			MoveToPlayer();
-
-		ParentClass::AIUpdate();
 	}
 
 	void MoveToChest()

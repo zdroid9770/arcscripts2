@@ -27,7 +27,7 @@ public:
 	void OnActivate(Player * pPlayer)
 	{
 		if( pPlayer->HasQuest(10339) && sEAS.GetNearestCreature(pPlayer, 20482) == NULL )
-			sEAS.SpawnCreature( pPlayer, 20482, 4017.96f, 2315.91f, 116.418f, pPlayer->GetOrientation()+3.14f, DESPAWN_TIME );
+			sEAS.SpawnCreature( pPlayer, 20482, 4017.96f, 2315.91f, 116.418f, pPlayer->GetOrientation()+3.14f, DEFAULT_DESPAWN_TIMER );
 	}
 };
 

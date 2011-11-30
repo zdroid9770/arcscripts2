@@ -41,7 +41,7 @@ public:
 	{
 		LocationVector vect( pPlayer->GetPositionX()+RandomFloat(2.0f), pPlayer->GetPositionY()+RandomFloat(2.0f), pPlayer->GetPositionZ(), pPlayer->GetOrientation() );
 		if( pPlayer->HasQuest(10111) && sEAS.GetNearestCreature(pPlayer, 19055) )
-			sEAS.SpawnCreature(pPlayer, 19055, vect, DESPAWN_TIME);
+			sEAS.SpawnCreature(pPlayer, 19055, vect.x, vect.y, vect.z, vect.o, DEFAULT_DESPAWN_TIMER);
 	}
 };
 

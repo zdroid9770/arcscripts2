@@ -43,9 +43,7 @@ public:
 	{
 		if( GetUnit()->GetHealthPct() <= 30 )
 		{
-			GetUnit()->smsg_AttackStop(GetUnit()->GetAIInterface()->getNextTarget());
-			GetUnit()->GetAIInterface()->getNextTarget()->smsg_AttackStop(GetUnit());
-			GetUnit()->GetAIInterface()->setNextTarget( TO_UNIT(NULL) );
+			WipeHateList();
 			GetUnit()->SetFaction( 35 );
 		}
 		ParentClass::AIUpdate();

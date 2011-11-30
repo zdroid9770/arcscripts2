@@ -28,7 +28,7 @@ public:
 	{
 		LocationVector vect( pPlayer->GetPositionX()+RandomFloat(2.0f), pPlayer->GetPositionY()+RandomFloat(2.0f), pPlayer->GetPositionZ(), pPlayer->GetOrientation() );
 		if( pPlayer->HasQuest(11078) )
-			sEAS.SpawnCreature( pPlayer, 23282, vect, DESPAWN_TIME );
+			sEAS.SpawnCreature( pPlayer, 23282, vect.x, vect.y, vect.z, vect.o, DEFAULT_DESPAWN_TIMER );
 	}
 };
 
@@ -42,7 +42,7 @@ public:
 	{
 		LocationVector vect( pPlayer->GetPositionX()+RandomFloat(2.0f), pPlayer->GetPositionY()+RandomFloat(2.0f), pPlayer->GetPositionZ(), pPlayer->GetOrientation() );
 		if( pPlayer->HasQuest(11078) )
-			sEAS.SpawnCreature( pPlayer, 23061, vect, DESPAWN_TIME );
+			sEAS.SpawnCreature( pPlayer, 23061, vect.x, vect.y, vect.z, vect.o, DEFAULT_DESPAWN_TIMER);
 	}
 };
 
@@ -56,7 +56,7 @@ public:
 	{
 		LocationVector vect( pPlayer->GetPositionX()+RandomFloat(2.0f), pPlayer->GetPositionY()+RandomFloat(2.0f), pPlayer->GetPositionZ(), pPlayer->GetOrientation() );
 		if( pPlayer->HasQuest(11078) )
-			sEAS.SpawnCreature( pPlayer, 23261, vect, DESPAWN_TIME );
+			sEAS.SpawnCreature( pPlayer, 23261, vect.x, vect.y, vect.z, vect.o, DEFAULT_DESPAWN_TIMER);
 	}
 };
 
@@ -70,7 +70,7 @@ public:
 	{
 		LocationVector vect( pPlayer->GetPositionX()+RandomFloat(2.0f), pPlayer->GetPositionY()+RandomFloat(2.0f), pPlayer->GetPositionZ(), pPlayer->GetOrientation() );
 		if( pPlayer->HasQuest(11078) )
-			sEAS.SpawnCreature( pPlayer, 23281, vect, DESPAWN_TIME );
+			sEAS.SpawnCreature( pPlayer, 23281, vect.x, vect.y, vect.z, vect.o, DEFAULT_DESPAWN_TIMER);
 	}
 };
 
@@ -85,8 +85,8 @@ public:
 		GameObject *gobj = sEAS.GetNearestGameObject(pPlayer, 184729);
 		if( pPlayer->HasQuest(10526) )
 		{
-			_gameobject->Despawn( 0, DESPAWN_TIME );
-			sEAS.SpawnCreature( pPlayer, 21319, 1315.54f, 6688.33f, -18, 0.001f, DESPAWN_TIME );
+			_gameobject->Despawn( 0, DEFAULT_DESPAWN_TIMER );
+			sEAS.SpawnCreature( pPlayer, 21319, 1315.54f, 6688.33f, -18, 0.001f, DEFAULT_DESPAWN_TIMER );
 		}
 	}
 };
@@ -101,10 +101,10 @@ public:
 	{
 		if( pPlayer->HasQuest( 10584 ) )
 		{
-			Creature *Elec = sEAS.SpawnCreature( pPlayer, 21729, _gameobject->GetPositionNC(), DESPAWN_TIME );
+			Creature *Elec = sEAS.SpawnCreature( pPlayer, 21729, _gameobject->GetPositionX(), _gameobject->GetPositionY(), _gameobject->GetPositionZ(), _gameobject->GetOrientation(), DEFAULT_DESPAWN_TIMER );
 			Elec->GetAIInterface()->AttackReaction( pPlayer, 1 );
 		}
-		_gameobject->Despawn( 0, DESPAWN_TIME );
+		_gameobject->Despawn( 0, DEFAULT_DESPAWN_TIMER );
 	}
 };
 
@@ -122,11 +122,11 @@ public:
 			itemcount += pPlayer->GetItemInterface()->GetItemCount( 30782, true );
 			itemcount += pPlayer->GetItemInterface()->GetItemCount( 30783, true );
 			if( itemcount <= 9 && itemcount == (rand()%itemcount + 9) )
-				sEAS.SpawnCreature( _gameobject, 21823, _gameobject->GetPositionNC(), DESPAWN_TIME );
-			else
-				_gameobject->CastSpell( _gameobject, 36326, true );
+				sEAS.SpawnCreature(pPlayer, 21823, _gameobject->GetPositionX(), _gameobject->GetPositionY(),_gameobject->GetPositionZ(), _gameobject->GetOrientation(), DEFAULT_DESPAWN_TIMER );
+			/*else
+				_gameobject->GetItemInterface()->CastSpell( _gameobject, 36326, true );*/
 		}
-		_gameobject->Despawn( 0, DESPAWN_TIME );
+		_gameobject->Despawn( 0, DEFAULT_DESPAWN_TIMER );
 	}
 };
 
@@ -151,7 +151,7 @@ public:
 
 		_gameobject->SetState( 0 );
 		if( obelisk1->GetState() == 0 && obelisk2->GetState() == 0 && obelisk3->GetState() == 0 && obelisk4->GetState() == 0 && obelisk5->GetState() == 0 )
-			sEAS.SpawnCreature( pPlayer, 19963, 2943.59f, 4779.05f, 284.49f, 1.89f, DESPAWN_TIME );
+			sEAS.SpawnCreature( pPlayer, 19963, 2943.59f, 4779.05f, 284.49f, 1.89f, DEFAULT_DESPAWN_TIMER );
 
 		sEventMgr.AddEvent( obelisk1, &GameObject::SetState, (uint8)1, EVENT_UNK, 600000, 1, EVENT_FLAG_DO_NOT_EXECUTE_IN_WORLD_CONTEXT );
 		sEventMgr.AddEvent( obelisk2, &GameObject::SetState, (uint8)1, EVENT_UNK, 600000, 1, EVENT_FLAG_DO_NOT_EXECUTE_IN_WORLD_CONTEXT );

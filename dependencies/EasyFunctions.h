@@ -445,6 +445,16 @@ class SCRIPT_DECL EasyFunctions
 
 		return ClosestGameObject;
 	}
+
+	// Return the nearest player
+	Player *GetNearestPlayer(Object *pObj)
+	{
+		PrintMessage("Function call: GetNearestPlayer()");
+		if( pObj == NULL )
+			return NULL;
+
+		return pObj->GetMapMgr()->GetInterface()->GetPlayerNearestCoords( pObj->GetPositionX(), pObj->GetPositionY(), pObj->GetPositionZ() );
+	}
 };
 
 #define sEAS EasyFunctions::GetInstance()

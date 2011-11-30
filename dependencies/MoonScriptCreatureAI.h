@@ -304,11 +304,11 @@ class SpellDesc
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //Class MoonScriptCreatureAI
-class MoonScriptCreatureAI : public CreatureAIScript
+class SCRIPT_DECL MoonScriptCreatureAI : public CreatureAIScript
 {
 	public:
-		MoonScriptCreatureAI(Creature* pCreature);
-		virtual ~MoonScriptCreatureAI();
+		explicit MoonScriptCreatureAI(Creature* pCreature);
+		~MoonScriptCreatureAI();
 
 		//Movement
 		bool					GetCanMove();
@@ -453,7 +453,6 @@ class MoonScriptCreatureAI : public CreatureAIScript
 		virtual void			Destroy();
 
 	protected:
-
 		bool					IsSpellScheduled(SpellDesc* pSpell);
 		bool					CastSpellInternal(SpellDesc* pSpell, uint32 pCurrentTime = 0);
 		void					CastSpellOnTarget(Unit* pTarget, TargetType pType, SpellEntry* pEntry, bool pInstant);

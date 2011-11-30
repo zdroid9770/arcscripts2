@@ -38,7 +38,11 @@ public:
 
 		++BristlelimbKilled;
 		if( BristlelimbKilled > 8 && (rand()%80) )
-			sEAS.SpawnCreature( mKiller, 17702, -2419, -12166, 33, 3.45f, DESPAWN_TIME );
+		{
+			Creature* pSummon = _unit->GetMapMgr()->GetInterface()->SpawnCreature(17702, -2419.0f, -12166.0f, 33.0f, 3.45f, false, true, 0, 0, 1);
+			if(pSummon!=NULL)
+				pSummon->Despawn(DEFAULT_DESPAWN_TIMER, 0);
+		}
 	}
 };
 
@@ -72,12 +76,12 @@ public:
 		{
 			// Creatures from Bloodmyst Isle
 			uint32 Id[51] = { 17681, 17887, 17550, 17323, 17338, 17341, 17333, 17340, 17353, 17320, 17339, 17337, 17715, 17322, 17494, 17654, 17342, 17328, 17331, 17325, 17321, 17330, 17522, 17329, 17524, 17327, 17661, 17352, 17334, 17326, 17324, 17673, 17336, 17346, 17589, 17609, 17608, 17345, 17527, 17344, 17347, 17525, 17713, 17523, 17348, 17606, 17604, 17607, 17610, 17358, 17588 };
-			sEAS.SpawnCreature( pPlayer, Id[RandomUInt(50)], vec, DESPAWN_TIME );
+			sEAS.SpawnCreature( pPlayer, Id[RandomUInt(50)], vec.x, vec.y, vec.z, vec.o, DEFAULT_DESPAWN_TIMER );
 		}
 		else
 		{
 			uint32 Id[8] = { 17681, 17321, 17330, 17522, 17673, 17336, 17346, 17589 };
-			Creature *RandomCreature = sEAS.SpawnCreature( pPlayer, Id[RandomUInt(7)], vec, DESPAWN_TIME );
+			Creature *RandomCreature = sEAS.SpawnCreature( pPlayer, Id[RandomUInt(7)], vec.x, vec.y, vec.z, vec.o, DEFAULT_DESPAWN_TIMER );
 			if( RandomCreature != NULL && RandomCreature->GetEntry() == 17681 )
 			{
 				sEAS.KillMobForQuest( pPlayer, 9670, 0 );

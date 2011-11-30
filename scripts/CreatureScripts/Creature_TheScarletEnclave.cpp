@@ -105,11 +105,10 @@ public:
 						break;
 				}
 
-				Creature *cr = sEAS.SpawnCreature( TO_PLAYER(mTarget), 16980, mTarget->GetPositionNC() );
+				Creature *cr = sEAS.SpawnCreature( TO_PLAYER(mTarget), 16980, mTarget->GetPositionX(),mTarget->GetPositionY(),mTarget->GetPositionZ(), DEFAULT_DESPAWN_TIMER);
 				if(cr)
 				{
 					cr->SendChatMessage( CHAT_MSG_MONSTER_WHISPER, LANG_UNIVERSAL, whisp.c_str() );
-					cr->Despawn( 0, 0 );
 					TO_PLAYER(mTarget)->PlaySound( sound );
 				}
 			}

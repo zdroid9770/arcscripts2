@@ -27,7 +27,7 @@ public:
 	void OnActivate(Player * pPlayer)
 	{
 		if( pPlayer->HasQuest(6027) )
-			sEAS.SpawnCreature( pPlayer, 12369, 246.741f, 2953.3f, 5.8631f, 1.078f, DESPAWN_TIME );
+			sEAS.SpawnCreature( pPlayer, 12369, 246.741f, 2953.3f, 5.8631f, 1.078f, DEFAULT_DESPAWN_TIMER );
 	}
 };
 
@@ -40,7 +40,7 @@ public:
 	void OnActivate(Player * pPlayer)
 	{
 		if( pPlayer->HasQuest(5381) )
-			sEAS.SpawnCreature( pPlayer, 11876, -348.231f, 1763.85f, 138.371f, 4.42728f, DESPAWN_TIME );
+			sEAS.SpawnCreature( pPlayer, 11876, -348.231f, 1763.85f, 138.371f, 4.42728f, DEFAULT_DESPAWN_TIMER );
 	}
 };
 

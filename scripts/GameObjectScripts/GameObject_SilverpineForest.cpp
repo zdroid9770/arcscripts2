@@ -28,7 +28,7 @@ public:
 	{
 		LocationVector vect( pPlayer->GetPositionX()+RandomFloat(2.0f), pPlayer->GetPositionY()+RandomFloat(2.0f), pPlayer->GetPositionZ(), pPlayer->GetOrientation() );
 		if( pPlayer->HasQuest(63) )
-			sEAS.SpawnCreature(pPlayer, 5894, vect, DESPAWN_TIME);
+			sEAS.SpawnCreature(pPlayer, 5894, vect.x, vect.y, vect.z, vect.o, DEFAULT_DESPAWN_TIMER);
 	}
 };
 
@@ -43,7 +43,7 @@ public:
 		if( pLooter->HasQuest(422) )
 		{
 			LocationVector vect( pLooter->GetPositionX()+RandomFloat(2.0f), pLooter->GetPositionY()+RandomFloat(2.0f), pLooter->GetPositionZ(), pLooter->GetOrientation() );
-			Creature* NewCreature = sEAS.SpawnCreature(pLooter, 1770, vect, DESPAWN_TIME);
+			Creature* NewCreature = sEAS.SpawnCreature(pLooter, 1770, vect.x, vect.y, vect.z, vect.o, DEFAULT_DESPAWN_TIMER);
 			NewCreature->SendChatMessage(CHAT_MSG_MONSTER_YELL, LANG_UNIVERSAL, "The Sons of Arugal will rise against all who challenge the power of the Moonrage!");
 		}
 	}

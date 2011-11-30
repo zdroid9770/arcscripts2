@@ -29,7 +29,7 @@ public:
 		if( pPlayer->GetQuestLogForEntry(5902) || pPlayer->GetQuestLogForEntry(5904) )
 		{
 			if( sEAS.GetNearestGameObject( pPlayer, 177491 ) )
-				sEAS.SpawnGameobject( pPlayer, 177491, 2449.51f, -1662.32f, 104.38f, 1.0f, DESPAWN_TIME );
+				sEAS.SpawnGameobject( pPlayer, 177491, 2449.51f, -1662.32f, 104.38f, pPlayer->GetOrientation(),  1.0f, 0, 0, 0.695946f, -0.718095f );
 		}
 	}
 };

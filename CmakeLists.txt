@@ -1,23 +1,30 @@
 #faster way to grab all source - no need to edit this every time
-file(GLOB_RECURSE base ${SCRIPTS_PATH}/base/*.cpp ${SCRIPTS_PATH}/base/*.h)
+file(GLOB_RECURSE dependencies ${SCRIPTS_PATH}/dependencies/*.cpp ${SCRIPTS_PATH}/dependencies/*.h)
 file(GLOB_RECURSE setup ${SCRIPTS_PATH}/system/*.cpp ${SCRIPTS_PATH}/base/*.h)
 file(GLOB_RECURSE event_scripts ${SCRIPTS_PATH}/scripts/EventScripts/*.cpp ${SCRIPTS_PATH}/scripts/EventScripts/*.h)
 file(GLOB_RECURSE gossip_scripts ${SCRIPTS_PATH}/scripts/GossipScripts/*.cpp ${SCRIPTS_PATH}/scripts/GossipScripts/*.h)
 file(GLOB_RECURSE instance_scripts ${SCRIPTS_PATH}/scripts/InstanceScripts/*.cpp ${SCRIPTS_PATH}/scripts/InstanceScripts/*.h)
-file(GLOB_RECURSE raid_scripts ${SCRIPTS_PATH}/scripts/QuestScripts/*.cpp ${SCRIPTS_PATH}/scripts/QuestScripts/*.h)
+file(GLOB_RECURSE raid_scripts ${SCRIPTS_PATH}/scripts/RaidScripts/*.cpp ${SCRIPTS_PATH}/scripts/RaidScripts/*.h)
 file(GLOB_RECURSE misc_scripts ${SCRIPTS_PATH}/scripts/MiscScripts/*.cpp ${SCRIPTS_PATH}/scripts/MiscScripts/*.h)
+file(GLOB_RECURSE extra_scripts ${SCRIPTS_PATH}/scripts/ExtraScripts/*.cpp ${SCRIPTS_PATH}/scripts/ExtraScripts/*.h)
 file(GLOB_RECURSE quest_scripts ${SCRIPTS_PATH}/scripts/QuestScripts/*.cpp ${SCRIPTS_PATH}/scripts/QuestScripts/*.h)
+file(GLOB_RECURSE creature_scripts ${SCRIPTS_PATH}/scripts/CreatureScripts/*.cpp ${SCRIPTS_PATH}/scripts/CreatureScripts/*.h)
+file(GLOB_RECURSE gameobject_scripts ${SCRIPTS_PATH}/scripts/GameObjectScripts/*.cpp ${SCRIPTS_PATH}/scripts/GameObjectScripts/*.h)
 
 set(source
 ${source}
-${base}
+${dependencies}
 ${setup}
 ${event_scripts}
 ${gossip_scripts}
 ${instance_scripts}
 ${raid_scripts}
 ${misc_scripts}
-${quest_scripts})
+${extra_scripts}
+${quest_scripts}
+${creature_scripts}
+${gameobject_scripts}
+)
 
 include_directories(
 ${include_dirs} 

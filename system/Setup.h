@@ -17,10 +17,10 @@
  */
 
 #include "StdAfx.h"
-#include "../base/EasyFunctions.h"
-#include "../base/MoonInstanceScript.h"
-#include "../base/MoonScriptBossAI.h"
-#include "../base/MoonScriptCreatureAI.h"
+#include "../dependencies/EasyFunctions.h"
+#include "../dependencies/MoonInstanceScript.h"
+#include "../dependencies/MoonScriptBossAI.h"
+#include "../dependencies/MoonScriptCreatureAI.h"
 
 #ifndef SETUP
 #define SETUP

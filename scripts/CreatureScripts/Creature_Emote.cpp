@@ -27,7 +27,7 @@ void GuardsOnEmote(Player *pPlayer, Unit *pUnit, uint32 Emote)
 		pUnit->Emote( static_cast<EmoteType>(Emote) );
 }
 
-void tOnEmote(Player *pPlayer, uint32 Emote, Unit *pUnit)
+void mOnEmote(Player *pPlayer, uint32 Emote, Unit *pUnit)
 {
 	if( !pUnit || pUnit->IsDead() || pUnit->CombatStatus.IsInCombat() || !pUnit->GetAIInterface() )
 		return;
@@ -45,5 +45,5 @@ void tOnEmote(Player *pPlayer, uint32 Emote, Unit *pUnit)
 
 void SetupEmoteCreatures(ScriptMgr * mgr)
 {
-	mgr->register_hook(SERVER_HOOK_EVENT_ON_EMOTE, (void *)&tOnEmote);
+	mgr->register_hook(SERVER_HOOK_EVENT_ON_EMOTE, (void *)&mOnEmote);
 }

@@ -44,7 +44,7 @@ public:
 	void OnActivate(Player * plr)
 	{
 		if( plr->HasQuest(9418) )
-			sEAS.SpawnCreature(plr, 17085, -1323.14f, 4042.12f, 117.0f, plr->GetOrientation()+float(M_PI), 360000, 1, 14);
+			sEAS.SpawnCreature(plr, 17085, -1323.14f, 4042.12f, 117.0f, plr->GetOrientation()+float(M_PI), 360000);
 	}
 };
 

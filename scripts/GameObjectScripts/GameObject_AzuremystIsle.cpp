@@ -28,7 +28,7 @@ public:
 	{
 		Creature *prisoner = sEAS.GetNearestCreature(pPlayer, 17375);
 		if( pPlayer->HasQuest(9544) && prisoner )
-			prisoner->Despawn(1, DESPAWN_TIME);
+			prisoner->Despawn(1, DEFAULT_DESPAWN_TIMER);
 	}
 };
 

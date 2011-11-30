@@ -34,7 +34,7 @@ public:
 		if( grenka != NULL )
 			return;
 		else
-			sEAS.SpawnCreature( pPlayer, 4490, vect, DESPAWN_TIME );
+			sEAS.SpawnCreature( pPlayer, 4490, vect.x, vect.y, vect.z, vect.o, DEFAULT_DESPAWN_TIMER );
 	}
 };
 
@@ -47,7 +47,7 @@ public:
 	void OnActivate(Player *pPlayer)
 	{
 		LocationVector vect( pPlayer->GetPositionX()+RandomFloat(2.0f), pPlayer->GetPositionY()+RandomFloat(2.0f), pPlayer->GetPositionZ(), pPlayer->GetOrientation() );
-		sEAS.SpawnCreature( pPlayer, 10882, vect, DESPAWN_TIME );
+		sEAS.SpawnCreature( pPlayer, 10882, vect.x, vect.y, vect.z, vect.o, DEFAULT_DESPAWN_TIMER );
 	}
 };
 

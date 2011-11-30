@@ -31,7 +31,7 @@ public:
 		{
 			vect.x += RandomFloat(2.0f);
 			vect.y += RandomFloat(2.0f);
-			sEAS.SpawnCreature(mTarget, 9526, vect, DESPAWN_TIME);
+			sEAS.SpawnCreature(TO_PLAYER(mTarget), 9526, vect.x, vect.y, vect.z, vect.o, DEFAULT_DESPAWN_TIMER);
 		}
 	}
 };
@@ -49,7 +49,7 @@ public:
 		{
 			vect.x += RandomFloat(2.0f);
 			vect.y += RandomFloat(2.0f);
-			sEAS.SpawnCreature(mTarget, 9527, vect, DESPAWN_TIME);
+			sEAS.SpawnCreature(TO_PLAYER(mTarget), 9527, vect.x, vect.y, vect.z, vect.o, DEFAULT_DESPAWN_TIMER);
 		}
 	}
 };
@@ -67,7 +67,7 @@ public:
 		{
 			vect.x += RandomFloat(2.0f);
 			vect.y += RandomFloat(2.0f);
-			sEAS.SpawnCreature(mTarget, 9297, vect, DESPAWN_TIME);
+			sEAS.SpawnCreature(TO_PLAYER(mTarget), 9297, vect.x, vect.y, vect.z, vect.o, DEFAULT_DESPAWN_TIMER);
 		}
 	}
 };
@@ -85,7 +85,7 @@ public:
 		{
 			vect.x += RandomFloat(2.0f);
 			vect.y += RandomFloat(2.0f);
-			sEAS.SpawnCreature(mTarget, 9521, vect, DESPAWN_TIME);
+			sEAS.SpawnCreature(TO_PLAYER(mTarget), 9521, vect.x, vect.y, vect.z, vect.o, DEFAULT_DESPAWN_TIMER);
 		}
 	}
 };
@@ -103,7 +103,7 @@ public:
 		{
 			vect.x += RandomFloat(2.0f);
 			vect.y += RandomFloat(2.0f);
-			sEAS.SpawnCreature(mTarget, 27946, vect, DESPAWN_TIME);
+			sEAS.SpawnCreature(TO_PLAYER(mTarget), 27946, vect.x, vect.y, vect.z, vect.o, DEFAULT_DESPAWN_TIMER);
 		}
 	}
 };
@@ -121,7 +121,7 @@ public:
 		{
 			vect.x += RandomFloat(2.0f);
 			vect.y += RandomFloat(2.0f);
-			sEAS.SpawnCreature(mTarget, 9526+i, vect, DESPAWN_TIME);
+			sEAS.SpawnCreature(TO_PLAYER(mTarget), 9526+i, vect.x, vect.y, vect.z, vect.o, DEFAULT_DESPAWN_TIMER);
 		}
 	}
 };

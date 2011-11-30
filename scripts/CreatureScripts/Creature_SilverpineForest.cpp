@@ -27,7 +27,7 @@ public:
 	void OnDied(Unit *mKiller)
 	{
 		LocationVector vect( GetUnit()->GetPositionX()+2, GetUnit()->GetPositionY()+2, GetUnit()->GetPositionZ(), GetUnit()->GetOrientation() );
-		sEAS.SpawnCreature(mKiller, 5895, vect, DESPAWN_TIME);
+		sEAS.SpawnCreature(TO_PLAYER(mKiller), 5895, vect.x, vect.y, vect.z, vect.o, DEFAULT_DESPAWN_TIMER);
 	}
 };
 

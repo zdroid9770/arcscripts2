@@ -34,11 +34,12 @@ public:
 			case 0:
 				break; // 33% of chance get nothing...
 			case 1:
-				sEAS.SpawnCreature( pPlayer, 24562, _gameobject->GetPositionNC(), DESPAWN_TIME ); // 33% to spawn a Nerub'ar Invader...
+				sEAS.SpawnCreature( pPlayer, 24562, _gameobject->GetPositionX(), _gameobject->GetPositionY(), _gameobject->GetPositionY(), _gameobject->GetOrientation(), DEFAULT_DESPAWN_TIMER ); break; // 33% to spawn a Nerub'ar Invader...
 			case 2:
-				sEAS.SpawnCreature( pPlayer, 25652, _gameobject->GetPositionNC(), DESPAWN_TIME ); // and 33% to spawn 3 Nerub'ar Scarab
-				sEAS.SpawnCreature( pPlayer, 25652, _gameobject->GetPositionNC(), DESPAWN_TIME );
-				sEAS.SpawnCreature( pPlayer, 25652, _gameobject->GetPositionNC(), DESPAWN_TIME );
+				sEAS.SpawnCreature( pPlayer, 25652, _gameobject->GetPositionX(), _gameobject->GetPositionY(), _gameobject->GetPositionY(), _gameobject->GetOrientation(), DEFAULT_DESPAWN_TIMER ); // and 33% to spawn 3 Nerub'ar Scarab
+				sEAS.SpawnCreature( pPlayer, 25652, _gameobject->GetPositionX(), _gameobject->GetPositionY(), _gameobject->GetPositionY(), _gameobject->GetOrientation(), DEFAULT_DESPAWN_TIMER );
+				sEAS.SpawnCreature( pPlayer, 25652, _gameobject->GetPositionX(), _gameobject->GetPositionY(), _gameobject->GetPositionY(), _gameobject->GetOrientation(), DEFAULT_DESPAWN_TIMER );
+				break;
 		}
 		_gameobject->Despawn( 500, 60000 );
 	}

@@ -28,7 +28,7 @@ public:
 	{
 		LocationVector vect( pPlayer->GetPositionX()+RandomFloat(2.0f), pPlayer->GetPositionY()+RandomFloat(2.0f), pPlayer->GetPositionZ(), pPlayer->GetOrientation() );
 		if( pPlayer->HasQuest(9508) )
-			sEAS.SpawnCreature( pPlayer, 17359, vect, DESPAWN_TIME );
+			sEAS.SpawnCreature( pPlayer, 17359, vect.x, vect.y, vect.z, vect.o, DEFAULT_DESPAWN_TIMER );
 	}
 };
 
@@ -41,7 +41,7 @@ public:
 	void OnActivate(Player * pPlayer)
 	{
 		if( pPlayer->HasQuest(9689) )
-			sEAS.SpawnCreature(pPlayer, 17592, -1203.8f, -12424.7f, 95.36f, 4.7f, DESPAWN_TIME);
+			sEAS.SpawnCreature(pPlayer, 17592, -1203.8f, -12424.7f, 95.36f, 4.7f, DEFAULT_DESPAWN_TIMER);
 	}
 };
 
@@ -58,7 +58,7 @@ public:
 
 		Creature *Princess = sEAS.GetNearestCreature( pPlayer, 17682 );
 		if( Princess != NULL )
-			Princess->Despawn( 1000, DESPAWN_TIME );
+			Princess->Despawn( 1000, DEFAULT_DESPAWN_TIMER );
 	}
 };
 

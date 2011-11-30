@@ -109,7 +109,7 @@ public:
 
 		ParentClass::AIUpdate();
 	}
-
+/*
 	void OnTransporterUpdate(Transporter * pTransporter)
 	{
 		// we just changed our map, we should shout that we are docking :)
@@ -131,6 +131,7 @@ public:
 		}
 		ParentClass::OnTransporterUpdate(pTransporter);
 	}
+*/
 private:
 	int8 state;
 	int32 timer;
@@ -233,7 +234,7 @@ public:
 
 		ParentClass::AIUpdate();
 	}
-
+/*
 	void OnTransporterUpdate(Transporter * pTransporter)
 	{
 		// we just changed our map, we should shout that we are docking :)
@@ -253,6 +254,7 @@ public:
 		
 		ParentClass::OnTransporterUpdate(pTransporter);
 	}
+*/
 private:
 	uint8 state;
 	int32 timer;
@@ -265,6 +267,7 @@ public:
 	MOONSCRIPT_FACTORY_FUNCTION(Fairweather, MoonScriptCreatureAI)
 	Fairweather(Creature *pCreature) : MoonScriptCreatureAI(pCreature) {}
 
+/*
 	void OnTransporterUpdate(Transporter * pTransporter)
 	{
 		if( pTransporter->state == TRANSPORTER_STATE_JUST_CHANGED_MAP || pTransporter->state == TRANSPORTER_STATE_JUST_DEPARTED_FROM_DOCKING )
@@ -279,6 +282,7 @@ public:
 		}
 		ParentClass::OnTransporterUpdate(pTransporter);
 	}
+*/
 };
 
 class Hatch : public MoonScriptCreatureAI
@@ -308,7 +312,7 @@ public:
 
 		ParentClass::AIUpdate();
 	}
-
+/*
 	void OnTransporterUpdate(Transporter * pTransporter)
 	{
 		// we are docking
@@ -325,6 +329,7 @@ public:
 		}
 		ParentClass::OnTransporterUpdate(pTransporter);
 	}
+*/
 private:
 	uint8 state;
 	int32 timer;
@@ -336,6 +341,7 @@ public:
 	MOONSCRIPT_FACTORY_FUNCTION(Hammerflange, MoonScriptCreatureAI)
 	Hammerflange(Creature * pCreature) : MoonScriptCreatureAI(pCreature) {}
 
+/*
 	void OnTransporterUpdate(Transporter * pTransporter)
 	{
 		// we are starting our way
@@ -345,6 +351,7 @@ public:
 		}
 		ParentClass::OnTransporterUpdate(pTransporter);
 	}
+*/
 };
 
 class Duuna : public MoonScriptCreatureAI
@@ -352,7 +359,7 @@ class Duuna : public MoonScriptCreatureAI
 public:
 	MOONSCRIPT_FACTORY_FUNCTION(Duuna, MoonScriptCreatureAI)
 	Duuna(Creature * pCreature) : MoonScriptCreatureAI(pCreature) {}
-
+/*
 	void OnTransporterUpdate(Transporter * pTransporter)
 	{
 		// we are starting our way
@@ -369,6 +376,7 @@ public:
 		}
 		ParentClass::OnTransporterUpdate(pTransporter);
 	}
+*/
 };
 
 // this is simple worker AI
@@ -550,7 +558,7 @@ public:
 		Menu->AddItem( 0, "Where is the zeppelin now?", 1 );
 		Menu->SendTo( Plr );
 	}
-
+/*
 	void GossipSelectOption(Object *pObject, Player *Plr, uint32 Id, uint32 IntId, const char *EnteredCode)
 	{
 		Transporter * pTransporter = objmgr.GetTransporterByEntry( THUNDERCALLER );
@@ -592,6 +600,7 @@ public:
 		if( Menu )
 			Menu->SendTo( Plr );
 	}
+*/
 };
 
 class OG_GG_Gossip : public GossipScript
@@ -613,6 +622,7 @@ public:
 		Menu->SendTo( Plr );
 	}
 
+/*
 	void GossipSelectOption(Object *pObject, Player *Plr, uint32 Id, uint32 IntId, const char *EnteredCode)
 	{
 		Transporter * pTransporter = objmgr.GetTransporterByEntry( IRONEAGLE );
@@ -654,6 +664,7 @@ public:
 		if( Menu )
 			Menu->SendTo( Plr );
 	}
+*/
 };
 
 class UC_GG_Gossip : public GossipScript
@@ -674,7 +685,7 @@ public:
 		Menu->AddItem( 0, "Where is the zeppelin now?", 1 );
 		Menu->SendTo( Plr );
 	}
-
+/*
 	void GossipSelectOption(Object *pObject, Player *Plr, uint32 Id, uint32 IntId, const char *EnteredCode)
 	{
 		Transporter * pTransporter = objmgr.GetTransporterByEntry( PURPLEPRINCESS );
@@ -720,12 +731,13 @@ public:
 		if( Menu )
 			Menu->SendTo( Plr );
 	}
+*/
 };
 
 void SetupTransportCreatureScripts(ScriptMgr * mgr)
 {
 	// main script used for zeppelin masters
-	mgr->register_hook( SERVER_HOOK_EVENT_ON_TRANSPORTER_UPDATE, (void *)&OnTransporterUpdate );
+	//mgr->register_hook( SERVER_HOOK_EVENT_ON_TRANSPORTER_UPDATE, (void *)&OnTransporterUpdate );
 
 	// CREATURE SCRIPTS
 	// zeppelin Thundercaller
