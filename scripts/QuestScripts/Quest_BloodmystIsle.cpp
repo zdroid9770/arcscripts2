@@ -197,42 +197,11 @@ class TheKesselRun3 : public GossipScript
 
 //-----------------------------------------------------------------------------------------------------------------------
 
-int fulborgskilled = 0;
-
-
-class SavingPrincessStillpine : public GameObjectAIScript
-{
-	public:
-		SavingPrincessStillpine(GameObject* goinstance) : GameObjectAIScript(goinstance) {}
-		static GameObjectAIScript* Create(GameObject* GO) { return new SavingPrincessStillpine(GO); }
-
-		void OnActivate(Player* pPlayer)
-		{
-			QuestLogEntry* qle = pPlayer->GetQuestLogForEntry(9667);
-			if(qle == NULL)
-				return;
-
-			if(qle->GetMobCount(0) < qle->GetQuest()->required_mobcount[0])
-			{
-				qle->SetMobCount(0, qle->GetMobCount(0) + 1);
-				qle->SendUpdateAddKill(0);
-				qle->UpdatePlayerFields();
-			}
-
-			Creature* princess = pPlayer->GetMapMgr()->GetInterface()->GetCreatureNearestCoords(pPlayer->GetPositionX(), pPlayer->GetPositionY(), pPlayer->GetPositionZ(), 17682);
-			if(!princess)
-				return;
-
-			princess->Despawn(1000, 6 * 60 * 1000);
-			return;
-		}
-};
-
 class HighChiefBristlelimb : public CreatureAIScript
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(HighChiefBristlelimb);
-		HighChiefBristlelimb(Creature* pCreature) : CreatureAIScript(pCreature) {}
+		HighChiefBristlelimb(Creature* pCreature) : CreatureAIScript(pCreature) {fulborgskilled = 0;}
 
 		void OnDied(Unit* mKiller)
 		{
@@ -250,6 +219,8 @@ class HighChiefBristlelimb : public CreatureAIScript
 			}
 		}
 
+	protected:
+		int fulborgskilled;
 };
 
 class WebbedCreature : public CreatureAIScript
@@ -321,23 +292,11 @@ class WebbedCreature : public CreatureAIScript
 
 void SetupBloodmystIsle(ScriptMgr* mgr)
 {
-	QuestScript* KesselRun = new TheKesselRun();
-	mgr->register_quest_script(9663, KesselRun);
-
-	GossipScript* gossip1 = new TheKesselRun1();
-	mgr->register_gossip_script(17440, gossip1);
-
-	GossipScript* gossip2 = new TheKesselRun2();
-	mgr->register_gossip_script(17116, gossip2);
-
-	GossipScript* gossip3 = new TheKesselRun3();
-	mgr->register_gossip_script(17240, gossip3);
-
-
-	mgr->register_gameobject_script(181928, &SavingPrincessStillpine::Create);
-
+	mgr->register_quest_script(9663, new TheKesselRun);
+	mgr->register_gossip_script(17440, new TheKesselRun1);
+	mgr->register_gossip_script(17116, new TheKesselRun2);
+	mgr->register_gossip_script(17240, new TheKesselRun3);
 	mgr->register_creature_script(17320, &HighChiefBristlelimb::Create);
 	mgr->register_creature_script(17321, &HighChiefBristlelimb::Create);
-
 	mgr->register_creature_script(17680, &WebbedCreature::Create);
 }

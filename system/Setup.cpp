@@ -95,7 +95,6 @@ extern "C" SCRIPT_DECL void _exp_script_register(ScriptMgr* mgr)	// Comment any 
 	SetupTheramoreGossip(mgr);
 	SetupTeldrassilGossip(mgr);
 	SetupDarkmoonFaireGossip(mgr);
-	SetupDarkmoonFaireBarker(mgr);
 	SetupBoreanTundraGossip(mgr);
 	SetupDragonblightGossip(mgr);
 	SetupGeneralGossip(mgr);
@@ -165,12 +164,6 @@ extern "C" SCRIPT_DECL void _exp_script_register(ScriptMgr* mgr)	// Comment any 
 	SetupRuinsOfAhnQiraj(mgr);
 	SetupTempleOfAhnQiraj(mgr);
 	SetupRuinsOfAhnQiraj(mgr);
-
-	//MISC
-	SetupGoHandlers(mgr);
-	SetupRandomScripts(mgr);
-	SetupMiscCreatures(mgr);
-	SetupDarkmoonFaireObjects(mgr);
 
 	//QUEST
 	SetupDruid(mgr);

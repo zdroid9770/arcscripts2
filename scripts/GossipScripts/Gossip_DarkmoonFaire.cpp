@@ -59,45 +59,6 @@ class SetupCarnies_Gossip : public GossipScript
 
 };
 
-class SetupCarnies_Bark : public CreatureAIScript
-{
-	public:
-		ADD_CREATURE_FACTORY_FUNCTION(SetupCarnies_Bark);
-		SetupCarnies_Bark(Creature* pCreature) : CreatureAIScript(pCreature)
-		{
-			RegisterAIUpdateEvent(120000); 			// Start initial update after: 2mins
-		}
-
-		void AIUpdate()
-		{
-			int randGossip;
-			randGossip = rand() % 4;
-			switch(randGossip)
-			{
-				case 0:
-					_unit->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, BARK_SETUP_CARNIES_1);
-					break;
-
-				case 1:
-					_unit->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, BARK_SETUP_CARNIES_2);
-					break;
-
-				case 2:
-					_unit->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, BARK_SETUP_CARNIES_3);
-					break;
-
-				case 3:
-					_unit->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, BARK_SETUP_CARNIES_4);
-					break;
-			}
-
-			int rndTimer;
-			rndTimer = rand() % 300 + 120; 			// Generate a random value between: 2-5mins
-			rndTimer = rndTimer * 1000; 			// Convert to milliseconds
-			ModifyAIUpdateEvent(rndTimer); 			// Modify timer to new random value
-		}
-};
-
 // Active Carnies
 #define BARK_ACTIVE_CARNIES_1    "Having a good time?"
 #define BARK_ACTIVE_CARNIES_2    "Sure are a lot of litter bugs around here."
@@ -147,45 +108,6 @@ class ActiveCarnies_Gossip : public GossipScript
 			}
 		}
 
-};
-
-class ActiveCarnies_Bark : public CreatureAIScript
-{
-	public:
-		ADD_CREATURE_FACTORY_FUNCTION(ActiveCarnies_Bark);
-		ActiveCarnies_Bark(Creature* pCreature) : CreatureAIScript(pCreature)
-		{
-			RegisterAIUpdateEvent(120000); 			// Start initial update after: 2mins
-		}
-
-		void AIUpdate()
-		{
-			int randGossip;
-			randGossip = rand() % 4;
-			switch(randGossip)
-			{
-				case 0:
-					_unit->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, BARK_ACTIVE_CARNIES_1);
-					break;
-
-				case 1:
-					_unit->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, BARK_ACTIVE_CARNIES_2);
-					break;
-
-				case 2:
-					_unit->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, BARK_ACTIVE_CARNIES_3);
-					break;
-
-				case 3:
-					_unit->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, BARK_ACTIVE_CARNIES_4);
-					break;
-			}
-
-			int rndTimer;
-			rndTimer = rand() % 180 + 60; 			// Generate a random value between: 1-3mins
-			rndTimer = rndTimer * 1000; 			// Convert to milliseconds
-			ModifyAIUpdateEvent(rndTimer); 			// Modify timer to new random value
-		}
 };
 
 // Burth
@@ -251,51 +173,6 @@ class Burth_Gossip : public GossipScript
 
 };
 
-// Flik
-#define BARK_FLIK_1    "It's getting away!"
-#define BARK_FLIK_2    "Get back here!"
-#define BARK_FLIK_3    "Hey, someone help me catch this thing!"
-#define BARK_FLIK_4    "Frogs and leather balls for sale!"
-
-class Flik_Bark : public CreatureAIScript
-{
-	public:
-		ADD_CREATURE_FACTORY_FUNCTION(Flik_Bark);
-		Flik_Bark(Creature* pCreature) : CreatureAIScript(pCreature)
-		{
-			RegisterAIUpdateEvent(180000); 			// Start initial update after: 3mins
-		}
-
-		void AIUpdate()
-		{
-			int randGossip;
-			randGossip = rand() % 4;
-			switch(randGossip)
-			{
-				case 0:
-					_unit->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, BARK_FLIK_1);
-					break;
-
-				case 1:
-					_unit->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, BARK_FLIK_2);
-					break;
-
-				case 2:
-					_unit->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, BARK_FLIK_3);
-					break;
-
-				case 3:
-					_unit->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, BARK_FLIK_4);
-					break;
-			}
-
-			int rndTimer;
-			rndTimer = rand() % 240 + 120; 			// Generate a random value between: 2-4mins
-			rndTimer = rndTimer * 1000; 			// Convert to milliseconds
-			ModifyAIUpdateEvent(rndTimer); 			// Modify timer to new random value
-		}
-};
-
 // Flik's Frog
 class FliksFrog_Gossip : public GossipScript
 {
@@ -334,96 +211,6 @@ class FliksFrog_Gossip : public GossipScript
 
 };
 
-// Gevas Grimegate
-#define BARK_GEVAS_GRIMEGATE_1    "Tickets! Redeem your Darkmoon Faire Prize Tickets here! Wondrous and exotic prizes are waiting for you!"
-#define BARK_GEVAS_GRIMEGATE_2    "Five tickets or two-hundred and fifty, it doesn't matter friend, everybody is a winner!"
-#define BARK_GEVAS_GRIMEGATE_3    "All it takes is five or more and you're on your way to the most wondrous prizes on all of Azeroth. Everybody is a winner!"
-#define BARK_GEVAS_GRIMEGATE_4    "Mysterious prizes await the adventurous. Step right up, step right up!"
-
-class GevasGrimegate_Bark : public CreatureAIScript
-{
-	public:
-		ADD_CREATURE_FACTORY_FUNCTION(GevasGrimegate_Bark);
-		GevasGrimegate_Bark(Creature* pCreature) : CreatureAIScript(pCreature)
-		{
-			RegisterAIUpdateEvent(60000); 			// Start initial update after: 1mins
-		}
-
-		void AIUpdate()
-		{
-			int randGossip;
-			randGossip = rand() % 4;
-			switch(randGossip)
-			{
-				case 0:
-					_unit->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, BARK_GEVAS_GRIMEGATE_1);
-					break;
-
-				case 1:
-					_unit->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, BARK_GEVAS_GRIMEGATE_2);
-					break;
-
-				case 2:
-					_unit->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, BARK_GEVAS_GRIMEGATE_3);
-					break;
-
-				case 3:
-					_unit->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, BARK_GEVAS_GRIMEGATE_4);
-					break;
-			}
-
-			int rndTimer;
-			rndTimer = rand() % 300 + 180; 			// Generate a random value between: 3-5mins
-			rndTimer = rndTimer * 1000; 			// Convert to milliseconds
-			ModifyAIUpdateEvent(rndTimer); 			// Modify timer to new random value
-		}
-};
-
-// Lhara
-#define BARK_LHARA_1    "Come and take a look at my wares while you still can. We're here all week, and then we're off to some far off land."
-#define BARK_LHARA_2    "Darkmoon Faire Cards? See the Professor here for those. Come see me if you are a dealer in hard to come by antiquities and artifacts."
-#define BARK_LHARA_3    "Every item that I have for sale I acquired myself. You have my personal guarantee of authenticity."
-#define BARK_LHARA_4    "Have you any idea what I go through to bring these incomparable valuables to sell? Come see them all for yourself!"
-
-class Lhara_Bark : public CreatureAIScript
-{
-	public:
-		ADD_CREATURE_FACTORY_FUNCTION(Lhara_Bark);
-		Lhara_Bark(Creature* pCreature) : CreatureAIScript(pCreature)
-		{
-			RegisterAIUpdateEvent(90000); 			// Start initial update after: 1.5mins
-		}
-
-		void AIUpdate()
-		{
-			int randGossip;
-			randGossip = rand() % 4;
-			switch(randGossip)
-			{
-				case 0:
-					_unit->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, BARK_LHARA_1);
-					break;
-
-				case 1:
-					_unit->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, BARK_LHARA_2);
-					break;
-
-				case 2:
-					_unit->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, BARK_LHARA_3);
-					break;
-
-				case 3:
-					_unit->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, BARK_LHARA_4);
-					break;
-			}
-
-			int rndTimer;
-			rndTimer = rand() % 360 + 240; 			// Generate a random value between: 4-6mins
-			rndTimer = rndTimer * 1000; 			// Convert to milliseconds
-			ModifyAIUpdateEvent(rndTimer); 			// Modify timer to new random value
-		}
-};
-
 // Maxima Blastenheimer
 class MaximaBlastenheimer_Gossip : public GossipScript
 {
@@ -458,45 +245,6 @@ class MaximaBlastenheimer_Gossip : public GossipScript
 			}
 		}
 
-};
-
-// Morja
-#define BARK_MORJA_1    "Jubjub? Where are you, Jubjub? Oh no! Where did you go this time!"
-
-class Morja_Bark : public CreatureAIScript
-{
-	public:
-		ADD_CREATURE_FACTORY_FUNCTION(Morja_Bark);
-		Morja_Bark(Creature* pCreature) : CreatureAIScript(pCreature)
-		{
-			RegisterAIUpdateEvent(240000); 			// Start initial update after: 4mins
-		}
-
-		void AIUpdate()
-		{
-			_unit->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, BARK_MORJA_1);
-
-			int rndTimer;
-			rndTimer = rand() % 360 + 240; 			// Generate a random value between: 4-6mins
-			rndTimer = rndTimer * 1000; 			// Convert to milliseconds
-			ModifyAIUpdateEvent(rndTimer); 			// Modify timer to new random value
-		}
-};
-
-// Music Doodad
-class MusicDoodad : public CreatureAIScript
-{
-	public:
-		ADD_CREATURE_FACTORY_FUNCTION(MusicDoodad);
-		MusicDoodad(Creature* pCreature) : CreatureAIScript(pCreature)
-		{
-			RegisterAIUpdateEvent(1000); 			// Get that music playing right away!
-		}
-
-		void AIUpdate()
-		{
-			_unit->PlaySoundToSet(8440);			// Play Darkmoon Faire music if player is in range.
-		}
 };
 
 // Professor Thaddeus Paleo
@@ -591,45 +339,6 @@ class ProfessorThaddeusPaleo_Gossip : public GossipScript
 			}
 		}
 
-};
-
-class ProfessorThaddeusPaleo_Bark : public CreatureAIScript
-{
-	public:
-		ADD_CREATURE_FACTORY_FUNCTION(ProfessorThaddeusPaleo_Bark);
-		ProfessorThaddeusPaleo_Bark(Creature* pCreature) : CreatureAIScript(pCreature)
-		{
-			RegisterAIUpdateEvent(210000); 			// Start initial update after: 3.5mins
-		}
-
-		void AIUpdate()
-		{
-			int randGossip;
-			randGossip = rand() % 4;
-			switch(randGossip)
-			{
-				case 0:
-					_unit->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, BARK_PROFESSOR_THADDEUS_PALEO_1);
-					break;
-
-				case 1:
-					_unit->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, BARK_PROFESSOR_THADDEUS_PALEO_2);
-					break;
-
-				case 2:
-					_unit->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, BARK_PROFESSOR_THADDEUS_PALEO_3);
-					break;
-
-				case 3:
-					_unit->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, BARK_PROFESSOR_THADDEUS_PALEO_4);
-					break;
-			}
-
-			int rndTimer;
-			rndTimer = rand() % 180 + 300; 			// Generate a random value between: 3-5mins
-			rndTimer = rndTimer * 1000; 			// Convert to milliseconds
-			ModifyAIUpdateEvent(rndTimer); 			// Modify timer to new random value
-		}
 };
 
 // Sayge
@@ -852,45 +561,6 @@ class Sayge_Gossip : public GossipScript
 
 };
 
-class Sayge_Bark : public CreatureAIScript
-{
-	public:
-		ADD_CREATURE_FACTORY_FUNCTION(Sayge_Bark);
-		Sayge_Bark(Creature* pCreature) : CreatureAIScript(pCreature)
-		{
-			RegisterAIUpdateEvent(135000); 			// Start initial update after: 2.25mins
-		}
-
-		void AIUpdate()
-		{
-			int randGossip;
-			randGossip = rand() % 4;
-			switch(randGossip)
-			{
-				case 0:
-					_unit->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, BARK_SAYGE_1);
-					break;
-
-				case 1:
-					_unit->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, BARK_SAYGE_2);
-					break;
-
-				case 2:
-					_unit->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, BARK_SAYGE_3);
-					break;
-
-				case 3:
-					_unit->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, BARK_SAYGE_4);
-					break;
-			}
-
-			int rndTimer;
-			rndTimer = rand() % 180 + 300; 			// Generate a random value between: 3-5mins
-			rndTimer = rndTimer * 1000; 			// Convert to milliseconds
-			ModifyAIUpdateEvent(rndTimer); 			// Modify timer to new random value
-		}
-};
-
 // Selina Dourman
 class SelinaDourman_Gossip : public GossipScript
 {
@@ -999,183 +669,15 @@ class SilasDarkmoon_Gossip : public GossipScript
 
 };
 
-class SilasDarkmoon_Bark : public CreatureAIScript
-{
-	public:
-		ADD_CREATURE_FACTORY_FUNCTION(SilasDarkmoon_Bark);
-		SilasDarkmoon_Bark(Creature* pCreature) : CreatureAIScript(pCreature)
-		{
-			RegisterAIUpdateEvent(180000); 			// Start initial update after: 3mins
-		}
-
-		void AIUpdate()
-		{
-			int randGossip;
-			randGossip = rand() % 6;
-			switch(randGossip)
-			{
-				case 0:
-					_unit->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, BARK_SILAS_DARKMOON_1);
-					break;
-
-				case 1:
-					_unit->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, BARK_SILAS_DARKMOON_2);
-					break;
-
-				case 2:
-					_unit->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, BARK_SILAS_DARKMOON_3);
-					break;
-
-				case 3:
-					_unit->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, BARK_SILAS_DARKMOON_4);
-					break;
-
-				case 4:
-					_unit->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, BARK_SILAS_DARKMOON_5);
-					break;
-
-				case 5:
-					_unit->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, BARK_SILAS_DARKMOON_6);
-					break;
-			}
-
-			int rndTimer;
-			rndTimer = rand() % 300 + 240; 			// Generate a random value between: 3-5mins
-			rndTimer = rndTimer * 1000; 			// Convert to milliseconds
-			ModifyAIUpdateEvent(rndTimer); 			// Modify timer to new random value
-		}
-};
-
-// Stamp Thunderhorn
-#define BARK_STAMP_THUNDERHORN_1    "Darkmoon Dogs fresh off the grill. Come and get em while they're hot!"
-#define BARK_STAMP_THUNDERHORN_2    "Step right up! Get your Red Hot Wings right here!"
-#define BARK_STAMP_THUNDERHORN_3    "I recommend the Darkmoon Special Reserve to wash down some Red Hot Wings. And if the future is what you seek, then run, don't walk, to speak with Sayge."
-#define BARK_STAMP_THUNDERHORN_4    "For a limited time only, Crunchy Frog available exclusively here at the Darkmoon Faire."
-#define BARK_STAMP_THUNDERHORN_5    "You've got money and we've got food. What are you waiting for?!"
-
-class StampThunderhorn_Bark : public CreatureAIScript
-{
-	public:
-		ADD_CREATURE_FACTORY_FUNCTION(StampThunderhorn_Bark);
-		StampThunderhorn_Bark(Creature* pCreature) : CreatureAIScript(pCreature)
-		{
-			RegisterAIUpdateEvent(180000); 			// Start initial update after: 3mins
-		}
-
-		void AIUpdate()
-		{
-			int randGossip;
-			randGossip = rand() % 5;
-			switch(randGossip)
-			{
-				case 0:
-					_unit->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, BARK_STAMP_THUNDERHORN_1);
-					break;
-
-				case 1:
-					_unit->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, BARK_STAMP_THUNDERHORN_2);
-					break;
-
-				case 2:
-					_unit->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, BARK_STAMP_THUNDERHORN_3);
-					break;
-
-				case 3:
-					_unit->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, BARK_STAMP_THUNDERHORN_4);
-					break;
-
-				case 4:
-					_unit->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, BARK_STAMP_THUNDERHORN_5);
-					break;
-			}
-
-			int rndTimer;
-			rndTimer = rand() % 300 + 180; 			// Generate a random value between: 3-5mins
-			rndTimer = rndTimer * 1000; 			// Convert to milliseconds
-			ModifyAIUpdateEvent(rndTimer); 			// Modify timer to new random value
-		}
-};
-
-// Sylannia
-#define BARK_SYLANNIA_1    "Huzzah for the tipper! Step right up and get your delicious, cold drinks right here!"
-#define BARK_SYLANNIA_2    "Just in... another batch of Darkmoon Special Reserve. Come get yours before they're all gone!"
-#define BARK_SYLANNIA_3    "You there! Yes you! You look thirsty. Get over here, I have just what you need!"
-#define BARK_SYLANNIA_4    "Cheap beer! Get your Cheap Beer right here!"
-
-class Sylannia_Bark : public CreatureAIScript
-{
-	public:
-		ADD_CREATURE_FACTORY_FUNCTION(Sylannia_Bark);
-		Sylannia_Bark(Creature* pCreature) : CreatureAIScript(pCreature)
-		{
-			RegisterAIUpdateEvent(120000); 			// Start initial update after: 2mins
-		}
-
-		void AIUpdate()
-		{
-			int randGossip;
-			randGossip = rand() % 4;
-			switch(randGossip)
-			{
-				case 0:
-					_unit->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, BARK_SYLANNIA_1);
-					break;
-
-				case 1:
-					_unit->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, BARK_SYLANNIA_2);
-					break;
-
-				case 2:
-					_unit->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, BARK_SYLANNIA_3);
-					break;
-
-				case 3:
-					_unit->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, BARK_SYLANNIA_4);
-					break;
-			}
-
-			int rndTimer;
-			rndTimer = rand() % 360 + 180; 			// Generate a random value between: 3-6mins
-			rndTimer = rndTimer * 1000; 			// Convert to milliseconds
-			ModifyAIUpdateEvent(rndTimer); 			// Modify timer to new random value
-		}
-};
-
 void SetupDarkmoonFaireGossip(ScriptMgr* mgr)
 {
-	GossipScript* ActiveCarniesGossip = new ActiveCarnies_Gossip;
-	//GossipScript * SetupCarniesGossip = new SetupCarnies_Gossip;
-	GossipScript* BurthGossip = new Burth_Gossip;
-	GossipScript* FliksFrogGossip = new FliksFrog_Gossip;
-	GossipScript* MaximaBlastenheimerGossip = new MaximaBlastenheimer_Gossip;
-	GossipScript* ProfessorThaddeusPaleoGossip = new ProfessorThaddeusPaleo_Gossip;
-	GossipScript* SaygeGossip = new Sayge_Gossip;
-	GossipScript* SelinaDourmanGossip = new SelinaDourman_Gossip;
-	GossipScript* SilasDarkmoonGossip = new SilasDarkmoon_Gossip;
-
-	mgr->register_gossip_script(14849, ActiveCarniesGossip); 						// Active Carine Gossip
-	//mgr->register_gossip_script(14849, SetupCarniesGossip); 						// Setup Carine Gossip
-	mgr->register_gossip_script(14827, BurthGossip); 								// Burth Gossip
-	mgr->register_gossip_script(14866, FliksFrogGossip); 							// Flik's Frog Gossip
-	mgr->register_gossip_script(15303, MaximaBlastenheimerGossip); 					// Maxima Blastenheimer Gossip
-	mgr->register_gossip_script(14847, ProfessorThaddeusPaleoGossip); 				// Professor Thaddeus Paleo Gossip
-	mgr->register_gossip_script(14822, SaygeGossip); 								// Sayge Gossip
-	mgr->register_gossip_script(10445, SelinaDourmanGossip); 						// Selina Dourman
-	mgr->register_gossip_script(14823, SilasDarkmoonGossip); 						// Silas Darkmoon
-}
-
-void SetupDarkmoonFaireBarker(ScriptMgr* mgr)
-{
-	mgr->register_creature_script(14849, &ActiveCarnies_Bark::Create); 				// Active Carines
-	//mgr->register_creature_script(14849, &SetupCarnies_Bark::Create); 				// Setup Carine
-	mgr->register_creature_script(14860, &Flik_Bark::Create); 						// Flik
-	mgr->register_creature_script(14828, &GevasGrimegate_Bark::Create); 			// Gevas Grimegate
-	mgr->register_creature_script(14846, &Lhara_Bark::Create); 						// Lhara
-	mgr->register_creature_script(14871, &Morja_Bark::Create); 						// Morja
-	mgr->register_creature_script(500000, &MusicDoodad::Create); 					// Darkmoon Faire Music Doodad
-	mgr->register_creature_script(14847, &ProfessorThaddeusPaleo_Bark::Create); 	// Professor Thaddeus Paleo
-	mgr->register_creature_script(14822, &Sayge_Bark::Create); 						// Sayge
-	mgr->register_creature_script(14823, &SilasDarkmoon_Bark::Create); 				// Silas Darkmoon
-	mgr->register_creature_script(14845, &StampThunderhorn_Bark::Create); 			// StampThunderhorn
-	mgr->register_creature_script(14844, &Sylannia_Bark::Create); 					// Sylannia
+	mgr->register_gossip_script(14849, new ActiveCarnies_Gossip); 						// Active Carine Gossip
+	//mgr->register_gossip_script(14849, new SetupCarnies_Gossip); 						// Setup Carine Gossip
+	mgr->register_gossip_script(14827, new Burth_Gossip); 								// Burth Gossip
+	mgr->register_gossip_script(14866, new FliksFrog_Gossip); 							// Flik's Frog Gossip
+	mgr->register_gossip_script(15303, new MaximaBlastenheimer_Gossip); 				// Maxima Blastenheimer Gossip
+	mgr->register_gossip_script(14847, new ProfessorThaddeusPaleo_Gossip); 				// Professor Thaddeus Paleo Gossip
+	mgr->register_gossip_script(14822, new Sayge_Gossip); 								// Sayge Gossip
+	mgr->register_gossip_script(10445, new SelinaDourman_Gossip); 						// Selina Dourman
+	mgr->register_gossip_script(14823, new SilasDarkmoon_Gossip); 						// Silas Darkmoon
 }

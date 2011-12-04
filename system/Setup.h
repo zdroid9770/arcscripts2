@@ -92,7 +92,6 @@ void SetupIronforgeGossip(ScriptMgr* mgr);
 void SetupDalaranGossip(ScriptMgr* mgr);
 void SetupTheramoreGossip(ScriptMgr* mgr);
 void SetupDarkmoonFaireGossip(ScriptMgr* mgr);
-void SetupDarkmoonFaireBarker(ScriptMgr* mgr);
 void SetupTeldrassilGossip(ScriptMgr* mgr);
 void SetupBoreanTundraGossip(ScriptMgr* mgr);
 void SetupDragonblightGossip(ScriptMgr* mgr);
@@ -162,14 +161,6 @@ void SetupIcecrownCitadel(ScriptMgr* mgr);
 void SetupRubySanctum(ScriptMgr* mgr);
 void SetupTempleOfAhnQiraj(ScriptMgr* mgr);
 void SetupRuinsOfAhnQiraj(ScriptMgr* mgr);
-
-//MISC
-void SetupGoHandlers(ScriptMgr* mgr);
-void SetupQDGoHandlers(ScriptMgr* mgr);
-void SetupRandomScripts(ScriptMgr* mgr);
-void SetupMiscCreatures(ScriptMgr* mgr);
-void SetupDarkmoonFaireObjects(ScriptMgr* mgr);
-void InitializeGameObjectTeleportTable(ScriptMgr* mgr);
 
 //QUEST
 void SetupDruid(ScriptMgr* mgr);

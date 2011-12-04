@@ -18,30 +18,6 @@
 
 #include "Setup.h"
 
-class ProfessorPhizzlethorpe : public CreatureAIScript
-{
-public:
-	ADD_CREATURE_FACTORY_FUNCTION(ProfessorPhizzlethorpe)
-	ProfessorPhizzlethorpe(Creature *pCreature) : CreatureAIScript(pCreature) {}
-
-	void OnReachWP(uint32 iWaypointId, bool bForwards)
-	{
-		if( iWaypointId == 15 )
-		{
-			GetUnit()->GetAIInterface()->deleteWaypoints();
-			GetUnit()->SendChatMessage( CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, "Thanks, I found the fact that, it searched" );
-			GetUnit()->Despawn(DEFAULT_DESPAWN_TIMER, 1000);
-
-			if( GetUnit()->m_escorter != NULL )
-			{
-				GetUnit()->m_escorter->GetQuestLogForEntry(665)->SendQuestComplete();
-				GetUnit()->m_escorter = NULL;
-			}
-		}
-	}
-};
-
 void SetupArathiHighlandsCreature(ScriptMgr * mgr)
 {
-	mgr->register_creature_script( 2768,  &ProfessorPhizzlethorpe::Create );	// Professor Phizzlethorpe
 }
