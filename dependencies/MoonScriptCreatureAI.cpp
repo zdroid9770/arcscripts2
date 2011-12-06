@@ -97,6 +97,7 @@ MoonScriptCreatureAI::~MoonScriptCreatureAI()
 	DeleteArray(mOnDiedEmotes);
 	DeleteArray(mOnTargetDiedEmotes);
 	DeleteArray(mOnCombatStartEmotes);
+	DeleteArray(mOnCombatStopEmotes);
 	DeleteArray(mOnTauntEmotes);
 	DeleteArray(mSpells);
 	DeleteArray(mEvents);
@@ -652,6 +653,9 @@ EmoteDesc* MoonScriptCreatureAI::AddEmote(EventType pEventType, const char* pTex
 			case Event_OnCombatStart:
 				mOnCombatStartEmotes.push_back(NewEmote);
 				break;
+			case Event_OnCombatStop:
+				mOnCombatStopEmotes.push_back(NewEmote);
+				break;
 			case Event_OnTargetDied:
 				mOnTargetDiedEmotes.push_back(NewEmote);
 				break;
@@ -676,6 +680,9 @@ void MoonScriptCreatureAI::RemoveEmote(EventType pEventType, EmoteDesc* pEmote)
 		case Event_OnCombatStart:
 			DeleteItem(mOnCombatStartEmotes, pEmote);
 			break;
+		case Event_OnCombatStop:
+			mOnCombatStopEmotes.push_back(NewEmote);
+			break;
 		case Event_OnTargetDied:
 			DeleteItem(mOnTargetDiedEmotes, pEmote);
 			break;
@@ -697,6 +704,9 @@ void MoonScriptCreatureAI::RemoveAllEmotes(EventType pEventType)
 	{
 		case Event_OnCombatStart:
 			DeleteArray(mOnCombatStartEmotes);
+			break;
+		case Event_OnCombatStop:
+			mOnCombatStopEmotes.push_back(NewEmote);
 			break;
 		case Event_OnTargetDied:
 			DeleteArray(mOnTargetDiedEmotes);
@@ -1083,6 +1093,7 @@ void MoonScriptCreatureAI::OnCombatStart(Unit* pTarget)
 
 void MoonScriptCreatureAI::OnCombatStop(Unit* pTarget)
 {
+	RandomEmote(mOnCombatStopEmotes);
 	CancelAllSpells();
 	CancelAllTimers();
 	RemoveAllEvents();

@@ -59,6 +59,7 @@ enum TextType
 enum EventType
 {
     Event_OnCombatStart,
+	Event_OnCombatStop,
     Event_OnTargetDied,
     Event_OnDied,
     Event_OnTaunt
@@ -445,6 +446,7 @@ class SCRIPT_DECL MoonScriptCreatureAI : public CreatureAIScript
 		void					AddRareLoot(Unit* pTarget, uint32 pItemID, float pPercentChance);
 
 		//Reimplemented Events
+		virtual void			Reset();
 		virtual void			OnCombatStart(Unit* pTarget);
 		virtual void			OnCombatStop(Unit* pTarget);
 		virtual void			OnTargetDied(Unit* pTarget);
@@ -480,6 +482,7 @@ class SCRIPT_DECL MoonScriptCreatureAI : public CreatureAIScript
 		SpellDesc*				mRunToTargetSpellCache;
 
 		EmoteArray				mOnCombatStartEmotes;
+		EmoteArray				mOnCombatStopEmotes;
 		EmoteArray				mOnTargetDiedEmotes;
 		EmoteArray				mOnDiedEmotes;
 		EmoteArray				mOnTauntEmotes;
