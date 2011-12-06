@@ -220,18 +220,20 @@ public:
 
 		SpellDesc *sEnrage = AddSpell(MarrowgarSpells[SPELL_LM_BERSERK][pMode], Target_Self, 0, 0, 0, 0, 0, false, "THE MASTER'S RAGE COURSES THROUGH ME!", Text_Yell, 16945);	//10 min
 		sBoneSlice = AddSpell(MarrowgarSpells[SPELL_LM_BONE_SLICE][pMode], Target_Current, 25.0f, 0, rand()%10+1);
-		SpellDesc* sBoneSpike = AddSpell(MarrowgarSpells[SPELL_LM_BONE_SPIKE_GRAVEYARD][pMode], Target_RandomPlayer, 25.0f, 0, rand()%20+15);
-			sBoneSpike->AddEmote("Bound by bone!", Text_Yell, 16947);
-			sBoneSpike->AddEmote("Stick Around!", Text_Yell, 16948);
-			sBoneSpike->AddEmote("The only escape is death!", Text_Yell, 16949);
 
 		SetEnrageInfo(sEnrage, MINUTE*10*SEC_IN_MS);
 
 		//normal phase
 		AddPhaseSpell(1, sBoneSlice);
 		AddPhaseSpell(1, AddSpell(MarrowgarSpells[SPELL_LM_COLDFLAME][pMode], Target_RandomPlayer, 100.0f, 0, 5));
+
 		if(IsHeroic())
-			AddPhaseSpell(1, sBoneSpike);
+		{
+			SpellDesc* sBoneSpike = AddPhaseSpell(1, AddSpell(MarrowgarSpells[SPELL_LM_BONE_SPIKE_GRAVEYARD][pMode], Target_RandomPlayer, 25.0f, 0, rand()%20+15));
+			sBoneSpike->AddEmote("Bound by bone!", Text_Yell, 16947);
+			sBoneSpike->AddEmote("Stick Around!", Text_Yell, 16948);
+			sBoneSpike->AddEmote("The only escape is death!", Text_Yell, 16949);
+		}
 
 		//Bone Storm!
 		sBoneStorm = AddSpell(MarrowgarSpells[SPELL_LM_BONESTORM][pMode], Target_Self, 0, 3, 0, 0, 0, false, "BONE STORM!", Text_Yell, 16946, "Lord Marrowgar creates a whirllng if bone!");
