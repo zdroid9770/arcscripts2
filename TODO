@@ -12,15 +12,15 @@ Recruitmen is open <url> (temporally forums are not set)
       * OS( I will finish it when i am not so bored, small work left, mostly improving the drake part/hard mode )
       * Utgarde Keep: Utgard Pinnacle
       * Malygos raid( Started it, no idea when will i finish it )
-- 3.1 aspire support, please
 - 3.1 Ulduar raid, i started some work on my pc, done Assembly of iron and Fyera, plans on yoggi and general, flame levi wont be hard either
 
 New features:
 	* Database based gossip system,
 	* Add DoScriptText, LoadScriptData (in progress)
-	* Add waypoints loads (not in progress)
-	* Add  loads	(not in progress)
+	* Add script data (waypoints, texts data, gossip data) loads (not in progress)
 	* MoonScriptEscortAI (in progress)
+	* Add DoTimedEmote and DioTimedSpellCast functions
+	* Add Event_OnCombatStop use
 
 General:
 	* Add base documentation

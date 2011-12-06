@@ -35,101 +35,100 @@ enum eUnits
     POD_OMEGA                             = 183965, //pod fifth boss wave
     WARDENS_SHIELD                        = 184802, // warden shield
 
-    MELLICHAR                             = 20904 //skyriss will kill this unit
+    NPC_MELLICHAR						= 20904 //skyriss will kill this unit
 };
 
 class ArcatrazInstanceScript : public MoonInstanceScript
 {
-public:
-	MOONSCRIPT_INSTANCE_FACTORY_FUNCTION(ArcatrazInstanceScript, MoonInstanceScript);
-	ArcatrazInstanceScript(MapMgr* pMapMgr) : MoonInstanceScript(pMapMgr) 
-	{
-		WardenShieldGuid = CoreSecurityAlphaGuid = CoreSecurityBetaGuid = NULL;
-		for(uint32 i=0; i<=3; i++)
-			OrbGuid[i] = 0;
-	}
-	
-
-	void OnGameObjectPushToWorld(GameObject* pGameObject)
-	{
-		switch(pGameObject->GetEntry())
+	public:
+		MOONSCRIPT_INSTANCE_FACTORY_FUNCTION(ArcatrazInstanceScript, MoonInstanceScript);
+		ArcatrazInstanceScript(MapMgr* pMapMgr) : MoonInstanceScript(pMapMgr) 
 		{
-			case CONTAINMENT_CORE_SECURITY_FIELD_ALPHA: CoreSecurityAlphaGuid = pGameObject->GetGUID(); break;
-			case CONTAINMENT_CORE_SECURITY_FIELD_BETA: CoreSecurityBetaGuid = pGameObject->GetGUID(); break;
-			case WARDENS_SHIELD: WardenShieldGuid = pGameObject->GetGUID(); break;
-			case POD_ALPHA: OrbGuid[0] = pGameObject->GetGUID(); break;
-			case POD_BETA: OrbGuid[1] = pGameObject->GetGUID(); break;
-			case POD_DELTA: OrbGuid[2] = pGameObject->GetGUID(); break;
-			case POD_GAMMA: OrbGuid[3] = pGameObject->GetGUID(); break;
+			WardenShieldGuid = CoreSecurityAlphaGuid = CoreSecurityBetaGuid = NULL;
+			for(uint32 i=0; i<=3; i++)
+				OrbGuid[i] = 0;
 		}
-	}
 
-	void OnCreatureDeath(Creature* pCreature, Unit* pUnit)
-	{		
-		switch(pCreature->GetEntry())
+		void OnGameObjectPushToWorld(GameObject* pGameObject)
 		{
-			case CN_DALLIAH_THE_DOOMSAYER:
+			switch(pGameObject->GetEntry())
 			{
-				GameObject* pGo1 = GetGameObjectByGuid(CoreSecurityBetaGuid);
-				if(pGo1 != NULL)
-					pGo1->SetState(State_Active);
-			}break;
-			case CN_WRATH_SCRYER_SOCCOTHRATES:
-			{
-				GameObject* pGo2 = GetGameObjectByGuid(CoreSecurityAlphaGuid);
-				if(pGo2 != NULL)
-					pGo2->SetState(State_Active);
-			}break;
+				case CONTAINMENT_CORE_SECURITY_FIELD_ALPHA: CoreSecurityAlphaGuid = pGameObject->GetGUID(); break;
+				case CONTAINMENT_CORE_SECURITY_FIELD_BETA: CoreSecurityBetaGuid = pGameObject->GetGUID(); break;
+				case WARDENS_SHIELD: WardenShieldGuid = pGameObject->GetGUID(); break;
+				case POD_ALPHA: OrbGuid[0] = pGameObject->GetGUID(); break;
+				case POD_BETA: OrbGuid[1] = pGameObject->GetGUID(); break;
+				case POD_DELTA: OrbGuid[2] = pGameObject->GetGUID(); break;
+				case POD_GAMMA: OrbGuid[3] = pGameObject->GetGUID(); break;
+			}
 		}
-	}
 
-	uint32 GetInstanceData(uint32 pType, uint32 pIndex)
-	{
-		return mEncounters[pIndex];
-	}
-
-	void SetInstanceData(uint32 pType, uint32 pIndex, uint32 pData)
-	{
-		if(pIndex == WARDEN_MELLICHAR)
-		{
-			switch(pData)
+		void OnCreatureDeath(Creature* pCreature, Unit* pUnit)
+		{		
+			switch(pCreature->GetEntry())
 			{
-				case 1:	//agroo
+				case CN_DALLIAH_THE_DOOMSAYER:
 				{
-					GameObject* pGo1 = GetGameObjectByGuid(WardenShieldGuid);
+					GameObject* pGo1 = GetGameObjectByGuid(CoreSecurityBetaGuid);
 					if(pGo1 != NULL)
 						pGo1->SetState(State_Active);
 				}break;
-				case 2:	//first orb
+				case CN_WRATH_SCRYER_SOCCOTHRATES:
 				{
-					GameObject* pGo2 = GetGameObjectByGuid(OrbGuid[0]);
+					GameObject* pGo2 = GetGameObjectByGuid(CoreSecurityAlphaGuid);
 					if(pGo2 != NULL)
 						pGo2->SetState(State_Active);
 				}break;
-				case 3:	//second orb
-				{
-					GameObject* pGo3 = GetGameObjectByGuid(OrbGuid[1]);
-					if(pGo3 != NULL)
-						pGo3->SetState(State_Active);
-				}break;
-				case 4:	//third orb
-				{
-					GameObject* pGo4 = GetGameObjectByGuid(OrbGuid[2]);
-					if(pGo4 != NULL)
-						pGo4->SetState(State_Active);
-				}break;
-				case 5:	//four orb
-				{
-					GameObject* pGo5 = GetGameObjectByGuid(OrbGuid[3]);
-					if(pGo5 != NULL)
-						pGo5->SetState(State_Active);
-				}break;
 			}
 		}
-	}
 
-protected:
-	uint64 WardenShieldGuid, CoreSecurityAlphaGuid, CoreSecurityBetaGuid, OrbGuid[3], mEncounters[1];
+		uint32 GetInstanceData(uint32 pType, uint32 pIndex)
+		{
+			return mEncounters[pIndex];
+		}
+
+		void SetInstanceData(uint32 pType, uint32 pIndex, uint32 pData)
+		{
+			if(pIndex == WARDEN_MELLICHAR)
+			{
+				switch(pData)
+				{
+					case 1:	//agroo
+					{
+						GameObject* pGo1 = GetGameObjectByGuid(WardenShieldGuid);
+						if(pGo1 != NULL)
+							pGo1->SetState(State_Active);
+					}break;
+					case 2:	//first orb
+					{
+						GameObject* pGo2 = GetGameObjectByGuid(OrbGuid[0]);
+						if(pGo2 != NULL)
+							pGo2->SetState(State_Active);
+					}break;
+					case 3:	//second orb
+					{
+						GameObject* pGo3 = GetGameObjectByGuid(OrbGuid[1]);
+						if(pGo3 != NULL)
+							pGo3->SetState(State_Active);
+					}break;
+					case 4:	//third orb
+					{
+						GameObject* pGo4 = GetGameObjectByGuid(OrbGuid[2]);
+						if(pGo4 != NULL)
+							pGo4->SetState(State_Active);
+					}break;
+					case 5:	//four orb
+					{
+						GameObject* pGo5 = GetGameObjectByGuid(OrbGuid[3]);
+						if(pGo5 != NULL)
+							pGo5->SetState(State_Active);
+					}break;
+				}
+			}
+		}
+
+	private:
+		uint64 WardenShieldGuid, CoreSecurityAlphaGuid, CoreSecurityBetaGuid, OrbGuid[3], mEncounters[1];
 };
 
 // Zereketh the UnboundAI
@@ -143,44 +142,43 @@ protected:
 
 class ZerekethAI : public MoonScriptBossAI
 {
-public:
-	MOONSCRIPT_FACTORY_FUNCTION(ZerekethAI, MoonScriptBossAI);
-	ZerekethAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
-	{
-		AddEmote(Event_OnCombatStart, "Life energy to... consume.", Text_Yell, 11250);
-		AddEmote(Event_OnTargetDied, "This vessel...is empty.", Text_Yell, 11251);
-		AddEmote(Event_OnTargetDied, "No... more... life.", Text_Yell, 11252);
-		AddEmote(Event_OnDied, "The Void... beckons.", Text_Yell, 11255);
-
-		AddSpell(SEED_OF_C, Target_RandomPlayer, 6.0f, 2, 20, 0, 100.0f);
-		AddSpell(SHADOW_NOVA, Target_Self, 15, 2, 15);
-		AddSpell(VOID_ZONE, Target_RandomPlayer, 20, 0, rand()%10+30);
-	}
-
-	void OnCombatStart(Unit* mTarget)
-	{
-		SpeechTimer = AddTimer((rand()%10 + 40) * 1000);
-
-		ParentClass::OnCombatStart(mTarget);
-	}
-
-	void AIUpdate()
-	{
-		if(IsTimerFinished(SpeechTimer))
+	public:
+		MOONSCRIPT_FACTORY_FUNCTION(ZerekethAI, MoonScriptBossAI);
+		ZerekethAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
 		{
-			switch(rand()%2)
-			{
-				case 0: Emote("The shadow... will engulf you.", Text_Yell, 11253); break;
-				case 1: Emote("Darkness... consumes all.", Text_Yell, 11254); break;
-			}
-			ResetTimer(SpeechTimer, (rand()%10 + 40) * 1000);
+			AddEmote(Event_OnCombatStart, "Life energy to... consume.", Text_Yell, 11250);
+			AddEmote(Event_OnTargetDied, "This vessel...is empty.", Text_Yell, 11251);
+			AddEmote(Event_OnTargetDied, "No... more... life.", Text_Yell, 11252);
+			AddEmote(Event_OnDied, "The Void... beckons.", Text_Yell, 11255);
+
+			AddSpell(SEED_OF_C, Target_RandomPlayer, 6.0f, 2, 20, 0, 100.0f);
+			AddSpell(SHADOW_NOVA, Target_Self, 15, 2, 15);
+			AddSpell(VOID_ZONE, Target_RandomPlayer, 20, 0, rand()%10+30);
 		}
 
-		ParentClass::AIUpdate();
-	}
+		void OnCombatStart(Unit* mTarget)
+		{
+			SpeechTimer = AddTimer((rand()%10 + 40) * 1000);
+			ParentClass::OnCombatStart(mTarget);
+		}
 
-protected:
-	int32 SpeechTimer;
+		void AIUpdate()
+		{
+			if(IsTimerFinished(SpeechTimer))
+			{
+				switch(rand()%2)
+				{
+					case 0: Emote("The shadow... will engulf you.", Text_Yell, 11253); break;
+					case 1: Emote("Darkness... consumes all.", Text_Yell, 11254); break;
+				}
+				ResetTimer(SpeechTimer, (rand()%10 + 40) * 1000);
+			}
+
+			ParentClass::AIUpdate();
+		}
+
+	protected:
+		int32 SpeechTimer;
 };
 
 class VoidZoneARC : public MoonScriptCreatureAI
@@ -241,11 +239,11 @@ public:
 #define KNOCK_AWAY 20686
 #define CHARGE 35754
 
-class WrathScryerSoccothratesAI : public MoonScriptBossAI
+class WrathScryerSoccothratesAI : public MoonScriptCreatureAI
 {
 public:
-	MOONSCRIPT_FACTORY_FUNCTION(WrathScryerSoccothratesAI, MoonScriptBossAI);
-	WrathScryerSoccothratesAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
+	MOONSCRIPT_FACTORY_FUNCTION(WrathScryerSoccothratesAI, MoonScriptCreatureAI);
+	WrathScryerSoccothratesAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 	{
 		AddEmote(Event_OnCombatStart, "At last, a target for my frustrations!", Text_Yell, 11238);
 		AddEmote(Event_OnTargetDied, "Yes, that was quiet... satisfying.", Text_Yell, 11239);
@@ -273,64 +271,44 @@ public:
 // SIMPLE_TELEPORT 12980 ?
 // Add sounds related to his dialog with mind controlled guy
 
-class HarbringerSkyrissAI : public MoonScriptBossAI
+class HarbringerSkyrissAI : public MoonScriptCreatureAI
 {
 	public:
-		MOONSCRIPT_FACTORY_FUNCTION(HarbringerSkyrissAI, MoonScriptBossAI);
-
-		HarbringerSkyrissAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
+		MOONSCRIPT_FACTORY_FUNCTION(HarbringerSkyrissAI, MoonScriptCreatureAI);
+		HarbringerSkyrissAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
-			AddSpell(MIND_REND, Target_Current, 15.0f, 0, -1);
-
-			SpellDesc* Fear = AddSpell(FEAR, Target_Current, 8.0f, 0, -1);
-			Fear->AddEmote("Flee in terror!", Text_Yell, 11129);
-			Fear->AddEmote("I will show you horrors undreamed of.", Text_Yell, 11130);
-
-			SpellDesc* Domination = AddSpell(DOMINATION, Target_Current, 6.0f, 0, -1);
-			Domination->AddEmote("You will do my bidding, weakling.", Text_Yell, 11127);
-			Domination->AddEmote("Your will is no longer your own.", Text_Yell, 11128);
-
-			Illusion66 = AddSpell(SUMMON_ILLUSION_66, Target_Self, 0, 0, -1, 0, 0, false, "", Text_Yell, 11131);
-			Illusion66->mEnabled = false;
-
-			Illusion33 = AddSpell(SUMMON_ILLUSION_33, Target_Self, 0, 0, -1, 0, 0, false, "",  Text_Yell, 11131);
-			Illusion33->mEnabled = false;
-
 			AddEmote(Event_OnCombatStart, "Bear witness to the agent of your demise!", Text_Yell, 11123);
 			AddEmote(Event_OnTargetDied, "Your fate is written!", Text_Yell, 11124);
 			AddEmote(Event_OnTargetDied, "The chaos I have sown here is but a taste....", Text_Yell, 11125);
 			AddEmote(Event_OnDied, "I am merely one of... infinite multitudes.", Text_Yell, 11126);
 
-			IllusionCount = 0;
-		}
+			AddSpell(MIND_REND, Target_Current, 15.0f, 0, -1);
+			SpellDesc* Fear = AddSpell(FEAR, Target_Current, 8.0f, 0, -1);
+				Fear->AddEmote("Flee in terror!", Text_Yell, 11129);
+				Fear->AddEmote("I will show you horrors undreamed of.", Text_Yell, 11130);
 
-		void OnCombatStart(Unit* mTarget)
-		{
-			IllusionCount = 0;
-			ParentClass::OnCombatStart(mTarget);
+			SpellDesc* Domination = AddSpell(DOMINATION, Target_Current, 6.0f, 0, -1);
+				Domination->AddEmote("You will do my bidding, weakling.", Text_Yell, 11127);
+				Domination->AddEmote("Your will is no longer your own.", Text_Yell, 11128);
 		}
 
 		void AIUpdate()
 		{
+			uint32 IllusionCount = 0;
 			if(GetHealthPercent() <= 66 && IllusionCount == 0)
 			{
+				_unit->CastSpell(_unit, SUMMON_ILLUSION_66, true);
+				_unit->PlaySoundToSet(11131);
 				IllusionCount++;
-				CastSpell(Illusion66);
 			}
 			else if(GetHealthPercent() <= 33 && IllusionCount == 1)
 			{
+				_unit->CastSpell(_unit, SUMMON_ILLUSION_33, true);
+				_unit->PlaySoundToSet(11131);
 				IllusionCount++;
-				CastSpell(Illusion33);
 			}
 			ParentClass::AIUpdate();
 		}
-
-
-	protected:
-
-		uint32 IllusionCount;
-		SpellDesc* Illusion66;
-		SpellDesc* Illusion33;
 };
 
 
@@ -358,18 +336,20 @@ enum eWardenUnits
     ENTRY_TW_DRAK      = 20910,
     ENTRY_BL_DRAK      = 20911,
     //phase 6
-    ENTRY_SKYRISS      = 20912
+    NPC_SKYRISS      = 20912
 };
 
-#define CN_WARDEN_MELLICHAR 20904
+#define CN_WARDEN_MELLICHAR	20904
 
-#define BLAZING_TRICKSTER 20905
-#define WARP_STALKER 20906
-#define AKKIRIS_LIGHTNING_WAKER 20908
-#define SULFURON_MAGMA_THROWER 20909
-#define TWILIGHT_DRAKONAAR 20910
-#define BLACKWING_DRAKONAAR 20911
-#define MILLHOUSE_MANASTORM 20977
+
+static Location pSummonCoords[5]=
+{
+    {478.326f, -148.505f, 42.56f, 3.19f},                   // Trickster or Phase Hunter
+    {413.292f, -148.378f, 42.56f, 6.27f},                   // Millhouse
+    {420.179f, -174.396f, 42.58f, 0.02f},                   // Akkiris or Sulfuron
+    {471.795f, -174.58f, 42.58f, 3.06f},                    // Twilight or Blackwing Drakonaar
+    {445.763f, -191.639f, 44.64f, 1.60f}                    // Skyriss
+};
 
 class WardenMellicharAI : public MoonScriptBossAI
 {
@@ -402,35 +382,34 @@ class WardenMellicharAI : public MoonScriptBossAI
 		void AIUpdate()
 		{
 			// ORB ONE
-			if(IsTimerFinished(Phase_Timer) && GetPhase() == 0)
+			if(GetPhase() == 0)
 			{
 				Emote("The naaru kept some of the most dangerous beings in existence here in these cells. Let me introduce you to another...", Text_Yell, 11223);
 				_unit->CastSpell(_unit, SPELL_TARGET_ALPHA, false);
 				mInstance->SetInstanceData(Data_UnspecifiedType, WARDEN_MELLICHAR, 2);
-				switch(rand()%2)
+
+				if(!HasSummonedNpc && IsTimerFinished(Phase_Timer))
 				{
-					case 0: pSummon = SpawnCreature(ENTRY_TRICKSTER, 478.326f, -148.505f, 42.56f, 3.19f); break;
-					case 1: pSummon = SpawnCreature(ENTRY_PH_HUNTER, 478.326f, -148.505f, 42.56f, 3.19f); break;
+					pSummon = SpawnCreature(rand()%1 ? ENTRY_TRICKSTER : ENTRY_PH_HUNTER, pSummonCoords[0].x, pSummonCoords[0].y, pSummonCoords[0].z, pSummonCoords[0].o);
+					HasSummonedNpc = true;
 				}
 
-				if(pSummon == NULL)
-					return;
-
-				if(!pSummon->IsAlive())
+				if(!pSummon->IsAlive() && pSummon != NULL && HasSummonedNpc)
 				{
 					Emote("Yes, yes... another! Your will is mine! Behold another terrifying creature of incomprehensible power!", Text_Yell, 11224);
 					_unit->CastSpell(_unit, SPELL_TARGET_BETA, false);
 					mInstance->SetInstanceData(Data_UnspecifiedType, WARDEN_MELLICHAR, 3);
 					ResetTimer(Phase_Timer, 6000);
 					SetPhase(1);
+					HasSummonedNpc = false;
 					pSummon = NULL;
 				}
 
 			//ORB TWO
 			}else if(IsTimerFinished(Phase_Timer) && GetPhase() == 1)
 			{
-				Millhouse = _unit->GetMapMgr()->GetInterface()->SpawnCreature(ENTRY_MILLHOUSE, 413.292f, -148.378f, 42.56f, 6.27f, false, true, 0, 0);
-				if(Millhouse!=NULL)
+				Millhouse = _unit->GetMapMgr()->GetInterface()->SpawnCreature(ENTRY_MILLHOUSE, pSummonCoords[1].x, pSummonCoords[1].y, pSummonCoords[1].z, pSummonCoords[1].o, false, true, 0, 0);
+				if(Millhouse != NULL)
 				{
 					Millhouse->SendChatMessage(CHAT_MSG_MONSTER_YELL, LANG_UNIVERSAL, "Where in Bonzo's brass buttons am I? And who are-- yaaghh, that's one mother of a headache!", 2000);
 					sEventMgr.AddEvent(TO_OBJECT(Millhouse), &Object::PlaySoundToSet, (uint32)11171, EVENT_UNK, 2000, 1, EVENT_FLAG_DO_NOT_EXECUTE_IN_WORLD_CONTEXT);
@@ -450,17 +429,13 @@ class WardenMellicharAI : public MoonScriptBossAI
 			// ORB THREE
 			}else if(IsTimerFinished(Phase_Timer) && GetPhase() == 2)
 			{
-
-				switch(rand()%2)
+				if(!HasSummonedNpc)
 				{
-					case 0 : pSummon = SpawnCreature(ENTRY_AKKIRIS, 420.179f, -174.396f, 42.58f, 0.02f); break;
-					case 1 : pSummon = SpawnCreature(ENTRY_SULFURON, 420.179f, -174.396f, 42.58f, 0.02f); break;
+					pSummon = SpawnCreature(rand()%1 ? ENTRY_AKKIRIS : ENTRY_SULFURON, pSummonCoords[2].x, pSummonCoords[2].y, pSummonCoords[2].z, pSummonCoords[2].o);
+					HasSummonedNpc = true;
 				}
 
-				if(pSummon == NULL)
-					return;
-				
-				if(!pSummon->IsAlive())
+				if(!pSummon->IsAlive() && pSummon != NULL)
 				{
 					Emote("Anarchy! Bedlam! Oh, you are so wise! Yes, I see it now, of course!", Text_Yell, 11227);
 					_unit->CastSpell(_unit, SPELL_TARGET_GAMMA, false);
@@ -468,41 +443,39 @@ class WardenMellicharAI : public MoonScriptBossAI
 					SetPhase(3);
 					ResetTimer(Phase_Timer, 6000);
 					pSummon = NULL;
+					HasSummonedNpc = false;
 				}
 
 			// ORB FOUR
 			}else if(IsTimerFinished(Phase_Timer) && GetPhase() == 3)
 			{
-
-				switch(rand()%2)
+				if(!HasSummonedNpc)
 				{
-					case 0: pSummon = SpawnCreature(ENTRY_TW_DRAK , 471.795f, -174.58f, 42.58f, 3.06f); break;
-					case 1: pSummon = SpawnCreature(ENTRY_BL_DRAK , 471.795f, -174.58f, 42.58f, 3.06f); break;
+					pSummon = SpawnCreature(rand()%1 ? ENTRY_TW_DRAK : ENTRY_BL_DRAK, pSummonCoords[3].x, pSummonCoords[3].y, pSummonCoords[3].z, pSummonCoords[3].o);
+					HasSummonedNpc = true;
 				}
-
-				if(pSummon == NULL)
-					return;
 				
-				if(!pSummon->IsAlive())
+				if(!pSummon->IsAlive() && pSummon != NULL)
 				{
 					mInstance->SetInstanceData(Data_UnspecifiedType, WARDEN_MELLICHAR, 6);
 					SetPhase(4);
 					ResetTimer(Phase_Timer, 6000);
 					pSummon = NULL;
+					HasSummonedNpc = false;
 				}
+			//SKYRISS encounter
 			}else if(IsTimerFinished(Phase_Timer) && GetPhase() == 4)
 			{
-				pSummon = SpawnCreature(ENTRY_SKYRISS , 445.763f, -191.639f, 44.64f, 1.60f);
+				pSummon = SpawnCreature(NPC_SKYRISS, pSummonCoords[4].x, pSummonCoords[4].y, pSummonCoords[4].z, pSummonCoords[4].o);
 				if(pSummon!=NULL)
 					Emote("Yes, O great one, right away!", Text_Yell, 11228);
 			}
-			ParentClass::AIUpdate();
-}
-	protected:
+		ParentClass::AIUpdate();
+	}
 
-		uint32 Phasepart;
-		uint32 NPC_ID_Spawn;
-		uint32 Spawncounter;
+	protected:
+		bool HasSummonedNpc;
+		uint32 Phasepart, NPC_ID_Spawn, Spawncounter;
 		int32 Phase_Timer;
 		MoonInstanceScript* mInstance;
 		MoonScriptCreatureAI* pSummon;
@@ -517,6 +490,6 @@ void SetupArcatraz(ScriptMgr* mgr)
 
 	mgr->register_creature_script(CN_DALLIAH_THE_DOOMSAYER, &DalliahTheDoomsayerAI::Create);
 	mgr->register_creature_script(CN_WRATH_SCRYER_SOCCOTHRATES, &WrathScryerSoccothratesAI::Create);
-	mgr->register_creature_script(CN_HARBRINGER_SKYRISS, &HarbringerSkyrissAI::Create);
-	//mgr->register_creature_script(CN_WARDEN_MELLICHAR, &WardenMellicharAI::Create);
+	mgr->register_creature_script(NPC_SKYRISS, &HarbringerSkyrissAI::Create);
+	mgr->register_creature_script(NPC_MELLICHAR, &WardenMellicharAI::Create);
 }
