@@ -681,7 +681,7 @@ void MoonScriptCreatureAI::RemoveEmote(EventType pEventType, EmoteDesc* pEmote)
 			DeleteItem(mOnCombatStartEmotes, pEmote);
 			break;
 		case Event_OnCombatStop:
-			mOnCombatStopEmotes.push_back(NewEmote);
+			DeleteItem(mOnCombatStopEmotes, pEmote);
 			break;
 		case Event_OnTargetDied:
 			DeleteItem(mOnTargetDiedEmotes, pEmote);
@@ -706,7 +706,7 @@ void MoonScriptCreatureAI::RemoveAllEmotes(EventType pEventType)
 			DeleteArray(mOnCombatStartEmotes);
 			break;
 		case Event_OnCombatStop:
-			mOnCombatStopEmotes.push_back(NewEmote);
+			DeleteArray(mOnCombatStopEmotes);
 			break;
 		case Event_OnTargetDied:
 			DeleteArray(mOnTargetDiedEmotes);
