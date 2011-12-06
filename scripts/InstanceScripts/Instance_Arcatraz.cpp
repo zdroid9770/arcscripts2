@@ -295,13 +295,13 @@ class HarbringerSkyrissAI : public MoonScriptCreatureAI
 		void AIUpdate()
 		{
 			uint32 IllusionCount = 0;
-			if(GetHealthPercent() <= 66 && IllusionCount == 0)
+			if(GetHealthPercent() <= 66.0f && IllusionCount == 0)
 			{
 				_unit->CastSpell(_unit, SUMMON_ILLUSION_66, true);
 				_unit->PlaySoundToSet(11131);
 				IllusionCount++;
 			}
-			else if(GetHealthPercent() <= 33 && IllusionCount == 1)
+			else if(GetHealthPercent() <= 33.0f && IllusionCount == 1)
 			{
 				_unit->CastSpell(_unit, SUMMON_ILLUSION_33, true);
 				_unit->PlaySoundToSet(11131);
@@ -359,7 +359,7 @@ class WardenMellicharAI : public MoonScriptBossAI
 		{
 			SetCanMove(false);
 			mInstance = GetInstanceScript();
-			Phase_Timer = 0;
+			SetPhase(0);
 		}
 
 		void OnCombatStart(Unit* mTarget)
