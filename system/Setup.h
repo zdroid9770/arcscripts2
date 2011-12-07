@@ -17,6 +17,7 @@
  */
 
 #include "StdAfx.h"
+#include "System.h"
 #include "../dependencies/EasyFunctions.h"
 #include "../dependencies/MoonInstanceScript.h"
 #include "../dependencies/MoonScriptBossAI.h"
