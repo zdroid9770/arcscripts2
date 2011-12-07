@@ -253,7 +253,7 @@ class MograineAI : public MoonScriptCreatureAI
 		void OnDied(Unit* mKiller)
 		{
 			GameObject * pDoor = _unit->GetMapMgr()->GetInterface()->GetGameObjectNearestCoords(1173.01f, 1389.91f, 31.9723f, 104600);
-			if(pDoor != NULL
+			if(pDoor != NULL)
 				pDoor->SetState(State_Active);
 		}
 };
@@ -310,18 +310,16 @@ class WhitemaneAI : public MoonScriptBossAI
 
 //TODO: check his texts
 #define FAIRBANKS 4542
-#define BLOOD 40412 //Need a better spell
 #define PWS 11647 //PWS = Power Word: Shield 
 
-class FairbanksAI : public CreatureAIScript
+class FairbanksAI : public MoonScriptCreatureAI
 {
 	public:
-		MOONSCRIPT_FACTORY_FUNCTION(WhitemaneAI, MoonScriptBossAI);
-		WhitemaneAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
+		MOONSCRIPT_FACTORY_FUNCTION(FairbanksAI, MoonScriptCreatureAI);
+		FairbanksAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			AddEmote(Event_OnTargetDied, "Ha! Had enough?", Text_Yell, 0);
-			AddSpell(BLOOD, 15.0f, 0, 0);
-			AddSpell(PWS, 15.0f, 0, 0);
+			AddSpell(PWS, Target_Self, 15.0f, 0, 0);
 		}
 };
 

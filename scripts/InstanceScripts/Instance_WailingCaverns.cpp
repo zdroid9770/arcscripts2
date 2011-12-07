@@ -21,46 +21,23 @@
 
 #include "Setup.h"
 
-/************************************************************************/
-/* Instance_WailinCaverns.cpp Script		                               			     */
-/************************************************************************/
-
-// Devouring Ectoplasm AI by Soulshifter
-
-#define CN_DEVOURING_ECTOPLASM		3638
-class DevouringEctoplasmAI : public MoonScriptCreatureAI
-{
-		MOONSCRIPT_FACTORY_FUNCTION(DevouringEctoplasmAI, MoonScriptCreatureAI);
-		DevouringEctoplasmAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
-		{
-			// Summon Evolving Ectoplasm
-			AddSpell(7952, Target_Self, 10, 0, 600);
-		}
-};
-
 // Druid of the Fang AI by Soulshifter
 #define CN_DRUID_FANG				3840
 class DruidFangAI : public MoonScriptCreatureAI
 {
+	public:
 		MOONSCRIPT_FACTORY_FUNCTION(DruidFangAI, MoonScriptCreatureAI);
 		DruidFangAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
-			// Serpent Form
 			SerpentForm = AddSpell(8041, Target_Self, 0, 0, 0);
-
-			// Healing Touch
 			HealingTouch = AddSpell(5187, Target_Self, 0, 2.5, 0);
-
-			// Lightning Bolt
 			LightningBolt = AddSpell(9532, Target_Current, 30, 3, 0);
-
-			// Druid's Slumber
 			DruidsSlumber = AddSpell(8040, Target_RandomPlayerNotCurrent, 20, 2.5, 0);
 		}
 
 		void AIUpdate()
 		{
-			if(GetHealthPercent() <= 50 && SerpentForm->mEnabled == true)
+			if(GetHealthPercent() <= 50.0f && SerpentForm->mEnabled == true)
 			{
 				CastSpellNowNoScheduling(SerpentForm);
 				SerpentForm->mEnabled = false;
@@ -73,17 +50,17 @@ class DruidFangAI : public MoonScriptCreatureAI
 				DruidsSlumber->mEnabled = true;
 			}
 
-			if(GetHealthPercent() <= 5 && HealingTouch->mEnabled == true)
+			if(GetHealthPercent() <= 5.0f && HealingTouch->mEnabled == true)
 			{
 				// Remove Serpent Form
 				RemoveAura(8041);
 				CastSpellNowNoScheduling(HealingTouch);
 				HealingTouch->mEnabled = false;
 			}
-
 			ParentClass::AIUpdate();
 		}
 
+	protected:
 		SpellDesc* SerpentForm;
 		SpellDesc* LightningBolt;
 		SpellDesc* DruidsSlumber;
@@ -99,14 +76,13 @@ class DruidFangAI : public MoonScriptCreatureAI
 
 class LadyAnacondraAI : public MoonScriptCreatureAI
 {
+	public:
 		MOONSCRIPT_FACTORY_FUNCTION(LadyAnacondraAI, MoonScriptCreatureAI);
 		LadyAnacondraAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			AddEmote(Event_OnCombatStart, "None can stand against the Serpent Lords!", Text_Yell, 5786);
-			// Lightning Bolt
-			AddSpell(9532, Target_Current, 30, 3, 0);
-			// Sleep
-			AddSpell(700, Target_RandomPlayerNotCurrent, 10, 1.5, 20);
+			AddSpell(9532, Target_Current, 30, 3, 0);					// Lightning Bolt
+			AddSpell(700, Target_RandomPlayerNotCurrent, 10, 1.5f, 20);	// Sleep
 		}
 };
 
@@ -118,34 +94,32 @@ class LadyAnacondraAI : public MoonScriptCreatureAI
 
 class LordCobrahnAI : public MoonScriptCreatureAI
 {
+	public:
 		MOONSCRIPT_FACTORY_FUNCTION(LordCobrahnAI, MoonScriptCreatureAI);
 		LordCobrahnAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			AddEmote(Event_OnCombatStart, "You will never wake the dreamer!", Text_Yell, 5785);
-			// Lightning Bolt
 			LightningBolt = AddSpell(9532, Target_Current, 30, 3, 0);
-			// Poison -- Spell ID Needs checked
-			AddSpell(34969, Target_Current, 15, 0, 0);
-			// Cobrahn Serpent Form
+			AddSpell(34969, Target_Current, 15, 0, 0);	// Poison
 			SerpentForm = AddSpell(7965, Target_Self, 0, 0, 0);
 		}
 
 		void AIUpdate()
 		{
-			if(GetHealthPercent() <= 20 && SerpentForm->mEnabled == true)
+			if(GetHealthPercent() <= 20.0f && SerpentForm->mEnabled == true)
 			{
 				CastSpellNowNoScheduling(SerpentForm);
 				SerpentForm->mEnabled = false;
 				// Disable Lightning Bolt
 				LightningBolt->mEnabled = false;
 			}
-			else if(GetHealthPercent() <= 20 && SerpentForm->mEnabled == false && !GetUnit()->HasAura(7965))
-			{
-				// Enable Lightning Bolt
+			else if(GetHealthPercent() <= 20.0f && SerpentForm->mEnabled == false && !GetUnit()->HasAura(7965))
 				LightningBolt->mEnabled = true;
-			}
+
 			ParentClass::AIUpdate();
 		}
+
+	protected:
 		SpellDesc* LightningBolt;
 		SpellDesc* SerpentForm;
 };
@@ -154,16 +128,14 @@ class LordCobrahnAI : public MoonScriptCreatureAI
 #define CN_LORD_PYTHAS				3670
 class LordPythasAI : public MoonScriptCreatureAI
 {
+	public:
 		MOONSCRIPT_FACTORY_FUNCTION(LordPythasAI, MoonScriptCreatureAI);
 		LordPythasAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			AddEmote(Event_OnCombatStart, "The coils of death... Will crush you!", Text_Yell, 5787);
-			// Lightning Bolt
-			AddSpell(9532, Target_Current, 30, 3, 0);
-			// Sleep
-			AddSpell(700, Target_RandomPlayer, 10, 1.5, 0);
-			// Thunderclap
-			AddSpell(8147, Target_Self, 20, 0, 5);
+			AddSpell(9532, Target_Current, 30.0f, 3, 0);		// Lightning Bolt
+			AddSpell(700, Target_RandomPlayer, 10.0f, 1.5, 0);	// Sleep
+			AddSpell(8147, Target_Self, 20.0f, 0, 5);			// Thunderclap
 		}
 };
 
@@ -172,27 +144,13 @@ class LordPythasAI : public MoonScriptCreatureAI
 #define CN_LORD_SERPENTIS			3673
 class LordSerpentisAI : public MoonScriptCreatureAI
 {
+	public:
 		MOONSCRIPT_FACTORY_FUNCTION(LordSerpentisAI, MoonScriptCreatureAI);
 		LordSerpentisAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			AddEmote(Event_OnCombatStart, "I am the serpent king, i can do anything!", Text_Yell, 5788);
-			// Lightning Bolt
-			AddSpell(9532, Target_Current, 30, 3, 0);
-			// Sleep
-			AddSpell(700, Target_RandomPlayer, 10, 1.5, 0);
-		}
-};
-
-// Verdan the Everliving AI by Soulshifter
-
-#define CN_VERDAN_EVERLIVING		5775
-class VerdanEverlivingAI : public MoonScriptCreatureAI
-{
-		MOONSCRIPT_FACTORY_FUNCTION(VerdanEverlivingAI, MoonScriptCreatureAI);
-		VerdanEverlivingAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
-		{
-			// Grasping Vines
-			AddSpell(8142, Target_Current, 30, 1, 0);
+			AddSpell(9532, Target_Current, 30.0f, 3, 0);		// Lightning Bolt
+			AddSpell(700, Target_RandomPlayer, 10.0f, 1.5f, 0);	// Sleep
 		}
 };
 
@@ -200,16 +158,16 @@ class VerdanEverlivingAI : public MoonScriptCreatureAI
 #define CN_SKUM						3674
 class SkumAI : public MoonScriptCreatureAI
 {
+	public:
 		MOONSCRIPT_FACTORY_FUNCTION(SkumAI, MoonScriptCreatureAI);
 		SkumAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
-			// Chained Bolt
-			AddSpell(6254, Target_Current, 50, 1.8f, 0);
+			AddSpell(6254, Target_Current, 50.0f, 1.8f, 0);	// Chained Bolt
 		}
 
 		void AIUpdate()
 		{
-			if(GetHealthPercent() <= 10 && GetBehavior() != Behavior_Flee)
+			if(GetHealthPercent() <= 10.0f && GetBehavior() != Behavior_Flee)
 			{
 				Emote("Skum tries to run away in fear", Text_Emote);
 				SetBehavior(Behavior_Flee);
@@ -222,29 +180,12 @@ class SkumAI : public MoonScriptCreatureAI
 		}
 };
 
-// Mutanus the Devourer AI by Soulshifter
-#define CN_MUTANUS				3654
-class MutanusAI : public MoonScriptCreatureAI
-{
-		MOONSCRIPT_FACTORY_FUNCTION(MutanusAI, MoonScriptCreatureAI);
-		MutanusAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
-		{
-			// Thundercrack
-			AddSpell(8150, Target_Self, 15, 0, 0);
-			// Terrify
-			AddSpell(7399, Target_RandomPlayer, 15, 0, 4);
-		}
-};
-
-
-
 // Wailing Caverns Event
 // Discipline of Naralex Gossip by Soulshifter
 #define CN_NARALEX				3679
 #define CN_DIS_NARALEX			3678
 static Location ToNaralex[] =
 {
-	{  },
 	{ -132.498077f, 125.888153f, -78.418182f, 0.244260f },
 	{ -123.892235f, 130.538422f, -78.808937f, 0.519935f },
 	{ -116.654480f, 142.935806f, -80.233383f, 1.149039f },
@@ -301,38 +242,29 @@ class DofNaralexGossip : public GossipScript
 				objmgr.CreateGossipMenuForPlayer(&Menu, pObject->GetGUID(), 699, plr);
 				Menu->AddItem(0, "Let's go!", 2);
 				Menu->SendTo(plr);
-			}
-			else
+			}else
 			{
 				GossipMenu* Menu;
 				objmgr.CreateGossipMenuForPlayer(&Menu, pObject->GetGUID(), 698, plr);
 				Menu->AddItem(0, "I will slay those Fanglords", 1);
 				Menu->SendTo(plr);
 			}
-
 		}
+
 		void GossipSelectOption(Object* pObject, Player* Plr, uint32 Id, uint32 IntId, const char* Code)
 		{
-			Creature* pCreature = (pObject->IsCreature()) ? TO_CREATURE(pObject) : NULL;
-			if(pCreature == NULL)
-				return;
+			Creature* pCreature = TO_CREATURE(pObject);
 
 			switch(IntId)
 			{
-				case 0: // Return to start
-
-					GossipHello(pCreature, Plr);
-					break;
-
+				case 0: GossipHello(pCreature, Plr); break;
 				case 1: // Disciple of Naralex Casts Mark of the Wild on players.
 					{
 						pCreature->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, "Take this! It will be useful for you. I'll be waiting here when you have slain the 4 Fanglords to awake Naralex!");
 						pCreature->CastSpell(Plr, 5232, true);
 						pCreature->Emote(EMOTE_ONESHOT_CHEER);
 						Plr->Gossip_Complete();
-					}
-					break;
-
+					}break;
 				case 2: // Start Event
 					{
 						pCreature->SetUInt32Value(UNIT_NPC_FLAGS, 0);
@@ -340,23 +272,42 @@ class DofNaralexGossip : public GossipScript
 						pCreature->GetAIInterface()->SetAIState(STATE_SCRIPTMOVE);
 						pCreature->GetAIInterface()->setMoveType(MOVEMENTTYPE_WANTEDWP);
 						pCreature->GetAIInterface()->setWaypointToMove(2);
-					}
-					break;
+					}break;
 			}
-
 		}
-
 };
+
+static Location Moccasin[]=
+{
+	{134.249207f, 242.194839f, -98.375496f, 3.325373f},
+	{124.917931f, 255.066635f, -97.796837f, 4.176745f},
+	{113.077148f, 258.880157f, -97.190590f, 4.688039f}
+};
+
+static Location Ectoplasm[]=
+{
+	(134.249207f, 242.194839f, -98.375496f, 3.325373f),
+	(124.917931f, 255.066635f, -97.796837f, 4.176745f),
+	(113.077148f, 258.880157f, -97.190590f, 4.688039f),
+	(138.794693f, 228.224976f, -100.174332f, 2.471645f),
+	(128.170364f, 225.190247f, -99.392830f, 2.411169f),
+	(136.762009f, 242.685669f, -98.564545f, 3.344223f),
+	(122.403961f, 259.438354f, -98.153984f, 4.366811f)
+};
+
+#define CN_MUTANUS				3654
 
 // Disciple of Naralex AI by Soulshifter
 class DofNaralexAI : public MoonScriptBossAI
 {
+	public:
 		MOONSCRIPT_FACTORY_FUNCTION(DofNaralexAI, MoonScriptBossAI);
 		DofNaralexAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
 		{
 			// --- Initialization ---
-			for(int i = 1; i < 39; i++)
+			for(uint8 i = 0; i < 38; i++)
 				AddWaypoint(CreateWaypoint(i, 0, Flag_Run, ToNaralex[i]));
+
 			SetMoveType(Move_DontMoveWP);
 
 			// Awakening Spell
@@ -368,7 +319,7 @@ class DofNaralexAI : public MoonScriptBossAI
 		void OnReachWP(uint32 iWaypointId, bool bForwards)
 		{
 			ForceWaypointMove(iWaypointId + 1);
-			if(GetPhase() == 1 && GetCurrentWaypoint() == 39)
+			if(GetPhase() == 1 && GetCurrentWaypoint() == 38)
 			{
 				_unit->Emote(EMOTE_ONESHOT_TALK);
 				SetPhase(2, Awakening);
@@ -384,22 +335,30 @@ class DofNaralexAI : public MoonScriptBossAI
 				switch(GetPhase())
 				{
 					case 2:
-						Moccasin();
+					{
+						for(uint8 i = 0; i<3; i++)
+							SpawnCreature(5762, Moccasin[i].x, Moccasin[i].y, Moccasin[i].z, Moccasin[i].o);
+
 						ResetTimer(SpawnTimer, 100000);
 						SetPhase(3);
-						break;
+					}break;
 					case 3:
-						Ectoplasm();
+					{
+						for(uint8 i = 0; i<7; i++)
+							SpawnCreature(5762, Ectoplasm[i].x, Ectoplasm[i].y, Ectoplasm[i].z, Ectoplasm[i].o);
+
 						ResetTimer(SpawnTimer, 100000);
 						SetPhase(4);
-						break;
+					}break;
 					case 4:
-						BMutanus();
+					{
+						SpawnCreature(CN_MUTANUS, 136.337006f, 263.769989f, -102.666000f, 4.002330f);
 						ResetTimer(SpawnTimer, 100000);
 						SetPhase(5);
-						break;
+					}break;
 				}
 			}
+
 			if(GetPhase() == 5 && (!Mutanus || !Mutanus->GetUnit()->isAlive()))
 			{
 				MoonScriptCreatureAI* Naralex = GetNearestCreature(3679);
@@ -419,51 +378,10 @@ class DofNaralexAI : public MoonScriptBossAI
 			ParentClass::AIUpdate();
 		}
 
-		void Moccasin()
-		{
-			MoonScriptCreatureAI* Moccasin = NULL;
-			Moccasin = SpawnCreature(5762, 134.249207f, 242.194839f, -98.375496f, 3.325373f);
-			Moccasin = SpawnCreature(5762, 124.917931f, 255.066635f, -97.796837f, 4.176745f);
-			Moccasin = SpawnCreature(5762, 113.077148f, 258.880157f, -97.190590f, 4.688039f);
-		}
-
-		void Ectoplasm()
-		{
-			MoonScriptCreatureAI* Ectoplasm = NULL;
-			Ectoplasm = SpawnCreature(5763, 134.249207f, 242.194839f, -98.375496f, 3.325373f);
-			Ectoplasm = SpawnCreature(5763, 124.917931f, 255.066635f, -97.796837f, 4.176745f);
-			Ectoplasm = SpawnCreature(5763, 113.077148f, 258.880157f, -97.190590f, 4.688039f);
-			Ectoplasm = SpawnCreature(5763, 138.794693f, 228.224976f, -100.174332f, 2.471645f);
-			Ectoplasm = SpawnCreature(5763, 128.170364f, 225.190247f, -99.392830f, 2.411169f);
-			Ectoplasm = SpawnCreature(5763, 136.762009f, 242.685669f, -98.564545f, 3.344223f);
-			Ectoplasm = SpawnCreature(5763, 122.403961f, 259.438354f, -98.153984f, 4.366811f);
-		}
-
-		void BMutanus()
-		{
-			Mutanus = SpawnCreature(CN_MUTANUS, 136.337006f, 263.769989f, -102.666000f, 4.002330f);
-		}
-
+	protected:
 		int32 SpawnTimer;
 		SpellDesc* Awakening;
 		MoonScriptCreatureAI* Mutanus;
-};
-// Deviate Moccasin
-class DeviateMoccasinAI : public MoonScriptCreatureAI
-{
-		MOONSCRIPT_FACTORY_FUNCTION(DeviateMoccasinAI, MoonScriptCreatureAI);
-		DeviateMoccasinAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
-		{
-		}
-};
-
-// Nightmare Ectoplasm
-class EctoplasmAI : public MoonScriptCreatureAI
-{
-		MOONSCRIPT_FACTORY_FUNCTION(EctoplasmAI, MoonScriptCreatureAI);
-		EctoplasmAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
-		{
-		}
 };
 
 // Naralex State
@@ -481,20 +399,12 @@ class Naralex : public MoonScriptCreatureAI
 void SetupWailingCaverns(ScriptMgr* mgr)
 {
 	mgr->register_creature_script(CN_DRUID_FANG, &DruidFangAI::Create);
-	mgr->register_creature_script(CN_DEVOURING_ECTOPLASM, &DevouringEctoplasmAI::Create);
 	mgr->register_creature_script(CN_LADY_ANACONDRA, &LadyAnacondraAI::Create);
 	mgr->register_creature_script(CN_LORD_COBRAHN, &LordCobrahnAI::Create);
 	mgr->register_creature_script(CN_LORD_PYTHAS, &LordPythasAI::Create);
 	mgr->register_creature_script(CN_LORD_SERPENTIS, &LordSerpentisAI::Create);
-	mgr->register_creature_script(CN_VERDAN_EVERLIVING, &VerdanEverlivingAI::Create);
 	mgr->register_creature_script(CN_SKUM, &SkumAI::Create);
-	mgr->register_creature_script(CN_MUTANUS, &MutanusAI::Create);
-	GossipScript* DNaralex = new DofNaralexGossip();
-	mgr->register_gossip_script(CN_DIS_NARALEX, DNaralex);
+	mgr->register_gossip_script(CN_DIS_NARALEX, new DofNaralexGossip);
 	mgr->register_creature_script(CN_DIS_NARALEX, &DofNaralexAI::Create);
 	mgr->register_creature_script(CN_NARALEX, &Naralex::Create);
-
-	// Might be easier to merge this 2 into 1 since they are moving to the same locations..
-	mgr->register_creature_script(5762, &DeviateMoccasinAI::Create);
-	mgr->register_creature_script(5763, &EctoplasmAI::Create);
 }
