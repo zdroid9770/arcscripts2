@@ -350,14 +350,12 @@ public:
 
 bool BoneStorm(uint32 i, Spell* s)
 {
-	SpellEntry*	pSpell = dbcSpell.LookupEntry((uint32)s);
-	if(pSpell != NULL && s->u_caster != NULL)
-	{
-		uint32 Dmg = s->u_caster->GetSpellDidHitResult(s->u_caster, s->GetType(), s->GetProto());
-		Dmg += Dmg/10.0f;
-		s->u_caster->HandleProc(PROC_ON_SPELL_HIT, s->u_caster, pSpell, false, Dmg);
-		return true;
-	}
+	if(s->u_caster == NULL && !s->u_caster->isAlive())
+		return false;
+
+	uint32 Dmg = s->u_caster->GetSpellDidHitResult(s->u_caster, s->GetType(), s->GetProto());
+	Dmg += Dmg/10.0f;
+	s->u_caster->HandleProc(PROC_ON_SPELL_HIT, s->u_caster, pSpell, false, Dmg);
 	return true;
 };
 
