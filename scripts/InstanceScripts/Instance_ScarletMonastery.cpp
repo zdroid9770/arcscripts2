@@ -52,24 +52,24 @@ class VishasAI : public MoonScriptCreatureAI
 			m_uiSay = 0;
 
 			ParentClass::OnCombatStop(pTarget);
-		};
+		}
 
 		void AIUpdate()
 		{
-			if(GetHealthPercent() <= 75 && m_uiSay == 0)
+			if(GetHealthPercent() <= 75.0f && m_uiSay == 0)
 			{
 				Emote("Naughty secrets!", Text_Yell, 5849);
-				m_uiSay = 1;
-			};
+				m_uiSay++;
+			}
 
-			if(GetHealthPercent() <= 25 && m_uiSay == 1)
+			if(GetHealthPercent() <= 25.0f && m_uiSay == 1)
 			{
 				Emote("I'll rip the secrets from your flesh!", Text_Yell, 5850);
-				m_uiSay = 2;
-			};
+				m_uiSay++;
+			}
 
 			ParentClass::AIUpdate();
-		};
+		}
 
 	private:
 		uint8 m_uiSay;
@@ -93,25 +93,18 @@ class ThalnosAI : public MoonScriptCreatureAI
 			AddEmote(Event_OnTargetDied, "More... More souls.", Text_Yell, 5845);
 
 			m_bEmoted = false;
-		};
-
-		void OnCombatStop(Unit* pTarget)
-		{
-			m_bEmoted = false;
-
-			ParentClass::OnCombatStop(pTarget);
-		};
+		}
 
 		void AIUpdate()
 		{
-			if(GetHealthPercent() <= 50 && m_bEmoted == false)
+			if(GetHealthPercent() <= 50.0f && m_bEmoted == false)
 			{
 				Emote("No rest, for the angry dead.", Text_Yell, 5846);
 				m_bEmoted = true;
-			};
+			}
 
 			ParentClass::AIUpdate();
-		};
+		}
 
 	private:
 		bool m_bEmoted;
@@ -132,7 +125,7 @@ class LokseyAI : public MoonScriptCreatureAI
 		{
 			AddSpell(6742, Target_Self, 5, 0, 40);
 			AddEmote(Event_OnCombatStart, "Release the hounds!", Text_Yell, 5841);
-		};
+		}
 };
 
 // Arcanist Doan
@@ -157,28 +150,18 @@ class DoanAI : public MoonScriptCreatureAI
 			AddEmote(Event_OnCombatStart, "You will not defile these mysteries!", Text_Yell, 5842);
 
 			m_bShielded = false;
-		};
+		}
 
 		void OnDamageTaken(Unit* mAttacker, uint32 fAmount)
 		{
-			if(GetHealthPercent() <= 50 && !m_bShielded)
-				Shield();
-		};
-
-		void Shield()
-		{
-			_unit->CastSpell(_unit, SHIELD , true);
-			Emote("Burn in righteous fire!", Text_Yell, 5843);
-			_unit->CastSpell(_unit, NOVA, false);
-			m_bShielded = true;
-		};
-
-		void OnCombatStop(Unit* pTarget)
-		{
-			m_bShielded = false;
-
-			ParentClass::OnCombatStop(pTarget);
-		};
+			if(GetHealthPercent() <= 50.0f && !m_bShielded)
+			{
+				ApplyAura(SHIELD);
+				Emote("Burn in righteous fire!", Text_Yell, 5843);
+				_unit->CastSpell(_unit, NOVA, false);
+				m_bShielded = true;
+			}
+		}
 
 	private:
 		bool m_bShielded;
@@ -211,7 +194,7 @@ class HerodAI : public MoonScriptCreatureAI
 			AddEmote(Event_OnTargetDied, "Ha, is that all?", Text_Yell, 5831);
 
 			m_bEnraged = false;
-		};
+		}
 
 		void OnCombatStop(Unit* pTarget)
 		{
@@ -219,19 +202,20 @@ class HerodAI : public MoonScriptCreatureAI
 			RemoveAura(ENRAGESPELL);
 
 			ParentClass::OnCombatStop(pTarget);
-		};
+		}
 
 		void AIUpdate()
 		{
-			if(GetHealthPercent() <= 40 && m_bEnraged == false)
+			if(GetHealthPercent() <= 40.0f && m_bEnraged == false)
 			{
 				ApplyAura(ENRAGESPELL);
 				Emote("Light, give me strength!", Text_Yell,  5833);
-			};
+			}
 
 			ParentClass::AIUpdate();
-		};
+		}
 
+	protected:
 		bool    m_bEnraged;
 };
 
@@ -246,76 +230,18 @@ class HerodAI : public MoonScriptCreatureAI
 #define CRUSADER 14517
 #define RESTALK 5835
 
-class MograineAI : public CreatureAIScript
+class MograineAI : public MoonScriptCreatureAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(MograineAI);
-
-		SP_AI_Spell spells[3];
-
-		bool m_spellcheck[3];
-
-		MograineAI(Creature* pCreature) : CreatureAIScript(pCreature)
+		MOONSCRIPT_FACTORY_FUNCTION(MograineAI, MoonScriptCreatureAI);
+		MograineAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
-			nrspells = 3;
-			mPhase = 0;
-
-			for(int i = 0; i < nrspells; i++)
-			{
-				m_spellcheck[i] = false;
-			}
-
-			spells[0].info = dbcSpell.LookupEntry(SHIELD);
-			spells[0].targettype = TARGET_SELF;
-			spells[0].instant = true;
-			spells[0].perctrigger = 5.0f;
-			spells[0].attackstoptimer = 1000;
-
-			spells[1].info = dbcSpell.LookupEntry(HAMMER);
-			spells[1].targettype = TARGET_ATTACKING;
-			spells[1].instant = true;
-			spells[1].perctrigger = 10.0f;
-			spells[1].attackstoptimer = 1000;
-
-			spells[2].info = dbcSpell.LookupEntry(CRUSADER);
-			spells[2].targettype = TARGET_ATTACKING;
-			spells[2].instant = true;
-			spells[2].perctrigger = 30.0f;
-			spells[2].attackstoptimer = 1000;
-			Timer = 0;
-
+			AddEmote(Event_OnCombatStart, "Infidels. They must be purified!", Text_Yell, 5835);
+			AddEmote(Event_OnTargetDied, "Unworthy.", Text_Yell, 5836);
+			AddSpell(SHIELD, Target_Self, 5.0f, 0, 0);
+			AddSpell(HAMMER, Target_Self, 10.0f, 0, 0);
+			AddSpell(CRUSADER, Target_Current, 30.0f, 0, 0);
 		}
-
-		void OnCombatStart(Unit* mTarget)
-		{
-			_unit->SendChatMessage(CHAT_MSG_MONSTER_YELL, LANG_UNIVERSAL, "Infidels. They must be purified!");
-
-			_unit->PlaySoundToSet(5835);
-
-			RegisterAIUpdateEvent(_unit->GetUInt32Value(UNIT_FIELD_BASEATTACKTIME));
-		}
-
-		void OnTargetDied(Unit* mTarget)
-		{
-
-			if(_unit->GetHealthPct() > 0)
-			{
-				int RandomSpeach;
-				RandomFloat(1000);
-				RandomSpeach = rand() % 2;
-				switch(RandomSpeach)
-				{
-					case 0:
-
-						_unit->SendChatMessage(CHAT_MSG_MONSTER_YELL, LANG_UNIVERSAL, "Unworthy.");
-
-						_unit->PlaySoundToSet(5836);
-						break;
-
-				}
-			}
-		}
-
 
 		void OnCombatStop(Unit* mTarget)
 		{
@@ -326,88 +252,10 @@ class MograineAI : public CreatureAIScript
 
 		void OnDied(Unit* mKiller)
 		{
-			GameObject*  pDoor = _unit->GetMapMgr()->GetInterface()->GetGameObjectNearestCoords(1173.01f, 1389.91f, 31.9723f, 104600);
-			if(pDoor == 0)
-				return;
-
-			// Open the door
-			pDoor->SetState(0);
-
-			RemoveAIUpdateEvent();
+			GameObject * pDoor = _unit->GetMapMgr()->GetInterface()->GetGameObjectNearestCoords(1173.01f, 1389.91f, 31.9723f, 104600);
+			if(pDoor != NULL
+				pDoor->SetState(State_Active);
 		}
-
-
-		void AIUpdate()
-		{
-			Timer = Timer + 1;
-
-			/*if (Timer == 30000000000)
-			{
-			    _unit->CastSpell(_unit, spells[1].info, spells[1].instant);
-			}
-
-			else
-			{*/
-			float val = RandomFloat(100.0f);
-			SpellCast(val);
-//}
-		}
-
-		void SpellCast(float val)
-		{
-			if(_unit->GetCurrentSpell() == NULL && _unit->GetAIInterface()->getNextTarget())
-			{
-				float comulativeperc = 0;
-				Unit* target = NULL;
-				for(int i = 0; i < nrspells; i++)
-				{
-					if(!spells[i].perctrigger) continue;
-
-					if(m_spellcheck[i])
-					{
-						target = _unit->GetAIInterface()->getNextTarget();
-						switch(spells[i].targettype)
-						{
-							case TARGET_SELF:
-
-							case TARGET_VARIOUS:
-								_unit->CastSpell(_unit, spells[i].info, spells[i].instant);
-								break;
-
-							case TARGET_ATTACKING:
-								_unit->CastSpell(target, spells[i].info, spells[i].instant);
-								break;
-
-							case TARGET_DESTINATION:
-								_unit->CastSpellAoF(target->GetPositionX(), target->GetPositionY(), target->GetPositionZ(), spells[i].info, spells[i].instant);
-								break;
-						}
-
-						if(spells[i].speech != "")
-						{
-							_unit->SendChatMessage(CHAT_MSG_MONSTER_YELL, LANG_UNIVERSAL, spells[i].speech.c_str());
-							_unit->PlaySoundToSet(spells[i].soundid);
-						}
-
-						m_spellcheck[i] = false;
-						return;
-					}
-
-					if(val > comulativeperc && val <= (comulativeperc + spells[i].perctrigger))
-					{
-						_unit->setAttackTimer(spells[i].attackstoptimer, false);
-						m_spellcheck[i] = true;
-					}
-
-					comulativeperc += spells[i].perctrigger;
-				}
-			}
-		}
-
-	protected:
-		uint32 mPhase;
-		int nrspells;
-		int Timer;
 };
 
 // High Inquisitor Whitemane
@@ -416,190 +264,36 @@ class MograineAI : public CreatureAIScript
 #define SMITE 9481
 #define SLEEP 9256
 #define RESURRECTION 25435
-#define RESTALK2 5840
 
-class WhitemaneAI : public CreatureAIScript
+class WhitemaneAI : public MoonScriptBossAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(WhitemaneAI);
-		SP_AI_Spell spells[3];
-		bool m_spellcheck[3];
-
-		WhitemaneAI(Creature* pCreature) : CreatureAIScript(pCreature)
+		MOONSCRIPT_FACTORY_FUNCTION(WhitemaneAI, MoonScriptBossAI);
+		WhitemaneAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
 		{
-			nrspells = 3;
-			mPhase = 0;
-
-			for(int i = 0; i < nrspells; i++)
-			{
-				m_spellcheck[i] = false;
-			}
-
-			spells[0].info = dbcSpell.LookupEntry(SMITE);
-			spells[0].targettype = TARGET_ATTACKING;
-			spells[0].instant = false;
-			spells[0].perctrigger = 15.0f;
-			spells[0].attackstoptimer = 1000;
-
-			spells[1].info = dbcSpell.LookupEntry(SLEEP);
-			spells[1].targettype = TARGET_ATTACKING;
-			spells[1].instant = true;
-			spells[1].perctrigger = 0.0f;
-			spells[1].attackstoptimer = 1000;
-
-			spells[2].info = dbcSpell.LookupEntry(RESURRECTION);
-			spells[2].targettype = TARGET_VARIOUS; //Can't seem to get her to cast it on Mograine...
-			spells[2].instant = false;
-			spells[2].perctrigger = 0.0f;
-			spells[2].attackstoptimer = 1000;
-			spells[2].soundid = RESTALK2;
-			spells[2].speech = "Arise, my champion!";
-			Timer = 0;
-		}
-
-		void OnCombatStart(Unit* mTarget)
-		{
-			_unit->SendChatMessage(CHAT_MSG_MONSTER_YELL, LANG_UNIVERSAL, "Mograine has fallen? You shall pay for this treachery!");
-
-			_unit->PlaySoundToSet(5838);
-
-			RegisterAIUpdateEvent(_unit->GetUInt32Value(UNIT_FIELD_BASEATTACKTIME));
-		}
-
-		void OnTargetDied(Unit* mTarget)
-		{
-
-			if(_unit->GetHealthPct() > 0)
-			{
-				int RandomSpeach;
-				RandomFloat(1000);
-				RandomSpeach = rand() % 2;
-				switch(RandomSpeach)
-				{
-					case 0:
-
-						_unit->SendChatMessage(CHAT_MSG_MONSTER_YELL, LANG_UNIVERSAL, "The light has spoken!");
-
-						_unit->PlaySoundToSet(5839);
-						break;
-
-				}
-			}
+			AddEmote(Event_OnCombatStart, "Mograine has fallen? You shall pay for this treachery!", Text_Yell, 5838);
+			AddEmote(Event_OnTargetDied, "The light has spoken!", Text_Yell, 5839);
+			AddSpell(SMITE, Target_Current, 15.0f, 2.5f, 0);
+			
+			SetPhase(1);
 		}
 
 		void OnDamageTaken(Unit* mAttacker, uint32 fAmount)
 		{
-			if(fAmount < 5) return;
+			if(fAmount < 5)
+				return;
+	
 			// <50% hp -> We go to phase 1
-			if(_unit->GetHealthPct() <= 50 && mPhase == 0)
+			if(GetHealthPercent() <= 50.0f && GetPhase() == 1)
 			{
-				ChangeToPhase1();
-			}
-		}
-
-		void ChangeToPhase1()
-		{
-			// Set phase var
-			mPhase = 1;
-
-			// Play sound, and send text.
-			/*_unit->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, "Light, give me strength!");
-			       ^^ Notes for myself */
-			_unit->SendChatMessage(CHAT_MSG_MONSTER_YELL, LANG_UNIVERSAL, "Arise, my champion!");
-			//MoveToRes();
-			CastSleep();
-			CastRes();
-		}
-
-		/*void MoveToRes()
-		{
-			_unit->GetAIInterface ()->MoveTo(1154.859009,1403.924683,32.250183,3.466254);
-		}*/
-
-		void CastSleep()
-		{
-			_unit->CastSpell(_unit, spells[1].info, spells[1].instant);
-		}
-
-		void CastRes()
-		{
-			_unit->CastSpell(_unit, spells[2].info, spells[2].instant);
-		}
-
-		void OnCombatStop(Unit* mTarget)
-		{
-			_unit->GetAIInterface()->setCurrentAgent(AGENT_NULL);
-			_unit->GetAIInterface()->SetAIState(STATE_IDLE);
-			RemoveAIUpdateEvent();
-		}
-
-		void OnDied(Unit* mKiller)
-		{
-
-			RemoveAIUpdateEvent();
-		}
-
-
-		void AIUpdate()
-		{
-			Timer = Timer + 1;
-
-			/*if (Timer == 30000000000)
-			{
-				 //_unit->CastSpell(_unit, spells[1].info, spells[1].instant);
-			}
-
-			else
-			{*/
-			float val = RandomFloat(100.0f);
-			SpellCast(val);
-			//}
-		}
-
-		void SpellCast(float val)
-		{
-			if(_unit->GetCurrentSpell() == NULL && _unit->GetAIInterface()->getNextTarget())
-			{
-				float comulativeperc = 0;
-				Unit* target = NULL;
-				for(int i = 0; i < nrspells; i++)
-				{
-					if(!spells[i].perctrigger) continue;
-
-					if(m_spellcheck[i])
-					{
-						target = _unit->GetAIInterface()->getNextTarget();
-						switch(spells[i].targettype)
-						{
-							case TARGET_SELF:
-							case TARGET_VARIOUS:
-								_unit->CastSpell(_unit, spells[i].info, spells[i].instant);
-								break;
-							case TARGET_ATTACKING:
-								_unit->CastSpell(target, spells[i].info, spells[i].instant);
-								break;
-							case TARGET_DESTINATION:
-								_unit->CastSpellAoF(target->GetPositionX(), target->GetPositionY(), target->GetPositionZ(), spells[i].info, spells[i].instant);
-								break;
-						}
-
-						if(spells[i].speech != "")
-						{
-							_unit->SendChatMessage(CHAT_MSG_MONSTER_YELL, LANG_UNIVERSAL, spells[i].speech.c_str());
-							_unit->PlaySoundToSet(spells[i].soundid);
-						}
-
-						m_spellcheck[i] = false;
-						return;
-					}
-
-					if(val > comulativeperc && val <= (comulativeperc + spells[i].perctrigger))
-					{
-						_unit->setAttackTimer(spells[i].attackstoptimer, false);
-						m_spellcheck[i] = true;
-					}
-					comulativeperc += spells[i].perctrigger;
-				}
+				SetPhase(2);
+				_unit->GetAIInterface()->MoveTo(1154.85f,1403.92f,32.25f,3.466254f);
+				ApplyAura(SLEEP);
+				// Play sound, and send text.
+				/*_unit->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, "Light, give me strength!");
+					   ^^ Notes for myself */
+				Emote("Arise, my champion!", Text_Yell, 5840);
+				_unit->CastSpell(_unit, RESURRECTION, false);				
 			}
 		}
 
@@ -609,9 +303,12 @@ class WhitemaneAI : public CreatureAIScript
 		int Timer;
 };
 
-
 // High Inquisitor Fairbanks
 
+//he has another event, he should tell ashbringer history and where in outlands he can just make to corrupted ashbringer,
+//need equiped ashbringer, but as base this event has been removed since wotlk.
+
+//TODO: check his texts
 #define FAIRBANKS 4542
 #define BLOOD 40412 //Need a better spell
 #define PWS 11647 //PWS = Power Word: Shield 
@@ -619,141 +316,13 @@ class WhitemaneAI : public CreatureAIScript
 class FairbanksAI : public CreatureAIScript
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(FairbanksAI);
-		SP_AI_Spell spells[2];
-		bool m_spellcheck[2];
-		FairbanksAI(Creature* pCreature) : CreatureAIScript(pCreature)
+		MOONSCRIPT_FACTORY_FUNCTION(WhitemaneAI, MoonScriptBossAI);
+		WhitemaneAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
 		{
-			nrspells = 2;
-			mPhase = 0;
-
-			for(int i = 0; i < nrspells; i++)
-			{
-				m_spellcheck[i] = false;
-			}
-
-			spells[0].info = dbcSpell.LookupEntry(BLOOD);
-			spells[0].targettype = TARGET_ATTACKING;
-			spells[0].instant = true;
-			spells[0].perctrigger = 15.0f;
-			spells[0].attackstoptimer = 1000;
-
-			spells[1].info = dbcSpell.LookupEntry(PWS);
-			spells[1].targettype = TARGET_SELF;
-			spells[1].instant = true;
-			spells[1].perctrigger = 15.0f;
-			spells[1].attackstoptimer = 1000;
-			Timer = 0;
+			AddEmote(Event_OnTargetDied, "Ha! Had enough?", Text_Yell, 0);
+			AddSpell(BLOOD, 15.0f, 0, 0);
+			AddSpell(PWS, 15.0f, 0, 0);
 		}
-
-		void OnCombatStart(Unit* mTarget)
-		{
-			RegisterAIUpdateEvent(_unit->GetUInt32Value(UNIT_FIELD_BASEATTACKTIME));
-		}
-
-		void OnTargetDied(Unit* mTarget)
-		{
-
-			if(_unit->GetHealthPct() > 0)
-			{
-				int RandomSpeach;
-				RandomFloat(1000);
-				RandomSpeach = rand() % 2;
-				switch(RandomSpeach)
-				{
-					case 0:
-
-						_unit->SendChatMessage(CHAT_MSG_MONSTER_YELL, LANG_UNIVERSAL, "Ha! Had enough?");
-
-						_unit->PlaySoundToSet(0000);
-						break;
-
-				}
-			}
-		}
-
-
-		void OnCombatStop(Unit* mTarget)
-		{
-			_unit->GetAIInterface()->setCurrentAgent(AGENT_NULL);
-			_unit->GetAIInterface()->SetAIState(STATE_IDLE);
-			RemoveAIUpdateEvent();
-		}
-
-		void OnDied(Unit* mKiller)
-		{
-
-			RemoveAIUpdateEvent();
-		}
-
-		void AIUpdate()
-		{
-			Timer = Timer + 1;
-
-			if(Timer == 20000)
-			{
-				_unit->CastSpell(_unit, spells[1].info, spells[1].instant);
-			}
-
-			else
-			{
-				float val = RandomFloat(100.0f);
-				SpellCast(val);
-			}
-		}
-
-		void SpellCast(float val)
-		{
-			if(_unit->GetCurrentSpell() == NULL && _unit->GetAIInterface()->getNextTarget())
-			{
-				float comulativeperc = 0;
-				Unit* target = NULL;
-				for(int i = 0; i < nrspells; i++)
-				{
-					if(!spells[i].perctrigger) continue;
-
-					if(m_spellcheck[i])
-					{
-						target = _unit->GetAIInterface()->getNextTarget();
-						switch(spells[i].targettype)
-						{
-							case TARGET_SELF:
-							case TARGET_VARIOUS:
-								_unit->CastSpell(_unit, spells[i].info, spells[i].instant);
-								break;
-							case TARGET_ATTACKING:
-								_unit->CastSpell(target, spells[i].info, spells[i].instant);
-								break;
-							case TARGET_DESTINATION:
-								_unit->CastSpellAoF(target->GetPositionX(), target->GetPositionY(), target->GetPositionZ(), spells[i].info, spells[i].instant);
-								break;
-						}
-
-						if(spells[i].speech != "")
-						{
-							_unit->SendChatMessage(CHAT_MSG_MONSTER_YELL, LANG_UNIVERSAL, spells[i].speech.c_str());
-							_unit->PlaySoundToSet(spells[i].soundid);
-						}
-
-						m_spellcheck[i] = false;
-						return;
-					}
-
-					if(val > comulativeperc && val <= (comulativeperc + spells[i].perctrigger))
-					{
-						_unit->setAttackTimer(spells[i].attackstoptimer, false);
-						m_spellcheck[i] = true;
-					}
-
-					comulativeperc += spells[i].perctrigger;
-				}
-			}
-		}
-
-	protected:
-		uint32 mPhase;  // NPC has 2 phases
-		int nrspells;
-		int Timer;
 };
 
 class ScarletTorch : public GameObjectAIScript
@@ -766,12 +335,7 @@ class ScarletTorch : public GameObjectAIScript
 		{
 			GameObject* SecretDoor = pPlayer->GetMapMgr()->GetInterface()->GetGameObjectNearestCoords(1167.79f, 1347.26f, 31.5494f, 97700);
 			if(SecretDoor != NULL)
-			{
-				if(SecretDoor->GetState() == 1)
-					SecretDoor->SetState(0);
-				else
-					SecretDoor->SetState(1);
-			}
+				SecretDoor->SetState(SecretDoor->GetState() == State_Inactive ? State_Active : State_Inactive);
 		}
 };
 
@@ -785,12 +349,7 @@ class ArmoryLever : public GameObjectAIScript
 		{
 			GameObject* ArmoryDoor = pPlayer->GetMapMgr()->GetInterface()->GetGameObjectNearestCoords(2886.31f, -827.261f, 160.336f, 101851);
 			if(ArmoryDoor != NULL)
-			{
-				if(ArmoryDoor->GetState() == 1)
-					ArmoryDoor->SetState(0);
-				else
-					ArmoryDoor->SetState(1);
-			}
+				ArmoryDoor->SetState(ArmoryDoor->GetState() == State_Inactive ? State_Active : State_Inactive);
 		}
 };
 
@@ -804,12 +363,7 @@ class CathedralLever: public GameObjectAIScript
 		{
 			GameObject* CathedralDoor = pPlayer->GetMapMgr()->GetInterface()->GetGameObjectNearestCoords(2908.18f, -818.203f, 160.332f, 101850);
 			if(CathedralDoor != NULL)
-			{
-				if(CathedralDoor->GetState() == 1)
-					CathedralDoor->SetState(0);
-				else
-					CathedralDoor->SetState(1);
-			}
+				CathedralDoor->SetState(CathedralDoor->GetState() == State_Inactive ? State_Active : State_Inactive);
 		}
 };
 
