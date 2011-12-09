@@ -36,9 +36,9 @@ class MoonScriptBossAI : public MoonScriptCreatureAI
 		virtual ~MoonScriptBossAI();
 
 		//Basic Interface
-		SpellDesc*		AddPhaseSpell(uint32 pPhase, SpellDesc* pSpell);
-		int32			GetPhase();
-		void			SetPhase(uint32 pPhase, SpellDesc* pPhaseChangeSpell = NULL);
+		SpellDesc*		AddPhaseSpell(uint8 pPhase, SpellDesc* pSpell);
+		uint8			GetPhase();
+		void			SetPhase(uint8 pPhase, SpellDesc* pPhaseChangeSpell = NULL);
 		void			SetEnrageInfo(SpellDesc* pSpell, uint32 pTriggerMilliseconds);
 
 		//Reimplemented Events
@@ -47,7 +47,7 @@ class MoonScriptBossAI : public MoonScriptCreatureAI
 		virtual void	AIUpdate();
 
 	protected:
-		uint32			mPhaseIndex;
+		uint8			mPhaseIndex;
 		PhaseSpellArray	mPhaseSpells;
 		SpellDesc*		mEnrageSpell;
 		uint32			mEnrageTimerDuration;
