@@ -339,7 +339,7 @@ float MoonScriptCreatureAI::GetHealthPercent()
 	if(GetUnit()->GetUInt32Value(UNIT_FIELD_HEALTH) == 0 || GetUnit()->GetUInt32Value(UNIT_FIELD_MAXHEALTH) == 0)
 		return 0;
 
-	return GetUnit()->GetUInt32Value(UNIT_FIELD_HEALTH) * 100 / GetUnit()->GetUInt32Value(UNIT_FIELD_MAXHEALTH);
+	return GetUnit()->GetUInt32Value(UNIT_FIELD_HEALTH) * 100.0f / GetUnit()->GetUInt32Value(UNIT_FIELD_MAXHEALTH);
 }
 
 float MoonScriptCreatureAI::GetManaPercent()
@@ -347,7 +347,7 @@ float MoonScriptCreatureAI::GetManaPercent()
 	if(GetUnit()->GetUInt32Value(UNIT_FIELD_POWER1) == 0 || GetUnit()->GetUInt32Value(UNIT_FIELD_MAXPOWER1) == 0)  //POWER_TYPE_MANA
 		return 0;
 
-	return GetUnit()->GetUInt32Value(UNIT_FIELD_POWER1) * 100 / GetUnit()->GetUInt32Value(UNIT_FIELD_MAXPOWER1);
+	return GetUnit()->GetUInt32Value(UNIT_FIELD_POWER1) * 100.0f / GetUnit()->GetUInt32Value(UNIT_FIELD_MAXPOWER1);
 }
 
 void MoonScriptCreatureAI::Regenerate()
@@ -1319,7 +1319,7 @@ Unit* MoonScriptCreatureAI::GetTargetForSpell(SpellDesc* pSpell)
 		case TargetGen_Self:
 			if(!IsAlive())
 				return NULL;
-			if((pSpell->mTargetType.mTargetFilter & TargetFilter_Wounded) && GetHealthPercent() >= 99)
+			if((pSpell->mTargetType.mTargetFilter & TargetFilter_Wounded) && GetHealthPercent() >= 99.0f)
 				return NULL;
 
 			return _unit;
@@ -1476,7 +1476,7 @@ bool MoonScriptCreatureAI::IsValidUnitTarget(Object* pObject, TargetFilter pFilt
 			return false;
 
 		//Keep only wounded targets if requested
-		if((pFilter & TargetFilter_Wounded) && UnitTarget->GetHealthPct() >= 99)
+		if((pFilter & TargetFilter_Wounded) && UnitTarget->GetHealthPercent() >= 99.0f)
 			return false;
 
 		//Skip targets not in melee range if requested
