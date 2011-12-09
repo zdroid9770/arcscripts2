@@ -533,7 +533,7 @@ class SkarvaldTheConstructorAI : public MoonScriptCreatureAI
 		};
 
 	private:
-		int32					mReplyTimer;
+		uint32					mReplyTimer;
 		MoonScriptCreatureAI*	pDalronn;
 		MoonScriptCreatureAI*	pDalronnGhost;
 };

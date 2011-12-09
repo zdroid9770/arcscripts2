@@ -2304,10 +2304,10 @@ class WarbringerOmroggAI : public MoonScriptCreatureAI
 
 		MoonScriptCreatureAI*	mLeftHead;
 		MoonScriptCreatureAI*	mRightHead;
-		int32					mAggroShiftTimer;
-		int32					mBlastWaveTimer;
-		int32					mSpeechTimer;
-		int32					mSpeechId;
+		uint32					mAggroShiftTimer;
+		uint32					mBlastWaveTimer;
+		uint32					mSpeechTimer;
+		uint8					mSpeechId;
 		SpellDesc*				mBlastWave;
 };
 

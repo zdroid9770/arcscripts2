@@ -206,9 +206,9 @@ class MaexxnaAI : public MoonScriptBossAI
 		SpellDesc*			mWebWrapProc;
 		bool				mHasEnraged;
 		bool				mLeftWall;
-		int32				mAddsSummonTimer;
-		int32				mWebSprayTimer;
-		int32				mWebWrapTimer;
+		uint32				mAddsSummonTimer;
+		uint32				mWebSprayTimer;
+		uint32				mWebWrapTimer;
 };
 
 /////////////////////////////////////////////////////////////////////////////////
@@ -368,8 +368,8 @@ class AnubRekhanAI : public MoonScriptBossAI
 		set< CryptGuardAI* >	mCryptGuards;
 		set< uint32 >			mUsedCorpseGuids;
 		SpellDesc*				mLocustSwarm;
-		int32					mLocustSwarmTimer;
-		int32					mCryptSpawnTimer;
+		uint32					mLocustSwarmTimer;
+		uint32					mCryptSpawnTimer;
 };
 
 /////////////////////////////////////////////////////////////////////////////////

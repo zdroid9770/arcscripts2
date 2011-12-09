@@ -178,7 +178,7 @@ class ZerekethAI : public MoonScriptBossAI
 		}
 
 	protected:
-		int32 SpeechTimer;
+		uint32 SpeechTimer;
 };
 
 class VoidZoneARC : public MoonScriptCreatureAI
@@ -476,7 +476,7 @@ class WardenMellicharAI : public MoonScriptBossAI
 	protected:
 		bool HasSummonedNpc;
 		uint32 Phasepart, NPC_ID_Spawn, Spawncounter;
-		int32 Phase_Timer;
+		uint32 Phase_Timer;
 		MoonInstanceScript* mInstance;
 		MoonScriptCreatureAI* pSummon;
 		Creature* Millhouse;

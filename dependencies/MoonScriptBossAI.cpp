@@ -34,7 +34,7 @@ MoonScriptBossAI::~MoonScriptBossAI()
 	mPhaseSpells.clear();
 };
 
-SpellDesc* MoonScriptBossAI::AddPhaseSpell(int32 pPhase, SpellDesc* pSpell)
+SpellDesc* MoonScriptBossAI::AddPhaseSpell(uint32 pPhase, SpellDesc* pSpell)
 {
 	mPhaseSpells.push_back(std::make_pair(pPhase, pSpell));
 	return pSpell;
@@ -45,7 +45,7 @@ int32 MoonScriptBossAI::GetPhase()
 	return mPhaseIndex;
 };
 
-void MoonScriptBossAI::SetPhase(int32 pPhase, SpellDesc* pPhaseChangeSpell)
+void MoonScriptBossAI::SetPhase(uint32 pPhase, SpellDesc* pPhaseChangeSpell)
 {
 	if(mPhaseIndex != pPhase)
 	{
@@ -67,7 +67,7 @@ void MoonScriptBossAI::SetPhase(int32 pPhase, SpellDesc* pPhaseChangeSpell)
 	}
 };
 
-void MoonScriptBossAI::SetEnrageInfo(SpellDesc* pSpell, int32 pTriggerMilliseconds)
+void MoonScriptBossAI::SetEnrageInfo(SpellDesc* pSpell, uint32 pTriggerMilliseconds)
 {
 	mEnrageSpell = pSpell;
 	mEnrageTimerDuration = pTriggerMilliseconds;

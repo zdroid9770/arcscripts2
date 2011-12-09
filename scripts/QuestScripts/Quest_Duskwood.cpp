@@ -63,7 +63,7 @@ class ElizaAI : public MoonScriptCreatureAI
 			}
 		}
 
-		int32		mElizaCombatTimer;
+		uint32		mElizaCombatTimer;
 		SpellDesc*	mSummonGuard;
 		Creature*	mElizaGuard;
 };

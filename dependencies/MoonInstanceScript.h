@@ -100,7 +100,7 @@ typedef std::map< uint32, GameObjectState >						GameObjectEntryMap;
 typedef std::vector< uint32 >									IdVector;
 typedef std::set< uint32 >										IdSet;
 typedef std::map< uint32, IdVector >							EntryIdMap;
-typedef std::pair< int32, int32 >								TimerPair;
+typedef std::pair< uint32, uint32 >								TimerPair;
 typedef std::vector< TimerPair >								TimerArray;
 typedef HM_NAMESPACE::hash_map<uint32, GameObject* >			GameObjectMap;
 typedef set< Unit* >											UnitSet;
@@ -150,11 +150,11 @@ class MoonInstanceScript : public InstanceScript
 		bool						IsCombatInProgress();
 
 		// Timers - reimplementation from MoonScriptCreatureAI
-		int32						AddTimer(int32 pDurationMillisec);
-		int32						GetTimer(int32 pTimerId);
-		void						RemoveTimer(int32 & pTimerId);
-		void						ResetTimer(int32 pTimerId, int32 pDurationMillisec);
-		bool						IsTimerFinished(int32 pTimerId);
+		uint32						AddTimer(uint32 pDurationMillisec);
+		uint32						GetTimer(uint32 pTimerId);
+		void						RemoveTimer(uint32 & pTimerId);
+		void						ResetTimer(uint32 pTimerId, uint32 pDurationMillisec);
+		bool						IsTimerFinished(uint32 pTimerId);
 		void						CancelAllTimers();
 
 		// Update Event
