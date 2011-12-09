@@ -347,15 +347,15 @@ class SCRIPT_DECL MoonScriptCreatureAI : public CreatureAIScript
 		//Status
 		void					ClearHateList();
 		void					WipeHateList();
-		int32					GetHealthPercent();
-		int32					GetManaPercent();
+		float					GetHealthPercent();
+		float					GetManaPercent();
 		void					Regenerate();
 		void					SetScale(float pScale);
 		float					GetScale();
 		void					SetDisplayId(uint32 pDisplayId);
 		void					SetWieldWeapon(bool pValue);
 		void					SetDisplayWeapon(bool pMainHand, bool pOffHand);
-		void					SetDisplayWeaponIds(uint32 pItem1Id, uint32 pItem2Id);
+		void					SetDisplayWeaponIds(uint32 Mainhand, uint32 OffHand);
 
 		//Environment
 		float					GetRange(MoonScriptCreatureAI* pCreature);
@@ -438,12 +438,8 @@ class SCRIPT_DECL MoonScriptCreatureAI : public CreatureAIScript
 		uint32					GetAIUpdateFreq();
 
 		//Loot
-		void					AddLootToTable(LootTable* pTable, uint32 pItemID, uint32 pChance, uint32 pMinCount, uint32 pMaxCount, uint32 pFFA);
-		void					ClearLoot(Unit* pTarget);
-		void					AddLootFromTable(Unit* pTarget, LootTable* pTable, uint32 pCount = 1);
 		void					SetGoldLoot(Unit* pTarget, uint32 pMinGold, uint32 pMaxGold);
-		void					AddLoot(Unit* pTarget, uint32 pItemID, uint32 pMinCount, uint32 pMaxCount, uint32 pFFA);
-		void					AddRareLoot(Unit* pTarget, uint32 pItemID, float pPercentChance);
+		void					AddLoot(Unit* pTarget, uint32 pItemID, uint32 pMinCount, uint32 pMaxCount);
 
 		//Reimplemented Events
 		//virtual void			Reset();

@@ -334,14 +334,20 @@ void MoonScriptCreatureAI::WipeHateList()
 	_unit->GetAIInterface()->WipeHateList();
 }
 
-int32 MoonScriptCreatureAI::GetHealthPercent()
+float MoonScriptCreatureAI::GetHealthPercent()
 {
-	return _unit->GetHealthPct();
+	if(GetUnit()->GetUInt32Value(UNIT_FIELD_HEALTH) == 0 || GetUnit()->GetUInt32Value(UNIT_FIELD_MAXHEALTH) == 0)
+		return 0;
+
+	return GetUnit()->GetUInt32Value(UNIT_FIELD_HEALTH) * 100 / GetUnit()->GetUInt32Value(UNIT_FIELD_MAXHEALTH);
 }
 
-int32 MoonScriptCreatureAI::GetManaPercent()
+float MoonScriptCreatureAI::GetManaPercent()
 {
-	return _unit->GetManaPct();
+	if(GetUnit()->GetUInt32Value(UNIT_FIELD_POWER1) == 0 || GetUnit()->GetUInt32Value(UNIT_FIELD_MAXPOWER1) == 0)  //POWER_TYPE_MANA
+		return 0;
+
+	return GetUnit()->GetUInt32Value(UNIT_FIELD_POWER1) * 100 / GetUnit()->GetUInt32Value(UNIT_FIELD_MAXPOWER1);
 }
 
 void MoonScriptCreatureAI::Regenerate()
@@ -891,59 +897,15 @@ uint32 MoonScriptCreatureAI::GetAIUpdateFreq()
 	return mAIUpdateFrequency;
 }
 
-/*
-void MoonScriptCreatureAI::AddLootToTable(LootTable* pTable, uint32 pItemID, uint32 pChance, uint32 pMinCount, uint32 pMaxCount, uint32 pFFA)
-{
-	LootDesc loot;
-	loot.mItemID = pItemID;
-	loot.mChance = pChance;
-	loot.mMinCount = pMinCount;
-	loot.mMaxCount = pMaxCount;
-	loot.mFFA = pFFA;
-	pTable->push_back(loot);
-}
-
-void MoonScriptCreatureAI::ClearLoot(Unit* pTarget)
-{
-	pTarget->ClearLoot();
-}
-
-void MoonScriptCreatureAI::AddLootFromTable(Unit* pTarget, LootTable* pTable, uint32 pCount)
-{
-	uint32 total = 0;
-	for (LootTable::iterator it = pTable->begin(); it != pTable->end(); ++it) total += (*it).mChance;
-	for (uint32 count = 0; count < pCount; ++count)
-	{
-		uint32 result = RandomUInt(total);
-		uint32 sum = 0;
-		for (LootTable::iterator it = pTable->begin(); it != pTable->end(); ++it)
-		{
-			sum += (*it).mChance;
-			if (result <= sum)
-			{
-				LootMgr::getSingleton().AddLoot(pTarget->loot(), (*it).mItemID, (*it).mMinCount, (*it).mMaxCount, (*it).mFFA);
-				break;
-			}
-		}
-	}
-}
-
 void MoonScriptCreatureAI::SetGoldLoot(Unit* pTarget, uint32 pMinGold, uint32 pMaxGold)
 {
-	pTarget->GetLoot()->gold = RandomUInt(pMaxGold - pMinGold) + pMinGold;
+	pTarget->loot.gold = RandomUInt(pMaxGold - pMinGold) + pMinGold;
 }
 
-void MoonScriptCreatureAI::AddLoot(Unit* pTarget, uint32 pItemID, uint32 pMinCount, uint32 pMaxCount, uint32 pFFA)
+void MoonScriptCreatureAI::AddLoot(Unit* pTarget, uint32 pItemID, uint32 pMinCount, uint32 pMaxCount)
 {
-	LootMgr::getSingleton().AddLoot(pTarget->GetLoot(), pItemID, pMinCount, pMaxCount, pFFA);
+	LootMgr::getSingleton().AddLoot(&pTarget->loot, pItemID, pMinCount, pMaxCount);
 }
-
-void MoonScriptCreatureAI::AddRareLoot(Unit* pTarget, uint32 pItemID, float pPercentChance)
-{
-	float result = RandomFloat(100.0f);
-	if (result <= pPercentChance)
-		LootMgr::getSingleton().AddLoot(pTarget->GetLoot(), pItemID, 1, 1, 0);
-}*/
 
 WayPoint* MoonScriptCreatureAI::CreateWaypoint(int pId, uint32 pWaittime, uint32 pMoveFlag, Location pCoords)
 {
@@ -992,6 +954,7 @@ void MoonScriptCreatureAI::ForceWaypointMove(uint32 pWaypointId)
 {
 	if(GetCanEnterCombat())
 		_unit->GetAIInterface()->SetAllowedToEnterCombat(false);
+
 	if(!GetCanMove())
 		SetCanMove(true);
 
@@ -1098,19 +1061,16 @@ void MoonScriptCreatureAI::OnCombatStop(Unit* pTarget)
 	CancelAllTimers();
 	RemoveAllEvents();
 	RemoveAllAuras();
-	//SetCanMove( GetCanMove() );
 	SetBehavior(Behavior_Default);
-	//_unit->GetAIInterface()->SetAIState(STATE_IDLE);				// Fix for stuck mobs that don't regen
 	RemoveAIUpdateEvent();
-	if(mDespawnWhenInactive) Despawn(DEFAULT_DESPAWN_TIMER);
+	if(mDespawnWhenInactive)
+		Despawn(DEFAULT_DESPAWN_TIMER);
 }
 
 void MoonScriptCreatureAI::OnTargetDied(Unit* pTarget)
 {
 	if(GetHealthPercent() > 0)	//Prevent double yelling (OnDied and OnTargetDied)
-	{
 		RandomEmote(mOnTargetDiedEmotes);
-	}
 }
 
 void MoonScriptCreatureAI::OnDied(Unit* pKiller)
@@ -1131,9 +1091,7 @@ void MoonScriptCreatureAI::AIUpdate()
 
 	//Elapse timers
 	for(TimerArray::iterator TimerIter = mTimers.begin(); TimerIter != mTimers.end(); ++TimerIter)
-	{
 		TimerIter->second -= mAIUpdateFrequency;
-	}
 
 	// update events
 	for(EventArray::iterator EventIter = mEvents.begin(); EventIter != mEvents.end(); ++ EventIter)
@@ -1163,8 +1121,7 @@ void MoonScriptCreatureAI::AIUpdate()
 				mScheduledSpells.erase(SpellIter);
 
 			break;
-		}
-		else
+		}else
 			++SpellIter;
 	}
 
@@ -1312,23 +1269,20 @@ void MoonScriptCreatureAI::CastSpellOnTarget(Unit* pTarget, TargetType pType, Sp
 		case TargetGen_RandomPlayer:
 			_unit->CastSpell(pTarget, pEntry, pInstant);
 			break;
-
 		case TargetGen_RandomUnitApplyAura:
 		case TargetGen_RandomPlayerApplyAura:
 			pTarget->CastSpell(pTarget, pEntry, pInstant);
 			break;
-
 		case TargetGen_Destination:
 		case TargetGen_RandomUnitDestination:
 		case TargetGen_RandomPlayerDestination:
 			_unit->CastSpellAoF(pTarget->GetPositionX(), pTarget->GetPositionY(), pTarget->GetPositionZ(), pEntry, pInstant);
 			break;
-
 		default:
 			sLog.outDebug("ArcScript: MoonScriptCreatureAI::CastSpellOnTarget() : Invalid target type!");
 			break;
-	};
-};
+	}
+}
 
 int32 MoonScriptCreatureAI::CalcSpellAttackTime(SpellDesc* pSpell)
 {
@@ -1348,7 +1302,7 @@ RangeStatusPair MoonScriptCreatureAI::GetSpellRangeStatusToUnit(Unit* pTarget, S
 			return make_pair(RangeStatus_TooClose, pSpell->mMinRange);
 		if(pSpell->mMaxRange > 0 && (Range > pSpell->mMaxRange))
 			return make_pair(RangeStatus_TooFar, pSpell->mMaxRange);
-	};
+	}
 
 	return make_pair(RangeStatus_Ok, 0.0f);
 };
@@ -1365,7 +1319,7 @@ Unit* MoonScriptCreatureAI::GetTargetForSpell(SpellDesc* pSpell)
 		case TargetGen_Self:
 			if(!IsAlive())
 				return NULL;
-			if((pSpell->mTargetType.mTargetFilter & TargetFilter_Wounded) && _unit->GetHealthPct() >= 99)
+			if((pSpell->mTargetType.mTargetFilter & TargetFilter_Wounded) && GetHealthPercent() >= 99)
 				return NULL;
 
 			return _unit;
@@ -1387,7 +1341,7 @@ Unit* MoonScriptCreatureAI::GetTargetForSpell(SpellDesc* pSpell)
 		default:
 			sLog.outDebug("ArcScript: MoonScriptCreatureAI::GetTargetForSpell() : Invalid target type!");
 			return NULL;
-	};
+	}
 };
 
 Unit* MoonScriptCreatureAI::GetBestPlayerTarget(TargetFilter pTargetFilter, float pMinRange, float pMaxRange)
@@ -1398,7 +1352,7 @@ Unit* MoonScriptCreatureAI::GetBestPlayerTarget(TargetFilter pTargetFilter, floa
 	{
 		if(IsValidUnitTarget(*PlayerIter, pTargetFilter, pMinRange, pMaxRange))
 			TargetArray.push_back(TO_UNIT(*PlayerIter));
-	};
+	}
 
 	return ChooseBestTargetInArray(TargetArray, pTargetFilter);
 };
@@ -1413,19 +1367,18 @@ Unit* MoonScriptCreatureAI::GetBestUnitTarget(TargetFilter pTargetFilter, float 
 		{
 			if(IsValidUnitTarget(*ObjectIter, pTargetFilter, pMinRange, pMaxRange))
 				TargetArray.push_back(TO_UNIT(*ObjectIter));
-		};
+		}
 
 		if(IsValidUnitTarget(_unit, pTargetFilter))
 			TargetArray.push_back(_unit);	//Also add self as possible friendly target
-	}
-	else
+	}else
 	{
 		for(set< Object* >::iterator ObjectIter = _unit->GetInRangeOppFactsSetBegin(); ObjectIter != _unit->GetInRangeOppFactsSetEnd(); ++ObjectIter)
 		{
 			if(IsValidUnitTarget(*ObjectIter, pTargetFilter, pMinRange, pMaxRange))
 				TargetArray.push_back(TO_UNIT(*ObjectIter));
-		};
-	};
+		}
+	}
 
 	return ChooseBestTargetInArray(TargetArray, pTargetFilter);
 };
@@ -1459,8 +1412,8 @@ Unit* MoonScriptCreatureAI::GetNearestTargetInArray(UnitArray & pTargetArray)
 		{
 			NearestDistance = Distance;
 			NearestUnit = (*UnitIter);
-		};
-	};
+		}
+	}
 
 	return NearestUnit;
 };
@@ -1481,9 +1434,9 @@ Unit* MoonScriptCreatureAI::GetSecondMostHatedTargetInArray(UnitArray & pTargetA
 			{
 				MostHatedUnit = TargetUnit;
 				HighestThreat = Threat;
-			};
-		};
-	};
+			}
+		}
+	}
 
 	return MostHatedUnit;
 };
@@ -1493,6 +1446,7 @@ bool MoonScriptCreatureAI::IsValidUnitTarget(Object* pObject, TargetFilter pFilt
 	//Make sure its a valid unit
 	if(!pObject->IsUnit())
 		return false;
+
 	if(pObject->GetInstanceID() != _unit->GetInstanceID())
 		return false;
 
@@ -1502,8 +1456,7 @@ bool MoonScriptCreatureAI::IsValidUnitTarget(Object* pObject, TargetFilter pFilt
 	{
 		if(UnitTarget->isAlive() || !UnitTarget->IsCreature() || TO_CREATURE(UnitTarget)->GetCreatureInfo()->Rank == ELITE_WORLDBOSS)
 			return false;
-	}
-	else if(!UnitTarget->isAlive())
+	}else if(!UnitTarget->isAlive())
 		return false;
 
 	if(UnitTarget->IsPlayer() && TO_PLAYER(UnitTarget)->m_isGmInvisible)
@@ -1538,7 +1491,7 @@ bool MoonScriptCreatureAI::IsValidUnitTarget(Object* pObject, TargetFilter pFilt
 				return false;
 			if(pMaxRange > 0 && Range > pMaxRange)
 				return false;
-		};
+		}
 
 		//Skip targets not in Line Of Sight if requested
 		if((~pFilter & TargetFilter_IgnoreLineOfSight) && !_unit->IsWithinLOSInMap(UnitTarget))
@@ -1551,8 +1504,8 @@ bool MoonScriptCreatureAI::IsValidUnitTarget(Object* pObject, TargetFilter pFilt
 				return false; //Skip not-in-combat targets if friendly
 			if(isHostile(_unit, UnitTarget) || _unit->GetAIInterface()->getThreatByPtr(UnitTarget) > 0)
 				return false;
-		};
-	};
+		}
+	}
 
 	return true; //This is a valid unit target
 };
@@ -1567,7 +1520,7 @@ void MoonScriptCreatureAI::PushRunToTargetCache(Unit* pTarget, SpellDesc* pSpell
 		SetAllowMelee(false);
 		SetAllowRanged(false);
 		SetAllowSpell(false);
-	};
+	}
 
 	if(mRunToTargetCache)
 		MoveTo(mRunToTargetCache, pRangeStatus);
@@ -1583,7 +1536,7 @@ void MoonScriptCreatureAI::PopRunToTargetCache()
 		SetAllowRanged(true);
 		SetAllowSpell(true);
 		StopMovement();
-	};
+	}
 };
 
 void MoonScriptCreatureAI::RandomEmote(EmoteArray & pEmoteArray)
@@ -1593,7 +1546,7 @@ void MoonScriptCreatureAI::RandomEmote(EmoteArray & pEmoteArray)
 	{
 		uint32 Roll = (ArraySize > 1) ? RandomUInt(ArraySize - 1) : 0;
 		Emote(pEmoteArray[ Roll ]->mText.c_str(), pEmoteArray[ Roll ]->mType, pEmoteArray[ Roll ]->mSoundId);
-	};
+	}
 };
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1645,9 +1598,7 @@ void EventFunc_ChangeGoState(MoonScriptCreatureAI* pCreatureAI, int32 pMiscVal)
 	{
 		pSelectedGO = (*GOIter);
 		if(pSelectedGO->GetEntry() == pGOEntry)
-		{
 			pSelectedGO->SetState(pSelectedGO->GetState() == 1 ? 0 : 1);
-		}
 	}
 
 	if(!pCreatureAI->IsInCombat() && !pCreatureAI->HasEvents() && pCreatureAI->GetTimerCount() == 0)
