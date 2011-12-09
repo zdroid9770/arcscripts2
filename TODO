@@ -2,11 +2,9 @@ Main
 	* Classic instances rewrite/cleanup.
 
 New features:
-	* Database based gossip system,
-	* Add DoScriptText, LoadScriptData (in progress)
+	* Add DoScriptText(in progress)
 	* Add script data (waypoints, texts data, gossip data) loads (not in progress)
 	* MoonScriptEscortAI (in progress)
-	* Add DoTimedEmote and DioTimedSpellCast functions
 
 General:
 	* Add base documentation
