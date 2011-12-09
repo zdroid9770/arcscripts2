@@ -354,8 +354,8 @@ class SCRIPT_DECL MoonScriptCreatureAI : public CreatureAIScript
 		float					GetScale();
 		void					SetDisplayId(uint32 pDisplayId);
 		void					SetWieldWeapon(bool pValue);
-		void					SetDisplayWeapon(bool pMainHand, bool pOffHand);
-		void					SetDisplayWeaponIds(uint32 Mainhand, uint32 OffHand);
+		void					SetDisplayWeapon(bool pMainHand, bool pOffHand, bool pRanged = false);
+		void					SetDisplayWeaponIds(uint32 mainhand, uint32 offhand, uint32 ranged = 0);
 
 		//Environment
 		float					GetRange(MoonScriptCreatureAI* pCreature);

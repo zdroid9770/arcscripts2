@@ -383,19 +383,22 @@ void MoonScriptCreatureAI::SetWieldWeapon(bool pValue)
 	}
 }
 
-void MoonScriptCreatureAI::SetDisplayWeapon(bool pMainHand, bool pOffHand)
+void MoonScriptCreatureAI::SetDisplayWeapon(bool pMainHand, bool pOffHand, bool pRanged)
 {
-	SetDisplayWeaponIds(pMainHand ? _unit->GetEquippedItem(MELEE) : 0, pOffHand ? _unit->GetEquippedItem(OFFHAND) : 0);
+	SetDisplayWeaponIds(pMainHand ? _unit->GetEquippedItem(MELEE) : 0, pOffHand ? _unit->GetEquippedItem(OFFHAND) : 0, pRanged ? _unit->GetEquippedItem(RANGED) : 0);
 }
 
 //change SetDisplayweaponIds to take 2 parameters ? pitem1id,pitem2id
-void MoonScriptCreatureAI::SetDisplayWeaponIds(uint32 pItem1Id, uint32 pItem2Id)
+void MoonScriptCreatureAI::SetDisplayWeaponIds(uint32 mainhand, uint32 offhand, uint32 ranged)
 {
 	//Main Hand
-	_unit->SetEquippedItem(MELEE, pItem1Id);
+	_unit->SetEquippedItem(MELEE, mainhand);
 
 	//Off Hand
-	_unit->SetEquippedItem(OFFHAND, pItem2Id);
+	_unit->SetEquippedItem(OFFHAND, offhand);
+
+	//Ranged
+	_unit->SetEquippedItem(RANGED, ranged);
 }
 
 float MoonScriptCreatureAI::GetRange(MoonScriptCreatureAI* pCreature)
@@ -1476,7 +1479,7 @@ bool MoonScriptCreatureAI::IsValidUnitTarget(Object* pObject, TargetFilter pFilt
 			return false;
 
 		//Keep only wounded targets if requested
-		if((pFilter & TargetFilter_Wounded) && UnitTarget->GetHealthPercent() >= 99.0f)
+		if((pFilter & TargetFilter_Wounded) && GetHealthPercent() >= 99.0f)
 			return false;
 
 		//Skip targets not in melee range if requested
