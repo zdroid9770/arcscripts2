@@ -88,9 +88,7 @@ class SCRIPT_DECL EasyFunctions
 				pCreature->m_custom_waypoint_map->resize(wp->id + 1);
 
 			if((*pCreature->m_custom_waypoint_map)[wp->id] == NULL)
-			{
 				(*pCreature->m_custom_waypoint_map)[wp->id] = wp;
-			}
 
 		}
 
@@ -98,6 +96,7 @@ class SCRIPT_DECL EasyFunctions
 		{
 			if(!creat)
 				return;
+
 			if(!creat->m_custom_waypoint_map)
 				return;
 
@@ -255,8 +254,7 @@ class SCRIPT_DECL EasyFunctions
 				{
 					pPlayer->GetItemInterface()->BuildInventoryChangeError(NULL, NULL, INV_ERR_INVENTORY_FULL);
 					return false;
-				}
-				else
+				}else
 				{
 					Item* NewItem = objmgr.CreateItem(pEntry, pPlayer);
 					if(NewItem == NULL)
@@ -270,24 +268,22 @@ class SCRIPT_DECL EasyFunctions
 					{
 						NewItem = NULL;
 						return false;
-					};
+					}
 
 					pPlayer->SendItemPushResult(false, true, true, true,
 					                            pPlayer->GetItemInterface()->LastSearchItemBagSlot(), pPlayer->GetItemInterface()->LastSearchItemSlot(), pCount,
 					                            NewItem->GetEntry(), NewItem->GetItemRandomSuffixFactor(), NewItem->GetItemRandomPropertyId(), NewItem->GetStackCount());
 					return true;
-				};
-			}
-			else
+				}
+			}else
 			{
 				ItemStack->SetStackCount(ItemStack->GetStackCount() + pCount);
 				ItemStack->m_isDirty = true;
 				pPlayer->SendItemPushResult(false, true, true, false, static_cast<uint8>(pPlayer->GetItemInterface()->GetBagSlotByGuid(ItemStack->GetGUID())), 0xFFFFFFFF,  pCount , ItemStack->GetEntry(), ItemStack->GetItemRandomSuffixFactor(), ItemStack->GetItemRandomPropertyId(), ItemStack->GetStackCount());
 				return true;
-			};
-
+			}
 			return false;
-		};
+		}
 
 		void EventCreatureDelete(Creature* creat, uint32 time)  // Creature and time in ms
 		{
@@ -325,13 +321,14 @@ class SCRIPT_DECL EasyFunctions
 		{
 			if(plr == NULL || plr->GetMapMgr() == NULL || plr->GetMapMgr()->GetInterface() == NULL)
 				return NULL;
+
 			return plr->GetMapMgr()->GetInterface()->GetGameObjectNearestCoords(plr->GetPositionX(), plr->GetPositionY(), plr->GetPositionZ(), goid);
 		}
 
 		QuestLogEntry* GetQuest(Player* pPlayer, uint32 pQuestId)
 		{
 			return pPlayer->GetQuestLogForEntry(pQuestId);
-		};
+		}
 
 		void KillMobForQuest(Player* pPlayer, QuestLogEntry* pQuest, uint32 pRequiredMobCount)
 		{
@@ -347,8 +344,8 @@ class SCRIPT_DECL EasyFunctions
 				pQuest->SetMobCount(i, pQuest->GetMobCount(i) + 1);
 				pQuest->SendUpdateAddKill(i);
 				pQuest->UpdatePlayerFields();
-			};
-		};
+			}
+		}
 
 		void KillMobForQuest(Player* pPlayer, uint32 pQuestId, uint32 pRequiredMobCount)
 		{
@@ -365,57 +362,56 @@ class SCRIPT_DECL EasyFunctions
 				pQuest->SetMobCount(i, pQuest->GetMobCount(i) + 1);
 				pQuest->SendUpdateAddKill(i);
 				pQuest->UpdatePlayerFields();
-			};
-		};
-
-	// Return the nearest creature with the specified id
-	Creature *GetNearestCreature(Object *pObj, uint32 npcid = 0)
-	{
-		PrintMessage("Function call: GetNearestCreature()");
-		if( pObj == NULL )
-			return NULL;
-
-		return pObj->GetMapMgr()->GetInterface()->GetCreatureNearestCoords( pObj->GetPositionX(), pObj->GetPositionY(), pObj->GetPositionZ(), npcid );
-	}
-
-	// Return the nearest creature with the specified array of ids
-	Creature *GetNearestCreature(Object *pObj, uint32 *npcid)
-	{
-		PrintMessage("Function call: GetNearestCreature() with array");
-		if( pObj == NULL )
-			return NULL;
-
-		Creature *ClosestCreature = NULL;
-		float ClosestDist = 999999.0f;
-		float CurrentDist = 0.0f;
-		for( set<Object*>::iterator iter = pObj->GetInRangeSetBegin(); iter != pObj->GetInRangeSetEnd(); ++iter ) 
-		{
-			CurrentDist = (*iter)->CalcDistance( pObj );
-			if( CurrentDist < ClosestDist && (*iter)->IsCreature() )
-			{
-				for( uint32 i = 0; npcid[i] != 0; ++i )
-				{
-					if( (*iter)->GetEntry() == npcid[i] )
-					{
-						ClosestDist = CurrentDist;
-						ClosestCreature = TO_CREATURE( (*iter) );
-					}
-				}
 			}
 		}
 
-		return ClosestCreature;
-	}
+		// Return the nearest creature with the specified id
+		Creature *GetNearestCreature(Object *pObj, uint32 npcid = 0)
+		{
+			PrintMessage("Function call: GetNearestCreature()");
+			if( pObj == NULL )
+				return NULL;
 
-	// Return the nearest gameobject with the specified id
-	GameObject *GetNearestGameObject(Object *pObj, uint32 goid = 0)
-	{
-		PrintMessage("Function call: GetNearestGameObject()");
-		if( pObj == NULL )
-			return NULL;
+			return pObj->GetMapMgr()->GetInterface()->GetCreatureNearestCoords( pObj->GetPositionX(), pObj->GetPositionY(), pObj->GetPositionZ(), npcid );
+		}
 
-		return pObj->GetMapMgr()->GetInterface()->GetGameObjectNearestCoords( pObj->GetPositionX(), pObj->GetPositionY(), pObj->GetPositionZ(), goid );
-	}
+		// Return the nearest creature with the specified array of ids
+		Creature *GetNearestCreature(Object *pObj, uint32 *npcid)
+		{
+			PrintMessage("Function call: GetNearestCreature() with array");
+			if( pObj == NULL )
+				return NULL;
+
+			Creature *ClosestCreature = NULL;
+			float ClosestDist = 999999.0f;
+			float CurrentDist = 0.0f;
+			for( set<Object*>::iterator iter = pObj->GetInRangeSetBegin(); iter != pObj->GetInRangeSetEnd(); ++iter ) 
+			{
+				CurrentDist = (*iter)->CalcDistance( pObj );
+				if( CurrentDist < ClosestDist && (*iter)->IsCreature() )
+				{
+					for( uint32 i = 0; npcid[i] != 0; ++i )
+					{
+						if( (*iter)->GetEntry() == npcid[i] )
+						{
+							ClosestDist = CurrentDist;
+							ClosestCreature = TO_CREATURE( (*iter) );
+						}
+					}
+				}
+			}
+			return ClosestCreature;
+		}
+
+		// Return the nearest gameobject with the specified id
+		GameObject *GetNearestGameObject(Object *pObj, uint32 goid = 0)
+		{
+			PrintMessage("Function call: GetNearestGameObject()");
+			if( pObj == NULL )
+				return NULL;
+
+			return pObj->GetMapMgr()->GetInterface()->GetGameObjectNearestCoords( pObj->GetPositionX(), pObj->GetPositionY(), pObj->GetPositionZ(), goid );
+		}
 
 	// Return the nearest gameobject with the specified array of ids
 	GameObject *GetNearestGameObject(Object *pObj, uint32 *goid)
@@ -442,7 +438,6 @@ class SCRIPT_DECL EasyFunctions
 				}
 			}
 		}
-
 		return ClosestGameObject;
 	}
 
