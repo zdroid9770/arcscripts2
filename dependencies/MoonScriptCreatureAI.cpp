@@ -336,18 +336,18 @@ void MoonScriptCreatureAI::WipeHateList()
 
 float MoonScriptCreatureAI::GetHealthPercent()
 {
-	if(GetUnit()->GetUInt32Value(UNIT_FIELD_HEALTH) == 0 || GetUnit()->GetUInt32Value(UNIT_FIELD_MAXHEALTH) == 0)
+	if(GetUnit()->GetFloatValue(UNIT_FIELD_HEALTH) == 0 || GetUnit()->GetFloatValue(UNIT_FIELD_MAXHEALTH) == 0)
 		return 0;
 
-	return GetUnit()->GetUInt32Value(UNIT_FIELD_HEALTH) * 100.0f / GetUnit()->GetUInt32Value(UNIT_FIELD_MAXHEALTH);
+	return GetUnit()->GetFloatValue(UNIT_FIELD_HEALTH) * 100.0f / GetUnit()->GetFloatValue(UNIT_FIELD_MAXHEALTH);
 }
 
 float MoonScriptCreatureAI::GetManaPercent()
 {
-	if(GetUnit()->GetUInt32Value(UNIT_FIELD_POWER1) == 0 || GetUnit()->GetUInt32Value(UNIT_FIELD_MAXPOWER1) == 0)  //POWER_TYPE_MANA
+	if(GetUnit()->GetFloatValue(UNIT_FIELD_POWER1) == 0 || GetUnit()->GetFloatValue(UNIT_FIELD_MAXPOWER1) == 0)  //POWER_TYPE_MANA
 		return 0;
 
-	return GetUnit()->GetUInt32Value(UNIT_FIELD_POWER1) * 100.0f / GetUnit()->GetUInt32Value(UNIT_FIELD_MAXPOWER1);
+	return GetUnit()->GetFloatValue(UNIT_FIELD_POWER1) * 100.0f / GetUnit()->GetFloatValue(UNIT_FIELD_MAXPOWER1);
 }
 
 void MoonScriptCreatureAI::Regenerate()
