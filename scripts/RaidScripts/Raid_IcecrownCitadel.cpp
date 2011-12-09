@@ -243,6 +243,7 @@ public:
 
 	void Reset()
 	{
+		BoneStormTimer = BoneSliceTimer = ChargeTimer = 0;
 		BoneStormPhase = false;
 		sBoneSlice->mEnabled = false;	//will eanbled after 10 sec and it will replace melee attacks ONLY in normal phase
 		SetCanMove(true);
@@ -255,53 +256,60 @@ public:
 		BoneSliceTimer = AddTimer(10*SEC_IN_MS);
 		BoneStormTimer = AddTimer(30*SEC_IN_MS);
 
-		ParentClass::OnCombatStart(pUnit);
-
-		if(mInstance!=NULL)
+		if(mInstance)
 			mInstance->SetInstanceData(Data_EncounterState, ICC_LORD_MARROWGAR, State_InProgress);
+
+		ParentClass::OnCombatStart(pUnit);
 	}
 
 	void OnCombatStop(Unit* mTarget)
 	{
 		Reset();
-		ParentClass::OnCombatStop(mTarget);
 
 		if(mInstance!=NULL)
 			mInstance->SetInstanceData(Data_EncounterState, ICC_LORD_MARROWGAR, State_NotStarted);
+
+		ParentClass::OnCombatStop(mTarget);
 	}
 
 	void AIUpdate()
 	{
+
+		//Bone Slice is enabled only after 10 seconds after agroo
 		if(IsTimerFinished(BoneSliceTimer) && !BoneStormPhase)
 			sBoneSlice->mEnabled = true;
 			
 
+		//after 30 seconds he starts 
 		if(IsTimerFinished(BoneStormTimer) && !BoneStormPhase)
 		{
-			SetPhase(2);
+			BoneStormPhase = true;
+			SetPhase(2, sBoneStorm);
+			SetAIUpdateFreq(4000);
 			ResetTimer(BoneStormTimer, (rand()%5+90)*SEC_IN_MS);
 		}
 
-		switch(GetPhase())
+		if(GetPhase() == 2)	//BoneStorm
 		{
-			case 1:
+			_unit->SetSpeeds(RUN, 18.0f);
+			//ChargeTimer = AddTimer(5000);
+			if(_unit->HasAura(MarrowgarSpells[SPELL_LM_BONESTORM][pMode]) && BoneStormPhase)
+			{
+				ClearHateList();
+				Unit* pTarget = GetBestPlayerTarget(TargetFilter_ClosestNotCurrent, 0, 70.0f);
+				if(pTarget!=NULL)
+				{
+					_unit->CastSpell(pTarget, MarrowgarSpells[SPELL_LM_BONESTORM_EFFECT][pMode], false);
+					pTarget = NULL;
+				}
+			}else if (!_unit->HasAura(MarrowgarSpells[SPELL_LM_BONESTORM][pMode]) && BoneStormPhase)
 			{
 				BoneStormPhase = false;
+				ClearHateList();
+				AggroRandomPlayer();
 				_unit->SetSpeeds(RUN, 8.0f);
-			}break;
-			case 2:	//initial bone storm
-			{
-				BoneStormPhase = true;
-				CastSpellInternal(sBoneStorm, 30*SEC_IN_MS);
-				_unit->SetSpeeds(RUN, 22.0f);
-				//ChargeTimer = AddTimer(5000);
-				if(_unit->HasAura(MarrowgarSpells[SPELL_LM_BONESTORM][pMode]))
-				{
-					Unit* pTarget = GetBestPlayerTarget(TargetFilter_ClosestNotCurrent, 0, 70.0f);
-					if(pTarget!=NULL)
-						CastSpellOnTarget(pTarget, Target_Self, (SpellEntry*)MarrowgarSpells[SPELL_LM_BONESTORM_EFFECT][pMode], true);
-				}else SetPhase(1);
-			}break;
+				SetPhase(1);
+			}
 		}
 		ParentClass::AIUpdate();
 	}
@@ -313,7 +321,7 @@ public:
 		float PosY = _unit->GetPositionY();
 		float PosZ = _unit->GetPositionZ();
 		float IncrValue = 5.0f;
-		for(uint32 ColdFlameCount = 1; ColdFlameCount<=MAX_COLDFLAMES_XFORM; ColdFlameCount++)
+		for(uint32 ColdFlameCount = 0; ColdFlameCount<MAX_COLDFLAMES_XFORM; ColdFlameCount++)
 		{
 			SpawnCreature(NPC_COLD_FLAME, PosX+IncrValue, PosY, PosZ);
 			SpawnCreature(NPC_COLD_FLAME, PosX, PosY+IncrValue, PosZ);
@@ -355,7 +363,7 @@ bool BoneStorm(uint32 i, Spell* s)
 
 	uint32 Dmg = s->u_caster->GetSpellDidHitResult(s->u_caster, s->GetType(), s->GetProto());
 	Dmg += Dmg/10.0f;
-	s->u_caster->HandleProc(PROC_ON_SPELL_HIT, s->u_caster, pSpell, false, Dmg);
+	s->u_caster->HandleProc(PROC_ON_SPELL_HIT, s->u_caster, (SpellEntry*)s->GetProto()->Id, false, Dmg);
 	return true;
 };
 
