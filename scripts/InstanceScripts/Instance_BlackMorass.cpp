@@ -21,467 +21,87 @@
 
 #include "Setup.h"
 
-/************************************************************************/
-/* Instance_BlackMorrass.cpp Script                                     */
-/************************************************************************/
-
 #define CN_CHRONO_LORD_DEJA 17879
+ 
+#define ARCANE_BLAST		HeroicInt(38538, 31457)
+#define TIME_LAPSE			31467
+#define ARCANE_DISCHARGE	HeroicInt(38539, 31472)
+#define ATTRACTION			38540
 
-#define ARCANE_BLAST 24857
-#define TIME_LAPSE 31467
-//#define MAGNETIC_PULL 31705 Only in Heroics - Correct ID?
-
-class CHRONOLORDDEJAAI : public CreatureAIScript
+//"You have outstayed your welcome, Timekeeper. Begone!" 10413 text, when he starts fight with timekeeper
+class ChronoLordDejaAI : public MoonScriptCreatureAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(CHRONOLORDDEJAAI);
-		SP_AI_Spell spells[2];
-		bool m_spellcheck[2];
-
-		CHRONOLORDDEJAAI(Creature* pCreature) : CreatureAIScript(pCreature)
+		MOONSCRIPT_FACTORY_FUNCTION(ChronoLordDejaAI, MoonScriptCreatureAI);
+		ChronoLordDejaAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
-			nrspells = 2;
-			for(int i = 0; i < nrspells; i++)
-			{
-				m_spellcheck[i] = false;
-			}
-			spells[0].info = dbcSpell.LookupEntry(ARCANE_BLAST);
-			spells[0].targettype = TARGET_ATTACKING;
-			spells[0].instant = true;
-			spells[0].cooldown = 10;
-			spells[0].perctrigger = 0.0f;
-			spells[0].attackstoptimer = 1000;
+			Emote("Why do you aid the Magus? Just think of how many lives could be saved if the portal is never opened, if the resulting wars could be erased ...", Text_Yell, 10412);
+			AddEmote(Event_OnCombatStart, "If you will not cease this foolish quest, then you will die!", Text_Yell, 10412);
+			AddEmote(Event_OnTargetDied, "I told you it was a fool's quest!", Text_Yell, 10415);
+			AddEmote(Event_OnTargetDied, "Leaving so soon?", Text_Yell, 10416);
+			AddEmote(Event_OnDied, "Time ... is on our side.", Text_Yell, 10417);
 
-			spells[1].info = dbcSpell.LookupEntry(TIME_LAPSE);
-			spells[1].targettype = TARGET_ATTACKING;
-			spells[1].instant = true;
-			spells[1].cooldown = 8;
-			spells[1].perctrigger = 0.0f;
-			spells[1].attackstoptimer = 1000;
+			AddSpell(ARCANE_BLAST, Target_Current, 5.0f, 0, 10);
+			AddSpell(TIME_LAPSE, Target_Current, 7.0f, 0, 8);
+			AddSpell(ARCANE_DISCHARGE, Target_Self, 10.0f, 2, 8);
 
-			/*spells[2].info = dbcSpell.LookupEntry(MAGNETIC_PULL);
-			spells[2].targettype = TARGET_VARIOUS;
-			spells[2].instant = true;
-			spells[2].cooldown = 15;
-			spells[2].perctrigger = 0.0f;
-			spells[2].attackstoptimer = 1000;*/
+			if(IsHeroic())
+				AddSpell(ATTRACTION, Target_Self, 11.0f, 0, 25);
 		}
-
-		void OnCombatStart(Unit* mTarget)
-		{
-			CastTime();
-			_unit->SendChatMessage(CHAT_MSG_MONSTER_YELL, LANG_UNIVERSAL, "If you will not cease this foolish quest, then you will die!");
-			_unit->PlaySoundToSet(10271);
-			RegisterAIUpdateEvent(_unit->GetBaseAttackTime(MELEE));
-		}
-
-		void CastTime()
-		{
-			for(int i = 0; i < nrspells; i++)
-				spells[i].casttime = spells[i].cooldown;
-		}
-
-		void OnTargetDied(Unit* mTarget)
-		{
-			if(_unit->GetHealthPct() > 0)
-			{
-				uint32 sound = 0;
-				const char* text = NULL;
-				switch(RandomUInt(1))
-				{
-					case 0:
-						sound = 10271;
-						text = "I told you it was a fool's quest!";
-						break;
-					case 1:
-						sound = 10271;
-						text = "Leaving so soon?";
-						break;
-				}
-				_unit->PlaySoundToSet(sound);
-				_unit->SendChatMessage(CHAT_MSG_MONSTER_YELL, LANG_UNIVERSAL, text);
-			}
-		}
-
-		void OnCombatStop(Unit* mTarget)
-		{
-			CastTime();
-			_unit->GetAIInterface()->setCurrentAgent(AGENT_NULL);
-			_unit->GetAIInterface()->SetAIState(STATE_IDLE);
-			RemoveAIUpdateEvent();
-		}
-
-		void OnDied(Unit* mKiller)
-		{
-			CastTime();
-			_unit->SendChatMessage(CHAT_MSG_MONSTER_YELL, LANG_UNIVERSAL, "Time ... is on our side.");
-			_unit->PlaySoundToSet(10271);
-			RemoveAIUpdateEvent();
-		}
-
-		void AIUpdate()
-		{
-			float val = RandomFloat(100.0f);
-			SpellCast(val);
-		}
-
-		void SpellCast(float val)
-		{
-			if(_unit->GetCurrentSpell() == NULL && _unit->GetAIInterface()->getNextTarget())
-			{
-				float comulativeperc = 0;
-				Unit* target = NULL;
-				for(int i = 0; i < nrspells; i++)
-				{
-					spells[i].casttime--;
-
-					if(m_spellcheck[i])
-					{
-						spells[i].casttime = spells[i].cooldown;
-						target = _unit->GetAIInterface()->getNextTarget();
-						switch(spells[i].targettype)
-						{
-							case TARGET_SELF:
-							case TARGET_VARIOUS:
-								_unit->CastSpell(_unit, spells[i].info, spells[i].instant);
-								break;
-							case TARGET_ATTACKING:
-								_unit->CastSpell(target, spells[i].info, spells[i].instant);
-								break;
-							case TARGET_DESTINATION:
-								_unit->CastSpellAoF(target->GetPositionX(), target->GetPositionY(), target->GetPositionZ(), spells[i].info, spells[i].instant);
-								break;
-						}
-
-						if(spells[i].speech != "")
-						{
-							_unit->SendChatMessage(CHAT_MSG_MONSTER_YELL, LANG_UNIVERSAL, spells[i].speech.c_str());
-							_unit->PlaySoundToSet(spells[i].soundid);
-						}
-
-						m_spellcheck[i] = false;
-						return;
-					}
-
-					if((val > comulativeperc && val <= (comulativeperc + spells[i].perctrigger)) || !spells[i].casttime)
-					{
-						_unit->setAttackTimer(spells[i].attackstoptimer, false);
-						m_spellcheck[i] = true;
-					}
-					comulativeperc += spells[i].perctrigger;
-				}
-			}
-		}
-
-	protected:
-
-		int nrspells;
 };
 
 #define CN_TEMPORUS 17880
 
-#define HASTEN 31458
-#define MORTAL_WOUND 28467
-//#define SPELL_REFLECTION 31705 Only in Heroics - Correct ID?
+#define TEMPORUS_HASTEN			31458
+#define TEMPORUS_WING_BUFFET	HeroicInt(38593, 31475)
+#define TEMPORUS_MORTAL_WOUND	31464
+#define TEMPORUS_REFLECT		38592
 
-class TEMPORUSAI : public CreatureAIScript
+//"Time... sands of time is run out for you." 10443 when attacks keeper
+class TemporusAI : public MoonScriptCreatureAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(TEMPORUSAI);
-		SP_AI_Spell spells[2];
-		bool m_spellcheck[2];
-
-		TEMPORUSAI(Creature* pCreature) : CreatureAIScript(pCreature)
+		MOONSCRIPT_FACTORY_FUNCTION(TemporusAI, MoonScriptCreatureAI);
+		TemporusAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
-			nrspells = 2;
-			for(int i = 0; i < nrspells; i++)
-			{
-				m_spellcheck[i] = false;
-			}
-			spells[0].info = dbcSpell.LookupEntry(HASTEN);
-			spells[0].targettype = TARGET_SELF;
-			spells[0].instant = true;
-			spells[0].cooldown = 10;
-			spells[0].perctrigger = 0.0f;
-			spells[0].attackstoptimer = 1000;
+			Emote("Why do you persist? Surely you can see the futility of it all. It is not too late! You may still leave with your lives ...", Text_Yell, 10442);
+			AddEmote(Event_OnCombatStart, "So be it ... you have been warned.", Text_Yell, 10444);
+			AddEmote(Event_OnTargetDied, "You should have left when you had the chance.", Text_Yell, 10445);
+			AddEmote(Event_OnTargetDied, "Your days are done.", Text_Yell, 10446);
+			AddEmote(Event_OnDied, "My death means ... little.", Text_Yell, 10447);
 
-			spells[1].info = dbcSpell.LookupEntry(MORTAL_WOUND);
-			spells[1].targettype = TARGET_ATTACKING;
-			spells[1].instant = true;
-			spells[1].cooldown = 5;
-			spells[1].perctrigger = 0.0f;
-			spells[1].attackstoptimer = 1000;
-
-			/*spells[2].info = dbcSpell.LookupEntry(SPELL_REFLECTION);
-			spells[2].targettype = TARGET_VARIOUS;
-			spells[2].instant = true;
-			spells[2].cooldown = 15;
-			spells[2].perctrigger = 0.0f;
-			spells[2].attackstoptimer = 1000;*/
+			AddSpell(TEMPORUS_HASTEN, Target_Self, 10.0f, 0, 10);
+			AddSpell(TEMPORUS_MORTAL_WOUND, Target_Current, 8.0f, 0, 10);
+			AddSpell(TEMPORUS_WING_BUFFET, Target_Self, 11.0f, 0, 20);
+			
+			if(IsHeroic())
+				AddSpell(TEMPORUS_REFLECT, Target_Self, 13.0f, 0, 20);
 		}
-
-		void OnCombatStart(Unit* mTarget)
-		{
-			CastTime();
-			_unit->SendChatMessage(CHAT_MSG_MONSTER_YELL, LANG_UNIVERSAL, "So be it ... you have been warned.");
-			_unit->PlaySoundToSet(10271);
-			RegisterAIUpdateEvent(_unit->GetBaseAttackTime(MELEE));
-		}
-
-		void CastTime()
-		{
-			for(int i = 0; i < nrspells; i++)
-				spells[i].casttime = spells[i].cooldown;
-		}
-
-		void OnTargetDied(Unit* mTarget)
-		{
-			if(_unit->GetHealthPct() > 0)
-			{
-				uint32 sound = 0;
-				const char* text = NULL;
-				switch(RandomUInt(1))
-				{
-					case 0:
-						sound = 10271;
-						text = "You should have left when you had the chance.";
-						break;
-					case 1:
-						sound = 10271;
-						text = "Your days are done.";
-						break;
-				}
-				_unit->PlaySoundToSet(sound);
-				_unit->SendChatMessage(CHAT_MSG_MONSTER_YELL, LANG_UNIVERSAL, text);
-			}
-		}
-
-		void OnCombatStop(Unit* mTarget)
-		{
-			CastTime();
-			_unit->GetAIInterface()->setCurrentAgent(AGENT_NULL);
-			_unit->GetAIInterface()->SetAIState(STATE_IDLE);
-			RemoveAIUpdateEvent();
-		}
-
-		void OnDied(Unit* mKiller)
-		{
-			CastTime();
-			_unit->SendChatMessage(CHAT_MSG_MONSTER_YELL, LANG_UNIVERSAL, "My death means ... little.");
-			_unit->PlaySoundToSet(10271);
-			RemoveAIUpdateEvent();
-		}
-
-		void AIUpdate()
-		{
-			float val = RandomFloat(100.0f);
-			SpellCast(val);
-		}
-
-		void SpellCast(float val)
-		{
-			if(_unit->GetCurrentSpell() == NULL && _unit->GetAIInterface()->getNextTarget())
-			{
-				float comulativeperc = 0;
-				Unit* target = NULL;
-				for(int i = 0; i < nrspells; i++)
-				{
-					spells[i].casttime--;
-
-					if(m_spellcheck[i])
-					{
-						spells[i].casttime = spells[i].cooldown;
-						target = _unit->GetAIInterface()->getNextTarget();
-						switch(spells[i].targettype)
-						{
-							case TARGET_SELF:
-							case TARGET_VARIOUS:
-								_unit->CastSpell(_unit, spells[i].info, spells[i].instant);
-								break;
-							case TARGET_ATTACKING:
-								_unit->CastSpell(target, spells[i].info, spells[i].instant);
-								break;
-							case TARGET_DESTINATION:
-								_unit->CastSpellAoF(target->GetPositionX(), target->GetPositionY(), target->GetPositionZ(), spells[i].info, spells[i].instant);
-								break;
-						}
-
-						if(spells[i].speech != "")
-						{
-							_unit->SendChatMessage(CHAT_MSG_MONSTER_YELL, LANG_UNIVERSAL, spells[i].speech.c_str());
-							_unit->PlaySoundToSet(spells[i].soundid);
-						}
-
-						m_spellcheck[i] = false;
-						return;
-					}
-
-					if((val > comulativeperc && val <= (comulativeperc + spells[i].perctrigger)) || !spells[i].casttime)
-					{
-						_unit->setAttackTimer(spells[i].attackstoptimer, false);
-						m_spellcheck[i] = true;
-					}
-					comulativeperc += spells[i].perctrigger;
-				}
-			}
-		}
-
-	protected:
-
-		int nrspells;
 };
 
-#define CN_AEONUS 17881
+#define CN_AEONUS			17881
+#define AEONUS_CLEAVE		40504
+#define AEONUS_SAN_BREATH	HeroicInt(39049, 31473)
+#define AEONUS_TIME_STOP	31422
+#define AEONUS_ENRAGE		37605
 
-#define SAND_BREATH 31478
-#define TIME_STOP 31422
-#define FRENZY 28371 //ID according to wowwiki
-
-class AEONUSAI : public CreatureAIScript
+class AeonusAI : public MoonScriptCreatureAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(AEONUSAI);
-		SP_AI_Spell spells[3];
-		bool m_spellcheck[3];
-
-		AEONUSAI(Creature* pCreature) : CreatureAIScript(pCreature)
+		MOONSCRIPT_FACTORY_FUNCTION(AeonusAI, MoonScriptCreatureAI);
+		AeonusAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
-			nrspells = 3;
-			for(int i = 0; i < nrspells; i++)
-			{
-				m_spellcheck[i] = false;
-			}
-			spells[0].info = dbcSpell.LookupEntry(SAND_BREATH);
-			spells[0].targettype = TARGET_DESTINATION;
-			spells[0].instant = true;
-			spells[0].cooldown = 15;
-			spells[0].perctrigger = 0.0f;
-			spells[0].attackstoptimer = 1000;
+			Emote("The time has come to shatter this clockwork universe forever! Let us no longer be slaves of the hourglass! I warn you: those who do not embrace the greater path shall become victims of its passing!", Text_Yell, 10400);
+			AddEmote(Event_OnCombatStart, "Let us see what fate lays in store...", Text_Yell, 10402);
+			AddEmote(Event_OnTargetDied, "One less obstacle in our way!", Text_Yell, 10403);
+			AddEmote(Event_OnTargetDied, "No one can stop us! No one!", Text_Yell, 10404);
+			AddEmote(Event_OnDied, "It is only a matter...of time.", Text_Yell, 10405);
 
-			spells[1].info = dbcSpell.LookupEntry(TIME_STOP);
-			spells[1].targettype = TARGET_VARIOUS;
-			spells[1].instant = true;
-			spells[1].cooldown = 15;
-			spells[1].perctrigger = 0.0f;
-			spells[1].attackstoptimer = 1000;
-
-			spells[2].info = dbcSpell.LookupEntry(FRENZY);
-			spells[2].targettype = TARGET_SELF;
-			spells[2].instant = true;
-			spells[2].cooldown = 8;
-			spells[2].perctrigger = 0.0f;
-			spells[2].attackstoptimer = 1000;
+			AddSpell(AEONUS_CLEAVE, Target_Current, 13.0f, 0, 15);
+			AddSpell(AEONUS_SAN_BREATH, Target_Destination, 11.0f, 0, 15, 0, 20.0f);
+			AddSpell(AEONUS_ENRAGE, Target_self, 14.0f, 0, 20);
+			AddSpell(AEONUS_TIME_STOP, Target_self, 12.0f, 0, 25, 0, 50.0f);
 		}
-
-		void OnCombatStart(Unit* mTarget)
-		{
-			CastTime();
-			_unit->SendChatMessage(CHAT_MSG_MONSTER_YELL, LANG_UNIVERSAL, "Let us see what fate lays in store...");
-			_unit->PlaySoundToSet(10271);
-			RegisterAIUpdateEvent(_unit->GetBaseAttackTime(MELEE));
-		}
-
-		void CastTime()
-		{
-			for(int i = 0; i < nrspells; i++)
-				spells[i].casttime = spells[i].cooldown;
-		}
-
-		void OnTargetDied(Unit* mTarget)
-		{
-			if(_unit->GetHealthPct() > 0)
-			{
-				uint32 sound = 0;
-				const char* text = NULL;
-				switch(RandomUInt(1))
-				{
-					case 0:
-						sound = 10271;
-						text = "No one can stop us! No one!";
-						break;
-					case 1:
-						sound = 10271;
-						text = "One less obstacle in our way!";
-						break;
-				}
-				_unit->PlaySoundToSet(sound);
-				_unit->SendChatMessage(CHAT_MSG_MONSTER_YELL, LANG_UNIVERSAL, text);
-			}
-		}
-
-		void OnCombatStop(Unit* mTarget)
-		{
-			CastTime();
-			_unit->GetAIInterface()->setCurrentAgent(AGENT_NULL);
-			_unit->GetAIInterface()->SetAIState(STATE_IDLE);
-			RemoveAIUpdateEvent();
-		}
-
-		void OnDied(Unit* mKiller)
-		{
-			CastTime();
-			_unit->SendChatMessage(CHAT_MSG_MONSTER_YELL, LANG_UNIVERSAL, "It is only a matter...of time.");
-			_unit->PlaySoundToSet(10271);
-			RemoveAIUpdateEvent();
-		}
-
-		void AIUpdate()
-		{
-			float val = RandomFloat(100.0f);
-			SpellCast(val);
-		}
-
-		void SpellCast(float val)
-		{
-			if(_unit->GetCurrentSpell() == NULL && _unit->GetAIInterface()->getNextTarget())
-			{
-				float comulativeperc = 0;
-				Unit* target = NULL;
-				for(int i = 0; i < nrspells; i++)
-				{
-					spells[i].casttime--;
-
-					if(m_spellcheck[i])
-					{
-						spells[i].casttime = spells[i].cooldown;
-						target = _unit->GetAIInterface()->getNextTarget();
-						switch(spells[i].targettype)
-						{
-							case TARGET_SELF:
-							case TARGET_VARIOUS:
-								_unit->CastSpell(_unit, spells[i].info, spells[i].instant);
-								break;
-							case TARGET_ATTACKING:
-								_unit->CastSpell(target, spells[i].info, spells[i].instant);
-								break;
-							case TARGET_DESTINATION:
-								_unit->CastSpellAoF(target->GetPositionX(), target->GetPositionY(), target->GetPositionZ(), spells[i].info, spells[i].instant);
-								break;
-						}
-
-						if(spells[i].speech != "")
-						{
-							_unit->SendChatMessage(CHAT_MSG_MONSTER_YELL, LANG_UNIVERSAL, spells[i].speech.c_str());
-							_unit->PlaySoundToSet(spells[i].soundid);
-						}
-
-						m_spellcheck[i] = false;
-						return;
-					}
-
-					if((val > comulativeperc && val <= (comulativeperc + spells[i].perctrigger)) || !spells[i].casttime)
-					{
-						_unit->setAttackTimer(spells[i].attackstoptimer, false);
-						m_spellcheck[i] = true;
-					}
-					comulativeperc += spells[i].perctrigger;
-				}
-			}
-		}
-
-	protected:
-
-		int nrspells;
 };
 
 void SetupTheBlackMorass(ScriptMgr* mgr)
