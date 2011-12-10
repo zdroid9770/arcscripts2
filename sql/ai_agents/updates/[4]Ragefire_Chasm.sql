@@ -36,7 +36,7 @@ INSERT INTO `ai_agents` (`entry`, `instance_mode`, `type`, `event`, `chance`, `m
 (11518, 0, 4, 0, 15, 0, 20800, 8, 2, -1, 0, 0),
 (11518, 0, 4, 0, 5, 0, 18267, 11, 2, -1, 0, 0);
 
-delete from ai_agents where entry=11319;
+delete from ai_agents where entry=11519;
 INSERT INTO `ai_agents` (`entry`, `instance_mode`, `type`, `event`, `chance`, `maxcount`, `spell`, `spelltype`, `targettype_overwrite`, `cooldown_overwrite`, `floatMisc1`, `Misc2`) VALUES 
 (11519, 0, 4, 0, 15, 0, 14873, 8, 2, -1, 0, 0),
 (11519, 0, 4, 0, 5, 0, 18197, 8, 2, -1, 0, 0);
