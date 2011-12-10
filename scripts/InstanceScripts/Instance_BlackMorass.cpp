@@ -99,14 +99,14 @@ class AeonusAI : public MoonScriptCreatureAI
 
 			AddSpell(AEONUS_CLEAVE, Target_Current, 13.0f, 0, 15);
 			AddSpell(AEONUS_SAN_BREATH, Target_Destination, 11.0f, 0, 15, 0, 20.0f);
-			AddSpell(AEONUS_ENRAGE, Target_self, 14.0f, 0, 20);
-			AddSpell(AEONUS_TIME_STOP, Target_self, 12.0f, 0, 25, 0, 50.0f);
+			AddSpell(AEONUS_ENRAGE, Target_Self, 14.0f, 0, 20);
+			AddSpell(AEONUS_TIME_STOP, Target_Self, 12.0f, 0, 25, 0, 50.0f);
 		}
 };
 
 void SetupTheBlackMorass(ScriptMgr* mgr)
 {
-	mgr->register_creature_script(CN_CHRONO_LORD_DEJA, &CHRONOLORDDEJAAI::Create);
-	mgr->register_creature_script(CN_TEMPORUS, &TEMPORUSAI::Create);
-	mgr->register_creature_script(CN_AEONUS, &AEONUSAI::Create);
+	mgr->register_creature_script(CN_CHRONO_LORD_DEJA, &ChronoLordDejaAI::Create);
+	mgr->register_creature_script(CN_TEMPORUS, &TemporusAI::Create);
+	mgr->register_creature_script(CN_AEONUS, &AeonusAI::Create);
 }
