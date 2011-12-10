@@ -37,7 +37,7 @@ class DruidFangAI : public MoonScriptCreatureAI
 
 		void AIUpdate()
 		{
-			if(GetHealthPercent() <= 50.0f && SerpentForm->mEnabled == true)
+			if(GetHealthPercent() <= 50 && SerpentForm->mEnabled == true)
 			{
 				CastSpellNowNoScheduling(SerpentForm);
 				SerpentForm->mEnabled = false;
@@ -50,7 +50,7 @@ class DruidFangAI : public MoonScriptCreatureAI
 				DruidsSlumber->mEnabled = true;
 			}
 
-			if(GetHealthPercent() <= 5.0f && HealingTouch->mEnabled == true)
+			if(GetHealthPercent() <= 5 && HealingTouch->mEnabled == true)
 			{
 				// Remove Serpent Form
 				RemoveAura(8041);
@@ -106,14 +106,14 @@ class LordCobrahnAI : public MoonScriptCreatureAI
 
 		void AIUpdate()
 		{
-			if(GetHealthPercent() <= 20.0f && SerpentForm->mEnabled == true)
+			if(GetHealthPercent() <= 20 && SerpentForm->mEnabled == true)
 			{
 				CastSpellNowNoScheduling(SerpentForm);
 				SerpentForm->mEnabled = false;
 				// Disable Lightning Bolt
 				LightningBolt->mEnabled = false;
 			}
-			else if(GetHealthPercent() <= 20.0f && SerpentForm->mEnabled == false && !GetUnit()->HasAura(7965))
+			else if(GetHealthPercent() <= 20 && SerpentForm->mEnabled == false && !GetUnit()->HasAura(7965))
 				LightningBolt->mEnabled = true;
 
 			ParentClass::AIUpdate();
@@ -167,7 +167,7 @@ class SkumAI : public MoonScriptCreatureAI
 
 		void AIUpdate()
 		{
-			if(GetHealthPercent() <= 10.0f && GetBehavior() != Behavior_Flee)
+			if(GetHealthPercent() <= 10 && GetBehavior() != Behavior_Flee)
 			{
 				Emote("Skum tries to run away in fear", Text_Emote);
 				SetBehavior(Behavior_Flee);

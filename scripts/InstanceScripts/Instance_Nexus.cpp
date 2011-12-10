@@ -83,7 +83,7 @@ public:
 
 	void AIUpdate()
 	{
-		if((GetHealthPercent() <= 50.0f && mSummon == 0))
+		if((GetHealthPercent() <= 50 && mSummon == 0))
 			mSummon += 1;
 
 		if(mSummon == 1)
@@ -260,7 +260,7 @@ public:
 
 	void AIUpdate()
 	{
-		if(GetPhase() == 1 && GetHealthPercent() <= 25.0f)
+		if(GetPhase() == 1 && GetHealthPercent() <= 25)
 		{
 			switch(rand() % 2)
 			{

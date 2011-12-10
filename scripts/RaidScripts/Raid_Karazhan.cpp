@@ -275,7 +275,7 @@ class MoroesAI : public MoonScriptBossAI
 		SpellDesc*	mVanish;
 		SpellDesc*	mGarrote;
 		SpellDesc*	mEnrage;
-		uint32		mVanishTimer, mGarroteTimer;
+		int32		mVanishTimer, mGarroteTimer;
 };
 
 /////////////////////////////////////////////////////////////////////

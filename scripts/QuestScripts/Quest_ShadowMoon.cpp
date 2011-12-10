@@ -201,8 +201,8 @@ class DeathbringerJovaanAI : public MoonScriptCreatureAI
 			}
 		}
 
-		uint32	mJovaanTimer;
-		uint32	mJovaanPhase;
+		int32	mJovaanTimer;
+		int32	mJovaanPhase;
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -271,8 +271,8 @@ class WarbringerRazuunAI : public MoonScriptCreatureAI
 			ParentClass::AIUpdate();
 		}
 
-		uint32	mRazuunTimer;
-		uint32	mRazuunPhase;
+		int32	mRazuunTimer;
+		int32	mRazuunPhase;
 };
 
 

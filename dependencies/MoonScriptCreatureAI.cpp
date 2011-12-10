@@ -334,20 +334,14 @@ void MoonScriptCreatureAI::WipeHateList()
 	_unit->GetAIInterface()->WipeHateList();
 }
 
-float MoonScriptCreatureAI::GetHealthPercent()
+uint32 MoonScriptCreatureAI::GetHealthPercent()
 {
-	if(GetUnit()->GetFloatValue(UNIT_FIELD_HEALTH) == 0 || GetUnit()->GetFloatValue(UNIT_FIELD_MAXHEALTH) == 0)
-		return 0;
-
-	return GetUnit()->GetFloatValue(UNIT_FIELD_HEALTH) * 100.0f / GetUnit()->GetFloatValue(UNIT_FIELD_MAXHEALTH);
+	return _unit->GetHealthPct();
 }
 
-float MoonScriptCreatureAI::GetManaPercent()
+uint32 MoonScriptCreatureAI::GetManaPercent()
 {
-	if(GetUnit()->GetFloatValue(UNIT_FIELD_POWER1) == 0 || GetUnit()->GetFloatValue(UNIT_FIELD_MAXPOWER1) == 0)  //POWER_TYPE_MANA
-		return 0;
-
-	return GetUnit()->GetFloatValue(UNIT_FIELD_POWER1) * 100.0f / GetUnit()->GetFloatValue(UNIT_FIELD_MAXPOWER1);
+	return _unit->GetManaPct();
 }
 
 void MoonScriptCreatureAI::Regenerate()
@@ -766,7 +760,7 @@ void MoonScriptCreatureAI::Announce(const char* pText)
 		_unit->SendChatMessage(CHAT_MSG_RAID_BOSS_EMOTE, LANG_UNIVERSAL, pText);
 }
 
-uint32 MoonScriptCreatureAI::AddTimer(uint32 pDurationMillisec)
+int32 MoonScriptCreatureAI::AddTimer(int32 pDurationMillisec)
 {
 	int32 Index = mTimerIdCounter++;
 	mTimers.push_back(std::make_pair(Index, pDurationMillisec));
@@ -774,17 +768,20 @@ uint32 MoonScriptCreatureAI::AddTimer(uint32 pDurationMillisec)
 	return Index;
 }
 
-uint32 MoonScriptCreatureAI::GetTimer(uint32 pTimerId)
+int32 MoonScriptCreatureAI::GetTimer(int32 pTimerId)
 {
 	for(TimerArray::iterator TimerIter = mTimers.begin(); TimerIter != mTimers.end(); ++TimerIter)
 	{
 		if(TimerIter->first == pTimerId)
+		{
 			return TimerIter->second;
+		}
 	}
+
 	return 0;
 }
 
-void MoonScriptCreatureAI::RemoveTimer(uint32 & pTimerId)
+void MoonScriptCreatureAI::RemoveTimer(int32 & pTimerId)
 {
 	for(TimerArray::iterator TimerIter = mTimers.begin(); TimerIter != mTimers.end(); ++TimerIter)
 	{
@@ -798,7 +795,7 @@ void MoonScriptCreatureAI::RemoveTimer(uint32 & pTimerId)
 	}
 }
 
-void MoonScriptCreatureAI::ResetTimer(uint32 pTimerId, uint32 pDurationMillisec)
+void MoonScriptCreatureAI::ResetTimer(int32 pTimerId, int32 pDurationMillisec)
 {
 	for(TimerArray::iterator TimerIter = mTimers.begin(); TimerIter != mTimers.end(); ++TimerIter)
 	{
@@ -810,7 +807,7 @@ void MoonScriptCreatureAI::ResetTimer(uint32 pTimerId, uint32 pDurationMillisec)
 	}
 }
 
-bool MoonScriptCreatureAI::IsTimerFinished(uint32 pTimerId)
+bool MoonScriptCreatureAI::IsTimerFinished(int32 pTimerId)
 {
 	for(TimerArray::iterator TimerIter = mTimers.begin(); TimerIter != mTimers.end(); ++TimerIter)
 	{
@@ -1319,7 +1316,7 @@ Unit* MoonScriptCreatureAI::GetTargetForSpell(SpellDesc* pSpell)
 		case TargetGen_Self:
 			if(!IsAlive())
 				return NULL;
-			if((pSpell->mTargetType.mTargetFilter & TargetFilter_Wounded) && GetHealthPercent() >= 99.0f)
+			if((pSpell->mTargetType.mTargetFilter & TargetFilter_Wounded) && GetHealthPercent() >= 99)
 				return NULL;
 
 			return _unit;
@@ -1476,7 +1473,7 @@ bool MoonScriptCreatureAI::IsValidUnitTarget(Object* pObject, TargetFilter pFilt
 			return false;
 
 		//Keep only wounded targets if requested
-		if((pFilter & TargetFilter_Wounded) && GetHealthPercent() >= 99.0f)
+		if((pFilter & TargetFilter_Wounded) && UnitTarget->GetHealthPct() >= 99)
 			return false;
 
 		//Skip targets not in melee range if requested

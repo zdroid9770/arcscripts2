@@ -329,8 +329,8 @@ class KrystallusAI : public MoonScriptCreatureAI
 		SpellDesc* mStomp;
 		SpellDesc* mShatter;
 
-		uint32 mStompTimer;
-		uint32 mShatterTimer;
+		int32 mStompTimer;
+		int32 mShatterTimer;
 };
 
 

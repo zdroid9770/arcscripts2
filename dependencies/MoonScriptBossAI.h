@@ -24,7 +24,7 @@
 
 class MoonScriptBossAI;
 
-typedef std::pair<uint32, SpellDesc*> PhaseSpellPair;
+typedef std::pair<int32, SpellDesc*> PhaseSpellPair;
 typedef std::vector<PhaseSpellPair> PhaseSpellArray;
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -36,10 +36,10 @@ class MoonScriptBossAI : public MoonScriptCreatureAI
 		virtual ~MoonScriptBossAI();
 
 		//Basic Interface
-		SpellDesc*		AddPhaseSpell(uint8 pPhase, SpellDesc* pSpell);
-		uint8			GetPhase();
-		void			SetPhase(uint8 pPhase, SpellDesc* pPhaseChangeSpell = NULL);
-		void			SetEnrageInfo(SpellDesc* pSpell, uint32 pTriggerMilliseconds);
+		SpellDesc*		AddPhaseSpell(int32 pPhase, SpellDesc* pSpell);
+		int32			GetPhase();
+		void			SetPhase(int32 pPhase, SpellDesc* pPhaseChangeSpell = NULL);
+		void			SetEnrageInfo(SpellDesc* pSpell, int32 pTriggerMilliseconds);
 
 		//Reimplemented Events
 		virtual void	OnCombatStart(Unit* pTarget);
@@ -47,11 +47,11 @@ class MoonScriptBossAI : public MoonScriptCreatureAI
 		virtual void	AIUpdate();
 
 	protected:
-		uint8			mPhaseIndex;
+		int32			mPhaseIndex;
 		PhaseSpellArray	mPhaseSpells;
 		SpellDesc*		mEnrageSpell;
-		uint32			mEnrageTimerDuration;
-		uint32			mEnrageTimer;
+		int32			mEnrageTimerDuration;
+		int32			mEnrageTimer;
 };
 
 #endif MOON_SCRIPT_BOSS_AI

@@ -178,7 +178,7 @@ class ZerekethAI : public MoonScriptBossAI
 		}
 
 	protected:
-		uint32 SpeechTimer;
+		int32 SpeechTimer;
 };
 
 class VoidZoneARC : public MoonScriptCreatureAI
@@ -295,13 +295,13 @@ class HarbringerSkyrissAI : public MoonScriptCreatureAI
 		void AIUpdate()
 		{
 			uint32 IllusionCount = 0;
-			if(GetHealthPercent() <= 66.0f && IllusionCount == 0)
+			if(GetHealthPercent() <= 66 && IllusionCount == 0)
 			{
 				_unit->CastSpell(_unit, SUMMON_ILLUSION_66, true);
 				_unit->PlaySoundToSet(11131);
 				IllusionCount++;
 			}
-			else if(GetHealthPercent() <= 33.0f && IllusionCount == 1)
+			else if(GetHealthPercent() <= 33 && IllusionCount == 1)
 			{
 				_unit->CastSpell(_unit, SUMMON_ILLUSION_33, true);
 				_unit->PlaySoundToSet(11131);
@@ -476,7 +476,7 @@ class WardenMellicharAI : public MoonScriptBossAI
 	protected:
 		bool HasSummonedNpc;
 		uint32 Phasepart, NPC_ID_Spawn, Spawncounter;
-		uint32 Phase_Timer;
+		int32 Phase_Timer;
 		MoonInstanceScript* mInstance;
 		MoonScriptCreatureAI* pSummon;
 		Creature* Millhouse;

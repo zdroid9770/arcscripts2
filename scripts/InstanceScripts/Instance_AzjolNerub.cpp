@@ -53,7 +53,7 @@ public:
 
 	void AIUpdate()
 	{
-		if(GetHealthPercent() <= 10.0f && !mEnraged)
+		if(GetHealthPercent() <= 10 && !mEnraged)
 		{
 			ApplyAura(KRIKTHIR_ENRAGE);
 			mEnraged = true;

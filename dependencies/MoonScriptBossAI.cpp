@@ -27,25 +27,25 @@ MoonScriptBossAI::MoonScriptBossAI(Creature* pCreature) : MoonScriptCreatureAI(p
 	mEnrageSpell = NULL;
 	mEnrageTimerDuration = -1;
 	mEnrageTimer = INVALIDATE_TIMER;
-}
+};
 
 MoonScriptBossAI::~MoonScriptBossAI()
 {
 	mPhaseSpells.clear();
-}
+};
 
-SpellDesc* MoonScriptBossAI::AddPhaseSpell(uint8 pPhase, SpellDesc* pSpell)
+SpellDesc* MoonScriptBossAI::AddPhaseSpell(int32 pPhase, SpellDesc* pSpell)
 {
 	mPhaseSpells.push_back(std::make_pair(pPhase, pSpell));
 	return pSpell;
-}
+};
 
-uint8 MoonScriptBossAI::GetPhase()
+int32 MoonScriptBossAI::GetPhase()
 {
 	return mPhaseIndex;
-}
+};
 
-void MoonScriptBossAI::SetPhase(uint8 pPhase, SpellDesc* pPhaseChangeSpell)
+void MoonScriptBossAI::SetPhase(int32 pPhase, SpellDesc* pPhaseChangeSpell)
 {
 	if(mPhaseIndex != pPhase)
 	{
@@ -54,39 +54,42 @@ void MoonScriptBossAI::SetPhase(uint8 pPhase, SpellDesc* pPhaseChangeSpell)
 
 		//Enable spells related to that phase
 		for(PhaseSpellArray::iterator SpellIter = mPhaseSpells.begin(); SpellIter != mPhaseSpells.end(); ++SpellIter)
-			SpellIter->second->mEnabled = SpellIter->first == pPhase ? true :false;
+		{
+			if(SpellIter->first == pPhase) SpellIter->second->mEnabled = true;
+			else SpellIter->second->mEnabled = false;
+		}
 
 		//Remember phase index
 		mPhaseIndex = pPhase;
 
 		//Cast phase change spell now if available
-		if(pPhaseChangeSpell)
-			CastSpellNowNoScheduling(pPhaseChangeSpell);
+		if(pPhaseChangeSpell) CastSpellNowNoScheduling(pPhaseChangeSpell);
 	}
-}
+};
 
-void MoonScriptBossAI::SetEnrageInfo(SpellDesc* pSpell, uint32 pTriggerMilliseconds)
+void MoonScriptBossAI::SetEnrageInfo(SpellDesc* pSpell, int32 pTriggerMilliseconds)
 {
 	mEnrageSpell = pSpell;
 	mEnrageTimerDuration = pTriggerMilliseconds;
-}
+};
 
 void MoonScriptBossAI::OnCombatStart(Unit* pTarget)
 {
 	SetPhase(1);
 	if(mEnrageSpell && mEnrageTimerDuration > 0)
+	{
 		mEnrageTimer = AddTimer(mEnrageTimerDuration);
-
+	}
 	TriggerCooldownOnAllSpells();
 	MoonScriptCreatureAI::OnCombatStart(pTarget);
-}
+};
 
 void MoonScriptBossAI::OnCombatStop(Unit* pTarget)
 {
 	SetPhase(1);
 	RemoveTimer(mEnrageTimer);
 	MoonScriptCreatureAI::OnCombatStop(pTarget);
-}
+};
 
 void MoonScriptBossAI::AIUpdate()
 {
@@ -96,4 +99,4 @@ void MoonScriptBossAI::AIUpdate()
 		RemoveTimer(mEnrageTimer);
 	}
 	MoonScriptCreatureAI::AIUpdate();
-}
+};

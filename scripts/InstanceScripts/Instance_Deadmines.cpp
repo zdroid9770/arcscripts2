@@ -285,7 +285,7 @@ public:
 
 protected:
 	SpellDesc*	mStomp;
-	uint32		mWaitAtChest;
+	int		mWaitAtChest;
 };
 
 // VanCleef

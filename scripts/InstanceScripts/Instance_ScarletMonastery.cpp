@@ -56,13 +56,13 @@ class VishasAI : public MoonScriptCreatureAI
 
 		void AIUpdate()
 		{
-			if(GetHealthPercent() <= 75.0f && m_uiSay == 0)
+			if(GetHealthPercent() <= 75 && m_uiSay == 0)
 			{
 				Emote("Naughty secrets!", Text_Yell, 5849);
 				m_uiSay++;
 			}
 
-			if(GetHealthPercent() <= 25.0f && m_uiSay == 1)
+			if(GetHealthPercent() <= 25 && m_uiSay == 1)
 			{
 				Emote("I'll rip the secrets from your flesh!", Text_Yell, 5850);
 				m_uiSay++;
@@ -97,7 +97,7 @@ class ThalnosAI : public MoonScriptCreatureAI
 
 		void AIUpdate()
 		{
-			if(GetHealthPercent() <= 50.0f && m_bEmoted == false)
+			if(GetHealthPercent() <= 50 && m_bEmoted == false)
 			{
 				Emote("No rest, for the angry dead.", Text_Yell, 5846);
 				m_bEmoted = true;
@@ -154,7 +154,7 @@ class DoanAI : public MoonScriptCreatureAI
 
 		void OnDamageTaken(Unit* mAttacker, uint32 fAmount)
 		{
-			if(GetHealthPercent() <= 50.0f && !m_bShielded)
+			if(GetHealthPercent() <= 50 && !m_bShielded)
 			{
 				ApplyAura(SHIELD);
 				Emote("Burn in righteous fire!", Text_Yell, 5843);
@@ -206,7 +206,7 @@ class HerodAI : public MoonScriptCreatureAI
 
 		void AIUpdate()
 		{
-			if(GetHealthPercent() <= 40.0f && m_bEnraged == false)
+			if(GetHealthPercent() <= 40 && m_bEnraged == false)
 			{
 				ApplyAura(ENRAGESPELL);
 				Emote("Light, give me strength!", Text_Yell,  5833);
@@ -284,7 +284,7 @@ class WhitemaneAI : public MoonScriptBossAI
 				return;
 	
 			// <50% hp -> We go to phase 1
-			if(GetHealthPercent() <= 50.0f && GetPhase() == 1)
+			if(GetHealthPercent() <= 50 && GetPhase() == 1)
 			{
 				SetPhase(2);
 				_unit->GetAIInterface()->MoveTo(1154.85f,1403.92f,32.25f,3.466254f);

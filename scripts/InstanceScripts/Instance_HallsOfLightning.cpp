@@ -682,8 +682,8 @@ class LokenAI : public MoonScriptCreatureAI
 		SpellDesc*	mNova;
 		MoonInstanceScript* mInstance;
 
-		uint32		mNovaTimer;
-		uint32		mRespondTimer;
+		int32		mNovaTimer;
+		int32		mRespondTimer;
 		uint8		mSpeech;
 };
 

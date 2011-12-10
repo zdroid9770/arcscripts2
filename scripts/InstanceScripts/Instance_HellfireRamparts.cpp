@@ -117,7 +117,7 @@ public:
 
 	void AIUpdate()
 	{
-		if(GetHealthPercent() <= 20.0f && !pShield->mEnabled)
+		if(GetHealthPercent() <= 20 && !pShield->mEnabled)
 			pShield->mEnabled = true;
 
 		ParentClass::AIUpdate();

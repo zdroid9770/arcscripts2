@@ -2997,7 +2997,7 @@ class ReliquaryOfSoulsAI : public MoonScriptCreatureAI
 		bool					SpawnedEnsalvedSoul;
 		int						Phase;
 		int						DeadSoulCount;
-		uint32					mEnslavedSoulTimer;
+		int32					mEnslavedSoulTimer;
 		MoonScriptCreatureAI*	mEoS;
 		MoonScriptCreatureAI*	mEoD;
 		MoonScriptCreatureAI*	mEoA;

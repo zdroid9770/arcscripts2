@@ -9,4 +9,5 @@ New features:
 General:
 	* Add base documentation
 	* Drop CreatureAIScript use from scripts
+	* Update timer's functions
 	* Finish all repo structure regroups

@@ -134,7 +134,7 @@ public:
 */
 private:
 	int8 state;
-	uint32 timer;
+	int32 timer;
 };
 
 class Coppernut : public MoonScriptCreatureAI
@@ -257,8 +257,8 @@ public:
 */
 private:
 	uint8 state;
-	uint32 timer;
-	uint32 turn_timer;
+	int32 timer;
+	int32 turn_timer;
 };
 
 class Fairweather : public MoonScriptCreatureAI
@@ -332,7 +332,7 @@ public:
 */
 private:
 	uint8 state;
-	uint32 timer;
+	int32 timer;
 };
 
 class Hammerflange : public MoonScriptCreatureAI
@@ -427,7 +427,7 @@ public:
 private:
 	uint8 state;
 	uint8 initiliaze_state;
-	uint32 timer;
+	int32 timer;
 };
 
 void ZeppelinThundercaller(Transporter * pTransporter, bool delayed)
