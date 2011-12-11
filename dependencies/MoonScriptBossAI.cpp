@@ -54,16 +54,14 @@ void MoonScriptBossAI::SetPhase(int32 pPhase, SpellDesc* pPhaseChangeSpell)
 
 		//Enable spells related to that phase
 		for(PhaseSpellArray::iterator SpellIter = mPhaseSpells.begin(); SpellIter != mPhaseSpells.end(); ++SpellIter)
-		{
-			if(SpellIter->first == pPhase) SpellIter->second->mEnabled = true;
-			else SpellIter->second->mEnabled = false;
-		}
+			SpellIter->second->mEnabled = SpellIter->first == pPhase ? true : false;
 
 		//Remember phase index
 		mPhaseIndex = pPhase;
 
 		//Cast phase change spell now if available
-		if(pPhaseChangeSpell) CastSpellNowNoScheduling(pPhaseChangeSpell);
+		if(pPhaseChangeSpell)
+			CastSpellNowNoScheduling(pPhaseChangeSpell);
 	}
 };
 
@@ -77,9 +75,8 @@ void MoonScriptBossAI::OnCombatStart(Unit* pTarget)
 {
 	SetPhase(1);
 	if(mEnrageSpell && mEnrageTimerDuration > 0)
-	{
 		mEnrageTimer = AddTimer(mEnrageTimerDuration);
-	}
+
 	TriggerCooldownOnAllSpells();
 	MoonScriptCreatureAI::OnCombatStart(pTarget);
 };

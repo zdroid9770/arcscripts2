@@ -773,9 +773,7 @@ int32 MoonScriptCreatureAI::GetTimer(int32 pTimerId)
 	for(TimerArray::iterator TimerIter = mTimers.begin(); TimerIter != mTimers.end(); ++TimerIter)
 	{
 		if(TimerIter->first == pTimerId)
-		{
 			return TimerIter->second;
-		}
 	}
 
 	return 0;
@@ -1078,7 +1076,8 @@ void MoonScriptCreatureAI::OnDied(Unit* pKiller)
 	RemoveAllEvents();
 	RemoveAllAuras();
 	RemoveAIUpdateEvent();
-	if(mDespawnWhenInactive) Despawn(DEFAULT_DESPAWN_TIMER);
+	if(mDespawnWhenInactive)
+		Despawn(DEFAULT_DESPAWN_TIMER);
 }
 
 void MoonScriptCreatureAI::AIUpdate()
@@ -1173,7 +1172,8 @@ void MoonScriptCreatureAI::AIUpdate()
 				}
 				return;	//Scheduling one spell at a time, exit now
 			}
-			else if(Spell->mChance != 100) ChanceTotal += Spell->mChance;	//Only add spells that aren't 100% chance of casting
+			else if(Spell->mChance != 100) 
+				ChanceTotal += Spell->mChance;	//Only add spells that aren't 100% chance of casting
 		}
 
 		//Go back to default behavior since we didn't decide anything
@@ -1181,14 +1181,15 @@ void MoonScriptCreatureAI::AIUpdate()
 		SetBehavior(Behavior_Melee);
 
 		//Random taunts
-		if(ChanceRoll >= 95) RandomEmote(mOnTauntEmotes);
+		if(ChanceRoll >= 95)
+			RandomEmote(mOnTauntEmotes);
 	}
 }
 
 void MoonScriptCreatureAI::Destroy()
 {
 	delete this;
-};
+}
 
 bool MoonScriptCreatureAI::IsSpellScheduled(SpellDesc* pSpell)
 {
@@ -1241,8 +1242,7 @@ bool MoonScriptCreatureAI::CastSpellInternal(SpellDesc* pSpell, uint32 pCurrentT
 			//Store cast time for cooldown
 			pSpell->mLastCastTime = CurrentTime;
 			return true;
-		}
-		else if(!pSpell->mStrictRange)   //Target is out of range, run to it
+		}else if(!pSpell->mStrictRange)   //Target is out of range, run to it
 		{
 			PushRunToTargetCache(Target, pSpell, Status);
 			return false;
@@ -1302,7 +1302,7 @@ RangeStatusPair MoonScriptCreatureAI::GetSpellRangeStatusToUnit(Unit* pTarget, S
 	}
 
 	return make_pair(RangeStatus_Ok, 0.0f);
-};
+}
 
 Unit* MoonScriptCreatureAI::GetTargetForSpell(SpellDesc* pSpell)
 {
@@ -1339,7 +1339,7 @@ Unit* MoonScriptCreatureAI::GetTargetForSpell(SpellDesc* pSpell)
 			sLog.outDebug("ArcScript: MoonScriptCreatureAI::GetTargetForSpell() : Invalid target type!");
 			return NULL;
 	}
-};
+}
 
 Unit* MoonScriptCreatureAI::GetBestPlayerTarget(TargetFilter pTargetFilter, float pMinRange, float pMaxRange)
 {
@@ -1352,7 +1352,7 @@ Unit* MoonScriptCreatureAI::GetBestPlayerTarget(TargetFilter pTargetFilter, floa
 	}
 
 	return ChooseBestTargetInArray(TargetArray, pTargetFilter);
-};
+}
 
 Unit* MoonScriptCreatureAI::GetBestUnitTarget(TargetFilter pTargetFilter, float pMinRange, float pMaxRange)
 {
@@ -1378,7 +1378,7 @@ Unit* MoonScriptCreatureAI::GetBestUnitTarget(TargetFilter pTargetFilter, float 
 	}
 
 	return ChooseBestTargetInArray(TargetArray, pTargetFilter);
-};
+}
 
 Unit* MoonScriptCreatureAI::ChooseBestTargetInArray(UnitArray & pTargetArray, TargetFilter pTargetFilter)
 {
@@ -1396,7 +1396,7 @@ Unit* MoonScriptCreatureAI::ChooseBestTargetInArray(UnitArray & pTargetArray, Ta
 
 	//Choose random unit in array
 	return (pTargetArray.size() > 1) ? pTargetArray[ RandomUInt((uint32)pTargetArray.size() - 1) ] : NULL;
-};
+}
 
 Unit* MoonScriptCreatureAI::GetNearestTargetInArray(UnitArray & pTargetArray)
 {
@@ -1505,7 +1505,7 @@ bool MoonScriptCreatureAI::IsValidUnitTarget(Object* pObject, TargetFilter pFilt
 	}
 
 	return true; //This is a valid unit target
-};
+}
 
 void MoonScriptCreatureAI::PushRunToTargetCache(Unit* pTarget, SpellDesc* pSpell, RangeStatusPair pRangeStatus)
 {
@@ -1521,7 +1521,7 @@ void MoonScriptCreatureAI::PushRunToTargetCache(Unit* pTarget, SpellDesc* pSpell
 
 	if(mRunToTargetCache)
 		MoveTo(mRunToTargetCache, pRangeStatus);
-};
+}
 
 void MoonScriptCreatureAI::PopRunToTargetCache()
 {
@@ -1534,7 +1534,7 @@ void MoonScriptCreatureAI::PopRunToTargetCache()
 		SetAllowSpell(true);
 		StopMovement();
 	}
-};
+}
 
 void MoonScriptCreatureAI::RandomEmote(EmoteArray & pEmoteArray)
 {
@@ -1544,7 +1544,7 @@ void MoonScriptCreatureAI::RandomEmote(EmoteArray & pEmoteArray)
 		uint32 Roll = (ArraySize > 1) ? RandomUInt(ArraySize - 1) : 0;
 		Emote(pEmoteArray[ Roll ]->mText.c_str(), pEmoteArray[ Roll ]->mType, pEmoteArray[ Roll ]->mSoundId);
 	}
-};
+}
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //Premade Spell Functions
