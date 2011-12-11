@@ -357,25 +357,26 @@ class SCRIPT_DECL MoonScriptCreatureAI : public CreatureAIScript
 		void					SetDisplayWeapon(bool pMainHand, bool pOffHand, bool pRanged = false);
 		void					SetDisplayWeaponIds(uint32 mainhand, uint32 offhand, uint32 ranged = 0);
 
-		//Environment
-		float					GetRange(MoonScriptCreatureAI* pCreature);
-		float					GetRangeToUnit(Unit* pUnit);
-		float					GetRangeToObject(Object* pObject);
-
 		//Instances
 		bool					IsHeroic();
 		int32					HeroicInt(int32 pNormal, int32 pHeroic) { return IsHeroic() ? pHeroic : pNormal; }
 		MoonInstanceScript*		GetInstanceScript();
 
-		void					CastOnAllInrangePlayers(uint32 pSpellId, bool pTriggered = false);
-		void					CastOnInrangePlayers(float pDistanceMin, float pDistanceMax, uint32 pSpellId, bool pTriggered = false);
+		//Searchers
+		void					GetNearPoint2D(float &x, float &y, float distance2d, float absAngle ) const;
+		void					GetCurrentPosition(float &x, float &y, float &z) const;
 		Player* 				GetNearestPlayer();
 		GameObject*				GetNearestGameObject(uint32 pGameObjectId = 0);
 		MoonScriptCreatureAI*	GetNearestCreature(uint32 pCreatureId = 0);
-		MoonScriptCreatureAI*	SpawnCreature(uint32 pCreatureId, bool pForceSameFaction = false);
-		MoonScriptCreatureAI*	SpawnCreature(uint32 pCreatureId, float pX, float pY, float pZ, float pO = 0, bool pForceSameFaction = false, uint32 pPhase = 1);
 		Unit*					ForceCreatureFind(uint32 pCreatureId);
 		Unit*					ForceCreatureFind(uint32 pCreatureId, float pX, float pY, float pZ);
+		float					GetRange(MoonScriptCreatureAI* pCreature);
+		float					GetRangeToUnit(Unit* pUnit);
+		float					GetRangeToObject(Object* pObject);
+
+		//Spawning/despawning
+		MoonScriptCreatureAI*	SpawnCreature(uint32 pCreatureId, bool pForceSameFaction = false);
+		MoonScriptCreatureAI*	SpawnCreature(uint32 pCreatureId, float pX, float pY, float pZ, float pO = 0, bool pForceSameFaction = false, uint32 pPhase = 1);
 		void					Despawn(uint32 pDelay = 0, uint32 pRespawnTime = 0);
 
 		//Spells
@@ -392,6 +393,8 @@ class SCRIPT_DECL MoonScriptCreatureAI : public CreatureAIScript
 		void					RemoveAllAuras();
 		void					TriggerCooldownOnAllSpells();
 		void					CancelAllCooldowns();
+		void					CastOnAllInrangePlayers(uint32 pSpellId, bool pTriggered = false);
+		void					CastOnInrangePlayers(float pDistanceMin, float pDistanceMax, uint32 pSpellId, bool pTriggered = false);
 
 		//Emotes
 		EmoteDesc*				AddEmote(EventType pEventType, const char* pText, TextType pType, uint32 pSoundId = 0);
@@ -409,6 +412,8 @@ class SCRIPT_DECL MoonScriptCreatureAI : public CreatureAIScript
 		bool					IsTimerFinished(int32 pTimerId);
 		void					CancelAllTimers();
 		uint32					GetTimerCount() { return mTimerCount; }
+
+		//Events
 		int32					AddEvent(uint32 pEventId, int32 pTriggerTimer, EventFunc pEvent, int32 pMiscVal = 0, bool pRepeatable = false);
 		void					ResetEvent(uint32 pEventId, int32 pNewTriggerTimer, bool pRepeatable = false);
 		void					RemoveEvent(uint32 pEventId);
@@ -442,7 +447,6 @@ class SCRIPT_DECL MoonScriptCreatureAI : public CreatureAIScript
 		void					AddLoot(Unit* pTarget, uint32 pItemID, uint32 pMinCount, uint32 pMaxCount);
 
 		//Reimplemented Events
-		//virtual void			Reset();
 		virtual void			OnCombatStart(Unit* pTarget);
 		virtual void			OnCombatStop(Unit* pTarget);
 		virtual void			OnTargetDied(Unit* pTarget);

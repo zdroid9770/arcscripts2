@@ -809,7 +809,8 @@ bool MoonScriptCreatureAI::IsTimerFinished(int32 pTimerId)
 {
 	for(TimerArray::iterator TimerIter = mTimers.begin(); TimerIter != mTimers.end(); ++TimerIter)
 	{
-		if(TimerIter->first == pTimerId) return (TimerIter->second <= 0) ? true : false;
+		if(TimerIter->first == pTimerId)
+			return (TimerIter->second <= 0) ? true : false;
 	}
 	return false;
 }
@@ -1544,6 +1545,19 @@ void MoonScriptCreatureAI::RandomEmote(EmoteArray & pEmoteArray)
 		uint32 Roll = (ArraySize > 1) ? RandomUInt(ArraySize - 1) : 0;
 		Emote(pEmoteArray[ Roll ]->mText.c_str(), pEmoteArray[ Roll ]->mType, pEmoteArray[ Roll ]->mSoundId);
 	}
+}
+
+void MoonScriptCreatureAI::GetNearPoint2D(float &x, float &y, float distance2d, float absAngle ) const
+{
+    x = _unit->GetPositionX() + distance2d * cos(absAngle);
+    y = _unit->GetPositionY() + distance2d * sin(absAngle);
+}
+
+void MoonScriptCreatureAI::GetCurrentPosition(float &x, float &y, float &z) const
+{
+    x = _unit->GetPositionX();
+    y = _unit->GetPositionY();
+	z = _unit->GetPositionZ();
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
