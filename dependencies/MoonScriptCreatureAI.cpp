@@ -1549,8 +1549,8 @@ void MoonScriptCreatureAI::RandomEmote(EmoteArray & pEmoteArray)
 
 void MoonScriptCreatureAI::GetNearPoint2D(float &x, float &y, float distance2d, float absAngle ) const
 {
-    x = _unit->GetPositionX() + distance2d * cos(absAngle);
-    y = _unit->GetPositionY() + distance2d * sin(absAngle);
+	float z = 0.0f;	//we no need z point
+	_unit->GetPoint(absAngle, distance2d, x, y, z, false);
 }
 
 void MoonScriptCreatureAI::GetCurrentPosition(float &x, float &y, float &z) const
