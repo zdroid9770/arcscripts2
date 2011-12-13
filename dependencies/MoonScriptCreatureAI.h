@@ -311,6 +311,8 @@ class SCRIPT_DECL MoonScriptCreatureAI : public CreatureAIScript
 		MoonScriptCreatureAI(Creature* pCreature);
 		~MoonScriptCreatureAI();
 
+		friend class CreatureAIScript;
+
 		//Movement
 		bool					GetCanMove();
 		void					SetCanMove(bool pCanMove);
@@ -363,7 +365,6 @@ class SCRIPT_DECL MoonScriptCreatureAI : public CreatureAIScript
 		MoonInstanceScript*		GetInstanceScript();
 
 		//Searchers
-		void					GetNearPoint2D(float &x, float &y, float distance2d, float absAngle ) const;
 		void					GetCurrentPosition(float &x, float &y, float &z) const;
 		Player* 				GetNearestPlayer();
 		GameObject*				GetNearestGameObject(uint32 pGameObjectId = 0);
