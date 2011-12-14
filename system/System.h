@@ -7,18 +7,10 @@
 
 struct StringTextData
 {
-    uint32 uiSoundId;
 	const char *uiText;
     uint8  uiType;
-    uint32 uiLanguage;
+    uint32 uiSoundId;
     uint32 uiEmote;
-};
-
-struct LanguageDesc
-{
-    Languages lang_id;
-    uint32   spell_id;
-    uint32   skill_id;
 };
 
 class ArcScripts2 : public ThreadBase
@@ -29,11 +21,11 @@ class ArcScripts2 : public ThreadBase
 
 		bool run()
 		{
-			Log.Success("ArcScripts2","");
-			Log.Success("ArcScripts2","");
-			Log.Success("ArcScripts2", "Engine has Started");
+			Log.Success("ArcScripts2","================ArcScripts2===================");
+			Log.Success("ArcScripts2", "Starting to load scripts data...");
+			Log.Success("ArcScripts2", "_____________________________________________");
 			LoadScriptTexts();
-			Log.Success("ArcScripts2","");
+			Log.Success("ArcScripts2","==============================================");
 			Log.Success("ArcScripts2","");
 			return true;
 		}

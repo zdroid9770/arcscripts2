@@ -751,13 +751,66 @@ void MoonScriptCreatureAI::Emote(const char* pText, TextType pType, uint32 pSoun
 				break;
 		}
 	}
-	if(pSoundId > 0) _unit->PlaySoundToSet(pSoundId);
+
+	if(pSoundId > 0)
+		_unit->PlaySoundToSet(pSoundId);
 }
 
 void MoonScriptCreatureAI::Announce(const char* pText)
 {
 	if(pText && strlen(pText) > 0)
 		_unit->SendChatMessage(CHAT_MSG_RAID_BOSS_EMOTE, LANG_UNIVERSAL, pText);
+}
+
+void MoonScriptCreatureAI::TextEmote(int32 pEntry)
+{
+	if(pEntry>=0)
+	{
+		Log.Debug("ArcScripts2","TextEmote entry should be negative value");
+		return;
+	}
+
+	StringTextData const* pData = pSystem->GetTextData(pEntry);
+	if(!pData)
+	{
+		sLog.outDebug("ArcScripts2", "TextEmote entry %i data not found", pEntry);
+		return;
+	}
+
+	//preparing data
+	const char * pText = pData->uiText;
+	uint8 pType = pData->uiType;
+	uint32 pSound = pData->uiSoundId;
+	uint32 pEmote = pData->uiEmote;
+
+	//pushing emote
+	Emote(pText, (TextType)pType, pSound);
+	if(pEmote>0)
+		_unit->Emote((EmoteType)pEmote);
+}
+
+void MoonScriptCreatureAI::AddTextEmote(int32 pEntry, EventType pEventType)
+{
+	if(pEntry>=0)
+	{
+		sLog.outDebug("AddTextEmote entry  %i should be negative value", pEntry);
+		return;
+	}
+
+	StringTextData const* pData = pSystem->GetTextData(pEntry);
+	if(pData == NULL)
+	{
+		sLog.outDebug("AddTextEmote entry %i data not found", pEntry);
+		return;
+	}
+
+	//preparing data
+	//all other checks has been dealed on load
+	const char*pText = pData->uiText;
+	uint8 pType = pData->uiType;
+	uint32 pSound = pData->uiSoundId;
+
+	AddEmote(pEventType, pText, (TextType)pType, pSound);
 }
 
 int32 MoonScriptCreatureAI::AddTimer(int32 pDurationMillisec)
