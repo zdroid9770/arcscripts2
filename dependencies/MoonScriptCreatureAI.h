@@ -20,6 +20,11 @@
 #ifndef MOON_SCRIPT_CREATURE_AI
 #define MOON_SCRIPT_CREATURE_AI
 
+#define MOONSCRIPT_FACTORY_FUNCTION(ClassName, ParentClassName)\
+public:\
+	ADD_CREATURE_FACTORY_FUNCTION(ClassName);\
+	typedef ParentClassName ParentClass;
+
 //Default time defines
 #define MINUTE	60				//1 min = 60 seconds
 #define SEC_IN_MS	1000		//1 sec = 1000 milliseconds
