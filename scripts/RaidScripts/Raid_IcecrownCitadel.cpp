@@ -67,6 +67,12 @@ public:
 	IcecrownCitadelInstanceScript(MapMgr* pMapMgr) : MoonInstanceScript(pMapMgr)
 	{}
 
+	void OnPlayerEnter(Player* pPlayer)
+	{
+		//chill of throne
+		pPlayer->CastSpell(pPlayer, 69127, true);
+	}
+
 	void OnCreatureDeath(Creature* c, Unit* pUnit)
 	{
 		if(c->GetEntry() == 36612)
