@@ -65,7 +65,8 @@ class IcecrownCitadelInstanceScript : public MoonInstanceScript
 public:
 	MOONSCRIPT_INSTANCE_FACTORY_FUNCTION(IcecrownCitadelInstanceScript, MoonInstanceScript);
 	IcecrownCitadelInstanceScript(MapMgr* pMapMgr) : MoonInstanceScript(pMapMgr)
-	{}
+	{
+	}
 
 	void OnPlayerEnter(Player* pPlayer)
 	{
@@ -214,6 +215,7 @@ public:
 	{
 		mInstance = GetInstanceScript();
 		pMode = _unit->GetMapMgr()->iInstanceMode;
+		Reset();
 
 		//Bone Storm!
 		sBoneStorm = AddSpell(MarrowgarSpells[SPELL_LM_BONESTORM][pMode], Target_Self, 0, 3, 0, 0, 0, false, "BONE STORM!", Text_Yell, 16946, "Lord Marrowgar creates a whirling of bone!");
@@ -233,8 +235,6 @@ public:
 			sBoneSpike->AddEmote("Stick Around!", Text_Yell, 16948);
 			sBoneSpike->AddEmote("The only escape is death!", Text_Yell, 16949);
 		}
-
-		Reset();
 
 		Emote("This is the beginning AND the end, mortals. None may enter the master's sanctum!", Text_Yell, 16950);
 		AddEmote(Event_OnCombatStart, "The Scourge will wash over this world as a swarm of death and destruction!", Text_Yell, 16941);
