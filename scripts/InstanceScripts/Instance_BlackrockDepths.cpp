@@ -24,8 +24,8 @@
 class AmbassadorFlamelash : public MoonScriptCreatureAI
 {
 	public:
-		MOONSCRIPT_FACTORY_FUNCTION(BaronAquanisAI, MoonScriptCreatureAI);
-		BaronAquanisAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
+		MOONSCRIPT_FACTORY_FUNCTION(AmbassadorFlamelash, MoonScriptCreatureAI);
+		AmbassadorFlamelash(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			SummonTimer = INVALIDATE_TIMER;
 		}
