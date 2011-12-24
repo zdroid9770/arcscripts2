@@ -1738,6 +1738,7 @@ void SpellFunc_Solarian_Reappear(SpellDesc* pThis, MoonScriptCreatureAI* pCreatu
 
 class HighAstromancerSolarianAI : public MoonScriptBossAI
 {
+	public:
 		MOONSCRIPT_FACTORY_FUNCTION(HighAstromancerSolarianAI, MoonScriptBossAI);
 		HighAstromancerSolarianAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
 		{
@@ -1842,8 +1843,6 @@ void SpellFunc_Solarian_Disappear(SpellDesc* pThis, MoonScriptCreatureAI* pCreat
 	HighAstromancerSolarianAI* Solarian = (pCreatureAI) ? TO< HighAstromancerSolarianAI* >(pCreatureAI) : NULL;
 	if(Solarian)
 	{
-		SpellFunc_Disappear(pThis, pCreatureAI, pTarget, pType);
-
 		//Spawn spot lights, and despawn them after 26sec X(400,460) Y(-340,-400)
 		Solarian->mSpawnPositions[0][0] = 400 + RandomFloat(60);
 		Solarian->mSpawnPositions[0][1] = -400 + RandomFloat(60);
@@ -1866,13 +1865,12 @@ void SpellFunc_Solarian_Reappear(SpellDesc* pThis, MoonScriptCreatureAI* pCreatu
 		Solarian->SpawnCreature(CN_SOLARIUMPRIEST, Solarian->mSpawnPositions[0][0], Solarian->mSpawnPositions[0][1], 17);
 		Solarian->SpawnCreature(CN_SOLARIUMPRIEST, Solarian->mSpawnPositions[1][0], Solarian->mSpawnPositions[1][1], 17);
 		//Solarian->MoveTo(Solarian->mSpawnPositions[2][0], Solarian->mSpawnPositions[2][1], 17);	//Doesn't work quite right yet
-
-		SpellFunc_Reappear(pThis, pCreatureAI, pTarget, pType);
 	}
 }
 
 class SolariumAgentAI : public MoonScriptCreatureAI
 {
+	public:
 		MOONSCRIPT_FACTORY_FUNCTION(SolariumAgentAI, MoonScriptCreatureAI);
 		SolariumAgentAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
@@ -1887,6 +1885,7 @@ class SolariumAgentAI : public MoonScriptCreatureAI
 
 class SolariumPriestAI : public MoonScriptCreatureAI
 {
+	public:
 		MOONSCRIPT_FACTORY_FUNCTION(SolariumPriestAI, MoonScriptCreatureAI);
 		SolariumPriestAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
@@ -1903,6 +1902,7 @@ class SolariumPriestAI : public MoonScriptCreatureAI
 
 class SolariumSpotLight : public MoonScriptCreatureAI
 {
+	public:
 		MOONSCRIPT_FACTORY_FUNCTION(SolariumSpotLight, MoonScriptCreatureAI);
 		SolariumSpotLight(Creature* pCreature) : MoonScriptCreatureAI(pCreature) { SetCanEnterCombat(false); }
 };

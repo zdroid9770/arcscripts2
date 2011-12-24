@@ -20,35 +20,6 @@
 #ifndef MOON_SCRIPT_CREATURE_AI
 #define MOON_SCRIPT_CREATURE_AI
 
-#define MOONSCRIPT_FACTORY_FUNCTION(ClassName, ParentClassName)\
-public:\
-	ADD_CREATURE_FACTORY_FUNCTION(ClassName);\
-	typedef ParentClassName ParentClass;
-
-//Default time defines
-#define MINUTE	60				//1 min = 60 seconds
-#define SEC_IN_MS	1000		//1 sec = 1000 milliseconds
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//Macros-- Start
-#define INVALIDATE_TIMER			-1
-#define DEFAULT_UPDATE_FREQUENCY	1000	//milliseconds
-#define DEFAULT_DESPAWN_TIMER		2000	//milliseconds
-
-#define AddDefaultAura( pAuraEntry )\
-	RegisterAIUpdateEvent( 500 );\
-	AddEvent( 1001, 500, &EventFunc_ApplyAura, pAuraEntry );
-
-#define MakeUnattackableFor( pTime )\
-	_unit->SetUInt64Value(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_ATTACKABLE_9);\
-	RegisterAIUpdateEvent( pTime );\
-	AddEvent( 1002, pTime, &EventFunc_RemoveUnitFieldFlags  );
-
-#define MakeUnselectableFor( pTime )\
-	_unit->SetUInt64Value(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE );\
-	RegisterAIUpdateEvent( pTime );\
-	AddEvent( 1003, pTime, &EventFunc_RemoveUnitFieldFlags  );
-
 enum TextType
 {
     Text_Say,
@@ -360,7 +331,11 @@ class SCRIPT_DECL MoonScriptCreatureAI : public CreatureAIScript
 
 		//Instances
 		bool					IsHeroic();
-		int32					HeroicInt(int32 pNormal, int32 pHeroic) { return IsHeroic() ? pHeroic : pNormal; }
+		int32					HeroicInt(int32 pNormal, int32 pHeroic) {return IsHeroic() ? pHeroic : pNormal;};
+
+		bool					Is25();
+		int32					Raid25manInst(uint32 p25manSpell, uint32 p10manSpell){return Is25() ? p25manSpell : p10manSpell;};
+
 		MoonInstanceScript*		GetInstanceScript();
 
 		//Searchers

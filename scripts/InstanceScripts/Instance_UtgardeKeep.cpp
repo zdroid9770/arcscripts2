@@ -229,6 +229,7 @@ class UtgardeKeepScript : public MoonInstanceScript
 
 class DragonflayerForgeMasterAI : public MoonScriptCreatureAI
 {
+	public:
 		MOONSCRIPT_FACTORY_FUNCTION(DragonflayerForgeMasterAI, MoonScriptCreatureAI);
 		DragonflayerForgeMasterAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
@@ -258,6 +259,7 @@ class DragonflayerForgeMasterAI : public MoonScriptCreatureAI
 
 class DragonflayerHeartSplitterAI : public MoonScriptCreatureAI
 {
+	public:
 		MOONSCRIPT_FACTORY_FUNCTION(DragonflayerHeartSplitterAI, MoonScriptCreatureAI);
 		DragonflayerHeartSplitterAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
@@ -277,6 +279,7 @@ class DragonflayerHeartSplitterAI : public MoonScriptCreatureAI
 
 class DragonflayerIronhelmAI : public MoonScriptCreatureAI
 {
+	public:
 		MOONSCRIPT_FACTORY_FUNCTION(DragonflayerIronhelmAI, MoonScriptCreatureAI);
 		DragonflayerIronhelmAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
@@ -328,6 +331,7 @@ class DragonflayerMetalworkerAI : public MoonScriptCreatureAI
 
 class DragonflayerOverseerAI : public MoonScriptCreatureAI
 {
+	public:
 		MOONSCRIPT_FACTORY_FUNCTION(DragonflayerOverseerAI, MoonScriptCreatureAI);
 		DragonflayerOverseerAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
@@ -346,6 +350,7 @@ class DragonflayerOverseerAI : public MoonScriptCreatureAI
 
 class DragonflayerRunecasterAI : public MoonScriptCreatureAI
 {
+	public:
 		MOONSCRIPT_FACTORY_FUNCTION(DragonflayerRunecasterAI, MoonScriptCreatureAI);
 		DragonflayerRunecasterAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
@@ -364,6 +369,7 @@ class DragonflayerRunecasterAI : public MoonScriptCreatureAI
 
 class DragonflayerSpiritualistAI : public MoonScriptCreatureAI
 {
+	public:
 		MOONSCRIPT_FACTORY_FUNCTION(DragonflayerSpiritualistAI, MoonScriptCreatureAI);
 		DragonflayerSpiritualistAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
@@ -397,6 +403,7 @@ class DragonflayerSpiritualistAI : public MoonScriptCreatureAI
 
 class DragonflayerWeaponSmithAI : public MoonScriptCreatureAI
 {
+	public:
 		MOONSCRIPT_FACTORY_FUNCTION(DragonflayerWeaponSmithAI, MoonScriptCreatureAI);
 		DragonflayerWeaponSmithAI(Creature*  pCreature) : MoonScriptCreatureAI(pCreature)
 		{
@@ -415,6 +422,7 @@ class DragonflayerWeaponSmithAI : public MoonScriptCreatureAI
 
 class EnslavedProto_DrakeAI : public MoonScriptCreatureAI
 {
+	public:
 		MOONSCRIPT_FACTORY_FUNCTION(EnslavedProto_DrakeAI, MoonScriptCreatureAI);
 		EnslavedProto_DrakeAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
@@ -432,6 +440,7 @@ class EnslavedProto_DrakeAI : public MoonScriptCreatureAI
 
 class FrenziedGeistAI : public MoonScriptCreatureAI
 {
+	public:
 		MOONSCRIPT_FACTORY_FUNCTION(FrenziedGeistAI, MoonScriptCreatureAI);
 		FrenziedGeistAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
@@ -457,6 +466,7 @@ class FrenziedGeistAI : public MoonScriptCreatureAI
 
 class SkarvaldTheConstructorAI : public MoonScriptCreatureAI
 {
+	public:
 		MOONSCRIPT_FACTORY_FUNCTION(SkarvaldTheConstructorAI, MoonScriptCreatureAI);
 		SkarvaldTheConstructorAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
@@ -540,6 +550,7 @@ class SkarvaldTheConstructorAI : public MoonScriptCreatureAI
 
 class DalronnTheControllerAI : public MoonScriptCreatureAI
 {
+	public:
 		MOONSCRIPT_FACTORY_FUNCTION(DalronnTheControllerAI, MoonScriptCreatureAI);
 		DalronnTheControllerAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
@@ -628,6 +639,7 @@ class DalronnTheControllerAI : public MoonScriptCreatureAI
 
 class SkarvaldTheConstructorGhostAI : public MoonScriptCreatureAI
 {
+	public:
 		MOONSCRIPT_FACTORY_FUNCTION(SkarvaldTheConstructorGhostAI, MoonScriptCreatureAI);
 		SkarvaldTheConstructorGhostAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
@@ -650,6 +662,7 @@ class SkarvaldTheConstructorGhostAI : public MoonScriptCreatureAI
 
 class DalronnTheControllerGhostAI : public MoonScriptCreatureAI
 {
+	public:
 		MOONSCRIPT_FACTORY_FUNCTION(DalronnTheControllerGhostAI, MoonScriptCreatureAI);
 		DalronnTheControllerGhostAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
@@ -712,8 +725,10 @@ void SpellFunc_KelesethAddSummon(SpellDesc* pThis, MoonScriptCreatureAI* pCreatu
 			pCreatureAI->SpawnCreature(KELESETH_SKELETON_ADD, 163.376f + i + 4, 252.901f - i + 5, 42.868f, 0, true);
 	};
 };
+
 class PrinceKelesethAI : public MoonScriptCreatureAI
 {
+	public:
 		MOONSCRIPT_FACTORY_FUNCTION(PrinceKelesethAI, MoonScriptCreatureAI);
 		PrinceKelesethAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
@@ -743,6 +758,7 @@ class PrinceKelesethAI : public MoonScriptCreatureAI
 
 class FrostTombAI : public MoonScriptCreatureAI
 {
+	public:
 		MOONSCRIPT_FACTORY_FUNCTION(FrostTombAI, MoonScriptCreatureAI);
 		FrostTombAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
@@ -779,6 +795,7 @@ class FrostTombAI : public MoonScriptCreatureAI
 
 class SkeletonAddAI : public MoonScriptCreatureAI
 {
+	public:
 		MOONSCRIPT_FACTORY_FUNCTION(SkeletonAddAI, MoonScriptCreatureAI);
 		SkeletonAddAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
@@ -852,6 +869,7 @@ void SpellFunc_ShadowAxe(SpellDesc* pThis, MoonScriptCreatureAI* pCreatureAI, Un
 
 class IngvarThePlundererAI : public MoonScriptCreatureAI
 {
+	public:
 		MOONSCRIPT_FACTORY_FUNCTION(IngvarThePlundererAI, MoonScriptCreatureAI);
 		IngvarThePlundererAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
@@ -887,6 +905,7 @@ class IngvarThePlundererAI : public MoonScriptCreatureAI
 
 class IngvarUndeadAI : public MoonScriptCreatureAI
 {
+	public:
 		MOONSCRIPT_FACTORY_FUNCTION(IngvarUndeadAI, MoonScriptCreatureAI);
 		IngvarUndeadAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{

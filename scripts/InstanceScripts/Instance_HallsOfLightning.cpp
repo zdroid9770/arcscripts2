@@ -222,6 +222,7 @@ enum GENERAL_STANCES
 
 class GeneralBjarngrimAI : public MoonScriptBossAI
 {
+public:
 		MOONSCRIPT_FACTORY_FUNCTION(GeneralBjarngrimAI, MoonScriptBossAI);
 		GeneralBjarngrimAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
 		{
@@ -352,6 +353,7 @@ class GeneralBjarngrimAI : public MoonScriptBossAI
 
 class Volkhan : public MoonScriptCreatureAI
 {
+	public:
 		MOONSCRIPT_FACTORY_FUNCTION(Volkhan, MoonScriptCreatureAI);
 		Volkhan(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
@@ -480,6 +482,7 @@ class Volkhan : public MoonScriptCreatureAI
 
 class MoltenGolem : public MoonScriptCreatureAI
 {
+	public:
 		MOONSCRIPT_FACTORY_FUNCTION(MoltenGolem, MoonScriptCreatureAI);
 		MoltenGolem(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
@@ -496,6 +499,7 @@ class MoltenGolem : public MoonScriptCreatureAI
 
 class BrittleGolem : public MoonScriptCreatureAI
 {
+	public:
 		MOONSCRIPT_FACTORY_FUNCTION(BrittleGolem, MoonScriptCreatureAI);
 		BrittleGolem(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
@@ -506,6 +510,7 @@ class BrittleGolem : public MoonScriptCreatureAI
 
 class VolkhansAnvil : public MoonScriptCreatureAI
 {
+	public:
 		MOONSCRIPT_FACTORY_FUNCTION(VolkhansAnvil, MoonScriptCreatureAI);
 		VolkhansAnvil(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
@@ -533,6 +538,7 @@ class VolkhansAnvil : public MoonScriptCreatureAI
 
 class IonarAI : public MoonScriptBossAI
 {
+	public:
 		MOONSCRIPT_FACTORY_FUNCTION(IonarAI, MoonScriptBossAI);
 		IonarAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
 		{
@@ -579,6 +585,7 @@ class IonarAI : public MoonScriptBossAI
 
 class LokenAI : public MoonScriptCreatureAI
 {
+	public:
 		MOONSCRIPT_FACTORY_FUNCTION(LokenAI, MoonScriptCreatureAI);
 		LokenAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{

@@ -40,6 +40,7 @@ class DeathKnightUnderstudyAI;
 
 class CarrionSpinnerAI : public MoonScriptCreatureAI
 {
+	public:
 		MOONSCRIPT_FACTORY_FUNCTION(CarrionSpinnerAI, MoonScriptCreatureAI);
 		CarrionSpinnerAI(Creature* pCreature);
 };
@@ -52,6 +53,7 @@ class CarrionSpinnerAI : public MoonScriptCreatureAI
 
 class DreadCreeperAI : public MoonScriptCreatureAI
 {
+	public:
 		MOONSCRIPT_FACTORY_FUNCTION(DreadCreeperAI, MoonScriptCreatureAI);
 		DreadCreeperAI(Creature* pCreature);
 };
@@ -64,6 +66,7 @@ class DreadCreeperAI : public MoonScriptCreatureAI
 
 class NaxxramasCultistAI : public MoonScriptCreatureAI
 {
+	public:
 		MOONSCRIPT_FACTORY_FUNCTION(NaxxramasCultistAI, MoonScriptCreatureAI);
 		NaxxramasCultistAI(Creature* pCreature);
 };
@@ -76,6 +79,7 @@ class NaxxramasCultistAI : public MoonScriptCreatureAI
 
 class VenomStalkerAI : public MoonScriptCreatureAI
 {
+	public:
 		MOONSCRIPT_FACTORY_FUNCTION(VenomStalkerAI, MoonScriptCreatureAI);
 		VenomStalkerAI(Creature* pCreature);
 };
@@ -91,6 +95,7 @@ class VenomStalkerAI : public MoonScriptCreatureAI
 
 class TombHorrorAI : public MoonScriptCreatureAI
 {
+	public:
 		MOONSCRIPT_FACTORY_FUNCTION(TombHorrorAI, MoonScriptCreatureAI);
 		TombHorrorAI(Creature* pCreature);
 };
@@ -105,6 +110,7 @@ class TombHorrorAI : public MoonScriptCreatureAI
 // To check: "total caster" + Explosion only when players are close ?
 class NaxxramasAcolyteAI : public MoonScriptCreatureAI
 {
+	public:
 		MOONSCRIPT_FACTORY_FUNCTION(NaxxramasAcolyteAI, MoonScriptCreatureAI);
 		NaxxramasAcolyteAI(Creature* pCreature);
 };
@@ -118,6 +124,7 @@ class NaxxramasAcolyteAI : public MoonScriptCreatureAI
 // Invisiblity should be removed OnCombatStart ?
 class VigilantShadeAI : public MoonScriptCreatureAI
 {
+	public:
 		MOONSCRIPT_FACTORY_FUNCTION(VigilantShadeAI, MoonScriptCreatureAI);
 		VigilantShadeAI(Creature* pCreature);
 
@@ -133,6 +140,7 @@ class VigilantShadeAI : public MoonScriptCreatureAI
 
 class CryptReaverAI : public MoonScriptCreatureAI
 {
+	public:
 		MOONSCRIPT_FACTORY_FUNCTION(CryptReaverAI, MoonScriptCreatureAI);
 		CryptReaverAI(Creature* pCreature);
 };
@@ -143,6 +151,7 @@ class CryptReaverAI : public MoonScriptCreatureAI
 
 class WebWrapAI : public MoonScriptCreatureAI
 {
+	public:
 		MOONSCRIPT_FACTORY_FUNCTION(WebWrapAI, MoonScriptCreatureAI);
 		WebWrapAI(Creature* pCreature);
 
@@ -163,6 +172,7 @@ class WebWrapAI : public MoonScriptCreatureAI
 
 class MaexxnaSpiderlingAI : public MoonScriptCreatureAI
 {
+	public:
 		MOONSCRIPT_FACTORY_FUNCTION(MaexxnaSpiderlingAI, MoonScriptCreatureAI);
 		MaexxnaSpiderlingAI(Creature* pCreature);
 };
@@ -196,6 +206,7 @@ void SpellFunc_MaexxnaWebWrap(SpellDesc* pThis, MoonScriptCreatureAI* pCreatureA
 
 class MaexxnaAI : public MoonScriptBossAI
 {
+	public:
 		MOONSCRIPT_FACTORY_FUNCTION(MaexxnaAI, MoonScriptBossAI);
 		MaexxnaAI(Creature* pCreature);
 
@@ -221,6 +232,7 @@ class MaexxnaAI : public MoonScriptBossAI
 
 class NaxxramasWorshipperAI : public MoonScriptCreatureAI
 {
+	public:
 		MOONSCRIPT_FACTORY_FUNCTION(NaxxramasWorshipperAI, MoonScriptCreatureAI);
 		NaxxramasWorshipperAI(Creature* pCreature);
 		friend class GrandWidowFaerlinaAI;
@@ -244,6 +256,7 @@ void SpellFunc_NaxxramasFollowerCharge(SpellDesc* pThis, MoonScriptCreatureAI* p
 
 class NaxxramasFollowerAI : public MoonScriptCreatureAI
 {
+	public:
 		MOONSCRIPT_FACTORY_FUNCTION(NaxxramasFollowerAI, MoonScriptCreatureAI);
 		NaxxramasFollowerAI(Creature* pCreature);
 		friend class GrandWidowFaerlinaAI;
@@ -280,6 +293,7 @@ static Location Followers[ 2 ] =
 
 class GrandWidowFaerlinaAI : public MoonScriptBossAI
 {
+	public:
 		MOONSCRIPT_FACTORY_FUNCTION(GrandWidowFaerlinaAI, MoonScriptBossAI);
 		GrandWidowFaerlinaAI(Creature* pCreature);
 
@@ -306,6 +320,7 @@ class GrandWidowFaerlinaAI : public MoonScriptBossAI
 
 class CryptGuardAI : public MoonScriptCreatureAI
 {
+	public:
 		MOONSCRIPT_FACTORY_FUNCTION(CryptGuardAI, MoonScriptCreatureAI);
 		CryptGuardAI(Creature* pCreature);
 		friend class AnubRekhanAI;
@@ -324,6 +339,7 @@ class CryptGuardAI : public MoonScriptCreatureAI
 
 class CorpseScarabAI : public MoonScriptCreatureAI
 {
+public:
 		MOONSCRIPT_FACTORY_FUNCTION(CorpseScarabAI, MoonScriptCreatureAI);
 		CorpseScarabAI(Creature* pCreature);
 		friend class AnubRekhanAI;
@@ -356,6 +372,7 @@ void SpellFunc_AnubRekhanCorpseScarabsCryptGuard(SpellDesc* pThis, MoonScriptCre
 
 class AnubRekhanAI : public MoonScriptBossAI
 {
+	public:
 		MOONSCRIPT_FACTORY_FUNCTION(AnubRekhanAI, MoonScriptBossAI);
 		AnubRekhanAI(Creature* pCreature);
 
@@ -386,6 +403,7 @@ class AnubRekhanAI : public MoonScriptBossAI
 
 class InfectiousGhoulAI : public MoonScriptCreatureAI
 {
+	public:
 		MOONSCRIPT_FACTORY_FUNCTION(InfectiousGhoulAI, MoonScriptCreatureAI);
 		InfectiousGhoulAI(Creature* pCreature);
 
@@ -405,6 +423,7 @@ class InfectiousGhoulAI : public MoonScriptCreatureAI
 
 class StoneskinGargoyleAI : public MoonScriptCreatureAI
 {
+	public:
 		MOONSCRIPT_FACTORY_FUNCTION(StoneskinGargoyleAI, MoonScriptCreatureAI);
 		StoneskinGargoyleAI(Creature* pCreature);
 
@@ -421,6 +440,7 @@ class StoneskinGargoyleAI : public MoonScriptCreatureAI
 
 class FrenziedBatAI : public MoonScriptCreatureAI
 {
+	public:
 		MOONSCRIPT_FACTORY_FUNCTION(FrenziedBatAI, MoonScriptCreatureAI);
 		FrenziedBatAI(Creature* pCreature);
 };
@@ -435,6 +455,7 @@ class FrenziedBatAI : public MoonScriptCreatureAI
 
 class PlagueBeastAI : public MoonScriptCreatureAI
 {
+	public:
 		MOONSCRIPT_FACTORY_FUNCTION(PlagueBeastAI, MoonScriptCreatureAI);
 		PlagueBeastAI(Creature* pCreature);
 
@@ -450,6 +471,7 @@ class PlagueBeastAI : public MoonScriptCreatureAI
 
 class EyeStalkerAI : public MoonScriptCreatureAI
 {
+	public:
 		MOONSCRIPT_FACTORY_FUNCTION(EyeStalkerAI, MoonScriptCreatureAI);
 		EyeStalkerAI(Creature* pCreature);
 
@@ -488,6 +510,7 @@ void SpellFunc_NothBlink(SpellDesc* pThis, MoonScriptCreatureAI* pCreatureAI, Un
 
 class NothThePlaguebringerAI : public MoonScriptBossAI
 {
+	public:
 		MOONSCRIPT_FACTORY_FUNCTION(NothThePlaguebringerAI, MoonScriptBossAI);
 		NothThePlaguebringerAI(Creature* pCreature);
 		friend class PlaguedWarriorAI;
@@ -520,6 +543,7 @@ class NothThePlaguebringerAI : public MoonScriptBossAI
 
 class PlaguedWarriorAI : public MoonScriptCreatureAI
 {
+	public:
 		MOONSCRIPT_FACTORY_FUNCTION(PlaguedWarriorAI, MoonScriptCreatureAI);
 		PlaguedWarriorAI(Creature* pCreature);
 
@@ -538,6 +562,7 @@ class PlaguedWarriorAI : public MoonScriptCreatureAI
 
 class PlaguedChampionAI : public MoonScriptCreatureAI
 {
+	public:
 		MOONSCRIPT_FACTORY_FUNCTION(PlaguedChampionAI, MoonScriptCreatureAI);
 		PlaguedChampionAI(Creature* pCreature);
 
@@ -555,6 +580,7 @@ class PlaguedChampionAI : public MoonScriptCreatureAI
 
 class PlaguedGuardianAI : public MoonScriptCreatureAI
 {
+	public:
 		MOONSCRIPT_FACTORY_FUNCTION(PlaguedGuardianAI, MoonScriptCreatureAI);
 		PlaguedGuardianAI(Creature* pCreature);
 
@@ -584,6 +610,7 @@ const float HeiganEruptionSlope[3] =
 
 class HeiganTheUncleanAI : public MoonScriptBossAI
 {
+	public:
 		MOONSCRIPT_FACTORY_FUNCTION(HeiganTheUncleanAI, MoonScriptBossAI);
 		HeiganTheUncleanAI(Creature* pCreature);
 		friend class PlagueFissureGO;
@@ -645,6 +672,7 @@ static Location Spores[] =
 
 class LoathebAI : public MoonScriptBossAI
 {
+	public:
 		MOONSCRIPT_FACTORY_FUNCTION(LoathebAI, MoonScriptBossAI);
 		LoathebAI(Creature* pCreature);
 		friend class SporeAI;
@@ -669,6 +697,7 @@ class LoathebAI : public MoonScriptBossAI
 
 class SporeAI : public MoonScriptCreatureAI
 {
+	public:
 		MOONSCRIPT_FACTORY_FUNCTION(SporeAI, MoonScriptCreatureAI);
 		SporeAI(Creature* pCreature);
 
@@ -692,6 +721,7 @@ class SporeAI : public MoonScriptCreatureAI
 
 class DeathKnightAI : public MoonScriptCreatureAI
 {
+	public:
 		MOONSCRIPT_FACTORY_FUNCTION(DeathKnightAI, MoonScriptCreatureAI);
 		DeathKnightAI(Creature* pCreature);
 
@@ -709,6 +739,7 @@ class DeathKnightAI : public MoonScriptCreatureAI
 
 class DeathKnightCaptainAI : public MoonScriptCreatureAI
 {
+	public:
 		MOONSCRIPT_FACTORY_FUNCTION(DeathKnightCaptainAI, MoonScriptCreatureAI);
 		DeathKnightCaptainAI(Creature* pCreature);
 
@@ -737,6 +768,7 @@ class GhostOfNaxxramasAI : public MoonScriptCreatureAI
 
 class ShadeOfNaxxramasAI : public MoonScriptCreatureAI
 {
+	public:
 		MOONSCRIPT_FACTORY_FUNCTION(ShadeOfNaxxramasAI, MoonScriptCreatureAI);
 		ShadeOfNaxxramasAI(Creature* pCreature);
 		friend class PortalOfShadowsAI;
@@ -753,6 +785,7 @@ class ShadeOfNaxxramasAI : public MoonScriptCreatureAI
 
 class PortalOfShadowsAI : public MoonScriptCreatureAI
 {
+	public:
 		MOONSCRIPT_FACTORY_FUNCTION(PortalOfShadowsAI, MoonScriptCreatureAI);
 		PortalOfShadowsAI(Creature* pCreature);
 
@@ -779,6 +812,7 @@ void SpellFunc_NecroKnightBlink(SpellDesc* pThis, MoonScriptCreatureAI* pCreatur
 
 class NecroKnightAI : public MoonScriptCreatureAI
 {
+	public:
 		MOONSCRIPT_FACTORY_FUNCTION(NecroKnightAI, MoonScriptCreatureAI);
 		NecroKnightAI(Creature* pCreature);
 };
@@ -793,6 +827,7 @@ class NecroKnightAI : public MoonScriptCreatureAI
 
 class SkeletalSmithAI : public MoonScriptCreatureAI
 {
+	public:
 		MOONSCRIPT_FACTORY_FUNCTION(SkeletalSmithAI, MoonScriptCreatureAI);
 		SkeletalSmithAI(Creature* pCreature);
 };
@@ -813,6 +848,7 @@ class SkeletalSmithAI : public MoonScriptCreatureAI
 
 class DeathKnightCavalierAI : public MoonScriptCreatureAI
 {
+	public:
 		MOONSCRIPT_FACTORY_FUNCTION(DeathKnightCavalierAI, MoonScriptCreatureAI);
 		DeathKnightCavalierAI(Creature* pCreature);
 		friend class DeathchargerSteedAI;
@@ -834,6 +870,7 @@ void SpellFunc_DeathchargerSteedCharge(SpellDesc* pThis, MoonScriptCreatureAI* p
 
 class DeathchargerSteedAI : public MoonScriptCreatureAI
 {
+	public:
 		MOONSCRIPT_FACTORY_FUNCTION(DeathchargerSteedAI, MoonScriptCreatureAI);
 		DeathchargerSteedAI(Creature* pCreature);
 		friend class DeathKnightCavalierAI;
@@ -853,6 +890,7 @@ class DeathchargerSteedAI : public MoonScriptCreatureAI
 
 class DarkTouchedWarriorAI : public MoonScriptCreatureAI
 {
+	public:
 		MOONSCRIPT_FACTORY_FUNCTION(DarkTouchedWarriorAI, MoonScriptCreatureAI);
 		DarkTouchedWarriorAI(Creature* pCreature);
 
@@ -869,6 +907,7 @@ class DarkTouchedWarriorAI : public MoonScriptCreatureAI
 
 class RisenSquireAI : public MoonScriptCreatureAI
 {
+	public:
 		MOONSCRIPT_FACTORY_FUNCTION(RisenSquireAI, MoonScriptCreatureAI);
 		RisenSquireAI(Creature* pCreature);
 };
@@ -883,6 +922,7 @@ class RisenSquireAI : public MoonScriptCreatureAI
 
 class UnholyAxeAI : public MoonScriptCreatureAI
 {
+	public:
 		MOONSCRIPT_FACTORY_FUNCTION(UnholyAxeAI, MoonScriptCreatureAI);
 		UnholyAxeAI(Creature* pCreature);
 };
@@ -895,6 +935,7 @@ class UnholyAxeAI : public MoonScriptCreatureAI
 
 class UnholySwordAI : public MoonScriptCreatureAI
 {
+	public:
 		MOONSCRIPT_FACTORY_FUNCTION(UnholySwordAI, MoonScriptCreatureAI);
 		UnholySwordAI(Creature* pCreature);
 };
@@ -909,6 +950,7 @@ class UnholySwordAI : public MoonScriptCreatureAI
 
 class UnholyStaffAI : public MoonScriptCreatureAI
 {
+	public:
 		MOONSCRIPT_FACTORY_FUNCTION(UnholyStaffAI, MoonScriptCreatureAI);
 		UnholyStaffAI(Creature* pCreature);
 };
@@ -924,6 +966,7 @@ class UnholyStaffAI : public MoonScriptCreatureAI
 
 class InstructorRazuviousAI : public MoonScriptBossAI
 {
+	public:
 		MOONSCRIPT_FACTORY_FUNCTION(InstructorRazuviousAI, MoonScriptBossAI);
 		InstructorRazuviousAI(Creature* pCreature);
 		friend class DeathKnightUnderstudyAI;
@@ -969,6 +1012,7 @@ void InstructorRazuviousAI::AIUpdate()
 
 class DeathKnightUnderstudyAI : public MoonScriptCreatureAI
 {
+	public:
 		MOONSCRIPT_FACTORY_FUNCTION(DeathKnightUnderstudyAI, MoonScriptCreatureAI);
 		DeathKnightUnderstudyAI(Creature* pCreature);
 
@@ -1074,6 +1118,7 @@ void DeathKnightUnderstudyAI::Destroy()
 
 class PatchworkGolemAI : public MoonScriptCreatureAI
 {
+	public:
 		MOONSCRIPT_FACTORY_FUNCTION(PatchworkGolemAI, MoonScriptCreatureAI);
 		PatchworkGolemAI(Creature* pCreature);
 
@@ -1090,6 +1135,7 @@ class PatchworkGolemAI : public MoonScriptCreatureAI
 
 class BileRetcherAI : public MoonScriptCreatureAI
 {
+	public:
 		MOONSCRIPT_FACTORY_FUNCTION(BileRetcherAI, MoonScriptCreatureAI);
 		BileRetcherAI(Creature* pCreature);
 };
@@ -1101,6 +1147,7 @@ class BileRetcherAI : public MoonScriptCreatureAI
 
 class SewageSlimeAI : public MoonScriptCreatureAI
 {
+	public:
 		MOONSCRIPT_FACTORY_FUNCTION(SewageSlimeAI, MoonScriptCreatureAI);
 		SewageSlimeAI(Creature* pCreature);
 
@@ -1115,6 +1162,7 @@ class SewageSlimeAI : public MoonScriptCreatureAI
 
 class EmbalmingSlimeAI : public MoonScriptCreatureAI
 {
+	public:
 		MOONSCRIPT_FACTORY_FUNCTION(EmbalmingSlimeAI, MoonScriptCreatureAI);
 		EmbalmingSlimeAI(Creature* pCreature);
 
@@ -1132,6 +1180,7 @@ class EmbalmingSlimeAI : public MoonScriptCreatureAI
 
 class MadScientistAI : public MoonScriptCreatureAI
 {
+	public:
 		MOONSCRIPT_FACTORY_FUNCTION(MadScientistAI, MoonScriptCreatureAI);
 		MadScientistAI(Creature* pCreature);
 };
@@ -1146,6 +1195,7 @@ class MadScientistAI : public MoonScriptCreatureAI
 
 class LivingMonstrosityAI : public MoonScriptCreatureAI
 {
+	public:
 		MOONSCRIPT_FACTORY_FUNCTION(LivingMonstrosityAI, MoonScriptCreatureAI);
 		LivingMonstrosityAI(Creature* pCreature);
 };
@@ -1158,6 +1208,7 @@ class LivingMonstrosityAI : public MoonScriptCreatureAI
 
 class LightningTotemAI : public MoonScriptCreatureAI
 {
+	public:
 		MOONSCRIPT_FACTORY_FUNCTION(LightningTotemAI, MoonScriptCreatureAI);
 		LightningTotemAI(Creature* pCreature);
 
@@ -1174,6 +1225,7 @@ class LightningTotemAI : public MoonScriptCreatureAI
 
 class StitchedColossusAI : public MoonScriptCreatureAI
 {
+	public:
 		MOONSCRIPT_FACTORY_FUNCTION(StitchedColossusAI, MoonScriptCreatureAI);
 		StitchedColossusAI(Creature* pCreature);
 
@@ -1190,6 +1242,7 @@ class StitchedColossusAI : public MoonScriptCreatureAI
 
 class MaraudingGeistAI : public MoonScriptCreatureAI
 {
+	public:
 		MOONSCRIPT_FACTORY_FUNCTION(MaraudingGeistAI, MoonScriptCreatureAI);
 		MaraudingGeistAI(Creature* pCreature);
 };
@@ -1207,6 +1260,7 @@ void SpellFunc_PatchwerkHatefulStrike(SpellDesc* pThis, MoonScriptCreatureAI* pC
 
 class PatchwerkAI : public MoonScriptBossAI
 {
+	public:
 		MOONSCRIPT_FACTORY_FUNCTION(PatchwerkAI, MoonScriptBossAI);
 		PatchwerkAI(Creature* pCreature);
 

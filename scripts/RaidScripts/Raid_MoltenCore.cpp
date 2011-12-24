@@ -348,6 +348,7 @@ TODO:
 
 class MoltenGiantAI : public MoonScriptCreatureAI
 {
+	public:
 		MOONSCRIPT_FACTORY_FUNCTION(MoltenGiantAI, MoonScriptCreatureAI);
 		MoltenGiantAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
@@ -365,6 +366,7 @@ class MoltenGiantAI : public MoonScriptCreatureAI
 
 class MoltenDestroyerAI : public MoonScriptCreatureAI
 {
+	public:
 		MOONSCRIPT_FACTORY_FUNCTION(MoltenDestroyerAI, MoonScriptCreatureAI);
 		MoltenDestroyerAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
@@ -382,6 +384,7 @@ class MoltenDestroyerAI : public MoonScriptCreatureAI
 
 class FirelordAI : public MoonScriptCreatureAI
 {
+	public:
 		MOONSCRIPT_FACTORY_FUNCTION(FirelordAI, MoonScriptCreatureAI);
 		FirelordAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
@@ -396,10 +399,10 @@ class FirelordAI : public MoonScriptCreatureAI
 
 class LavaAnnihilatorAI : public MoonScriptCreatureAI
 {
+	public:
 		MOONSCRIPT_FACTORY_FUNCTION(LavaAnnihilatorAI, MoonScriptCreatureAI);
 		LavaAnnihilatorAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
-			AddSpellFunc(&SpellFunc_ClearHateList, Target_Self, 20, 0, 0);
 		}
 };
 
@@ -417,6 +420,7 @@ class LavaAnnihilatorAI : public MoonScriptCreatureAI
 
 class AncientCoreHoundAI : public MoonScriptCreatureAI
 {
+	public:
 		MOONSCRIPT_FACTORY_FUNCTION(AncientCoreHoundAI, MoonScriptCreatureAI);
 		AncientCoreHoundAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
@@ -455,6 +459,7 @@ class AncientCoreHoundAI : public MoonScriptCreatureAI
 
 class LavaSurgerAI : public MoonScriptCreatureAI
 {
+	public:
 		MOONSCRIPT_FACTORY_FUNCTION(LavaSurgerAI, MoonScriptCreatureAI);
 		LavaSurgerAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
@@ -469,6 +474,7 @@ class LavaSurgerAI : public MoonScriptCreatureAI
 
 class FlameImpAI : public MoonScriptCreatureAI
 {
+	public:
 		MOONSCRIPT_FACTORY_FUNCTION(FlameImpAI, MoonScriptCreatureAI);
 		FlameImpAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
@@ -483,6 +489,7 @@ class FlameImpAI : public MoonScriptCreatureAI
 
 class CoreHoundAI : public MoonScriptCreatureAI
 {
+	public:
 		MOONSCRIPT_FACTORY_FUNCTION(CoreHoundAI, MoonScriptCreatureAI);
 		CoreHoundAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
@@ -497,6 +504,7 @@ class CoreHoundAI : public MoonScriptCreatureAI
 
 class LavaReaverAI : public MoonScriptCreatureAI
 {
+	public:
 		MOONSCRIPT_FACTORY_FUNCTION(LavaReaverAI, MoonScriptCreatureAI);
 		LavaReaverAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
@@ -511,6 +519,7 @@ class LavaReaverAI : public MoonScriptCreatureAI
 
 class LavaElementalAI : public MoonScriptCreatureAI
 {
+	public:
 		MOONSCRIPT_FACTORY_FUNCTION(LavaElementalAI, MoonScriptCreatureAI);
 		LavaElementalAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
@@ -526,6 +535,7 @@ class LavaElementalAI : public MoonScriptCreatureAI
 
 class FlameguardAI : public MoonScriptCreatureAI
 {
+	public:
 		MOONSCRIPT_FACTORY_FUNCTION(FlameguardAI, MoonScriptCreatureAI);
 		FlameguardAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
@@ -551,6 +561,7 @@ class FlameguardAI : public MoonScriptCreatureAI
 
 class FirewalkerAI : public MoonScriptCreatureAI
 {
+	public:
 		MOONSCRIPT_FACTORY_FUNCTION(FirewalkerAI, MoonScriptCreatureAI);
 		FirewalkerAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
@@ -569,6 +580,7 @@ class FirewalkerAI : public MoonScriptCreatureAI
 
 class LucifronAI : public MoonScriptBossAI
 {
+	public:
 		MOONSCRIPT_FACTORY_FUNCTION(LucifronAI, MoonScriptBossAI);
 		LucifronAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
 		{
@@ -586,6 +598,7 @@ class LucifronAI : public MoonScriptBossAI
 
 class FlamewakerProtectorAI : public MoonScriptCreatureAI
 {
+	public:
 		MOONSCRIPT_FACTORY_FUNCTION(FlamewakerProtectorAI, MoonScriptCreatureAI);
 		FlamewakerProtectorAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
@@ -604,6 +617,7 @@ class FlamewakerProtectorAI : public MoonScriptCreatureAI
 
 class MagmadarAI : public MoonScriptBossAI
 {
+	public:
 		MOONSCRIPT_FACTORY_FUNCTION(MagmadarAI, MoonScriptBossAI);
 		MagmadarAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
 		{
@@ -623,6 +637,7 @@ class MagmadarAI : public MoonScriptBossAI
 
 class GehennasAI : public MoonScriptBossAI
 {
+	public:
 		MOONSCRIPT_FACTORY_FUNCTION(GehennasAI, MoonScriptBossAI);
 		GehennasAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
 		{
@@ -641,6 +656,7 @@ class GehennasAI : public MoonScriptBossAI
 
 class FlamewakerAI : public MoonScriptCreatureAI
 {
+	public:
 		MOONSCRIPT_FACTORY_FUNCTION(FlamewakerAI, MoonScriptCreatureAI);
 		FlamewakerAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
@@ -658,6 +674,7 @@ class FlamewakerAI : public MoonScriptCreatureAI
 
 class GarrAI : public MoonScriptBossAI
 {
+	public:
 		MOONSCRIPT_FACTORY_FUNCTION(GarrAI, MoonScriptBossAI);
 		GarrAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
 		{
@@ -675,6 +692,7 @@ class GarrAI : public MoonScriptBossAI
 
 class FireswornAI : public MoonScriptCreatureAI
 {
+	public:
 		MOONSCRIPT_FACTORY_FUNCTION(FireswornAI, MoonScriptCreatureAI);
 		FireswornAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
@@ -721,6 +739,7 @@ class FireswornAI : public MoonScriptCreatureAI
 
 class BaronGeddonAI : public MoonScriptBossAI
 {
+	public:
 		MOONSCRIPT_FACTORY_FUNCTION(BaronGeddonAI, MoonScriptBossAI);
 		BaronGeddonAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
 		{
@@ -743,6 +762,7 @@ void SpellFunc_ShazzrahBlinkArcaneExplosions(SpellDesc* pThis, MoonScriptCreatur
 
 class ShazzrahAI : public MoonScriptBossAI
 {
+	public:
 		MOONSCRIPT_FACTORY_FUNCTION(ShazzrahAI, MoonScriptBossAI);
 		ShazzrahAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
 		{
@@ -780,6 +800,7 @@ void SpellFunc_ShazzrahBlinkArcaneExplosions(SpellDesc* pThis, MoonScriptCreatur
 
 class GolemaggAI : public MoonScriptBossAI
 {
+public:
 		MOONSCRIPT_FACTORY_FUNCTION(GolemaggAI, MoonScriptBossAI);
 		GolemaggAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
 		{

@@ -162,6 +162,7 @@ class AmnennarTheColdbringer : public CreatureAIScript
 
 class Glutton : public MoonScriptCreatureAI
 {
+	public:
 		MOONSCRIPT_FACTORY_FUNCTION(Glutton, MoonScriptCreatureAI);
 		Glutton(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
@@ -187,6 +188,7 @@ class Glutton : public MoonScriptCreatureAI
 
 class MordreshFireEye : public MoonScriptCreatureAI
 {
+	public:
 		MOONSCRIPT_FACTORY_FUNCTION(MordreshFireEye, MoonScriptCreatureAI);
 		MordreshFireEye(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{

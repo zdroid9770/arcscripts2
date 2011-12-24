@@ -23,6 +23,26 @@
 #include "../dependencies/MoonScriptBossAI.h"
 #include "../dependencies/MoonScriptCreatureAI.h"
 
+//////////////////Macros
+//used on creature ai scripts
+#define MOONSCRIPT_FACTORY_FUNCTION(ClassName, ParentClassName)\
+	ADD_CREATURE_FACTORY_FUNCTION(ClassName);\
+	typedef ParentClassName ParentClass;
+
+//used on instance scripts
+#define MOONSCRIPT_INSTANCE_FACTORY_FUNCTION( ClassName, ParentClassName ) \
+public:\
+	ADD_INSTANCE_FACTORY_FUNCTION( ClassName );\
+	typedef ParentClassName ParentClass;
+
+////////////////Timers
+#define INVALIDATE_TIMER			-1
+#define DEFAULT_UPDATE_FREQUENCY	1000	//milliseconds
+#define DEFAULT_DESPAWN_TIMER		2000	//milliseconds
+#define MINUTE						60		//1 min = 60 seconds
+#define SEC_IN_MS					1000	//1 sec = 1000 milliseconds
+
+
 #ifndef SETUP
 #define SETUP
 

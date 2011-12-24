@@ -46,6 +46,7 @@
 
 class KelidanTheBreakerAI : public MoonScriptBossAI
 {
+	public:
 		MOONSCRIPT_FACTORY_FUNCTION(KelidanTheBreakerAI, MoonScriptBossAI);
 		KelidanTheBreakerAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
 		{

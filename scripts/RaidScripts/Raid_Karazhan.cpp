@@ -72,6 +72,7 @@ class Berthold : public GossipScript
 
 class AttumenTheHuntsmanAI : public MoonScriptBossAI
 {
+	public:
 		MOONSCRIPT_FACTORY_FUNCTION(AttumenTheHuntsmanAI, MoonScriptBossAI);
 		AttumenTheHuntsmanAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
 		{
@@ -126,6 +127,7 @@ class AttumenTheHuntsmanAI : public MoonScriptBossAI
 
 class MidnightAI : public MoonScriptBossAI
 {
+	public:
 		MOONSCRIPT_FACTORY_FUNCTION(MidnightAI, MoonScriptBossAI);
 		MidnightAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
 		{
@@ -206,6 +208,7 @@ class MidnightAI : public MoonScriptBossAI
 
 class MoroesAI : public MoonScriptBossAI
 {
+	public:
 		MOONSCRIPT_FACTORY_FUNCTION(MoroesAI, MoonScriptBossAI);
 		MoroesAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
 		{
@@ -288,6 +291,7 @@ class MoroesAI : public MoonScriptBossAI
 
 class MaidenOfVirtueAI : public MoonScriptBossAI
 {
+	public:
 		MOONSCRIPT_FACTORY_FUNCTION(MaidenOfVirtueAI, MoonScriptBossAI);
 		MaidenOfVirtueAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
 		{
@@ -1375,6 +1379,7 @@ class CuratorAI : public CreatureAIScript
 
 class AstralFlareAI : public MoonScriptCreatureAI
 {
+	public:
 		MOONSCRIPT_FACTORY_FUNCTION(AstralFlareAI, MoonScriptCreatureAI);
 		AstralFlareAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{

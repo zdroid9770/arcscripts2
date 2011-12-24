@@ -20,14 +20,6 @@
 #ifndef _INSTANCE_SCRIPT_BASE_H_
 #define _INSTANCE_SCRIPT_BASE_H_
 
-#define INVALIDATE_TIMER			-1
-#define DEFAULT_UPDATE_FREQUENCY	1000	//milliseconds
-
-#define MOONSCRIPT_INSTANCE_FACTORY_FUNCTION( ClassName, ParentClassName ) \
-public:\
-	ADD_INSTANCE_FACTORY_FUNCTION( ClassName );\
-	typedef ParentClassName ParentClass;
-
 enum EncounterState
 {
     State_NotStarted			= 0,
@@ -64,8 +56,9 @@ enum DataType
 
 enum GameObjectState
 {
-    State_Active				= 0,	// Door: open
-    State_Inactive				= 1
+    State_Active,		// Door: open
+    State_Inactive,		// Door: closed
+	State_Alternative	// Door: explosed
 };
 
 struct BossData
@@ -75,18 +68,18 @@ struct BossData
 		mSqlId = 0;
 		mGuid = 0;
 		mState = pState;
-	};
+	}
 
 	BossData(uint32 pId = 0, uint64 pGuid = 0, EncounterState pState = State_NotStarted)
 	{
 		mSqlId = pId;
 		mGuid = pGuid;
 		mState = pState;
-	};
+	}
 
 	~BossData()
 	{
-	};
+	}
 
 	uint32			mSqlId;
 	uint64			mGuid;

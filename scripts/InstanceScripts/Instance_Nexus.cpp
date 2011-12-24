@@ -477,6 +477,7 @@ private:
 
 class CrystalSpikeAI : public MoonScriptBossAI
 {
+public:
 	MOONSCRIPT_FACTORY_FUNCTION(CrystalSpikeAI, MoonScriptBossAI);
 	CrystalSpikeAI(Creature* pCreature) : MoonScriptBossAI(pCreature) {};
 

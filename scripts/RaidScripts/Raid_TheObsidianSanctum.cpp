@@ -227,6 +227,7 @@ void SpellFunc_LavaSpawn(SpellDesc* pThis, MoonScriptCreatureAI* pCreatureAI, Un
 
 class SartharionAI : public MoonScriptBossAI
 {
+	public:
 		MOONSCRIPT_FACTORY_FUNCTION(SartharionAI, MoonScriptBossAI);
 		SartharionAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
 		{
@@ -373,6 +374,7 @@ class SartharionAI : public MoonScriptBossAI
 
 class TsunamiAI : public MoonScriptBossAI
 {
+	public:
 		MOONSCRIPT_FACTORY_FUNCTION(TsunamiAI, MoonScriptBossAI);
 		TsunamiAI(Creature* pCreature) : MoonScriptBossAI(pCreature) {};
 

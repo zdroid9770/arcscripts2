@@ -38,6 +38,7 @@
 
 class NalorakkAI : public MoonScriptBossAI
 {
+	public:
 		MOONSCRIPT_FACTORY_FUNCTION(NalorakkAI, MoonScriptBossAI);
 		NalorakkAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
 		{
@@ -128,6 +129,7 @@ class NalorakkAI : public MoonScriptBossAI
 
 class AkilzonAI : public MoonScriptBossAI
 {
+	public:
 		MOONSCRIPT_FACTORY_FUNCTION(AkilzonAI, MoonScriptBossAI);
 		AkilzonAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
 		{
@@ -183,6 +185,7 @@ class AkilzonAI : public MoonScriptBossAI
 
 class SoaringEagleAI : public MoonScriptCreatureAI
 {
+	public:
 		MOONSCRIPT_FACTORY_FUNCTION(SoaringEagleAI, MoonScriptCreatureAI);
 		SoaringEagleAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
@@ -207,6 +210,7 @@ class SoaringEagleAI : public MoonScriptCreatureAI
 
 class HalazziAI : public MoonScriptBossAI
 {
+	public:
 		MOONSCRIPT_FACTORY_FUNCTION(HalazziAI, MoonScriptBossAI);
 		HalazziAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
 		{
@@ -335,6 +339,7 @@ class HalazziAI : public MoonScriptBossAI
 
 class LynxSpiritAI : public MoonScriptCreatureAI
 {
+	public:
 		MOONSCRIPT_FACTORY_FUNCTION(LynxSpiritAI, MoonScriptCreatureAI);
 		LynxSpiritAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{

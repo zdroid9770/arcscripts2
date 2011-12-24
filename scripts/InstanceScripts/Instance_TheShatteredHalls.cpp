@@ -2323,6 +2323,7 @@ void SpellFunc_Warbringer_BurningMaul(SpellDesc* pThis, MoonScriptCreatureAI* pC
 
 class HeadAI : public MoonScriptCreatureAI
 {
+	public:
 		MOONSCRIPT_FACTORY_FUNCTION(HeadAI, MoonScriptCreatureAI);
 		HeadAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{

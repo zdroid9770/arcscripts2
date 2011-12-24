@@ -25,6 +25,7 @@
 #define CN_SEARING_BLADE_WARLOCK	11324
 class SearingBladeWarlockAI : public MoonScriptCreatureAI
 {
+	public:
 		MOONSCRIPT_FACTORY_FUNCTION(SearingBladeWarlockAI, MoonScriptCreatureAI);
 		SearingBladeWarlockAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{

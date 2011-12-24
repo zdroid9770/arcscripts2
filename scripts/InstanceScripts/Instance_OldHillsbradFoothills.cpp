@@ -309,6 +309,7 @@ class LieutenantDrakeAI : public MoonScriptCreatureAI
 
 class ThrallAI : public MoonScriptCreatureAI // this will be replaced with escortAI
 {
+	public:
 		MOONSCRIPT_FACTORY_FUNCTION(ThrallAI, MoonScriptCreatureAI);
 		ThrallAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{

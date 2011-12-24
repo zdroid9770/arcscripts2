@@ -75,6 +75,7 @@ static LocationExtra FelCrystals[] =
 
 class SelinFireheartAI : public MoonScriptCreatureAI
 {
+	public:
 		MOONSCRIPT_FACTORY_FUNCTION(SelinFireheartAI, MoonScriptCreatureAI);
 		SelinFireheartAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
@@ -211,6 +212,7 @@ class SelinFireheartAI : public MoonScriptCreatureAI
 
 class VexallusAI : public MoonScriptBossAI
 {
+	public:
 		MOONSCRIPT_FACTORY_FUNCTION(VexallusAI, MoonScriptBossAI);
 		VexallusAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
 		{
@@ -266,6 +268,7 @@ class VexallusAI : public MoonScriptBossAI
 
 class Priestess_DelrissaAI : public MoonScriptBossAI
 {
+	public:
 		MOONSCRIPT_FACTORY_FUNCTION(Priestess_DelrissaAI, MoonScriptBossAI);
 		Priestess_DelrissaAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
 		{
@@ -345,6 +348,7 @@ class Priestess_DelrissaAI : public MoonScriptBossAI
 
 class Kagani_NightstrikeAI : public MoonScriptBossAI
 {
+	public:
 		MOONSCRIPT_FACTORY_FUNCTION(Kagani_NightstrikeAI, MoonScriptBossAI);
 		Kagani_NightstrikeAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
 		{
@@ -365,6 +369,7 @@ class Kagani_NightstrikeAI : public MoonScriptBossAI
 
 class Ellrys_DuskhallowAI : public MoonScriptBossAI
 {
+	public:
 		MOONSCRIPT_FACTORY_FUNCTION(Ellrys_DuskhallowAI, MoonScriptBossAI);
 		Ellrys_DuskhallowAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
 		{
@@ -384,6 +389,7 @@ class Ellrys_DuskhallowAI : public MoonScriptBossAI
 
 class Eramas_BrightblazeAI : public MoonScriptBossAI
 {
+	public:
 		MOONSCRIPT_FACTORY_FUNCTION(Eramas_BrightblazeAI, MoonScriptBossAI);
 		Eramas_BrightblazeAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
 		{
@@ -404,6 +410,7 @@ class Eramas_BrightblazeAI : public MoonScriptBossAI
 
 class YazzaiAI : public MoonScriptBossAI
 {
+	public:
 		MOONSCRIPT_FACTORY_FUNCTION(YazzaiAI, MoonScriptBossAI);
 		YazzaiAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
 		{
@@ -429,6 +436,7 @@ class YazzaiAI : public MoonScriptBossAI
 
 class Warlord_SalarisAI : public MoonScriptBossAI
 {
+	public:
 		MOONSCRIPT_FACTORY_FUNCTION(Warlord_SalarisAI, MoonScriptBossAI);
 		Warlord_SalarisAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
 		{
@@ -455,6 +463,7 @@ class Warlord_SalarisAI : public MoonScriptBossAI
 
 class GaraxxasAI : public MoonScriptBossAI
 {
+	public:
 		MOONSCRIPT_FACTORY_FUNCTION(GaraxxasAI, MoonScriptBossAI);
 		GaraxxasAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
 		{
@@ -476,6 +485,7 @@ class GaraxxasAI : public MoonScriptBossAI
 
 class ApokoAI : public MoonScriptCreatureAI
 {
+	public:
 		MOONSCRIPT_FACTORY_FUNCTION(ApokoAI, MoonScriptCreatureAI);
 		ApokoAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
@@ -495,6 +505,7 @@ class ApokoAI : public MoonScriptCreatureAI
 
 class ZelfanAI : public MoonScriptCreatureAI
 {
+	public:
 		MOONSCRIPT_FACTORY_FUNCTION(ZelfanAI, MoonScriptCreatureAI);
 		ZelfanAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
@@ -517,6 +528,7 @@ class ZelfanAI : public MoonScriptCreatureAI
 
 class CoilskarWitchAI : public MoonScriptBossAI
 {
+	public:
 		MOONSCRIPT_FACTORY_FUNCTION(CoilskarWitchAI, MoonScriptBossAI);
 		CoilskarWitchAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
 		{
@@ -536,6 +548,7 @@ class CoilskarWitchAI : public MoonScriptBossAI
 
 class SisterOfTormentAI : public MoonScriptBossAI
 {
+	public:
 		MOONSCRIPT_FACTORY_FUNCTION(SisterOfTormentAI, MoonScriptBossAI);
 		SisterOfTormentAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
 		{
@@ -571,6 +584,7 @@ class SunbladeBloodKnightAI : public MoonScriptBossAI
 
 class SunbladeImpAI : public MoonScriptBossAI
 {
+	public:
 		MOONSCRIPT_FACTORY_FUNCTION(SunbladeImpAI, MoonScriptBossAI);
 		SunbladeImpAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
 		{
@@ -587,6 +601,7 @@ class SunbladeImpAI : public MoonScriptBossAI
 
 class SunbladeMageGuardAI : public MoonScriptBossAI
 {
+	public:
 		MOONSCRIPT_FACTORY_FUNCTION(SunbladeMageGuardAI, MoonScriptBossAI);
 		SunbladeMageGuardAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
 		{
@@ -604,6 +619,7 @@ class SunbladeMageGuardAI : public MoonScriptBossAI
 
 class SunbladeMagisterAI : public MoonScriptBossAI
 {
+	public:
 		MOONSCRIPT_FACTORY_FUNCTION(SunbladeMagisterAI, MoonScriptBossAI);
 		SunbladeMagisterAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
 		{

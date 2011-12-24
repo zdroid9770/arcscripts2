@@ -384,6 +384,7 @@ class GundrakScript : public MoonInstanceScript
 
 class SladranAI : public MoonScriptCreatureAI
 {
+public:
 		MOONSCRIPT_FACTORY_FUNCTION(SladranAI, MoonScriptCreatureAI);
 		SladranAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
@@ -429,6 +430,7 @@ class SladranAI : public MoonScriptCreatureAI
 
 class GalDarahAI : public MoonScriptCreatureAI
 {
+public:
 		MOONSCRIPT_FACTORY_FUNCTION(GalDarahAI, MoonScriptCreatureAI);
 		GalDarahAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{

@@ -95,6 +95,7 @@ class ColdarraGeoMonitorWest : public GameObjectAIScript
 
 class PurifyingTotemAI : public MoonScriptCreatureAI
 {
+	public:
 		MOONSCRIPT_FACTORY_FUNCTION(PurifyingTotemAI, MoonScriptCreatureAI);
 		PurifyingTotemAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
@@ -131,6 +132,7 @@ class NerubarEggSac : public GameObjectAIScript
 // Bury Those Cockroaches!
 class SeaforiumDepthCharge : public MoonScriptCreatureAI
 {
+	public:
 		MOONSCRIPT_FACTORY_FUNCTION(SeaforiumDepthCharge, MoonScriptCreatureAI);
 		SeaforiumDepthCharge(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
