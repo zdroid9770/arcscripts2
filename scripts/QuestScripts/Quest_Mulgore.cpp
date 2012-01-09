@@ -1,8 +1,6 @@
 /*
- * ArcScripts for ArcEmu MMORPG Server
- * Copyright (C) 2009 ArcEmu Team <http://www.arcemu.org/>
- * Copyright (C) 2008-2009 Sun++ Team <http://www.sunscripting.com/>
- * Copyright (C) 2008 WEmu Team
+ * ArcScripts2 Scripts for Arcemu MMORPG Server
+ * Copyright (C) 2011-2012 ArcScripts2 team
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,10 +17,6 @@
  */
 
 #include "Setup.h"
-
-
-
-
 
 class The_Plains_Vision : public CreatureAIScript
 {

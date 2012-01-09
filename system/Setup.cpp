@@ -1,6 +1,6 @@
 /*
- * ArcScripts2 for ArcEmu MMORPG Server
- * Copyright (C) 2011 ArcScripts2 Team <http://www.arcemu.org/>
+ * ArcScripts2 Scripts for Arcemu MMORPG Server
+ * Copyright (C) 2011-2012 ArcScripts2 team
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -186,6 +186,7 @@ extern "C" SCRIPT_DECL void _exp_script_register(ScriptMgr* mgr)	// Comment any 
 	SetupBlastedLands(mgr);
 	SetupBloodmystIsle(mgr);
 	SetupBurningSteppes(mgr);
+	SetupDarkshore(mgr);
 	SetupDeathKnight(mgr);
 	SetupDesolace(mgr);
 	SetupDragonblight(mgr);

@@ -1,9 +1,6 @@
 /*
- * ArcScripts for ArcEmu MMORPG Server
- * Copyright (C) 2009 ArcEmu Team <http://www.arcemu.org/>
- * Copyright (C) 2008-2009 Sun++ Team <http://www.sunscripting.com/>
- * Copyright (C) 2005-2007 Ascent Team <http://www.ascentemu.com/>
- * Copyright (C) 2007-2008 Moon++ Team <http://www.moonplusplus.info/>
+ * ArcScripts2 Scripts for Arcemu MMORPG Server
+ * Copyright (C) 2011-2012 ArcScripts2 team
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,8 +17,6 @@
  */
 
 #include "Setup.h"
-
-
 
 class PaladinDeadNPC : public CreatureAIScript
 {

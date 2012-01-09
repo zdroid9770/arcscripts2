@@ -1,8 +1,6 @@
 /*
- * Yelly Database Scripts
- * Copyright (C) 2006-2008 U2 Team <http://www.undzwei.eu/>
- * Copyright (C) 2007-2008 Yelly Team
- * Copyright (C) 2009 WhyScripts Team <http://www.whydb.org/>
+ * ArcScripts2 Scripts for Arcemu MMORPG Server
+ * Copyright (C) 2011-2012 ArcScripts2 team
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -11,11 +9,11 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 #include "Setup.h"

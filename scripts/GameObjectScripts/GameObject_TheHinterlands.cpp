@@ -1,6 +1,6 @@
 /*
- * WhyScript Scripts for Arcemu MMORPG Server
- * Copyright (C) 2010 WhyDB Team <http://www.whydb.org/>
+ * ArcScripts2 Scripts for Arcemu MMORPG Server
+ * Copyright (C) 2011-2012 ArcScripts2 team
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,7 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
+ 
 #include "Setup.h"
 
 class VilebranchKidnapper : public GameObjectAIScript

@@ -1,6 +1,6 @@
 /*
- * Why Scripts for Arcemu MMORPG Server <http://www.arcemu.org/>
- * Copyright (C) 2009 WhyScripts Team <http://www.whydb.org/>
+ * ArcScripts2 Scripts for Arcemu MMORPG Server
+ * Copyright (C) 2011-2012 ArcScripts2 team
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,7 +17,6 @@
  */
 
 #include "Setup.h"
-
 
 void SetupWinterspring(ScriptMgr* mgr)
 {
