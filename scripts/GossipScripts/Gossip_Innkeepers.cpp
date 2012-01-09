@@ -31,7 +31,7 @@
 class InnkeeperGossip : public Arcemu::Gossip::Script
 {
 	public:
-		void InnkeeperGossip::OnHello(Object* pObject, Player* Plr)
+		void OnHello(Object* pObject, Player* Plr)
 		{
 			uint32 TextID = 820;
 			uint32 Text = objmgr.GetGossipTextForNpc(pCreature->GetEntry());
@@ -64,93 +64,51 @@ class InnkeeperGossip : public Arcemu::Gossip::Script
 			menu.Send(Plr);
 		}
 		
-		void OnSelectOption(Object* pObject, Player* Plr, uint32 Id, const char* Code);
+		void OnSelectOption(Object* pObject, Player* Plr, uint32 Id, const char* Code)
+		{
+			Creature* pCreature = (pObject->IsCreature()) ? (TO_CREATURE(pObject)) : NULL;
+			if(pCreature == NULL)
+				return;
+
+			switch(Id)
+			{
+				case 1:	Plr->GetSession()->SendInventoryList(pCreature); break;// VENDOR
+				case 2:	Plr->GetSession()->SendInnkeeperBind(pCreature); break;// BINDER
+				case 3:     // WHAT CAN I DO ?
+					// Prepare second menu
+					Arcemu::Gossip::Menu::SendQuickMenu(pCreature->GetGUID(), 1853, Plr, 2, Arcemu::Gossip::ICON_CHAT, Plr->GetSession()->LocalizedWorldSrv(Arcemu::Gossip::INNKEEPER));
+					break;
+				case 4:     // EVENT OF HALLOWEEN
+					{
+						if(!Plr->HasAura(SPELL_TRICK_OR_TREATED))
+						{
+							pCreature->CastSpell(Plr, SPELL_TRICK_OR_TREATED, true);
+
+							// either trick or treat, 50% chance
+							if(rand() % 2)
+								Plr->CastSpell(Plr, SPELL_TREAT, true);
+							else
+							{
+								int32 trickspell = 0;
+								switch(rand()%6)
+								{
+									case 0:	trickspell = 24753; break;	// cannot cast, random 30sec
+									case 1:	trickspell = 24713; break;	//lepper gnome costume
+									case 2:	trickspell = Plr->getGender() == 0 ? 24735 : 24736; break;	//ghost costume
+									case 3:	trickspell = Plr->getGender() == 0 ? 24711 : 24710; break;	//ninja costume
+									case 4:	trickspell = Plr->getGender() == 0 ? 24708 : 24709; break;	//pirate costume
+									case 5:	trickspell = 24723;	break;	// skeleton costume	
+								}
+								pCreature->CastSpell(Plr, trickspell, true);
+							}
+						}
+						Arcemu::Gossip::Menu::Complete(Plr);
+					}break;
+			}
+		}
+
 		void Destroy() { delete this; }
 };
-
-//#define SendQuickMenu(textid) objmgr.CreateGossipMenuForPlayer(&Menu, pCreature->GetGUID(), textid, Plr); \
-//    Menu->SendTo(Plr);
-
-void InnkeeperGossip::OnSelectOption(Object* pObject, Player* Plr, uint32 Id, const char* Code)
-{
-	Creature* pCreature = (pObject->IsCreature()) ? (TO_CREATURE(pObject)) : NULL;
-	if(pCreature == NULL)
-		return;
-
-	switch(Id)
-	{
-		case 1:     // VENDOR
-			Plr->GetSession()->SendInventoryList(pCreature);
-			break;
-		case 2:     // BINDER
-			Plr->GetSession()->SendInnkeeperBind(pCreature);
-			break;
-		case 3:     // WHAT CAN I DO ?
-			// Prepare second menu
-			Arcemu::Gossip::Menu::SendQuickMenu(pCreature->GetGUID(), 1853, Plr, 2, Arcemu::Gossip::ICON_CHAT, Plr->GetSession()->LocalizedWorldSrv(Arcemu::Gossip::INNKEEPER));
-			break;
-		case 4:     // EVENT OF HALLOWEEN
-			if(!Plr->HasAura(SPELL_TRICK_OR_TREATED))
-			{
-				pCreature->CastSpell(Plr, SPELL_TRICK_OR_TREATED, true);
-
-				// either trick or treat, 50% chance
-				if(rand() % 2)
-				{
-					Plr->CastSpell(Plr, SPELL_TREAT, true);
-				}
-				else
-				{
-					int32 trickspell = 0;
-					switch(rand() % 9)
-					{
-						case 0:
-							trickspell = 24753;                     // cannot cast, random 30sec
-							break;
-						case 1:
-							trickspell = 24713;                     // lepper gnome costume
-							break;
-						case 2:
-							if(Plr->getGender() == 0)
-							{
-								trickspell = 24735;                 // male ghost costume
-							}
-							else
-							{
-								trickspell = 24736;                 // female ghostcostume
-							}
-							break;
-						case 3:
-							if(Plr->getGender() == 0)
-							{
-								trickspell = 24711;                 // male ninja costume
-							}
-							else
-							{
-								trickspell = 24710;                 // female ninja costume
-							}
-							break;
-						case 4:
-							if(Plr->getGender() == 0)
-							{
-								trickspell = 24708;                 // male pirate costume
-							}
-							else
-							{
-								trickspell = 24709;                 // female pirate costume
-							}
-							break;
-						case 5:
-							trickspell = 24723;                     // skeleton costume
-							break;
-					}
-					pCreature->CastSpell(Plr, trickspell, true);
-				}
-			}
-			Arcemu::Gossip::Menu::Complete(Plr);
-			break;
-	}
-}
 
 void SetupInnkeepers(ScriptMgr* mgr)
 {
