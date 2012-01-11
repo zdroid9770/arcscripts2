@@ -93,7 +93,7 @@ class TheInfestedProtectorsQAI : public MoonScriptCreatureAI
 					}
 				}
 			}
-			ParentClass:;OnDied(mKiller);
+			ParentClass::OnDied(mKiller);
 		}
 };
 
