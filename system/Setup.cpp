@@ -37,6 +37,7 @@ extern "C" SCRIPT_DECL void _exp_script_register(ScriptMgr* mgr)	// Comment any 
 	SetupBoreanTundraCreature(mgr);
 	SetupDarkmoonFaireCreatures(mgr);
 	SetupDurotarCreature(mgr);
+	SetupElwynForestCreature(mgr);
 	SetupEmoteCreatures(mgr);
 	SetupFlightMasterCreatures(mgr);
 	SetupHellfireCreatures(mgr);
