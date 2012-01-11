@@ -391,7 +391,7 @@ bool MoonScriptCreatureAI::IsHeroic()
 	return true;
 }
 
-bool MoonScriptCreatureAI::Is25()
+bool MoonScriptCreatureAI::Is25ManRaid()
 {
 	if(_unit->GetMapMgr() == NULL)
 		return false;
@@ -400,6 +400,11 @@ bool MoonScriptCreatureAI::Is25()
 		return false;
 
 	return true;
+}
+
+uint32 MoonScriptCreatureAI::GetInstanceMode()
+{
+	return _unit->GetMapMgr()->iInstanceMode;
 }
 
 MoonInstanceScript* MoonScriptCreatureAI::GetInstanceScript()

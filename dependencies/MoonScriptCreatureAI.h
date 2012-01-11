@@ -332,10 +332,9 @@ class SCRIPT_DECL MoonScriptCreatureAI : public CreatureAIScript
 		//Instances
 		bool					IsHeroic();
 		int32					HeroicInt(int32 pNormal, int32 pHeroic) {return IsHeroic() ? pHeroic : pNormal;};
-
-		bool					Is25();
+		bool					Is25ManRaid();
 		int32					Raid25manInst(uint32 p25manSpell, uint32 p10manSpell){return Is25() ? p25manSpell : p10manSpell;};
-
+		uint8					GetInstanceMode();
 		MoonInstanceScript*		GetInstanceScript();
 
 		//Searchers
