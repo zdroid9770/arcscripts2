@@ -228,6 +228,7 @@ extern "C" SCRIPT_DECL void _exp_script_register(ScriptMgr* mgr)	// Comment any 
 	SetupQuestGossip(mgr);
 	SetupQuestHooks(mgr);
 	SetupUnsorted(mgr);
+	SetupZulDrak(mgr);
 }
 
 #ifdef WIN32

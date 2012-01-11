@@ -244,7 +244,7 @@ void SetupSholazarBasin(ScriptMgr* mgr);
 void SetupQuestGossip(ScriptMgr* mgr);
 void SetupQuestHooks(ScriptMgr* mgr);
 void SetupUnsorted(ScriptMgr* mgr);
-
+void SetupZulDrak(ScriptMgr * mgr);
 
 
 struct ScriptSpell
