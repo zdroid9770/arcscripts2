@@ -42,22 +42,6 @@ public:
 	}
 };
 
-class ThukTheDefiant : public CreatureAIScript
-{
-public:
-	ADD_CREATURE_FACTORY_FUNCTION(ThukTheDefiant)
-	ThukTheDefiant(Creature *pCreature) : CreatureAIScript(pCreature)
-	{
-		GetUnit()->SetScale( 0.4f );
-	}
-
-	void OnTargetDied(Unit *mTarget)
-	{
-		GetUnit()->SetFaction( 35 );
-		GetUnit()->SetScale( 0.4f );
-	}
-};
-
 class BrutebaneStoutTrigger : public CreatureAIScript
 {
 public:
@@ -107,6 +91,5 @@ protected:
 void SetupBladeEdgeMountainsCreature(ScriptMgr * mgr)
 {
 	mgr->register_creature_script( 21823, &NihilTheBanished::Create );		// Nihil the Banished
-	mgr->register_creature_script( 22920, &ThukTheDefiant::Create );		// Thuk the Defiant
 	mgr->register_creature_script( 21241, &BrutebaneStoutTrigger::Create );	// Bloodmaul Brutebane Stout Trigger
 }

@@ -245,6 +245,5 @@ void SetupTerrokarForest(ScriptMgr* mgr)
 	mgr->register_creature_script(21846, &AnImproperBurial::Create);
 	mgr->register_creature_script(22307, &TheInfestedProtectorsQAI::Create);
 	mgr->register_creature_script(22095, &TheInfestedProtectorsQAI::Create);
-	GossipScript* gossip1 = new TheMomentofTruth();
-	mgr->register_gossip_script(19606, gossip1);
+	mgr->register_gossip_script(19606, new TheMomentofTruth);
 }
