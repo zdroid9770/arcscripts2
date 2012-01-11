@@ -43,6 +43,7 @@ class NorthFleet : public CreatureAIScript
 			}
 		}
 };
+
 class ChillmereScourge : public CreatureAIScript
 {
 	public:
@@ -68,6 +69,7 @@ class ChillmereScourge : public CreatureAIScript
 			}
 		}
 };
+
 class Baleheim : public CreatureAIScript
 {
 	public:

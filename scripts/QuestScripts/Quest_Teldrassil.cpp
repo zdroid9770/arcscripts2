@@ -24,7 +24,7 @@ class Zenn_Foulhoof : public QuestScript
 
 		void OnQuestComplete(Player* mTarget, QuestLogEntry* qLogEntry)
 		{
-			Creature* creat = mTarget->GetMapMgr()->GetSqlIdCreature(43727);
+			Creature* creat = sEAS.GetNearestCreature(mTarget, 2150);
 			if(creat == NULL)
 				return;
 

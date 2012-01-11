@@ -41,7 +41,7 @@ class StormwindGuardAI : public MoonScriptCreatureAI
 		}
 
 	private:
-		bool IsNightItemSet
+		bool IsNightItemSet;
 };
 
 void SetupElwynForestCreature(ScriptMgr * mgr)

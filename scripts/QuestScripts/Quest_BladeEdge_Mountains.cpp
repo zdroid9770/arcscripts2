@@ -139,6 +139,7 @@ class BloodmaulQAI : public CreatureAIScript
 
 void SetupBladeEdgeMountains(ScriptMgr* mgr)
 {
+	mgr->register_creature_script(21387, &WyrmcultBlackwhelp::Create);
 	mgr->register_creature_script(CN_BLADESPIRE_OGRE_1, &BladespireQAI::Create);
 	mgr->register_creature_script(21296, &BladespireQAI::Create);
 	mgr->register_creature_script(CN_BLADESPIRE_OGRE_3, &BladespireQAI::Create);

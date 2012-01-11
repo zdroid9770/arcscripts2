@@ -34,14 +34,14 @@ class InnkeeperGossip : public Arcemu::Gossip::Script
 		void OnHello(Object* pObject, Player* Plr)
 		{
 			uint32 TextID = 820;
-			uint32 Text = objmgr.GetGossipTextForNpc(pCreature->GetEntry());
+			uint32 Text = objmgr.GetGossipTextForNpc(pObject->GetEntry());
 			if(Text != 0)
 			{
 				GossipText* text = NpcTextStorage.LookupEntry(Text);
 				if(text != 0)
 					TextID = Text;
 			}
-			Arcemu::Gossip::Menu menu(pCreature->GetGUID(), TextID, 0);
+			Arcemu::Gossip::Menu menu(pObject->GetGUID(), TextID, 0);
 
 // Halloween control
 		tm * ct = localtime(&UNIXTIME);
@@ -49,17 +49,17 @@ class InnkeeperGossip : public Arcemu::Gossip::Script
 		{
 			if(!Plr->HasAura(SPELL_TRICK_OR_TREATED))
 				menu.AddItem(Arcemu::Gossip::ICON_CHAT, "Trick or Treat!", 4);
-				menu.AddItem(Arcemu::Gossip::ICON_CHAT, Plr->GetSession()->LocalizedWorldSrv(Arcemu::Gossip::TRICKORTREAT), 4);
+				menu.AddItem(Arcemu::Gossip::ICON_CHAT, Plr->GetSession()->LocalizedWorldSrv(TRICKORTREAT), 4);
 		}
 // End of Halloween control
 
-			if(pCreature->isVendor())
+			if(TO_CREATURE(pObject)->isVendor())
 				menu.AddItem(Arcemu::Gossip::ICON_VENDOR, Plr->GetSession()->LocalizedWorldSrv(Arcemu::Gossip::VENDOR), 1);
 
 			menu.AddItem(Arcemu::Gossip::ICON_CHAT, Plr->GetSession()->LocalizedWorldSrv(Arcemu::Gossip::INNKEEPER), 2);
-			menu.AddItem(Arcemu::Gossip::ICON_CHAT, Plr->GetSession()->LocalizedWorldSrv(Arcemu::Gossip::INNKEEPERASK), 3);
+			menu.AddItem(Arcemu::Gossip::ICON_CHAT, Plr->GetSession()->LocalizedWorldSrv(INNKEEPERASK), 3);
 
-			sQuestMgr.FillQuestMenu(pCreature, Plr, menu);
+			sQuestMgr.FillQuestMenu(TO_CREATURE(pObject), Plr, menu);
 
 			menu.Send(Plr);
 		}
@@ -114,20 +114,42 @@ void SetupInnkeepers(ScriptMgr* mgr)
 {
 	Arcemu::Gossip::Script* gs = new InnkeeperGossip();
 	/* Innkeeper List */
+	mgr->register_creature_gossip(26596, gs);     //"Charlie" Northtop
+	mgr->register_creature_gossip(24208, gs);     //"Little" Logok
+	mgr->register_creature_gossip(32418, gs);     //Abohba
+	mgr->register_creature_gossip(32411, gs);     //Afsaneh Asrar
+	mgr->register_creature_gossip(26680, gs);     //Aiyan Coldwind
+	mgr->register_creature_gossip(29532, gs);     //Ajay Green
+	mgr->register_creature_gossip(28687, gs);     //Amisi Azuregaze
+	mgr->register_creature_gossip(23995, gs);     //Axle
+	mgr->register_creature_gossip(26985, gs);     //Barracks Master Harga
+	mgr->register_creature_gossip(27125, gs);     //Barracks Master Rhekku
+	mgr->register_creature_gossip(24149, gs);     //Basil Osgood
+	mgr->register_creature_gossip(24033, gs);     //Bori Wintertotem
 	mgr->register_creature_gossip(15174, gs);     //Calandrath
+	mgr->register_creature_gossip(28686, gs);     //Caliel Brightwillow
 	mgr->register_creature_gossip(18251, gs);     //Caregiver Abidaar
 	mgr->register_creature_gossip(16739, gs);     //Caregiver Breel
 	mgr->register_creature_gossip(16553, gs);     //Caregiver Chellan
+	mgr->register_creature_gossip(25036, gs);     //Caregiver Inaara
+	mgr->register_creature_gossip(27148, gs);     //Caregiver Iqniq
 	mgr->register_creature_gossip(18914, gs);     //Caregiver Isel
+	mgr->register_creature_gossip(27174, gs);     //Caregiver Mumik
 	mgr->register_creature_gossip(18906, gs);     //Caregiver Ophera Windfury
+	mgr->register_creature_gossip(27187, gs);     //Caregiver Poallu
 	mgr->register_creature_gossip(17553, gs);     //Caregiver Topher Loaal
 	mgr->register_creature_gossip(21746, gs);     //Caretaker Aluuro
+	mgr->register_creature_gossip(33970, gs);     //Caris Sunlance
+	mgr->register_creature_gossip(24057, gs);     //Christina Daniels
+	mgr->register_creature_gossip(27950, gs);     //Demestrasz
 	mgr->register_creature_gossip(19352, gs);     //Dreg Cloudsweeper
 	mgr->register_creature_gossip(19531, gs);     //Eyonix
 	mgr->register_creature_gossip(21110, gs);     //Fizit "Doc" Clocktock
 	mgr->register_creature_gossip(16602, gs);     //Floyd Pinkus
 	mgr->register_creature_gossip(19470, gs);     //Gholah
-	mgr->register_creature_gossip(23143, gs);     //Horus
+	mgr->register_creature_gossip(29926, gs);     //Gunda Boldhammer
+	mgr->register_creature_gossip(27042, gs);     //Illusia Lune
+	mgr->register_creature_gossip(30308, gs);     //Initiate Brenners
 	mgr->register_creature_gossip(11116, gs);     //Innkeeper Abeqwa
 	mgr->register_creature_gossip(9501, gs);      //Innkeeper Adegwa
 	mgr->register_creature_gossip(22922, gs);     //Innkeeper Aelerya
@@ -140,6 +162,7 @@ void SetupInnkeepers(ScriptMgr* mgr)
 	mgr->register_creature_gossip(3934, gs);      //Innkeeper Boorand Plainswind
 	mgr->register_creature_gossip(6727, gs);      //Innkeeper Brianna
 	mgr->register_creature_gossip(7714, gs);      //Innkeeper Byula
+	mgr->register_creature_gossip(23937, gs);     //Innkeeper Celeste Goodhutch
 	mgr->register_creature_gossip(18907, gs);     //Innkeeper Coryth Stoktron
 	mgr->register_creature_gossip(19319, gs);     //Innkeeper Darg Bloodclaw
 	mgr->register_creature_gossip(15433, gs);     //Innkeeper Delaniel
@@ -152,6 +175,7 @@ void SetupInnkeepers(ScriptMgr* mgr)
 	mgr->register_creature_gossip(6928, gs);      //Innkeeper Grosk
 	mgr->register_creature_gossip(6929, gs);      //Innkeeper Gryshka
 	mgr->register_creature_gossip(19232, gs);     //Innkeeper Haelthol
+	mgr->register_creature_gossip(23731, gs);     //Innkeeper Hazel Lagras
 	mgr->register_creature_gossip(6734, gs);      //Innkeeper Hearthstove
 	mgr->register_creature_gossip(8931, gs);      //Innkeeper Heather
 	mgr->register_creature_gossip(1464, gs);      //Innkeeper Helbrek
@@ -184,20 +208,37 @@ void SetupInnkeepers(ScriptMgr* mgr)
 	mgr->register_creature_gossip(16618, gs);     //Innkeeper Velandra
 	mgr->register_creature_gossip(11118, gs);     //Innkeeper Vizzie
 	mgr->register_creature_gossip(6791, gs);      //Innkeeper Wiley
+	mgr->register_creature_gossip(32413, gs);     //Isirami Fairwind
+	mgr->register_creature_gossip(25245, gs);     //James Deacon
+	mgr->register_creature_gossip(33971, gs);     //Jarin Dawnglow
+	mgr->register_creature_gossip(27066, gs);     //Jennifer Bell
 	mgr->register_creature_gossip(16256, gs);     //Jessica Chambers
 	mgr->register_creature_gossip(14731, gs);     //Lard
+	mgr->register_creature_gossip(30005, gs);     //Lodge-Matron Embla
+	mgr->register_creature_gossip(29963, gs);     //Magorn
+	mgr->register_creature_gossip(28791, gs);     //Marissa Everwatch
 	mgr->register_creature_gossip(15397, gs);     //Marniel Amberlight
+	mgr->register_creature_gossip(27069, gs);     //Matron Magah
 	mgr->register_creature_gossip(18913, gs);     //Matron Tikkit
 	mgr->register_creature_gossip(21088, gs);     //Matron Varah
 	mgr->register_creature_gossip(6778, gs);      //Melika Isenstrider
 	mgr->register_creature_gossip(18245, gs);     //Merajit
 	mgr->register_creature_gossip(19046, gs);     //Minalei
+	mgr->register_creature_gossip(27027, gs);     //Mrs. Winterby
+	mgr->register_creature_gossip(27052, gs);     //Naohain
+	mgr->register_creature_gossip(26709, gs);     //Pahu Frosthoof
+	mgr->register_creature_gossip(29583, gs);     //Pan'ya
+	mgr->register_creature_gossip(29944, gs);     //Peon Gakra
+	mgr->register_creature_gossip(28038, gs);     //Purser Boulian
+	mgr->register_creature_gossip(26375, gs);     //Quartermaster McCarty
 	mgr->register_creature_gossip(21744, gs);     //Roldemar
 	mgr->register_creature_gossip(16826, gs);     //Sid Limbardi
+	mgr->register_creature_gossip(29904, gs);     //Smilin' Slirk Brassknob
 	mgr->register_creature_gossip(6806, gs);      //Tannok Frosthammer
-	mgr->register_creature_gossip(25036, gs);     //Caregiver Inaara
+	mgr->register_creature_gossip(24342, gs);     //Timothy Holland
+	mgr->register_creature_gossip(31557, gs);     //Uda the Beast
+	mgr->register_creature_gossip(29971, gs);     //Wabada Whiteflower
+	mgr->register_creature_gossip(25278, gs);     //Williamson
 
-	//cleanup:
-	//added 36 new Innkeeper's ,81 working innkeeper's now :P
-	//removed Innkeeper Monica(she dos not have gossip option she is from Old Hillsbrad Foothills)
+    //note: Innkeeper Monica (18649) does not have a gossip option as she is from Old Hillsbrad Foothills
 }

@@ -19,50 +19,6 @@
 #include "Setup.h"
 
 /*--------------------------------------------------------------------------------------------------------*/
-// Fel Orc Scavengers
-
-class FelOrcScavengersQAI : public CreatureAIScript
-{
-	public:
-		ADD_CREATURE_FACTORY_FUNCTION(FelOrcScavengersQAI);
-		FelOrcScavengersQAI(Creature* pCreature) : CreatureAIScript(pCreature)  {}
-
-		void OnDied(Unit* mKiller)
-		{
-			if(mKiller->IsPlayer())
-			{
-				QuestLogEntry* pQuest = TO_PLAYER(mKiller)->GetQuestLogForEntry(10482);
-				if(pQuest != NULL && pQuest->GetMobCount(0) < pQuest->GetQuest()->required_mobcount[0])
-				{
-					pQuest->SetMobCount(0, pQuest->GetMobCount(0) + 1);
-					pQuest->SendUpdateAddKill(0);
-					pQuest->UpdatePlayerFields();
-				}
-			}
-		}
-};
-
-class Dreadtusk : public CreatureAIScript
-{
-	public:
-		ADD_CREATURE_FACTORY_FUNCTION(Dreadtusk);
-		Dreadtusk(Creature* pCreature) : CreatureAIScript(pCreature) { }
-		void OnDied(Unit* mKiller)
-		{
-			if(!mKiller->IsPlayer())
-				return;
-
-			QuestLogEntry* pQuest = TO_PLAYER(mKiller)->GetQuestLogForEntry(10255);
-			if(pQuest != NULL && pQuest->GetMobCount(0) < pQuest->GetQuest()->required_mobcount[0])
-			{
-				pQuest->SetMobCount(0, pQuest->GetMobCount(0) + 1);
-				pQuest->SendUpdateAddKill(0);
-				pQuest->UpdatePlayerFields();
-			}
-		}
-};
-
-/*--------------------------------------------------------------------------------------------------------*/
 // Zeth'Gor Must Burn!
 
 class ZethGorMustBurnAlliance : public GameObjectAIScript
@@ -167,15 +123,11 @@ class ZethGorMustBurnAlliance : public GameObjectAIScript
 					}
 				}
 				else
-				{
 					pPlayer->BroadcastMessage("You are to far away!");
-				}
 
 			}
 			else
-			{
 				pPlayer->BroadcastMessage("Missing required quest : Zeth'Gor Must Burn");
-			}
 		}
 };
 
@@ -192,25 +144,13 @@ class PrisonerGossip : public GossipScript
 	public:
 		void GossipHello(Object* pObject, Player* pPlayer)
 		{
-			if(pPlayer == NULL)			// useless, but who knows
-				return;
-
-			if(!pObject->IsCreature())	// can't imagine to get this null lol
-				return;
-
 			int32 i = -1;
 			Creature* pPrisoner = TO_CREATURE(pObject);
 			switch(pPrisoner->GetEntry())
 			{
-				case 20677:
-					i = 0;
-					break;
-				case 20678:
-					i = 1;
-					break;
-				case 20679:
-					i = 2;
-					break;
+				case 20677: i = 0; break;
+				case 20678: i = 1; break;
+				case 20679: i = 2; break;
 			}
 
 			if(i == -1)
@@ -232,32 +172,18 @@ class PrisonerGossip : public GossipScript
 
 		void GossipSelectOption(Object* pObject, Player* pPlayer, uint32 Id, uint32 IntId, const char* EnteredCode)
 		{
-			if(pPlayer == NULL)
-				return;
-
-			if(!pObject->IsCreature())
-				return;
-
 			switch(IntId)
 			{
-				case 0:
-					GossipHello(pObject, pPlayer);
-					break;
+				case 0: GossipHello(pObject, pPlayer); break;
 				case 1:
 					{
 						int32 i = -1;
 						Creature* pPrisoner = TO_CREATURE(pObject);
 						switch(pPrisoner->GetEntry())
 						{
-							case 20677:
-								i = 0;
-								break;
-							case 20678:
-								i = 1;
-								break;
-							case 20679:
-								i = 2;
-								break;
+							case 20677: i = 0; break;
+							case 20678: i = 1; break;
+							case 20679: i = 2; break;
 						}
 
 						if(i == -1)
@@ -280,25 +206,6 @@ class PrisonerGossip : public GossipScript
 		}
 
 };
-
-// Limbo state?
-class PrisonersDreghoodElders : public CreatureAIScript
-{
-	public:
-		ADD_CREATURE_FACTORY_FUNCTION(PrisonersDreghoodElders);
-		PrisonersDreghoodElders(Creature* pCreature) : CreatureAIScript(pCreature) {}
-
-		void OnLoad()
-		{
-			_unit->SetStandState(STANDSTATE_SIT);
-			_unit->setDeathState(CORPSE);
-			_unit->GetAIInterface()->m_canMove = false;
-		}
-};
-
-
-
-
 
 /*--------------------------------------------------------------------------------------------------------*/
 class AncestralSpiritWolf : public CreatureAIScript
@@ -362,40 +269,11 @@ class DarkTidingsHorde : public QuestScript
 
 void SetupHellfirePeninsula(ScriptMgr* mgr)
 {
-	/*-------------------------------------------------------------------*/
-	// Finished
-	mgr->register_creature_script(16772, &FelOrcScavengersQAI::Create);
-	mgr->register_creature_script(19701, &FelOrcScavengersQAI::Create);
-	mgr->register_creature_script(16876, &FelOrcScavengersQAI::Create);
-	mgr->register_creature_script(16925, &FelOrcScavengersQAI::Create);
-	mgr->register_creature_script(18952, &FelOrcScavengersQAI::Create);
-
-	mgr->register_creature_script(16992, &Dreadtusk::Create);
-
 	mgr->register_gameobject_script(184661, &ZethGorMustBurnAlliance::Create);
-	GossipScript* pPrisonerGossip = new PrisonerGossip();
-	mgr->register_gossip_script(20677, pPrisonerGossip);
-	mgr->register_gossip_script(20678, pPrisonerGossip);
-	mgr->register_gossip_script(20679, pPrisonerGossip);
-
-	/*-------------------------------------------------------------------*/
-	// TODO
-	//mgr->register_dummy_spell(35460, &FuryOfTheDreghoodElders);
-
-
-	/*-------------------------------------------------------------------*/
-	// NPC States
-	mgr->register_creature_script(20677, &PrisonersDreghoodElders::Create);
-	mgr->register_creature_script(20678, &PrisonersDreghoodElders::Create);
-	mgr->register_creature_script(20679, &PrisonersDreghoodElders::Create);
-	mgr->register_creature_script(17405, &HellfireDeadNPC::Create);
-	mgr->register_creature_script(16852, &HellfireDeadNPC::Create);
-	mgr->register_creature_script(20158, &HellfireDeadNPC::Create);
-
-	QuestScript* DarkTidingsHordeQuest = new DarkTidingsHorde();
-	QuestScript* DarkTidingsAllianceQuest = new DarkTidingsAlliance();
-	mgr->register_quest_script(9587, DarkTidingsAllianceQuest);
-	mgr->register_quest_script(9588, DarkTidingsHordeQuest);
-
+	mgr->register_gossip_script(20677, new PrisonerGossip);
+	mgr->register_gossip_script(20678, new PrisonerGossip);
+	mgr->register_gossip_script(20679, new PrisonerGossip);
+	mgr->register_quest_script(9587, new DarkTidingsAlliance);
+	mgr->register_quest_script(9588, new DarkTidingsHorde);
 	mgr->register_creature_script(17077, &AncestralSpiritWolf::Create);
 }

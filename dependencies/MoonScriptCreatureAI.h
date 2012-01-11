@@ -288,7 +288,7 @@ class SCRIPT_DECL MoonScriptCreatureAI : public CreatureAIScript
 		void					SetCanMove(bool pCanMove);
 		void					MoveTo(MoonScriptCreatureAI* pCreature, RangeStatusPair pRangeStatus = make_pair(RangeStatus_TooFar, 0.0f));
 		void					MoveTo(Unit* pUnit, RangeStatusPair pRangeStatus = make_pair(RangeStatus_TooFar, 0.0f));
-		void					MoveTo(float pX, float pY, float pZ, bool pRun = true);
+		void					MoveTo(float pX, float pY, float pZ, float pO = 0.0f, bool pRun = true);
 		void					MoveToSpawnOrigin();
 		void					StopMovement();
 		void					SetFlyMode(bool pValue);

@@ -310,8 +310,6 @@ class ChieftainOomoorooQAI : public CreatureAIScript
 		}
 };
 
-
-
 void SetupAzuremystIsle(ScriptMgr* mgr)
 {
 	//mgr->register_item_gossip_script( 23654, CREATE_GOSSIPSCRIPT( DraeneiFishingNet ) );

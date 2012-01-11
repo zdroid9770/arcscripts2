@@ -4465,7 +4465,7 @@ class EyeBeamTriggerAI : public MoonScriptCreatureAI
 			}
 			else if(mPosition != -2)
 			{
-				MoveTo(EyeBeamPaths[7 - mPosition].x, EyeBeamPaths[7 - mPosition].y, EyeBeamPaths[7 - mPosition].z, false);
+				MoveTo(EyeBeamPaths[7 - mPosition].x, EyeBeamPaths[7 - mPosition].y, EyeBeamPaths[7 - mPosition].z, 0.0f, false);
 
 				mPosition = -2;
 			}
@@ -6005,7 +6005,7 @@ class IllidanStormrageAI : public MoonScriptBossAI
 				}
 
 				Emote("I will not be touched by rabble such as you!", Text_Yell, 11479);
-				MoveTo(_unit->GetPositionX(), _unit->GetPositionY(), _unit->GetPositionZ() + 10.0f, false);
+				MoveTo(_unit->GetPositionX(), _unit->GetPositionY(), _unit->GetPositionZ() + 10.0f, 0.0f, false);
 				SetCanEnterCombat(false);
 				SetAllowMelee(false);
 				SetFlyMode(true);

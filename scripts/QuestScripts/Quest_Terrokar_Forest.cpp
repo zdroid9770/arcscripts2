@@ -46,12 +46,13 @@ class ThreatFromAboveQAI : public CreatureAIScript
 };
 
 //The Infested Protectors
-class TheInfestedProtectorsQAI : public CreatureAIScript
+class TheInfestedProtectorsQAI : public MoonScriptCreatureAI
 {
 	public:
-
-		ADD_CREATURE_FACTORY_FUNCTION(TheInfestedProtectorsQAI);
-		TheInfestedProtectorsQAI(Creature* pCreature) : CreatureAIScript(pCreature)  {}
+		MOONSCRIPT_FACTORY_FUNCTION(TheInfestedProtectorsQAI, MoonScriptCreatureAI);
+		TheInfestedProtectorsQAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
+		{
+		}
 
 		void OnDied(Unit* mKiller)
 		{
@@ -65,20 +66,23 @@ class TheInfestedProtectorsQAI : public CreatureAIScript
 						uint32 min,max,finall;
 						switch(_unit->GetEntry())
 						{
-							case 22307:
-								min = 4; max = 11;
-								break;
-							case 22095:
-								min = 2; max = 5;
-								break;
+							case 22307:	//Rotting Forest-Rager
+								{
+									min = 4;
+									max = 11;
+								}break;
+							case 22095:	//Infested Root-Walker
+								{
+									min = 2;
+									max = 5;
+								}break;
 						}
 
 						finall = min + RandomUInt(max - min);
 
-						float SSX = _unit->GetPositionX();
-						float SSY = _unit->GetPositionY();
-						float SSZ = _unit->GetPositionZ();
-						float SSO = _unit->GetOrientation();
+						float SSX, SSY, SSZ, SSO;
+						GetCurrentPosition(SSX, SSY, SSZ);
+						SSO = _unit->GetOrientation();
 
 						for(uint8 i = 0; i < finall; i++)
 						{
@@ -89,6 +93,7 @@ class TheInfestedProtectorsQAI : public CreatureAIScript
 					}
 				}
 			}
+			ParentClass:;OnDied(mKiller);
 		}
 };
 

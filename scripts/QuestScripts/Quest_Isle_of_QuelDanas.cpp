@@ -54,13 +54,6 @@ class ScryingOrb : public GameObjectAIScript
 };
 
 
-
-
-
-
-
-
-
 #define SendQuickMenu(textid) objmgr.CreateGossipMenuForPlayer(&Menu, pObject->GetGUID(), textid, pPlayer); \
     Menu->SendTo(pPlayer);
 
@@ -183,8 +176,6 @@ void SetupIsleOfQuelDanas(ScriptMgr* mgr)
 	mgr->register_creature_script(25002, &TheBattleForTheSunReachArmory::Create);
 
 	//GOSSIP
-	GossipScript* AyrenCloudbreakerGossip = new AyrenCloudbreaker_Gossip;
-	mgr->register_gossip_script(25059, AyrenCloudbreakerGossip);
-	GossipScript* UnrestrainedDragonhawkGossip = new UnrestrainedDragonhawk_Gossip;
-	mgr->register_gossip_script(25236, UnrestrainedDragonhawkGossip);
+	mgr->register_gossip_script(25059, new AyrenCloudbreaker_Gossip);
+	mgr->register_gossip_script(25236, new UnrestrainedDragonhawk_Gossip);
 }

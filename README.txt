@@ -1,4 +1,4 @@
-Copyright 2011 ArcScripts2
+Copyright 2011-2012 ArcScripts2
 Development goes under GPL GNU v3 license
 
 ArcScripts2 is opensource and learning project for arcemu emulator (http://www.arcemu.org).

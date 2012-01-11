@@ -171,7 +171,7 @@ class SkumAI : public MoonScriptCreatureAI
 				SetAllowMelee(false);
 				SetAllowRanged(false);
 				SetAllowSpell(false);
-				MoveTo(-262.829742f, -299.363159f, -68.293579f, true);
+				MoveTo(-262.829742f, -299.363159f, -68.293579f, 0.0f, true);
 			}
 			ParentClass::AIUpdate();
 		}

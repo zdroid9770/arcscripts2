@@ -24,7 +24,7 @@ class Quest_JourneytoUndercity : public QuestScript // never extend std::tr1::en
 
 		void OnQuestComplete(Player* mTarget, QuestLogEntry* qLogEntry)
 		{
-			Creature* creat = mTarget->GetMapMgr()->GetSqlIdCreature(19175); //Lady Sylvanas Windrunner - NCDB guid
+			Creature* creat =  sEAS.GetNearestCreature(mTarget, 10181); //Lady Sylvanas Windrunner
 			if(creat == NULL) // we still check for equality with == NULL. if we are assigning, we use = NULL/OBJECT/ETC
 				return;
 

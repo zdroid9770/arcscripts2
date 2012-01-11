@@ -126,12 +126,12 @@ void MoonScriptCreatureAI::MoveTo(Unit* pUnit, RangeStatusPair pRangeStatus)
 		MoveTo(pUnit->GetPositionX(), pUnit->GetPositionY(), pUnit->GetPositionZ());
 }
 
-void MoonScriptCreatureAI::MoveTo(float pX, float pY, float pZ, bool pRun)
+void MoonScriptCreatureAI::MoveTo(float pX, float pY, float pZ, float pO, bool pRun)
 {
 	if(pRun)
 		_unit->GetAIInterface()->SetRun();
 
-	_unit->GetAIInterface()->MoveTo(pX, pY, pZ, 0);
+	_unit->GetAIInterface()->MoveTo(pX, pY, pZ, pO);
 }
 
 void MoonScriptCreatureAI::MoveToSpawnOrigin()
