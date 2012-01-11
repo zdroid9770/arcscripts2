@@ -38,6 +38,7 @@ class StormwindGuardAI : public MoonScriptCreatureAI
 				SetDisplayWeaponIds(1899, _unit->GetEquippedItem(OFFHAND));
 				IsNightItemSet = false;
 			}
+			ParentClass::AIUpdate();
 		}
 
 	private:
