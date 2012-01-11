@@ -455,6 +455,16 @@ class SCRIPT_DECL EasyFunctions
 
 		return pObj->GetMapMgr()->GetInterface()->GetPlayerNearestCoords( pObj->GetPositionX(), pObj->GetPositionY(), pObj->GetPositionZ() );
 	}
+
+	bool IsDay()
+	{
+		tm now = g_localTime;
+		// night is from 21:00 to 7:00 ?
+		if( now.tm_hour > 20 || now.tm_hour < 7 )
+			return false;
+
+		return true;
+	}
 };
 
 #define sEAS EasyFunctions::GetInstance()
