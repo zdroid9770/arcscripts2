@@ -652,11 +652,6 @@ void SetupZulDrak( ScriptMgr * mgr )
 
 	mgr->register_dummy_spell(55368, &SummonStefan);
 
-	// nasty hacky fix :/
-	SpellEntry * sp = dbcSpell.LookupEntryForced(52231);
-	if( sp )
-		sp->DurationIndex = 9; // 30 sec
-
 	mgr->register_dummy_spell(52227, &DiluteCauldron);
 
 	//mgr->register_dummy_spell(52245, &HarvestBlightCrystal);
