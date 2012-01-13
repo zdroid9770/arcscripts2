@@ -22,34 +22,35 @@
 MoonInstanceScript::MoonInstanceScript(MapMgr* pMapMgr) : InstanceScript(pMapMgr)
 {
 	mUpdateFrequency = DEFAULT_UPDATE_FREQUENCY;
-};
+}
 
 MoonInstanceScript::~MoonInstanceScript()
 {
-};
+}
 
 Creature* MoonInstanceScript::GetCreatureBySqlId(uint32 pSqlId)
 {
-	if(pSqlId == 0)
+	if(pSqlId == NULL)
 		return NULL;
 
 	return mInstance->GetSqlIdCreature(pSqlId);
-};
+}
 
 Creature* MoonInstanceScript::GetCreatureByGuid(uint32 pGuid)
 {
-	if(pGuid == 0)
+	if(pGuid == NULL)
 		return NULL;
 
 	return mInstance->GetCreature(pGuid);
-};
+}
 
 Creature*	MoonInstanceScript::FindClosestCreatureOnMap(uint32 pEntry, float pX, float pY, float pZ)
 {
 	CreatureSet Creatures = FindCreaturesOnMap(pEntry);
 
-	if(Creatures.size() == 0)
+	if(Creatures.size() == NULL)
 		return NULL;
+
 	if(Creatures.size() == 1)
 		return *(Creatures.begin());
 
@@ -62,17 +63,16 @@ Creature*	MoonInstanceScript::FindClosestCreatureOnMap(uint32 pEntry, float pX, 
 		{
 			NearestDistance = Distance;
 			NearestCreature = (*Iter);
-		};
-	};
-
+		}
+	}
 	return NearestCreature;
-};
+}
 
 Creature* MoonInstanceScript::SpawnCreature(uint32 pEntry, float pX, float pY, float pZ, float pO)
 {
 	Creature* NewCreature = mInstance->GetInterface()->SpawnCreature(pEntry, pX, pY, pZ, pO, true, true, 0, 0);
 	return NewCreature;
-};
+}
 
 Creature* MoonInstanceScript::SpawnCreature(uint32 pEntry, float pX, float pY, float pZ, float pO, uint32 pFactionId)
 {
@@ -81,7 +81,7 @@ Creature* MoonInstanceScript::SpawnCreature(uint32 pEntry, float pX, float pY, f
 		NewCreature->SetFaction(pFactionId);
 
 	return NewCreature;
-};
+}
 
 CreatureSet MoonInstanceScript::FindCreaturesOnMap(uint32 pEntry)
 {
@@ -94,8 +94,8 @@ CreatureSet MoonInstanceScript::FindCreaturesOnMap(uint32 pEntry)
 		{
 			if(CurrentCreature->GetEntry() == pEntry)
 				ReturnSet.insert(CurrentCreature);
-		};
-	};
+		}
+	}
 
 	return ReturnSet;
 };
@@ -104,8 +104,9 @@ GameObject* MoonInstanceScript::FindClosestGameObjectOnMap(uint32 pEntry, float 
 {
 	GameObjectSet GameObjects = FindGameObjectsOnMap(pEntry);
 
-	if(GameObjects.size() == 0)
+	if(GameObjects.size() == NULL)
 		return NULL;
+
 	if(GameObjects.size() == 1)
 		return *(GameObjects.begin());
 
@@ -118,11 +119,10 @@ GameObject* MoonInstanceScript::FindClosestGameObjectOnMap(uint32 pEntry, float 
 		{
 			NearestDistance = Distance;
 			NearestObject = (*Iter);
-		};
-	};
-
+		}
+	}
 	return NearestObject;
-};
+}
 
 GameObject* MoonInstanceScript::SpawnGameObject(uint32 pEntry, float pX, float pY, float pZ, float pO)
 {
@@ -141,37 +141,36 @@ GameObjectSet MoonInstanceScript::FindGameObjectsOnMap(uint32 pEntry)
 		{
 			if(CurrentObject->GetEntry() == pEntry)
 				ReturnSet.insert(CurrentObject);
-		};
-	};
-
+		}
+	}
 	return ReturnSet;
 };
 
 GameObject* MoonInstanceScript::GetGameObjectBySqlId(uint32 pSqlId)
 {
-	if(pSqlId == 0)
+	if(pSqlId == NULL)
 		return NULL;
 
 	return mInstance->GetSqlIdGameObject(pSqlId);
-};
+}
 
 GameObject* MoonInstanceScript::GetGameObjectByGuid(uint32 pGuid)
 {
-	if(pGuid == 0)
+	if(pGuid == NULL)
 		return NULL;
 
 	return mInstance->GetGameObject(pGuid);
-};
+}
 
 void MoonInstanceScript::AddGameObjectStateByEntry(uint32 pEntry, GameObjectState pState, bool pUseQuery)
 {
-	if(pEntry == 0)
+	if(pEntry == NULL)
 		return;
 
 	GameObjectEntryMap::iterator Iter = mGameObjects.find(pEntry);
 	if(Iter != mGameObjects.end())
 		(*Iter).second = pState;
-	else
+	else 
 		mGameObjects.insert(GameObjectEntryMap::value_type(pEntry, pState));
 
 	GameObject* CurrentObject = NULL;
@@ -184,10 +183,9 @@ void MoonInstanceScript::AddGameObjectStateByEntry(uint32 pEntry, GameObjectStat
 			{
 				if(CurrentObject->GetEntry() == pEntry)
 					CurrentObject->SetState(pState);
-			};
-		};
-	}
-	else
+			}
+		}
+	}else
 	{
 		QueryResult* Result = WorldDatabase.Query("SELECT id FROM gameobject_spawns WHERE entry = %u", pEntry);
 		if(Result != NULL)
@@ -201,13 +199,13 @@ void MoonInstanceScript::AddGameObjectStateByEntry(uint32 pEntry, GameObjectStat
 			while(Result->NextRow());
 
 			delete Result;
-		};
-	};
-};
+		}
+	}
+}
 
 void MoonInstanceScript::AddGameObjectStateById(uint32 pId, GameObjectState pState)
 {
-	if(pId == 0)
+	if(pId == NULL)
 		return;
 
 	GameObject* StateObject = GetGameObjectBySqlId(pId);
@@ -218,10 +216,8 @@ void MoonInstanceScript::AddGameObjectStateById(uint32 pId, GameObjectState pSta
 		Iter = mGameObjects.find(StateObject->GetEntry());
 		if(Iter != mGameObjects.end())
 			(*Iter).second = pState;
-		else
-			mGameObjects.insert(GameObjectEntryMap::value_type(StateObject->GetEntry(), pState));
-	}
-	else
+		else mGameObjects.insert(GameObjectEntryMap::value_type(StateObject->GetEntry(), pState));
+	}else
 	{
 		QueryResult* Result = WorldDatabase.Query("SELECT entry FROM gameobject_spawns WHERE id = %u", pId);
 		if(Result != NULL)
@@ -230,20 +226,19 @@ void MoonInstanceScript::AddGameObjectStateById(uint32 pId, GameObjectState pSta
 			Iter = mGameObjects.find(Entry);
 			if(Iter != mGameObjects.end())
 				(*Iter).second = pState;
-			else
-				mGameObjects.insert(GameObjectEntryMap::value_type(Entry, pState));
+			else mGameObjects.insert(GameObjectEntryMap::value_type(Entry, pState));
 
 			delete Result;
-		};
-	};
-};
+		}
+	}
+}
 
 void MoonInstanceScript::AddLeverStateByEntry(uint32 pEntry)
 {
 	GameObject* pGo = GetGameObjectBySqlId(pEntry);
-	if(pGo!=NULL)
+	if(pGo != NULL)
 		pGo->SetState(pGo->GetState() == State_Inactive ? State_Active : State_Inactive);
-};
+}
 
 float MoonInstanceScript::GetRangeToObject(Object* pObjectA, Object* pObjectB)
 {
@@ -251,7 +246,7 @@ float MoonInstanceScript::GetRangeToObject(Object* pObjectA, Object* pObjectB)
 		return 0.0f;
 
 	return GetRangeToObject(pObjectA->GetPositionX(), pObjectA->GetPositionY(), pObjectA->GetPositionZ(), pObjectB->GetPositionX(), pObjectB->GetPositionY(), pObjectB->GetPositionZ());
-};
+}
 
 float MoonInstanceScript::GetRangeToObject(Object* pObject, float pX, float pY, float pZ)
 {
@@ -259,7 +254,7 @@ float MoonInstanceScript::GetRangeToObject(Object* pObject, float pX, float pY, 
 		return 0.0f;
 
 	return GetRangeToObject(pObject->GetPositionX(), pObject->GetPositionY(), pObject->GetPositionZ(), pX, pY, pZ);
-};
+}
 
 float MoonInstanceScript::GetRangeToObject(float pX1, float pY1, float pZ1, float pX2, float pY2, float pZ2)
 {
@@ -268,17 +263,17 @@ float MoonInstanceScript::GetRangeToObject(float pX1, float pY1, float pZ1, floa
 	float dZ = pZ1 - pZ2;
 
 	return sqrtf(dX * dX + dY * dY + dZ * dZ);
-};
+}
 
 bool MoonInstanceScript::HasPlayers()
 {
 	return mInstance->GetPlayerCount() > 0;
-};
+}
 
 size_t MoonInstanceScript::GetPlayerCount()
 {
 	return mInstance->GetPlayerCount();
-};
+}
 
 Player* MoonInstanceScript::GetPlayerByGuid(uint32 pGuid)
 {
@@ -286,12 +281,12 @@ Player* MoonInstanceScript::GetPlayerByGuid(uint32 pGuid)
 		return NULL;
 
 	return mInstance->GetPlayer(pGuid);
-};
+}
 
 bool MoonInstanceScript::IsCombatInProgress()
 {
 	return mInstance->_combatProgress.size() > 0;
-};
+}
 
 int32 MoonInstanceScript::AddTimer(int32 pDurationMillisec)
 {
@@ -306,10 +301,10 @@ int32 MoonInstanceScript::GetTimer(int32 pTimerId)
 	{
 		if(TimerIter->first == pTimerId)
 			return TimerIter->second;
-	};
+	}
 
 	return 0;
-};
+}
 
 void MoonInstanceScript::RemoveTimer(int32 & pTimerId)
 {
@@ -320,9 +315,9 @@ void MoonInstanceScript::RemoveTimer(int32 & pTimerId)
 			mTimers.erase(TimerIter);
 			pTimerId = INVALIDATE_TIMER;
 			break;
-		};
-	};
-};
+		}
+	}
+}
 
 void MoonInstanceScript::ResetTimer(int32 pTimerId, int32 pDurationMillisec)
 {
@@ -332,9 +327,9 @@ void MoonInstanceScript::ResetTimer(int32 pTimerId, int32 pDurationMillisec)
 		{
 			TimerIter->second = pDurationMillisec;
 			break;
-		};
-	};
-};
+		}
+	}
+}
 
 bool MoonInstanceScript::IsTimerFinished(int32 pTimerId)
 {
@@ -342,21 +337,21 @@ bool MoonInstanceScript::IsTimerFinished(int32 pTimerId)
 	{
 		if(TimerIter->first == pTimerId)
 			return (TimerIter->second <= 0) ? true : false;
-	};
+	}
 
 	return false;
-};
+}
 
 void MoonInstanceScript::CancelAllTimers()
 {
 	mTimers.clear();
 	mTimerIdCounter = 0;
-};
+}
 
 void MoonInstanceScript::RegisterScriptUpdateEvent()
 {
 	RegisterUpdateEvent(mUpdateFrequency);
-};
+}
 
 void MoonInstanceScript::SetUpdateEventFreq(uint32 pUpdateFreq)
 {
@@ -364,13 +359,13 @@ void MoonInstanceScript::SetUpdateEventFreq(uint32 pUpdateFreq)
 	{
 		mUpdateFrequency = pUpdateFreq;
 		ModifyUpdateEvent(mUpdateFrequency);
-	};
-};
+	}
+}
 
 uint32 MoonInstanceScript::GetUpdateEventFreq()
 {
 	return mUpdateFrequency;
-};
+}
 
 void MoonInstanceScript::SetCellForcedStates(float pMinX, float pMaxX, float pMinY, float pMaxY, bool pActivate)
 {
@@ -388,60 +383,55 @@ void MoonInstanceScript::SetCellForcedStates(float pMinX, float pMaxX, float pMi
 				CurrentCell = mInstance->CreateByCoords(pMinX, pMinY);
 				if(CurrentCell != NULL)
 					CurrentCell->Init(mInstance->GetPosX(pMinX), mInstance->GetPosY(pMinY), mInstance);
-			};
+			}
 
 			if(CurrentCell != NULL)
-			{
-				if(pActivate)
-					mInstance->AddForcedCell(CurrentCell);
-				else
-					mInstance->RemoveForcedCell(CurrentCell);
-			};
+				pActivate ? mInstance->AddForcedCell(CurrentCell) : mInstance->RemoveForcedCell(CurrentCell);
 
 			pMinY += 40.0f;
-		};
+		}
 
 		pMinY = Y;
 		pMinX += 40.0f;
-	};
-};
+	}
+}
 
 void MoonInstanceScript::OnPlayerDeath(Player* pVictim, Unit* pKiller)
 {
-};
+}
 
 void MoonInstanceScript::OnPlayerEnter(Player* pPlayer)
 {
-};
+}
 
 void MoonInstanceScript::OnAreaTrigger(Player* pPlayer, uint32 pAreaId)
 {
-};
+}
 
 void MoonInstanceScript::OnZoneChange(Player* pPlayer, uint32 pNewZone, uint32 pOldZone)
 {
-};
+}
 
 void MoonInstanceScript::SetInstanceData(uint32 pType, uint32 pIndex, uint32 pData)
 {
-};
+}
 
 uint32 MoonInstanceScript::GetInstanceData(uint32 pType, uint32 pIndex)
 {
 	return 0;
-};
+}
 
 void MoonInstanceScript::OnCreatureDeath(Creature* pVictim, Unit* pKiller)
 {
-};
+}
 
 void MoonInstanceScript::OnCreaturePushToWorld(Creature* pCreature)
 {
-};
+}
 
 void MoonInstanceScript::OnGameObjectActivate(GameObject* pGameObject, Player* pPlayer)
 {
-};
+}
 
 void MoonInstanceScript::OnGameObjectPushToWorld(GameObject* pGameObject)
 {
@@ -452,39 +442,37 @@ void MoonInstanceScript::OnGameObjectPushToWorld(GameObject* pGameObject)
 	GameObjectEntryMap::iterator Iter = mGameObjects.find(pGameObject->GetEntry());
 	if(Iter != mGameObjects.end())
 		pGameObject->SetState((*Iter).second);
-};
+}
 
 GameObject* MoonInstanceScript::GetObjectForOpenLock(Player* pCaster, Spell* pSpell, SpellEntry* pSpellEntry)
 {
 	return NULL;
-};
+}
 
 void MoonInstanceScript::SetLockOptions(uint32 pEntryId, GameObject* pGameObject)
 {
-};
+}
 
 uint32 MoonInstanceScript::GetRespawnTimeForCreature(uint32 pEntryId, Creature* pCreature)
 {
 	return 240000;
-};
+}
 
 void MoonInstanceScript::OnLoad()
 {
-};
+}
 
 void MoonInstanceScript::UpdateEvent()
 {
 	//uint32 CurrentTime = static_cast< uint32 >( time( NULL ) );
 	for(TimerArray::iterator TimerIter = mTimers.begin(); TimerIter != mTimers.end(); ++TimerIter)
-	{
 		TimerIter->second -= mUpdateFrequency;
-	};
-};
+}
 
 void MoonInstanceScript::Destroy()
 {
 	delete this;
-};
+}
 
 void MoonInstanceScript::BuildEncounterMap()
 {
@@ -510,20 +498,14 @@ void MoonInstanceScript::BuildEncounterMap()
 				continue;
 
 			if(StartedInstance)
-			{
-				if(mInstance->pInstance->m_killedNpcs.find(Id) != mInstance->pInstance->m_killedNpcs.end())
-					State = State_Finished;
-				else
-					State = State_NotStarted;
-			};
+				State = mInstance->pInstance->m_killedNpcs.find(Id) != mInstance->pInstance->m_killedNpcs.end() ? State_Finished : State_NotStarted;
 
 			mEncounters.insert(EncounterMap::value_type(Entry, BossData(Id, 0, State)));
-		}
-		while(KillResult->NextRow());
+		}while(KillResult->NextRow());
 
 		delete KillResult;
-	};
-};
+	}
+}
 
 // Dynamic data creation that still involves MySQL
 void MoonInstanceScript::BuildEncounterMapWithEntries(IdVector pEntries)
@@ -538,7 +520,7 @@ void MoonInstanceScript::BuildEncounterMapWithEntries(IdVector pEntries)
 	{
 		Query << ", ";
 		Query << pEntries[ i ];
-	};
+	}
 
 	Query << " )";
 	QueryResult* KillResult = WorldDatabase.Query(Query.str().c_str());
@@ -560,20 +542,14 @@ void MoonInstanceScript::BuildEncounterMapWithEntries(IdVector pEntries)
 				continue;
 
 			if(StartedInstance)
-			{
-				if(mInstance->pInstance->m_killedNpcs.find(Id) != mInstance->pInstance->m_killedNpcs.end())
-					State = State_Finished;
-				else
-					State = State_NotStarted;
-			};
+				State = mInstance->pInstance->m_killedNpcs.find(Id) != mInstance->pInstance->m_killedNpcs.end() ? State_Finished : State_NotStarted;
 
 			mEncounters.insert(EncounterMap::value_type(Entry, BossData(Id, 0, State)));
-		}
-		while(KillResult->NextRow());
+		}while(KillResult->NextRow());
 
 		delete KillResult;
-	};
-};
+	}
+}
 
 // Static data creation without MySQL use
 void MoonInstanceScript::BuildEncounterMapWithIds(IdVector pIds)
@@ -605,11 +581,11 @@ void MoonInstanceScript::BuildEncounterMapWithIds(IdVector pIds)
 				continue;
 
 			mEncounters.insert(EncounterMap::value_type(Boss->GetEntry(), BossData(CurrentId, Boss->GetGUID(), State)));
-		};
+		}
 
 		State = State_NotStarted;
-	};
-};
+	}
+}
 
 IdVector MoonInstanceScript::BuildIdVector(uint32 pCount, ...)
 {
@@ -617,13 +593,11 @@ IdVector MoonInstanceScript::BuildIdVector(uint32 pCount, ...)
 	va_list List;
 	va_start(List, pCount);
 	for(uint32 i = 0; i < pCount; ++i)
-	{
 		NewVector.push_back(va_arg(List, uint32));
-	};
 
 	va_end(List);
 	return NewVector;
-};
+}
 
 IdSet MoonInstanceScript::BuildIdSet(uint32 pCount, ...)
 {
@@ -631,10 +605,46 @@ IdSet MoonInstanceScript::BuildIdSet(uint32 pCount, ...)
 	va_list List;
 	va_start(List, pCount);
 	for(uint32 i = 0; i < pCount; ++i)
-	{
 		NewSet.insert(va_arg(List, uint32));
-	};
 
 	va_end(List);
 	return NewSet;
-};
+}
+
+bool MoonInstanceScript::IsHeroic()
+{
+	if(GetInstance() == NULL)
+		return false;
+
+	if(GetInstance()->GetMapInfo() == NULL)
+		return false;
+
+	if(GetInstance()->GetMapInfo()->type == INSTANCE_RAID)
+	{
+		if((GetInstance()->iInstanceMode == MODE_NORMAL_10MEN) || (GetInstance()->iInstanceMode == MODE_NORMAL_25MEN))
+			return false;
+	}else
+	{
+		if(GetInstance()->iInstanceMode != MODE_HEROIC)
+			return false;
+	}
+
+	return true;
+}
+
+bool MoonInstanceScript::Is25ManRaid()
+{
+	if(GetInstance() == NULL)
+		return false;
+
+	if(GetInstance()->GetMapInfo() == NULL)
+		return false;
+
+	if(GetInstance()->GetMapInfo()->type == INSTANCE_RAID)
+	{
+		if((GetInstance()->iInstanceMode != MODE_NORMAL_25MEN) || (GetInstance()->iInstanceMode != MODE_HEROIC_25MEN))
+			return false;
+	}else return false;
+
+	return true;
+}

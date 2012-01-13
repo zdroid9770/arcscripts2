@@ -19,6 +19,23 @@
 #include "Setup.h"
 #include "System.h"
 
+ArcScripts2::ArcScripts2()
+{
+}
+
+ArcScripts2::~ArcScripts2()
+{
+}
+
+bool ArcScripts2::run()
+{
+	Log.Success("ArcScripts2", "================ArcScripts2===================");
+	Log.Success("ArcScripts2", "Starting to load scripts data...");
+	LoadScriptTexts();
+	Log.Success("ArcScripts2", "==============================================");
+	return true;
+}
+
 void ArcScripts2::LoadScriptTexts()
 {
     QueryResult* pResult = WorldDatabase.Query("SELECT entry, text, type, sound, emote FROM script_texts WHERE entry BETWEEN %i AND %i", TEXT_SOURCE_TEXT_END, TEXT_SOURCE_TEXT_START);
@@ -35,11 +52,11 @@ void ArcScripts2::LoadScriptTexts()
 		Field* pFields = pResult->Fetch();
 
 		StringTextData pTemp;
-		int32 iId           = pFields[0].GetInt32();
-		pTemp.uiText        = pFields[1].GetString();
-		pTemp.uiType        = pFields[2].GetUInt32();
-		pTemp.uiSoundId     = pFields[3].GetUInt32();
-		pTemp.uiEmote       = pFields[4].GetUInt32();
+		int32 iId           = pFields[ 0 ].GetInt32();
+		pTemp.uiText        = pFields[ 1 ].GetString();
+		pTemp.uiType        = pFields[ 2 ].GetUInt32();
+		pTemp.uiSoundId     = pFields[ 3 ].GetUInt32();
+		pTemp.uiEmote       = pFields[ 4 ].GetUInt32();
 
 		if(pTemp.uiText == NULL)
 		{
@@ -59,4 +76,14 @@ void ArcScripts2::LoadScriptTexts()
 
     delete pResult;
     Log.Success("ArcScripts2:", "Loaded %u additional Script Texts data.", count);
+}
+
+StringTextData const* ArcScripts2::GetTextData(int32 uiTextId) const
+{
+	TextDataMap::const_iterator itr = m_mTextDataMap.find(uiTextId);
+
+	if (itr == m_mTextDataMap.end())
+		return NULL;
+
+	return &itr->second;
 }

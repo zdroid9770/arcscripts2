@@ -42,7 +42,6 @@ public:\
 #define MINUTE						60		//1 min = 60 seconds
 #define SEC_IN_MS					1000	//1 sec = 1000 milliseconds
 
-
 #ifndef SETUP
 #define SETUP
 

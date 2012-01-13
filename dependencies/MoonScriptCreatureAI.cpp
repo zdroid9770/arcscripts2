@@ -314,12 +314,12 @@ void MoonScriptCreatureAI::WipeHateList()
 	_unit->GetAIInterface()->WipeHateList();
 }
 
-uint32 MoonScriptCreatureAI::GetHealthPercent()
+uint8 MoonScriptCreatureAI::GetHealthPercent()
 {
 	return _unit->GetHealthPct();
 }
 
-uint32 MoonScriptCreatureAI::GetManaPercent()
+uint8 MoonScriptCreatureAI::GetManaPercent()
 {
 	return _unit->GetManaPct();
 }
@@ -385,10 +385,15 @@ bool MoonScriptCreatureAI::IsHeroic()
 	if(_unit->GetMapMgr() == NULL)
 		return false;
 
-	if(_unit->GetMapMgr()->iInstanceMode != Mode_Heroic)
+	if(_unit->GetMapMgr()->iInstanceMode != MODE_HEROIC)
 		return false;
 
 	return true;
+}
+
+uint32 MoonScriptCreatureAI::HeroicInt(uint32 pNormal, uint32 pHeroic)
+{
+	return IsHeroic() ? pHeroic : pNormal;
 }
 
 bool MoonScriptCreatureAI::Is25ManRaid()
@@ -396,13 +401,18 @@ bool MoonScriptCreatureAI::Is25ManRaid()
 	if(_unit->GetMapMgr() == NULL)
 		return false;
 
-	if(_unit->GetMapMgr()->iInstanceMode != Mode_Normal_25)
+	if(_unit->GetMapMgr()->iInstanceMode != MODE_NORMAL_25MEN || _unit->GetMapMgr()->iInstanceMode != MODE_HEROIC_25MEN)
 		return false;
 
 	return true;
 }
 
-uint32 MoonScriptCreatureAI::GetInstanceMode()
+uint32 MoonScriptCreatureAI::Raid25manInst(uint32 p10manSpell, uint32 p25manSpell)
+{
+	return Is25ManRaid() ? p25manSpell : p10manSpell;
+}
+
+uint8 MoonScriptCreatureAI::GetInstanceMode()
 {
 	return _unit->GetMapMgr()->iInstanceMode;
 }

@@ -28,25 +28,6 @@ enum EncounterState
     State_Performed				= 3
 };
 
-enum InstanceType
-{
-    Type_Default				= INSTANCE_NULL,
-    Type_Raid					= INSTANCE_RAID,
-    Type_NonRaid				= INSTANCE_NONRAID,
-    Type_PvP					= INSTANCE_BATTLEGROUND, //pvp
-    Type_MultiMode				= INSTANCE_MULTIMODE
-};
-
-enum InstanceMode
-{
-    Mode_Normal					= MODE_NORMAL_10MEN,
-    Mode_Heroic					= MODE_NORMAL_25MEN,
-    Mode_Normal_10				= MODE_NORMAL_10MEN,
-    Mode_Normal_25				= MODE_NORMAL_25MEN,
-    Mode_Heroic_10				= MODE_HEROIC_10MEN,
-    Mode_Heroic_25				= MODE_HEROIC_25MEN
-};
-
 enum DataType
 {
     Data_EncounterState			= 0,
@@ -139,7 +120,7 @@ class MoonInstanceScript : public InstanceScript
 		// Player and instance - reimplementation for easier calling
 		bool						HasPlayers();
 		size_t						GetPlayerCount();
-		Player*				GetPlayerByGuid(uint32 pGuid);
+		Player*						GetPlayerByGuid(uint32 pGuid);
 		bool						IsCombatInProgress();
 
 		// Timers - reimplementation from MoonScriptCreatureAI
@@ -157,6 +138,10 @@ class MoonInstanceScript : public InstanceScript
 
 		// Cells
 		void						SetCellForcedStates(float pMinX, float pMaxX, float pMinY, float pMaxY, bool pActivate = true);
+
+		//instance difficulty
+		bool						IsHeroic();
+		bool						Is25ManRaid();
 
 		// Player
 		virtual void				OnPlayerDeath(Player* pVictim, Unit* pKiller);
