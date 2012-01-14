@@ -331,7 +331,7 @@ class HalazziAI : public MoonScriptBossAI
 		int32 mTotemTimer;
 		int32 CurrentHealth;
 		int32 MaxHealth;
-		int SplitCount;
+		uint8 SplitCount;
 };
 
 class LynxSpiritAI : public MoonScriptCreatureAI
