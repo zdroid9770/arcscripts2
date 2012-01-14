@@ -33,7 +33,7 @@ class ArchavonAI : public MoonScriptBossAI
 		MOONSCRIPT_FACTORY_FUNCTION(ArchavonAI, MoonScriptBossAI);
 		ArchavonAI(Creature *pCreature) : MoonScriptBossAI(pCreature)
 		{
-			mStompTimer = mRockShardsTimer = INVALIDATE_TIMER;
+			mStompTimer = INVALIDATE_TIMER;
 			SetEnrageInfo(AddSpell(SPELL_ARCHAVON_BERSERK, Target_Self, 0.0f), MINUTE*5*SEC_IN_MS);
 		
 			AddSpell(SPELL_ROCK_SHARDS, Target_Self, 20.0f);
@@ -62,7 +62,7 @@ class ArchavonAI : public MoonScriptBossAI
 
 	private:
 		SpellDesc * sRockShardsLeft, *sRockShardsRight;
-		int32 mStompTimer, mRockShardsTimer;
+		int32 mStompTimer;
 };
 
 void SetupVaultofArchavon(ScriptMgr * mgr)
