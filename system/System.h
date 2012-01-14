@@ -15,7 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
- 
+
 #ifndef SC_SYSTEM_H
 #define SC_SYSTEM_H
 
@@ -34,38 +34,18 @@ struct StringTextData
 class ArcScripts2 : public ThreadBase
 {
 	public:
-		ArcScripts2(){}
-		~ArcScripts2(){}
-
-		bool run()
-		{
-			Log.Success("ArcScripts2","================ArcScripts2===================");
-			Log.Success("ArcScripts2", "Starting to load scripts data...");
-			Log.Success("ArcScripts2", "_____________________________________________");
-			LoadScriptTexts();
-			Log.Success("ArcScripts2","==============================================");
-			Log.Success("ArcScripts2","");
-			return true;
-		}
+		ArcScripts2();
+		~ArcScripts2();
 
 		typedef std::unordered_map<uint32, StringTextData> TextDataMap;
 
-        //Database
+		bool run();
         void LoadScriptTexts();
 
         //Retrive from storage
-        StringTextData const* GetTextData(int32 uiTextId) const
-        {
-            TextDataMap::const_iterator itr = m_mTextDataMap.find(uiTextId);
+        StringTextData const* GetTextData(int32 uiTextId) const;
 
-            if (itr == m_mTextDataMap.end())
-                return NULL;
-
-            return &itr->second;
-        }
-
-    protected:
-        TextDataMap     m_mTextDataMap;                     //additional data for text strings
+        TextDataMap	m_mTextDataMap;                     //additional data for text strings
 };
 
 #endif

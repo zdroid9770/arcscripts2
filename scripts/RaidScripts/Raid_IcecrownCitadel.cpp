@@ -228,7 +228,7 @@ public:
 		AddPhaseSpell(1, AddSpell(MarrowgarSpells[SPELL_LM_BONE_SLICE][pMode], Target_Current, 25.0f, 0, rand()%10+1));
 		AddPhaseSpell(1, AddSpell(MarrowgarSpells[SPELL_LM_COLDFLAME][pMode], Target_RandomPlayer, 100.0f, 0, 5));
 
-		if(pMode == Mode_Heroic_10 || pMode == Mode_Heroic_25)
+		if(pMode == MODE_HEROIC_10MEN || pMode == MODE_HEROIC_25MEN)
 		{
 			SpellDesc* sBoneSpike = AddPhaseSpell(1, AddSpell(MarrowgarSpells[SPELL_LM_BONE_SPIKE_GRAVEYARD][pMode], Target_RandomPlayer, 25.0f, 0, rand()%20+15));
 			sBoneSpike->AddEmote("Bound by bone!", Text_Yell, 16947);

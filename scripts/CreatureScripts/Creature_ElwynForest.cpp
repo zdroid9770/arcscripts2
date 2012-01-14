@@ -24,25 +24,44 @@ class StormwindGuardAI : public MoonScriptCreatureAI
 		MOONSCRIPT_FACTORY_FUNCTION(StormwindGuardAI, MoonScriptCreatureAI)
 		StormwindGuardAI(Creature *pCreature) : MoonScriptCreatureAI(pCreature) 
 		{
+			//Getting default equiped item
+			MainHand = _unit->GetEquippedItem(MELEE);
+
+			//starting guard equipment changes
+			RegisterAIUpdateEvent(0);
 			IsNightItemSet = false;
+		}
+
+		void OnLoad()
+		{
+			RegisterAIUpdateEvent(0);
 		}
 
 		void AIUpdate()
 		{
-			if(!sEAS.IsDay() && !IsNightItemSet)
+			if(!sEAS.IsDay())
 			{
-				SetDisplayWeaponIds(6341, _unit->GetEquippedItem(OFFHAND));	//needs correction
-				IsNightItemSet = true;
-			}else if(sEAS.IsDay() && IsNightItemSet)
+				if(!IsNightItemSet)
+				{
+					SetDisplayWeaponIds(6341, _unit->GetEquippedItem(OFFHAND));	//needs correction
+					IsNightItemSet = true;
+				}
+				SetAIUpdateFreq(MINUTE*5*SEC_IN_MS);
+			}else if(sEAS.IsDay())
 			{
-				SetDisplayWeaponIds(1899, _unit->GetEquippedItem(OFFHAND));
-				IsNightItemSet = false;
+				if(IsNightItemSet)
+				{
+					SetDisplayWeaponIds(MainHand, _unit->GetEquippedItem(OFFHAND));
+					IsNightItemSet = false;
+				}
+				SetAIUpdateFreq(MINUTE*5*SEC_IN_MS);
 			}
 			ParentClass::AIUpdate();
 		}
 
 	private:
 		bool IsNightItemSet;
+		uint32 MainHand;
 };
 
 void SetupElwynForestCreature(ScriptMgr * mgr)

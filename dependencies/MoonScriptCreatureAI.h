@@ -319,8 +319,8 @@ class SCRIPT_DECL MoonScriptCreatureAI : public CreatureAIScript
 		//Status
 		void					ClearHateList();
 		void					WipeHateList();
-		uint32					GetHealthPercent();
-		uint32					GetManaPercent();
+		uint8					GetHealthPercent();
+		uint8					GetManaPercent();
 		void					Regenerate();
 		void					SetScale(float pScale);
 		float					GetScale();
@@ -331,9 +331,9 @@ class SCRIPT_DECL MoonScriptCreatureAI : public CreatureAIScript
 
 		//Instances
 		bool					IsHeroic();
-		int32					HeroicInt(int32 pNormal, int32 pHeroic) {return IsHeroic() ? pHeroic : pNormal;};
+		uint32					HeroicInt(uint32 pNormal, uint32 pHeroic);
 		bool					Is25ManRaid();
-		int32					Raid25manInst(uint32 p10manSpell, uint32 p25manSpell){return Is25ManRaid() ? p25manSpell : p10manSpell;};
+		uint32					Raid25manInst(uint32 p10manSpell, uint32 p25manSpell);
 		uint8					GetInstanceMode();
 		MoonInstanceScript*		GetInstanceScript();
 
