@@ -24,8 +24,10 @@ class StormwindGuardAI : public MoonScriptCreatureAI
 		MOONSCRIPT_FACTORY_FUNCTION(StormwindGuardAI, MoonScriptCreatureAI)
 		StormwindGuardAI(Creature *pCreature) : MoonScriptCreatureAI(pCreature) 
 		{
-			//required to check every 10 min
+			//Getting default equiped item
 			MainHand = _unit->GetEquippedItem(MELEE);
+
+			//starting guard equipment changes
 			RegisterAIUpdateEvent(0);
 			IsNightItemSet = false;
 		}
@@ -49,7 +51,7 @@ class StormwindGuardAI : public MoonScriptCreatureAI
 			{
 				if(IsNightItemSet)
 				{
-					SetDisplayWeaponIds(1899, _unit->GetEquippedItem(OFFHAND));
+					SetDisplayWeaponIds(MainHand, _unit->GetEquippedItem(OFFHAND));
 					IsNightItemSet = false;
 				}
 				SetAIUpdateFreq(MINUTE*5*SEC_IN_MS);
