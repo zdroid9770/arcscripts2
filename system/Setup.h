@@ -178,7 +178,6 @@ void SetupTheEye(ScriptMgr* mgr);
 void SetupTheObsidianSanctum(ScriptMgr* mgr);
 void SetupUlduar(ScriptMgr* mgr);
 void SetupZulFarrak(ScriptMgr* mgr);
-void SetupVaultOfArchavon(ScriptMgr * mgr);
 void SetupZulGurub(ScriptMgr* mgr);
 void SetupSerpentshrineCavern(ScriptMgr* mgr);
 void SetupMagtheridonsLair(ScriptMgr* mgr);
@@ -189,6 +188,7 @@ void SetupIcecrownCitadel(ScriptMgr* mgr);
 void SetupRubySanctum(ScriptMgr* mgr);
 void SetupTempleOfAhnQiraj(ScriptMgr* mgr);
 void SetupRuinsOfAhnQiraj(ScriptMgr* mgr);
+void SetupVaultOfArchavon(ScriptMgr * mgr);
 
 //QUEST
 void SetupDruid(ScriptMgr* mgr);

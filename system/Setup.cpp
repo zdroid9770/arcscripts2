@@ -162,7 +162,6 @@ extern "C" SCRIPT_DECL void _exp_script_register(ScriptMgr* mgr)	// Comment any 
 	SetupTheObsidianSanctum(mgr);
 	SetupUlduar(mgr);
 	SetupZulFarrak(mgr);
-	SetupVaultOfArchavon(mgr);
 	SetupZulGurub(mgr);
 	SetupSerpentshrineCavern(mgr);
 	SetupMagtheridonsLair(mgr);
@@ -174,6 +173,7 @@ extern "C" SCRIPT_DECL void _exp_script_register(ScriptMgr* mgr)	// Comment any 
 	SetupRuinsOfAhnQiraj(mgr);
 	SetupTempleOfAhnQiraj(mgr);
 	SetupRuinsOfAhnQiraj(mgr);
+	SetupVaultOfArchavon(mgr);
 
 	//QUEST
 	SetupDruid(mgr);
