@@ -1,6 +1,6 @@
 #faster way to grab all source - no need to edit this every time
 file(GLOB_RECURSE dependencies ${SCRIPTS_PATH}/dependencies/*.cpp ${SCRIPTS_PATH}/dependencies/*.h)
-file(GLOB_RECURSE setup ${SCRIPTS_PATH}/system/*.cpp ${SCRIPTS_PATH}/base/*.h)
+file(GLOB_RECURSE setup ${SCRIPTS_PATH}/system/*.cpp ${SCRIPTS_PATH}/system/*.h)
 file(GLOB_RECURSE event_scripts ${SCRIPTS_PATH}/scripts/EventScripts/*.cpp ${SCRIPTS_PATH}/scripts/EventScripts/*.h)
 file(GLOB_RECURSE gossip_scripts ${SCRIPTS_PATH}/scripts/GossipScripts/*.cpp ${SCRIPTS_PATH}/scripts/GossipScripts/*.h)
 file(GLOB_RECURSE instance_scripts ${SCRIPTS_PATH}/scripts/InstanceScripts/*.cpp ${SCRIPTS_PATH}/scripts/InstanceScripts/*.h)
