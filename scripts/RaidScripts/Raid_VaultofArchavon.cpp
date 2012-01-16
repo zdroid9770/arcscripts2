@@ -248,7 +248,7 @@ class KoralonAI : public MoonScriptBossAI
 		void OnCombatStart(Unit * pUnit)
 		{
 			mBreathTimer = AddTimer(15*SEC_IN_MS);
-			mBurningFuryTimer = AddTimer(20*SEX_IN_MS);
+			mBurningFuryTimer = AddTimer(20*SEC_IN_MS);
 			ParentClass::OnCombatStart(pUnit);
 		}
 
