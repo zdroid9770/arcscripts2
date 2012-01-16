@@ -273,6 +273,57 @@ class KoralonAI : public MoonScriptBossAI
 		int32 mBreathTimer, mBurningFuryTimer;
 };
 
+// Toravon
+#define NPC_TORAVAN				38433
+#define	SPELL_FREEZING_GROUND	Raid25manInst(72090, 72104)    // don't know cd... using 20 secs.
+#define	SPELL_FROZEN_ORB		Raid25manInst(72091, 72095)
+#define	SPELL_WHITEOUT          Raid25manInst(72034, 72096)    // Every 38 sec. cast. (after SPELL_FROZEN_ORB)
+#define	SPELL_FROZEN_MALLET     71993
+
+// Frost Warder
+#define	SPELL_FROST_BLAST       72123
+#define	SPELL_FROZEN_MALLET_2   72122
+
+// Frozen Orb
+#define	SPELL_FROZEN_ORB_DMG    72081    // priodic dmg aura
+#define	SPELL_FROZEN_ORB_AURA   72067    // make visible
+
+// Frozen Orb Stalker
+#define	SPELL_FROZEN_ORB_SUMMON 72093    // summon orb
+
+
+class ToravonAI : public MoonScriptBossAI
+{
+	public:
+		MOONSCRIPT_FACTORY_FUNCTION(ToravonAI, MoonScriptBossAI);
+		ToravonAI(Creature *pCreature) : MoonScriptBossAI(pCreature)
+		{
+			AddSpell(SPELL_FREEZING_GROUND, Target_RandomPlayer, 30.0f, 0, 20);
+			mFrozenOrbTimer = -1;
+		}
+
+		void OnCombatStart(Unit * pUnit)
+		{
+			_unit->CastSpell(_unit, SPELL_FROZEN_MALLET, true);
+			mFrozenOrbTimer = AddTimer(11*SEC_IN_MS);
+			ParentClass::OnCombatStart(pUnit);
+		}
+
+		void AIUpdate()
+		{
+			if(IsTimerFinished(mFrozenOrbTimer))
+			{
+				_unit->CastSpell(_unit, SPELL_FROZEN_ORB, false);
+				_unit->CastSpell(_unit, SPELL_WHITEOUT, false);
+				ResetTimer(mFrozenOrbTimer, 38*SEC_IN_MS);
+			}
+			ParentClass::AIUpdate();
+		}
+
+	private:
+		uint32 mFrozenOrbTimer;
+};
+
 void SetupVaultOfArchavon(ScriptMgr * mgr)
 {
 	mgr->register_instance_script(624, &VaulOfArchavon::Create);
@@ -280,4 +331,5 @@ void SetupVaultOfArchavon(ScriptMgr * mgr)
 	mgr->register_creature_script(NPC_EMALON, &EmalonAI::Create);
 	mgr->register_creature_script(NPC_TEMPEST_MINION, &EmalonMinionAI::Create);
 	mgr->register_creature_script(NPC_KORALON, &KoralonAI::Create);
+	mgr->register_creature_script(NPC_TORAVAN, &ToravonAI::Create);
 }
