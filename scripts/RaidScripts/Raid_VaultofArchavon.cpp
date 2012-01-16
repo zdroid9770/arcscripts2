@@ -213,7 +213,7 @@ class EmalonMinionAI : public MoonScriptBossAI
 
 		void AIUpdate()
 		{
-			if(_unit->GetAuraStackCount(SPELL_OVERCHARGED) < 10)
+			if(_unit->GetAuraStackCount(SPELL_OVERCHARGED) < 10 && _unit->HasAura(SPELL_OVERCHARGED))
 				_unit->CastSpell(_unit, SPELL_OVERCHARGED_BLAST, true);
 			else if(_unit->GetAuraStackCount(SPELL_OVERCHARGED) == 10)
 			{
@@ -223,8 +223,53 @@ class EmalonMinionAI : public MoonScriptBossAI
 			ParentClass::AIUpdate();
 		}
 
-	protected:
+	private:
 		int32 OverChargedTimer;
+};
+
+// Spells Koralon
+#define NPC_KORALON				35013
+#define	SPELL_BURNING_BREATH	Raid25manInst(66665, 67328)
+#define	SPELL_BURNING_FURY		66721
+#define	SPELL_FLAME_CINDER		Raid25manInst(66684, 66681)
+#define	SPELL_METEOR_FISTS		Raid25manInst(66725, 67333)
+
+class KoralonAI : public MoonScriptBossAI
+{
+	public:
+		MOONSCRIPT_FACTORY_FUNCTION(KoralonAI, MoonScriptBossAI);
+		KoralonAI(Creature *pCreature) : MoonScriptBossAI(pCreature)
+		{
+			AddSpell(SPELL_METEOR_FISTS, Target_Self, 35.0f, 1.5f, 45);
+			AddSpell(SPELL_FLAME_CINDER, Target_Self, 30.0f, 0, 30);
+			mBreathTimer = mBurningFuryTimer = -1;
+		}
+
+		void OnCombatStart(Unit * pUnit)
+		{
+			mBreathTimer = AddTimer(15*SEC_IN_MS);
+			mBurningFuryTimer = AddTimer(20*SEX_IN_MS);
+			ParentClass::OnCombatStart(pUnit);
+		}
+
+		void AIUpdate()
+		{
+			if(IsTimerFinished(mBreathTimer))
+			{
+				CastOnAllInrangePlayers(SPELL_BURNING_BREATH, true);
+				ResetTimer(mBreathTimer, 45*SEC_IN_MS);
+			}
+
+			if(IsTimerFinished(mBurningFuryTimer))
+			{
+				_unit->CastSpell(_unit, SPELL_BURNING_FURY, true);
+			}
+
+			ParentClass::AIUpdate();
+		}
+
+	private:
+		int32 mBreathTimer, mBurningFuryTimer;
 };
 
 void SetupVaultOfArchavon(ScriptMgr * mgr)
@@ -233,4 +278,5 @@ void SetupVaultOfArchavon(ScriptMgr * mgr)
 	mgr->register_creature_script(NPC_ARCHAVON, &ArchavonAI::Create);
 	mgr->register_creature_script(NPC_EMALON, &EmalonAI::Create);
 	mgr->register_creature_script(NPC_TEMPEST_MINION, &EmalonMinionAI::Create);
+	mgr->register_creature_script(NPC_KORALON, &KoralonAI::Create);
 }
