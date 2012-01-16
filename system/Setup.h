@@ -82,6 +82,7 @@ void SetupBladeEdgeMountainsGameobjects(ScriptMgr * mgr);
 void SetupBloodmystIsleGameobjects(ScriptMgr * mgr);
 void SetupBoreanTundraGameobjects(ScriptMgr * mgr);
 void SetupBurningSteppesGameobjects(ScriptMgr * mgr);
+void SetupCrystalsongForestGameobjects(ScriptMgr * mgr);
 void SetupDarkshoreGameobjects(ScriptMgr * mgr);
 void SetupDesolaceGameobjects(ScriptMgr * mgr);
 void SetupHellfirePeninsulaGameobjects(ScriptMgr * mgr);
