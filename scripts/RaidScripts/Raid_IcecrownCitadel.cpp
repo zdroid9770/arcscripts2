@@ -133,47 +133,45 @@ enum TeleporterSpells
 
 class ScourgeTeleporterAI : public GameObjectAIScript
 {
-public:
-	ScourgeTeleporterAI(GameObject* go) : GameObjectAIScript(go){}
-	~ScourgeTeleporterAI() 
-	{
-	}
-	static GameObjectAIScript* Create(GameObject* go) { return new ScourgeTeleporterAI(go); }
+	public:
+		ADD_GAMEOBJECT_FACTORY_FUNCTION(ScourgeTeleporterAI)
+		ScourgeTeleporterAI(GameObject* go) : GameObjectAIScript(go){}
+		~ScourgeTeleporterAI() {}
 
-	void OnActivate(Player* player)
-	{
-		GossipMenu* menu = NULL;
-		objmgr.CreateGossipMenuForPlayer(&menu, _gameobject->GetGUID(), 0, player);
-		menu->AddItem(Arcemu::Gossip::ICON_CHAT, "Teleport to Light's Hammer.", 0);
-		menu->AddItem(Arcemu::Gossip::ICON_CHAT, "Teleport to the Oratory of the Damned.", 1);
-		menu->AddItem(Arcemu::Gossip::ICON_CHAT, "Teleport to the Rampart of Skulls.", 2);
-		menu->AddItem(Arcemu::Gossip::ICON_CHAT, "Teleport to the Deathbringer's Rise.", 3);
-		menu->AddItem(Arcemu::Gossip::ICON_CHAT, "Teleport to the Upper Spire.", 4);
-		menu->AddItem(Arcemu::Gossip::ICON_CHAT, "Teleport to Sindragosa's Lair", 5);
-		menu->AddItem(Arcemu::Gossip::ICON_CHAT, "Teleport to Frozen Throne", 6);
-		menu->SendTo(player);
-	}
+		void OnActivate(Player* player)
+		{
+			GossipMenu* menu = NULL;
+			objmgr.CreateGossipMenuForPlayer(&menu, _gameobject->GetGUID(), 0, player);
+			menu->AddItem(Arcemu::Gossip::ICON_CHAT, "Teleport to Light's Hammer.", 0);
+			menu->AddItem(Arcemu::Gossip::ICON_CHAT, "Teleport to the Oratory of the Damned.", 1);
+			menu->AddItem(Arcemu::Gossip::ICON_CHAT, "Teleport to the Rampart of Skulls.", 2);
+			menu->AddItem(Arcemu::Gossip::ICON_CHAT, "Teleport to the Deathbringer's Rise.", 3);
+			menu->AddItem(Arcemu::Gossip::ICON_CHAT, "Teleport to the Upper Spire.", 4);
+			menu->AddItem(Arcemu::Gossip::ICON_CHAT, "Teleport to Sindragosa's Lair", 5);
+			menu->AddItem(Arcemu::Gossip::ICON_CHAT, "Teleport to Frozen Throne", 6);
+			menu->SendTo(player);
+		}
 };
 
 class ScourgeTeleporterGossip : public GossipScript
 {
-public:
-	ScourgeTeleporterGossip() : GossipScript(){}
+	public:
+		ScourgeTeleporterGossip() : GossipScript(){}
 
-	void OnSelectOption(Object* object, Player* player, uint32 Id, const char* enteredcode)
-	{
-		Arcemu::Gossip::Menu::Complete(player);
-		switch(Id)
+		void OnSelectOption(Object* object, Player* player, uint32 Id, const char* enteredcode)
 		{
-			case 0: player->CastSpell(player, LIGHT_S_HAMMER_TELEPORT, true); break;
-			case 1: player->CastSpell(player, ORATORY_OF_THE_DAMNED_TELEPORT, true); break;
-			case 2: player->CastSpell(player, RAMPART_OF_SKULLS_TELEPORT, true); break;
-			case 3: player->CastSpell(player, DEATHBRINGER_S_RISE_TELEPORT, true); break;
-			case 4: player->CastSpell(player, UPPER_SPIRE_TELEPORT, true); break;
-			case 5: player->CastSpell(player, ORATORY_OF_THE_DAMNED_TELEPORT, true); break;
-			case 6: player->CastSpell(player, FROZEN_THRONE_TELEPORT, true); break;
+			Arcemu::Gossip::Menu::Complete(player);
+			switch(Id)
+			{
+				case 0: player->CastSpell(player, LIGHT_S_HAMMER_TELEPORT, true); break;
+				case 1: player->CastSpell(player, ORATORY_OF_THE_DAMNED_TELEPORT, true); break;
+				case 2: player->CastSpell(player, RAMPART_OF_SKULLS_TELEPORT, true); break;
+				case 3: player->CastSpell(player, DEATHBRINGER_S_RISE_TELEPORT, true); break;
+				case 4: player->CastSpell(player, UPPER_SPIRE_TELEPORT, true); break;
+				case 5: player->CastSpell(player, ORATORY_OF_THE_DAMNED_TELEPORT, true); break;
+				case 6: player->CastSpell(player, FROZEN_THRONE_TELEPORT, true); break;
+			}
 		}
-	}
 };
 
 //special thanks for rsa and TrinityCore for information
@@ -209,155 +207,155 @@ enum LM_Summons
 
 class LordMarrowgar : public MoonScriptBossAI
 {
-public:
-	MOONSCRIPT_FACTORY_FUNCTION(LordMarrowgar, MoonScriptBossAI);
-	LordMarrowgar(Creature* pCreature) : MoonScriptBossAI(pCreature)
-	{
-		mInstance = GetInstanceScript();
-		pMode = _unit->GetMapMgr()->iInstanceMode;
-		Reset();
-
-		//Bone Storm!
-		sBoneStorm = AddSpell(MarrowgarSpells[SPELL_LM_BONESTORM][pMode], Target_Self, 0, 3, 0, 0, 0, false, "BONE STORM!", Text_Yell, 16946, "Lord Marrowgar creates a whirling of bone!");
-		AddPhaseSpell(2, AddSpell(MarrowgarSpells[SPELL_LM_COLDFLAME_BONE][pMode], Target_Self, 100.0f, 0, 5));
-		SpellDesc *sEnrage = AddSpell(MarrowgarSpells[SPELL_LM_BERSERK][pMode], Target_Self, 0, 0, 0, 0, 0, false, "THE MASTER'S RAGE COURSES THROUGH ME!", Text_Yell, 16945);	//10 min
-
-		SetEnrageInfo(sEnrage, MINUTE*10*SEC_IN_MS);
-
-		//normal phase
-		AddPhaseSpell(1, AddSpell(MarrowgarSpells[SPELL_LM_BONE_SLICE][pMode], Target_Current, 25.0f, 0, rand()%10+1));
-		AddPhaseSpell(1, AddSpell(MarrowgarSpells[SPELL_LM_COLDFLAME][pMode], Target_RandomPlayer, 100.0f, 0, 5));
-
-		if(pMode == MODE_HEROIC_10MEN || pMode == MODE_HEROIC_25MEN)
+	public:
+		MOONSCRIPT_FACTORY_FUNCTION(LordMarrowgar, MoonScriptBossAI);
+		LordMarrowgar(Creature* pCreature) : MoonScriptBossAI(pCreature)
 		{
-			SpellDesc* sBoneSpike = AddPhaseSpell(1, AddSpell(MarrowgarSpells[SPELL_LM_BONE_SPIKE_GRAVEYARD][pMode], Target_RandomPlayer, 25.0f, 0, rand()%20+15));
-			sBoneSpike->AddEmote("Bound by bone!", Text_Yell, 16947);
-			sBoneSpike->AddEmote("Stick Around!", Text_Yell, 16948);
-			sBoneSpike->AddEmote("The only escape is death!", Text_Yell, 16949);
-		}
+			mInstance = GetInstanceScript();
+			pMode = _unit->GetMapMgr()->iInstanceMode;
+			Reset();
 
-		Emote("This is the beginning AND the end, mortals. None may enter the master's sanctum!", Text_Yell, 16950);
-		AddEmote(Event_OnCombatStart, "The Scourge will wash over this world as a swarm of death and destruction!", Text_Yell, 16941);
-		AddEmote(Event_OnTargetDied, "More bones for the offering!", Text_Yell, 16942);
-		AddEmote(Event_OnTargetDied, "Languish in damnation!", Text_Yell, 16943);
-		AddEmote(Event_OnDied, "I see... only darkness...", Text_Yell, 16944);
-	}
+			//Bone Storm!
+			sBoneStorm = AddSpell(MarrowgarSpells[SPELL_LM_BONESTORM][pMode], Target_Self, 0, 3, 0, 0, 0, false, "BONE STORM!", Text_Yell, 16946, "Lord Marrowgar creates a whirling of bone!");
+			AddPhaseSpell(2, AddSpell(MarrowgarSpells[SPELL_LM_COLDFLAME_BONE][pMode], Target_Self, 100.0f, 0, 5));
+			SpellDesc *sEnrage = AddSpell(MarrowgarSpells[SPELL_LM_BERSERK][pMode], Target_Self, 0, 0, 0, 0, 0, false, "THE MASTER'S RAGE COURSES THROUGH ME!", Text_Yell, 16945);	//10 min
 
-	void Reset()
-	{
-		IsBoneStormSet = false;
-		BoneStormTimer = BoneStormPhaseTimer = ChargeTimer = INVALIDATE_TIMER;
-		SetBehavior(Behavior_Default);
-		_unit->SetSpeeds(RUN, 8.0f);
-	}
+			SetEnrageInfo(sEnrage, MINUTE*10*SEC_IN_MS);
 
-	void OnCombatStart(Unit* pUnit)
-	{
-		BoneStormTimer = AddTimer(30*SEC_IN_MS);
+			//normal phase
+			AddPhaseSpell(1, AddSpell(MarrowgarSpells[SPELL_LM_BONE_SLICE][pMode], Target_Current, 25.0f, 0, rand()%10+1));
+			AddPhaseSpell(1, AddSpell(MarrowgarSpells[SPELL_LM_COLDFLAME][pMode], Target_RandomPlayer, 100.0f, 0, 5));
 
-		if(mInstance)
-			mInstance->SetInstanceData(Data_EncounterState, ICC_LORD_MARROWGAR, State_InProgress);
-
-		ParentClass::OnCombatStart(pUnit);
-	}
-
-	void OnCombatStop(Unit* mTarget)
-	{
-		Reset();
-
-		if(mInstance)
-			mInstance->SetInstanceData(Data_EncounterState, ICC_LORD_MARROWGAR, State_NotStarted);
-
-		ParentClass::OnCombatStop(mTarget);
-	}
-
-	void OnDied(Unit* mKiller)
-	{
-		CancelAllSpells();
-
-		if(mInstance)
-			mInstance->SetInstanceData(Data_EncounterState, ICC_LORD_MARROWGAR, State_Finished);
-
-		ParentClass::OnDied(mKiller);
-	}
-
-	void AIUpdate()
-	{
-		//Initial bone storm
-		if(IsTimerFinished(BoneStormTimer) && GetPhase() == 1)
-		{
-			ClearHateList();
-			SetBehavior(Behavior_Spell);
-			_unit->SetSpeeds(RUN, 18.0f);
-			SetPhase(2, sBoneStorm);
-		}
-
-		//BoneStorm phase
-		if(GetPhase() == 2 && _unit->HasAura(MarrowgarSpells[SPELL_LM_BONESTORM][pMode]))
-		{
-			if(!IsBoneStormSet)
+			if(pMode == MODE_HEROIC_10MEN || pMode == MODE_HEROIC_25MEN)
 			{
-				SpawnColdFlame();
-				BoneStormPhaseTimer = AddTimer(30*SEC_IN_MS);
-				ChargeTimer = AddTimer(5*SEC_IN_MS);
-				IsBoneStormSet = true;
+				SpellDesc* sBoneSpike = AddPhaseSpell(1, AddSpell(MarrowgarSpells[SPELL_LM_BONE_SPIKE_GRAVEYARD][pMode], Target_RandomPlayer, 25.0f, 0, rand()%20+15));
+				sBoneSpike->AddEmote("Bound by bone!", Text_Yell, 16947);
+				sBoneSpike->AddEmote("Stick Around!", Text_Yell, 16948);
+				sBoneSpike->AddEmote("The only escape is death!", Text_Yell, 16949);
 			}
 
-			_unit->CastSpell(_unit, MarrowgarSpells[SPELL_LM_BONESTORM_EFFECT][pMode], false);
-
-			if(IsTimerFinished(ChargeTimer))
-			{
-				Unit* pTarget = GetBestPlayerTarget(TargetFilter_ClosestNotCurrent, 0, 70.0f);
-				if(pTarget != NULL)
-				{
-					MoveTo(pTarget->GetPositionX(), pTarget->GetPositionY(), pTarget->GetPositionZ());
-					SpawnColdFlame();
-				}
-				pTarget = NULL;
-				ResetTimer(ChargeTimer, 5*SEC_IN_MS);
-			}
+			Emote("This is the beginning AND the end, mortals. None may enter the master's sanctum!", Text_Yell, 16950);
+			AddEmote(Event_OnCombatStart, "The Scourge will wash over this world as a swarm of death and destruction!", Text_Yell, 16941);
+			AddEmote(Event_OnTargetDied, "More bones for the offering!", Text_Yell, 16942);
+			AddEmote(Event_OnTargetDied, "Languish in damnation!", Text_Yell, 16943);
+			AddEmote(Event_OnDied, "I see... only darkness...", Text_Yell, 16944);
 		}
 
-		if(GetPhase() == 2 && IsTimerFinished(BoneStormPhaseTimer))
+		void Reset()
 		{
-			_unit->SetSpeeds(RUN, 8.0f);
-			SetBehavior(Behavior_Default);
-			RemoveTimer(BoneStormPhaseTimer);
-			RemoveTimer(ChargeTimer);
 			IsBoneStormSet = false;
-			ResetTimer(BoneStormTimer, 60*SEC_IN_MS);
-			AggroRandomPlayer(25);
-			SetPhase(1);
+			BoneStormTimer = BoneStormPhaseTimer = ChargeTimer = INVALIDATE_TIMER;
+			SetBehavior(Behavior_Default);
+			_unit->SetSpeeds(RUN, 8.0f);
 		}
-		ParentClass::AIUpdate();
-	}
 
-	void SpawnColdFlame()
-	{
-		//Spawn cold flame x form
-		float PosX = _unit->GetPositionX();
-		float PosY = _unit->GetPositionY();
-		float PosZ = _unit->GetPositionZ();
-		float IncrValue = 5.0f;
-		
-
-		//creating loop to spawn x form slowly
-		for(uint8 ColdFlameCount = 0; ColdFlameCount<MAX_COLDFLAMES_XFORM; ColdFlameCount++)
+		void OnCombatStart(Unit* pUnit)
 		{
-			SpawnCreature(NPC_COLD_FLAME, PosX+IncrValue, PosY, PosZ);
-			SpawnCreature(NPC_COLD_FLAME, PosX, PosY-IncrValue, PosZ);
-			SpawnCreature(NPC_COLD_FLAME, PosX-IncrValue, PosY, PosZ);
-			SpawnCreature(NPC_COLD_FLAME, PosX, PosY+IncrValue, PosZ);
-			IncrValue = IncrValue+5.0f;
-		}
-	}
+			BoneStormTimer = AddTimer(30*SEC_IN_MS);
 
-protected:
-	SpellDesc *sBoneStorm;
-	int32 BoneStormTimer, BoneStormPhaseTimer, ChargeTimer;
-	uint8 pMode;
-	bool IsBoneStormSet;
-	MoonInstanceScript* mInstance;
+			if(mInstance)
+				mInstance->SetInstanceData(Data_EncounterState, ICC_LORD_MARROWGAR, State_InProgress);
+
+			ParentClass::OnCombatStart(pUnit);
+		}
+
+		void OnCombatStop(Unit* mTarget)
+		{
+			Reset();
+
+			if(mInstance)
+				mInstance->SetInstanceData(Data_EncounterState, ICC_LORD_MARROWGAR, State_NotStarted);
+
+			ParentClass::OnCombatStop(mTarget);
+		}
+
+		void OnDied(Unit* mKiller)
+		{
+			CancelAllSpells();
+
+			if(mInstance)
+				mInstance->SetInstanceData(Data_EncounterState, ICC_LORD_MARROWGAR, State_Finished);
+
+			ParentClass::OnDied(mKiller);
+		}
+
+		void AIUpdate()
+		{
+			//Initial bone storm
+			if(IsTimerFinished(BoneStormTimer) && GetPhase() == 1)
+			{
+				ClearHateList();
+				SetBehavior(Behavior_Spell);
+				_unit->SetSpeeds(RUN, 18.0f);
+				SetPhase(2, sBoneStorm);
+			}
+
+			//BoneStorm phase
+			if(GetPhase() == 2 && _unit->HasAura(MarrowgarSpells[SPELL_LM_BONESTORM][pMode]))
+			{
+				if(!IsBoneStormSet)
+				{
+					SpawnColdFlame();
+					BoneStormPhaseTimer = AddTimer(30*SEC_IN_MS);
+					ChargeTimer = AddTimer(5*SEC_IN_MS);
+					IsBoneStormSet = true;
+				}
+
+				_unit->CastSpell(_unit, MarrowgarSpells[SPELL_LM_BONESTORM_EFFECT][pMode], false);
+
+				if(IsTimerFinished(ChargeTimer))
+				{
+					Unit* pTarget = GetBestPlayerTarget(TargetFilter_ClosestNotCurrent, 0, 70.0f);
+					if(pTarget != NULL)
+					{
+						MoveTo(pTarget->GetPositionX(), pTarget->GetPositionY(), pTarget->GetPositionZ());
+						SpawnColdFlame();
+					}
+					pTarget = NULL;
+					ResetTimer(ChargeTimer, 5*SEC_IN_MS);
+				}
+			}
+
+			if(GetPhase() == 2 && IsTimerFinished(BoneStormPhaseTimer))
+			{
+				_unit->SetSpeeds(RUN, 8.0f);
+				SetBehavior(Behavior_Default);
+				RemoveTimer(BoneStormPhaseTimer);
+				RemoveTimer(ChargeTimer);
+				IsBoneStormSet = false;
+				ResetTimer(BoneStormTimer, 60*SEC_IN_MS);
+				AggroRandomPlayer(25);
+				SetPhase(1);
+			}
+			ParentClass::AIUpdate();
+		}
+
+		void SpawnColdFlame()
+		{
+			//Spawn cold flame x form
+			float PosX = _unit->GetPositionX();
+			float PosY = _unit->GetPositionY();
+			float PosZ = _unit->GetPositionZ();
+			float IncrValue = 5.0f;
+			
+
+			//creating loop to spawn x form slowly
+			for(uint8 ColdFlameCount = 0; ColdFlameCount<MAX_COLDFLAMES_XFORM; ColdFlameCount++)
+			{
+				SpawnCreature(NPC_COLD_FLAME, PosX+IncrValue, PosY, PosZ);
+				SpawnCreature(NPC_COLD_FLAME, PosX, PosY-IncrValue, PosZ);
+				SpawnCreature(NPC_COLD_FLAME, PosX-IncrValue, PosY, PosZ);
+				SpawnCreature(NPC_COLD_FLAME, PosX, PosY+IncrValue, PosZ);
+				IncrValue = IncrValue+5.0f;
+			}
+		}
+
+	protected:
+		SpellDesc *sBoneStorm;
+		int32 BoneStormTimer, BoneStormPhaseTimer, ChargeTimer;
+		uint8 pMode;
+		bool IsBoneStormSet;
+		MoonInstanceScript* mInstance;
 };
 
 enum ColdFlameSpells
@@ -368,14 +366,14 @@ enum ColdFlameSpells
 
 class ColdFlameAI : public MoonScriptCreatureAI
 {
-public:
-	MOONSCRIPT_FACTORY_FUNCTION(ColdFlameAI, MoonScriptCreatureAI);
-	ColdFlameAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
-	{
-		SetCanEnterCombat(false);
-		_unit->CastSpell(_unit, SPELL_COLD_FLAME_0, false);
-		Despawn(14*SEC_IN_MS);
-	}
+	public:
+		MOONSCRIPT_FACTORY_FUNCTION(ColdFlameAI, MoonScriptCreatureAI);
+		ColdFlameAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
+		{
+			SetCanEnterCombat(false);
+			_unit->CastSpell(_unit, SPELL_COLD_FLAME_0, false);
+			Despawn(14*SEC_IN_MS);
+		}
 };
 
 bool BoneStorm(uint32 i, Spell* s)
