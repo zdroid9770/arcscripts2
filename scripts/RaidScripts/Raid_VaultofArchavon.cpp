@@ -263,6 +263,7 @@ class KoralonAI : public MoonScriptBossAI
 			if(IsTimerFinished(mBurningFuryTimer))
 			{
 				_unit->CastSpell(_unit, SPELL_BURNING_FURY, true);
+				ResetTimer(mBurningFuryTimer, 20*SEC_IN_MS);
 			}
 
 			ParentClass::AIUpdate();
