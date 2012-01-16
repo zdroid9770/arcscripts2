@@ -229,7 +229,7 @@ class EmalonMinionAI : public MoonScriptBossAI
 
 void SetupVaultOfArchavon(ScriptMgr * mgr)
 {
-	mgr->register_instance_script(624, &IcecrownCitadelInstanceScript::Create);
+	mgr->register_instance_script(624, &VaulOfArchavon::Create);
 	mgr->register_creature_script(NPC_ARCHAVON, &ArchavonAI::Create);
 	mgr->register_creature_script(NPC_EMALON, &EmalonAI::Create);
 	mgr->register_creature_script(NPC_TEMPEST_MINION, &EmalonMinionAI::Create);
