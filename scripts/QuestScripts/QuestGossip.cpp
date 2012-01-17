@@ -110,11 +110,8 @@ class TeleportQ_Gossip : public GossipScript
 
 void SetupQuestGossip(ScriptMgr* mgr)
 {
-	GossipScript* LJ = new Lady_Jaina();
-	GossipScript* CB = new Cairne();
-
-	mgr->register_gossip_script(4968, LJ);
-	mgr->register_gossip_script(3057, CB);
+	mgr->register_gossip_script(4968, new Lady_Jaina);
+	mgr->register_gossip_script(3057, new Cairne);
 
 	// **** Dalaran quests start **** //
 	GossipScript* TeleportQGossip = new TeleportQ_Gossip;
