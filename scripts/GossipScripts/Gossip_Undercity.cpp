@@ -228,10 +228,10 @@ class UndercityGuard : public Arcemu::Gossip::Script
 		}
 };
 
-class UndercityGuardOverseer : public GossipScript
+class UndercityGuardOverseer : public Arcemu::Gossip::Script
 {
 	public:
-		void GossipHello(Object* pObject, Player* Plr, bool AutoSend)
+		void OnHello(Object* pObject, Player* Plr)
 		{
 			Arcemu::Gossip::Menu menu(pObject->GetGUID(), 15321);
 			menu.AddItem(Arcemu::Gossip::ICON_CHAT, "The auction house", 1);
@@ -251,7 +251,7 @@ class UndercityGuardOverseer : public GossipScript
 			menu.Send(Plr);
 		}
 
-		void GossipSelectOption(Object* pObject, Player* Plr, uint32 Id, const char * Code)
+		void OnSelectOption(Object* pObject, Player* Plr, uint32 Id, const char * Code)
 		{
 			switch(Id)
 			{
