@@ -11,3 +11,4 @@ General:
 	* Drop CreatureAIScript use from scripts
 	* Update timer's functions
 	* Finish all repo structure regroups
+	* Explicit class functions
