@@ -47,7 +47,7 @@ class StormwindGuardAI : public MoonScriptCreatureAI
 					IsNightItemSet = true;
 				}
 				SetAIUpdateFreq(MINUTE*5*SEC_IN_MS);
-			}else if(sEAS.IsDay())
+			}else
 			{
 				if(IsNightItemSet)
 				{
@@ -66,6 +66,5 @@ class StormwindGuardAI : public MoonScriptCreatureAI
 
 void SetupElwynForestCreature(ScriptMgr * mgr)
 {
-	mgr->register_creature_script(68, &StormwindGuardAI::Create );
 	mgr->register_creature_script(1976, &StormwindGuardAI::Create);
 }
