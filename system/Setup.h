@@ -99,6 +99,7 @@ void SetupWesternPlaguelandsGameobjects(ScriptMgr * mgr);
 void SetupZulDrakGameobjects(ScriptMgr * mgr);
 
 //GOSSIP
+void SetupCrystalsongForestGossip(ScriptMgr * mgr);
 void SetupInnkeepers(ScriptMgr* mgr);
 void SetupGuardGossip(ScriptMgr* mgr);
 void SetupTrainerScript(ScriptMgr* mgr);

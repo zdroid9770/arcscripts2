@@ -83,6 +83,7 @@ extern "C" SCRIPT_DECL void _exp_script_register(ScriptMgr* mgr)	// Comment any 
 	SetupZulDrakGameobjects(mgr);
 
 	//GOSSIP
+	SetupCrystalsongForestGossip(mgr);
 	SetupInnkeepers(mgr);
 	SetupGuardGossip(mgr);
 	SetupTrainerScript(mgr);
