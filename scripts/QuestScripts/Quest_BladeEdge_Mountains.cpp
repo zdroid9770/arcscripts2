@@ -159,8 +159,5 @@ void SetupBladeEdgeMountains(ScriptMgr* mgr)
 	mgr->register_creature_script(22160, &BloodmaulQAI::Create);
 	mgr->register_creature_script(19994, &BloodmaulQAI::Create);
 
-	mgr->register_quest_script(11000, new IntotheSoulgrinder());
-
-	mgr->register_creature_script(21387, &WyrmcultBlackwhelp::Create);
-
+	mgr->register_quest_script(11000, new IntotheSoulgrinder);
 }
