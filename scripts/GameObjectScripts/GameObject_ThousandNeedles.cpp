@@ -20,39 +20,39 @@
 
 class TestofEndurance : public GameObjectAIScript
 {
-public:
-	ADD_GAMEOBJECT_FACTORY_FUNCTION(TestofEndurance)
-	TestofEndurance(GameObject *goinstance) : GameObjectAIScript(goinstance) {}
+	public:
+		ADD_GAMEOBJECT_FACTORY_FUNCTION(TestofEndurance)
+		TestofEndurance(GameObject *goinstance) : GameObjectAIScript(goinstance) {}
 
-	void OnActivate(Player *pPlayer)
-	{
-		if( !pPlayer->HasQuest(1150) )
-			return;
+		void OnActivate(Player *pPlayer)
+		{
+			if(!pPlayer->HasQuest(1150))
+				return;
 
-		LocationVector vect( pPlayer->GetPositionX()+RandomFloat(2.0f), pPlayer->GetPositionY()+RandomFloat(2.0f), pPlayer->GetPositionZ(), pPlayer->GetOrientation() );
-		Creature *grenka = sEAS.GetNearestCreature( pPlayer, 4490 );
-		if( grenka != NULL )
-			return;
-		else
-			sEAS.SpawnCreature( pPlayer, 4490, vect.x, vect.y, vect.z, vect.o, DEFAULT_DESPAWN_TIMER );
-	}
+			LocationVector vect(pPlayer->GetPositionX()+RandomFloat(2.0f), pPlayer->GetPositionY()+RandomFloat(2.0f), pPlayer->GetPositionZ(), pPlayer->GetOrientation());
+			Creature *grenka = sEAS.GetNearestCreature(pPlayer, 4490);
+			if(grenka != NULL)
+				return;
+			else
+				sEAS.SpawnCreature(pPlayer, 4490, vect.x, vect.y, vect.z, vect.o, DEFAULT_DESPAWN_TIMER);
+		}
 };
 
 class SacredFireofLife : public GameObjectAIScript
 {
-public:
-	ADD_GAMEOBJECT_FACTORY_FUNCTION(SacredFireofLife)
-	SacredFireofLife(GameObject *goinstance) : GameObjectAIScript(goinstance) {}
+	public:
+		ADD_GAMEOBJECT_FACTORY_FUNCTION(SacredFireofLife)
+		SacredFireofLife(GameObject *goinstance) : GameObjectAIScript(goinstance) {}
 
-	void OnActivate(Player *pPlayer)
-	{
-		LocationVector vect( pPlayer->GetPositionX()+RandomFloat(2.0f), pPlayer->GetPositionY()+RandomFloat(2.0f), pPlayer->GetPositionZ(), pPlayer->GetOrientation() );
-		sEAS.SpawnCreature( pPlayer, 10882, vect.x, vect.y, vect.z, vect.o, DEFAULT_DESPAWN_TIMER );
-	}
+		void OnActivate(Player *pPlayer)
+		{
+			LocationVector vect(pPlayer->GetPositionX()+RandomFloat(2.0f), pPlayer->GetPositionY()+RandomFloat(2.0f), pPlayer->GetPositionZ(), pPlayer->GetOrientation());
+			sEAS.SpawnCreature(pPlayer, 10882, vect.x, vect.y, vect.z, vect.o, DEFAULT_DESPAWN_TIMER);
+		}
 };
 
 void SetupThousandNeedlesGameobjects(ScriptMgr * mgr)
 {
-	mgr->register_gameobject_script( 20447,  &TestofEndurance::Create );	// Harpy Foodstuffs
-	mgr->register_gameobject_script( 175944, &SacredFireofLife::Create );	// Sacred Fire of Life
+	mgr->register_gameobject_script(20447,  &TestofEndurance::Create);	// Harpy Foodstuffs
+	mgr->register_gameobject_script(175944, &SacredFireofLife::Create);	// Sacred Fire of Life
 }

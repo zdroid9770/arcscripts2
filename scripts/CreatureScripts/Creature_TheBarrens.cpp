@@ -18,20 +18,6 @@
 
 #include "Setup.h"
 
-class SavannahProwler : public CreatureAIScript
-{
-public:
-	ADD_CREATURE_FACTORY_FUNCTION(SavannahProwler)
-	SavannahProwler(Creature *pCreature) : CreatureAIScript(pCreature) {}
-
-	void OnLoad()
-	{
-		if( RandomUInt(3) == 1 )
-			GetUnit()->SetStandState(STANDSTATE_SLEEP); 
-	}
-};
-
 void SetupTheBarrensCreature(ScriptMgr * mgr)
 {
-	mgr->register_creature_script( 3425,  &SavannahProwler::Create );	// Savannah Prowler
 }

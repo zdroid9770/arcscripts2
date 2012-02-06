@@ -35,9 +35,6 @@ class CassaCrimsonwing_Gossip : public Arcemu::Gossip::Script
 			plr->GetQuestLogForEntry(11142)->SendQuestComplete();
 			plr->TaxiStart(sTaxiMgr.GetTaxiPath(724), 1147, 0);     // Gryph
 		}
-
-		void Destroy() { delete this; }
-
 };
 
 class CaptainGarranVimes_Gossip : public Arcemu::Gossip::Script

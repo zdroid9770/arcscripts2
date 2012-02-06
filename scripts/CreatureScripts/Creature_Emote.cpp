@@ -20,16 +20,16 @@
 
 void GuardsOnEmote(Player *pPlayer, Unit *pUnit, uint32 Emote)
 {
-	if( Emote == EMOTE_ONESHOT_KISS )
+	if(Emote == EMOTE_ONESHOT_KISS)
 		Emote = EMOTE_ONESHOT_BOW;
 
-	if( RandomUInt(100) <= 33 && pPlayer->GetStandingRank( pUnit->m_factionDBC->ID ) >= STANDING_FRIENDLY )
-		pUnit->Emote( static_cast<EmoteType>(Emote) );
+	if(RandomUInt(100) <= 33 && pPlayer->GetStandingRank( pUnit->m_factionDBC->ID ) >= STANDING_FRIENDLY)
+		pUnit->Emote(static_cast<EmoteType>(Emote));
 }
 
 void mOnEmote(Player *pPlayer, uint32 Emote, Unit *pUnit)
 {
-	if( !pUnit || pUnit->IsDead() || pUnit->CombatStatus.IsInCombat() || !pUnit->GetAIInterface() )
+	if(!pUnit || pUnit->IsDead() || pUnit->CombatStatus.IsInCombat() || !pUnit->GetAIInterface())
 		return;
 
 	switch(Emote)
@@ -37,13 +37,13 @@ void mOnEmote(Player *pPlayer, uint32 Emote, Unit *pUnit)
 		case EMOTE_ONESHOT_SALUTE:
 		case EMOTE_ONESHOT_WAVE:
 		case EMOTE_ONESHOT_KISS:
-			if( pUnit->GetAIInterface()->m_isGuard )
-				GuardsOnEmote( pPlayer, pUnit, Emote );
+			if(pUnit->GetAIInterface()->m_isGuard)
+				GuardsOnEmote(pPlayer, pUnit, Emote);
 			break;
 	}
 }
 
 void SetupEmoteCreatures(ScriptMgr * mgr)
 {
-	mgr->register_hook(SERVER_HOOK_EVENT_ON_EMOTE, (void *)&mOnEmote);
+	mgr->register_hook(SERVER_HOOK_EVENT_ON_EMOTE, &mOnEmote);
 }

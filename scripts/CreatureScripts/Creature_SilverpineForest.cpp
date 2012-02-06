@@ -20,18 +20,18 @@
 
 class CorruptMinorManifestationWater : public CreatureAIScript
 {
-public:
-	ADD_CREATURE_FACTORY_FUNCTION(CorruptMinorManifestationWater)
-	CorruptMinorManifestationWater(Creature *pCreature) : CreatureAIScript(pCreature) {}
+	public:
+		ADD_CREATURE_FACTORY_FUNCTION(CorruptMinorManifestationWater)
+		CorruptMinorManifestationWater(Creature *pCreature) : CreatureAIScript(pCreature) {}
 
-	void OnDied(Unit *mKiller)
-	{
-		LocationVector vect( GetUnit()->GetPositionX()+2, GetUnit()->GetPositionY()+2, GetUnit()->GetPositionZ(), GetUnit()->GetOrientation() );
-		sEAS.SpawnCreature(TO_PLAYER(mKiller), 5895, vect.x, vect.y, vect.z, vect.o, DEFAULT_DESPAWN_TIMER);
-	}
+		void OnDied(Unit *mKiller)
+		{
+			LocationVector vect(GetUnit()->GetPositionX()+2, GetUnit()->GetPositionY()+2, GetUnit()->GetPositionZ(), GetUnit()->GetOrientation());
+			sEAS.SpawnCreature(TO_PLAYER(mKiller), 5895, vect.x, vect.y, vect.z, vect.o, DEFAULT_DESPAWN_TIMER);
+		}
 };
 
 void SetupSilverpineForestCreature(ScriptMgr * mgr)
 {
-	mgr->register_creature_script( 5894,  &CorruptMinorManifestationWater::Create );	// Corrupt Minor Manifestation of Water
+	mgr->register_creature_script(5894,  &CorruptMinorManifestationWater::Create);	// Corrupt Minor Manifestation of Water
 }

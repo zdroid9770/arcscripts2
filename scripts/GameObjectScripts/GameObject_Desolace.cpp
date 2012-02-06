@@ -20,32 +20,32 @@
 
 class SerpentStatue : public GameObjectAIScript
 {
-public:
-	ADD_GAMEOBJECT_FACTORY_FUNCTION(SerpentStatue)
-	SerpentStatue(GameObject * goinstance) : GameObjectAIScript(goinstance) {}
+	public:
+		ADD_GAMEOBJECT_FACTORY_FUNCTION(SerpentStatue)
+		SerpentStatue(GameObject * goinstance) : GameObjectAIScript(goinstance) {}
 
-	void OnActivate(Player * pPlayer)
-	{
-		if( pPlayer->HasQuest(6027) )
-			sEAS.SpawnCreature( pPlayer, 12369, 246.741f, 2953.3f, 5.8631f, 1.078f, DEFAULT_DESPAWN_TIMER );
-	}
+		void OnActivate(Player * pPlayer)
+		{
+			if(pPlayer->HasQuest(6027))
+				sEAS.SpawnCreature(pPlayer, 12369, 246.741f, 2953.3f, 5.8631f, 1.078f, DEFAULT_DESPAWN_TIMER);
+		}
 };
 
 class HandofIruxos : public GameObjectAIScript
 {
-public:
-	ADD_GAMEOBJECT_FACTORY_FUNCTION(HandofIruxos)
-	HandofIruxos(GameObject * goinstance) : GameObjectAIScript(goinstance) {}
+	public:
+		ADD_GAMEOBJECT_FACTORY_FUNCTION(HandofIruxos)
+		HandofIruxos(GameObject * goinstance) : GameObjectAIScript(goinstance) {}
 
-	void OnActivate(Player * pPlayer)
-	{
-		if( pPlayer->HasQuest(5381) )
-			sEAS.SpawnCreature( pPlayer, 11876, -348.231f, 1763.85f, 138.371f, 4.42728f, DEFAULT_DESPAWN_TIMER );
-	}
+		void OnActivate(Player * pPlayer)
+		{
+			if(pPlayer->HasQuest(5381))
+				sEAS.SpawnCreature(pPlayer, 11876, -348.231f, 1763.85f, 138.371f, 4.42728f, DEFAULT_DESPAWN_TIMER);
+		}
 };
 
 void SetupDesolaceGameobjects(ScriptMgr * mgr)
 {
-	mgr->register_gameobject_script( 177673, &SerpentStatue::Create );	// Serpent Statue
-	mgr->register_gameobject_script( 176581, &HandofIruxos::Create );	// Hand of Iruxos Crystal
+	mgr->register_gameobject_script(177673, &SerpentStatue::Create);	// Serpent Statue
+	mgr->register_gameobject_script(176581, &HandofIruxos::Create);	// Hand of Iruxos Crystal
 }

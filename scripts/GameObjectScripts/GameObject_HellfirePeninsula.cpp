@@ -21,31 +21,31 @@
 //quest #9397
 class KaliriNest : public GameObjectAIScript
 {
-public:
-	KaliriNest(GameObject* goinstance) : GameObjectAIScript(goinstance) {}
-	static GameObjectAIScript *Create(GameObject * GO) { return new KaliriNest(GO); }
+	public:
+		KaliriNest(GameObject* goinstance) : GameObjectAIScript(goinstance) {}
+		static GameObjectAIScript *Create(GameObject * GO) { return new KaliriNest(GO); }
 
-	void OnActivate(Player * plr)
-	{
-		// mostly they are males
-		if( Rand(20) )
-			sEAS.SpawnCreature(plr, 17034, plr->GetPositionX(), plr->GetPositionY(), plr->GetPositionZ(), 2*60*1000);
-		else
-			sEAS.SpawnCreature(plr, 17039, plr->GetPositionX(), plr->GetPositionY(), plr->GetPositionZ(), 2*60*1000);
-	}
+		void OnActivate(Player * plr)
+		{
+			// mostly they are males
+			if(Rand(20))
+				sEAS.SpawnCreature(plr, 17034, plr->GetPositionX(), plr->GetPositionY(), plr->GetPositionZ(), 2*60*1000);
+			else
+				sEAS.SpawnCreature(plr, 17039, plr->GetPositionX(), plr->GetPositionY(), plr->GetPositionZ(), 2*60*1000);
+		}
 };
 
 class HaaleshiAltar : public GameObjectAIScript
 {
-public:
-	HaaleshiAltar(GameObject* goinstance) : GameObjectAIScript(goinstance) {}
-	static GameObjectAIScript *Create(GameObject * GO) { return new HaaleshiAltar(GO); }
+	public:
+		HaaleshiAltar(GameObject* goinstance) : GameObjectAIScript(goinstance) {}
+		static GameObjectAIScript *Create(GameObject * GO) { return new HaaleshiAltar(GO); }
 
-	void OnActivate(Player * plr)
-	{
-		if( plr->HasQuest(9418) )
-			sEAS.SpawnCreature(plr, 17085, -1323.14f, 4042.12f, 117.0f, plr->GetOrientation()+float(M_PI), 360000);
-	}
+		void OnActivate(Player * plr)
+		{
+			if(plr->HasQuest(9418))
+				sEAS.SpawnCreature(plr, 17085, -1323.14f, 4042.12f, 117.0f, plr->GetOrientation()+float(M_PI), 360000);
+		}
 };
 
 void SetupHellfirePeninsulaGameobjects(ScriptMgr * mgr)

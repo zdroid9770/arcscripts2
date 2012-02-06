@@ -20,18 +20,18 @@
 
 class EclipsionSpawn : public CreatureAIScript
 {
-public:
-	ADD_CREATURE_FACTORY_FUNCTION(EclipsionSpawn)
-	EclipsionSpawn(Creature *pCreature) : CreatureAIScript(pCreature) {}
+	public:
+		ADD_CREATURE_FACTORY_FUNCTION(EclipsionSpawn)
+		EclipsionSpawn(Creature *pCreature) : CreatureAIScript(pCreature) {}
 
-	void OnDied(Unit *mKiller)
-	{
-		GetUnit()->CastSpell( GetUnit(), 38311, true ); // Cast spell: "Summon Eclipsion Hawkstrider"
-	}
+		void OnDied(Unit *mKiller)
+		{
+			GetUnit()->CastSpell(GetUnit(), 38311, true); // Cast spell: "Summon Eclipsion Hawkstrider"
+		}
 };
 
 void SetupShadowmoonValleyCreature(ScriptMgr * mgr)
 {
-	mgr->register_creature_script( 19806, &EclipsionSpawn::Create );	// Eclipsion Bloodwarder
-	mgr->register_creature_script( 22018, &EclipsionSpawn::Create );	// Eclipsion Cavalier
+	mgr->register_creature_script(19806, &EclipsionSpawn::Create);	// Eclipsion Bloodwarder
+	mgr->register_creature_script(22018, &EclipsionSpawn::Create);	// Eclipsion Cavalier
 }

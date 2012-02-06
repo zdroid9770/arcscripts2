@@ -61,7 +61,6 @@ void SetupMiscCreatures(ScriptMgr * mgr);
 void SetupOrgrimmarCreature(ScriptMgr * mgr);
 void SetupShadowmoonValleyCreature(ScriptMgr * mgr);
 void SetupSilverpineForestCreature(ScriptMgr * mgr);
-void SetupSoundCreature(ScriptMgr * mgr);
 void SetupTanarisCreature(ScriptMgr * mgr);
 void SetupTheBarrensCreature(ScriptMgr * mgr);
 void SetupTheScarletEnclaveCreature(ScriptMgr * mgr);

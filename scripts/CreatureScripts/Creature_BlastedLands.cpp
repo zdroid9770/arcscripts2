@@ -20,14 +20,14 @@
 
 class KirithAI : public CreatureAIScript
 {
-public:
-	ADD_CREATURE_FACTORY_FUNCTION(KirithAI)
-	KirithAI(Creature *pCreature) : CreatureAIScript(pCreature)  {}
+	public:
+		ADD_CREATURE_FACTORY_FUNCTION(KirithAI)
+		KirithAI(Creature *pCreature) : CreatureAIScript(pCreature)  {}
 
-	void OnDied(Unit *mKiller)
-	{
-		GetUnit()->CastSpell( GetUnit(), 10853, true );
-	}
+		void OnDied(Unit *mKiller)
+		{
+			GetUnit()->CastSpell(GetUnit(), 10853, true);
+		}
 };
 
 void SetupBlastedLandsCreature(ScriptMgr * mgr)

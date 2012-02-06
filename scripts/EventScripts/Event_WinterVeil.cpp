@@ -26,24 +26,24 @@ Team  : Sun++
 
 class PX238WinterWondervolt : public GameObjectAIScript
 {
-public:
-	PX238WinterWondervolt(GameObject*  goinstance) : GameObjectAIScript(goinstance) {}
-	static GameObjectAIScript* Create(GameObject* GO) { return new PX238WinterWondervolt(GO); }
+	public:
+		PX238WinterWondervolt(GameObject*  goinstance) : GameObjectAIScript(goinstance) {}
+		static GameObjectAIScript* Create(GameObject* GO) { return new PX238WinterWondervolt(GO); }
 
-	void OnSpawn()
-	{
-		RegisterAIUpdateEvent(1);
-	}
+		void OnSpawn()
+		{
+			RegisterAIUpdateEvent(1);
+		}
 
-	void AIUpdate()
-	{
-		Player* plr = _gameobject->GetMapMgr()->GetInterface()->GetPlayerNearestCoords(_gameobject->GetPositionX(), _gameobject->GetPositionY(), _gameobject->GetPositionZ());
-		if(!plr)
-			return;
+		void AIUpdate()
+		{
+			Player* plr = _gameobject->GetMapMgr()->GetInterface()->GetPlayerNearestCoords(_gameobject->GetPositionX(), _gameobject->GetPositionY(), _gameobject->GetPositionZ());
+			if(!plr)
+				return;
 
-		if(_gameobject->CalcDistance(_gameobject, plr) <= 1.0f && !plr->HasAura(26274))       // aura given by the PX-238 Winter Wondervolt
-			plr->CastSpell(plr, 26275 , true);   // Spell that change into random gnome dispalyid (respect male & female)
-	}
+			if(_gameobject->CalcDistance(_gameobject, plr) <= 1.0f && !plr->HasAura(26274))       // aura given by the PX-238 Winter Wondervolt
+				plr->CastSpell(plr, 26275 , true);   // Spell that change into random gnome dispalyid (respect male & female)
+		}
 };
 
 void WinterReveler(Player* pPlayer, Unit* pUnit)
@@ -114,5 +114,5 @@ void WinterVeilEmote(Player* pPlayer, uint32 Emote, Unit* pUnit)
 void SetupWinterVeil(ScriptMgr* mgr)
 {
 	mgr->register_gameobject_script(180796, &PX238WinterWondervolt::Create);
-	mgr->register_hook(SERVER_HOOK_EVENT_ON_EMOTE, (void*)&WinterVeilEmote);
+	mgr->register_hook(SERVER_HOOK_EVENT_ON_EMOTE, &WinterVeilEmote);
 }

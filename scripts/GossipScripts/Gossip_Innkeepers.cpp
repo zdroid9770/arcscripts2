@@ -35,7 +35,7 @@ class InnkeeperGossip : public Arcemu::Gossip::Script
 		{
 			Arcemu::Gossip::Menu menu(pObject->GetGUID(), objmgr.GetGossipTextForNpc(pObject->GetEntry()), Plr->GetSession()->language);
 
-// Halloween control
+		/******************************** Halloween control *****************************/
 		tm * ct = localtime(&UNIXTIME);
 		if( ct->tm_mon == 9 && ( ct->tm_mday > 17 && ct->tm_mday <= 31 ) )
 		{
@@ -43,7 +43,7 @@ class InnkeeperGossip : public Arcemu::Gossip::Script
 				menu.AddItem(Arcemu::Gossip::ICON_CHAT, "Trick or Treat!", 4);
 				menu.AddItem(Arcemu::Gossip::ICON_CHAT, Plr->GetSession()->LocalizedWorldSrv(TRICKORTREAT), 4);
 		}
-// End of Halloween control
+		/******************************** End of Halloween control **********************/
 
 			if(TO_CREATURE(pObject)->isVendor())
 				menu.AddItem(Arcemu::Gossip::ICON_VENDOR, Plr->GetSession()->LocalizedWorldSrv(Arcemu::Gossip::VENDOR), 1);
@@ -98,13 +98,11 @@ class InnkeeperGossip : public Arcemu::Gossip::Script
 					}break;
 			}
 		}
-
-		void Destroy() { delete this; }
 };
 
 void SetupInnkeepers(ScriptMgr* mgr)
 {
-	Arcemu::Gossip::Script* gs = new InnkeeperGossip();
+	Arcemu::Gossip::Script* gs = new InnkeeperGossip;
 	/* Innkeeper List */
 	mgr->register_creature_gossip(26596, gs);     //"Charlie" Northtop
 	mgr->register_creature_gossip(24208, gs);     //"Little" Logok

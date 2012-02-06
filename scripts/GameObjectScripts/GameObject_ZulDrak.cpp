@@ -20,36 +20,31 @@
 
 class StrongholdCache : public GameObjectAIScript
 {
-public:
-	ADD_GAMEOBJECT_FACTORY_FUNCTION(StrongholdCache)
-	StrongholdCache(GameObject * goinstance) : GameObjectAIScript(goinstance) {}
+	public:
+		ADD_GAMEOBJECT_FACTORY_FUNCTION(StrongholdCache)
+		StrongholdCache(GameObject * goinstance) : GameObjectAIScript(goinstance) {}
 
-	void OnActivate(Player * pPlayer)
-	{
-		uint32 spellid = 0;
-		switch( RandomUInt(3) )
+		void OnActivate(Player * pPlayer)
 		{
-			case 0:
-				spellid = 52647; // spell: "Hex of Agony".
-				break;
-			case 1:
-				spellid = 52645; // spell: "Hex of Weakness".
-				break;
-			case 2:
-				spellid = 52652; // spell: "Hex of Tongues".
-				break;
-			// case 3 do nothing, not all times you got debuffed
-		}
-		if( spellid == 0 )
-			return;
+			uint32 spellid = 0;
+			switch( RandomUInt(3) )
+			{
+				case 0: spellid = 52647; break;// spell: "Hex of Agony".
+				case 1: spellid = 52645; break;// spell: "Hex of Weakness".
+				case 2: spellid = 52652; break;// spell: "Hex of Tongues".
+				// case 3 do nothing, not all times you got debuffed
+			}
 
-		Spell * spell = new Spell( _gameobject, dbcSpell.LookupEntryForced(spellid), true, NULL );
-		SpellCastTargets targets( pPlayer->GetGUID() );
-		spell->prepare( &targets );
-	}
+			if(spellid == 0)
+				return;
+
+			Spell * spell = new Spell(_gameobject, dbcSpell.LookupEntryForced(spellid), true, NULL);
+			SpellCastTargets targets(pPlayer->GetGUID());
+			spell->prepare(&targets);
+		}
 };
 
 void SetupZulDrakGameobjects(ScriptMgr * mgr)
 {
-	mgr->register_gameobject_script( 190836, &StrongholdCache::Create );	// Zol'Maz Stronghold Cache
+	mgr->register_gameobject_script(190836, &StrongholdCache::Create);	// Zol'Maz Stronghold Cache
 }

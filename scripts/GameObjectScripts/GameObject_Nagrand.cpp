@@ -20,33 +20,33 @@
 
 class BringMetheEgg : public GameObjectAIScript
 {
-public:
-	ADD_GAMEOBJECT_FACTORY_FUNCTION(BringMetheEgg)
-	BringMetheEgg(GameObject *goinstance) : GameObjectAIScript(goinstance) {}
+	public:
+		ADD_GAMEOBJECT_FACTORY_FUNCTION(BringMetheEgg)
+		BringMetheEgg(GameObject *goinstance) : GameObjectAIScript(goinstance) {}
 
-	void OnActivate(Player *pPlayer)
-	{
-		if( pPlayer->HasQuest(10111) && !pPlayer->HasAura(33382) )
-			pPlayer->CastSpell(pPlayer, 33382, true);
-	}
+		void OnActivate(Player *pPlayer)
+		{
+			if(pPlayer->HasQuest(10111) && !pPlayer->HasAura(33382))
+				pPlayer->CastSpell(pPlayer, 33382, true);
+		}
 };
 
 class MysteriousEgg : public GameObjectAIScript
 {
-public:
-	ADD_GAMEOBJECT_FACTORY_FUNCTION(MysteriousEgg)
-	MysteriousEgg(GameObject *goinstance) : GameObjectAIScript(goinstance) {}
+	public:
+		ADD_GAMEOBJECT_FACTORY_FUNCTION(MysteriousEgg)
+		MysteriousEgg(GameObject *goinstance) : GameObjectAIScript(goinstance) {}
 
-	void OnActivate(Player *pPlayer)
-	{
-		LocationVector vect( pPlayer->GetPositionX()+RandomFloat(2.0f), pPlayer->GetPositionY()+RandomFloat(2.0f), pPlayer->GetPositionZ(), pPlayer->GetOrientation() );
-		if( pPlayer->HasQuest(10111) && sEAS.GetNearestCreature(pPlayer, 19055) )
-			sEAS.SpawnCreature(pPlayer, 19055, vect.x, vect.y, vect.z, vect.o, DEFAULT_DESPAWN_TIMER);
-	}
+		void OnActivate(Player *pPlayer)
+		{
+			LocationVector vect(pPlayer->GetPositionX()+RandomFloat(2.0f), pPlayer->GetPositionY()+RandomFloat(2.0f), pPlayer->GetPositionZ(), pPlayer->GetOrientation());
+			if(pPlayer->HasQuest(10111) && sEAS.GetNearestCreature(pPlayer, 19055))
+				sEAS.SpawnCreature(pPlayer, 19055, vect.x, vect.y, vect.z, vect.o, DEFAULT_DESPAWN_TIMER);
+		}
 };
 
 void SetupNagrandGameobjects(ScriptMgr * mgr)
 {
-	mgr->register_gameobject_script( 183146, &BringMetheEgg::Create );	// Jump-a-tron 4000
-	mgr->register_gameobject_script( 183147, &MysteriousEgg::Create );	// Mysterious Egg
+	mgr->register_gameobject_script(183146, &BringMetheEgg::Create);	// Jump-a-tron 4000
+	mgr->register_gameobject_script(183147, &MysteriousEgg::Create);	// Mysterious Egg
 }

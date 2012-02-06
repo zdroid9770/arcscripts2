@@ -26,17 +26,17 @@ public:
 
 	void OnActivate(Player *pPlayer)
 	{
-		LocationVector vect( pPlayer->GetPositionX(), pPlayer->GetPositionY(), pPlayer->GetPositionZ(), pPlayer->GetOrientation() );
-		for( uint8 i = 0; i < 2; ++i )
+		LocationVector vect(pPlayer->GetPositionX(), pPlayer->GetPositionY(), pPlayer->GetPositionZ(), pPlayer->GetOrientation());
+		for(uint8 i = 0; i < 2; ++i)
 		{
-			vect.x += RandomFloat( 2.0f );
-			vect.y += RandomFloat( 2.0f );
-			sEAS.SpawnCreature( pPlayer, 14748, vect.x, vect.y, vect.z, vect.o, DEFAULT_DESPAWN_TIMER );
+			vect.x += RandomFloat(2.0f);
+			vect.y += RandomFloat(2.0f);
+			sEAS.SpawnCreature(pPlayer, 14748, vect.x, vect.y, vect.z, vect.o, DEFAULT_DESPAWN_TIMER);
 		}
 	}
 };
 
 void SetupTheHinterlandsGameobjects(ScriptMgr * mgr)
 {
-	mgr->register_gameobject_script( 179910, &VilebranchKidnapper::Create );	// Lard's Picnic Basket
+	mgr->register_gameobject_script(179910, &VilebranchKidnapper::Create);	// Lard's Picnic Basket
 }

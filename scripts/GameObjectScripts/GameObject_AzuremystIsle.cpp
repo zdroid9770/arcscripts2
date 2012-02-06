@@ -20,16 +20,16 @@
 
 class ProphecyofAkida : public GameObjectAIScript
 {
-public:
-	ADD_GAMEOBJECT_FACTORY_FUNCTION(ProphecyofAkida)
-	ProphecyofAkida(GameObject *goinstance) : GameObjectAIScript(goinstance) {}
+	public:
+		ADD_GAMEOBJECT_FACTORY_FUNCTION(ProphecyofAkida)
+		ProphecyofAkida(GameObject *goinstance) : GameObjectAIScript(goinstance) {}
 
-	void OnActivate(Player *pPlayer)
-	{
-		Creature *prisoner = sEAS.GetNearestCreature(pPlayer, 17375);
-		if( pPlayer->HasQuest(9544) && prisoner )
-			prisoner->Despawn(1, DEFAULT_DESPAWN_TIMER);
-	}
+		void OnActivate(Player *pPlayer)
+		{
+			Creature *prisoner = sEAS.GetNearestCreature(pPlayer, 17375);
+			if(pPlayer->HasQuest(9544) && prisoner)
+				prisoner->Despawn(1, DEFAULT_DESPAWN_TIMER);
+		}
 };
 
 void SetupAzuremystIsleGameobjects(ScriptMgr * mgr)

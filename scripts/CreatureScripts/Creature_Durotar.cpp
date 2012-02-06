@@ -20,21 +20,21 @@
 
 class PeonSleepingAI : public CreatureAIScript
 {
-public:
-	ADD_CREATURE_FACTORY_FUNCTION(PeonSleepingAI)
-	PeonSleepingAI(Creature *pCreature) : CreatureAIScript(pCreature) 
-	{
-		RegisterAIUpdateEvent( 3000 + RandomUInt( 180000 ) );
-	}
+	public:
+		ADD_CREATURE_FACTORY_FUNCTION(PeonSleepingAI)
+		PeonSleepingAI(Creature *pCreature) : CreatureAIScript(pCreature) 
+		{
+			RegisterAIUpdateEvent(3000 + RandomUInt(180000));
+		}
 
-	void AIUpdate()
-	{
-		GetUnit()->CastSpell( GetUnit(), 17743, true );
-		RemoveAIUpdateEvent();
-	}
+		void AIUpdate()
+		{
+			GetUnit()->CastSpell(GetUnit(), 17743, true);
+			RemoveAIUpdateEvent();
+		}
 };
 
 void SetupDurotarCreature(ScriptMgr * mgr)
 {
-	mgr->register_creature_script( 10556, &PeonSleepingAI::Create );	// Lazy Peon
+	mgr->register_creature_script(10556, &PeonSleepingAI::Create);	// Lazy Peon
 }

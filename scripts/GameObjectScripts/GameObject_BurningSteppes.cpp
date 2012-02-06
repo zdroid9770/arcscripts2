@@ -20,33 +20,33 @@
 
 class DreadmaulRock : public GameObjectAIScript
 {
-public:
-	ADD_GAMEOBJECT_FACTORY_FUNCTION(DreadmaulRock)
-	DreadmaulRock(GameObject * goinstance) : GameObjectAIScript(goinstance) {}
+	public:
+		ADD_GAMEOBJECT_FACTORY_FUNCTION(DreadmaulRock)
+		DreadmaulRock(GameObject * goinstance) : GameObjectAIScript(goinstance) {}
 
-	void OnActivate(Player * pPlayer)
-	{
-		LocationVector vect( pPlayer->GetPositionX()+RandomFloat(2.0f), pPlayer->GetPositionY()+RandomFloat(2.0f), pPlayer->GetPositionZ(), pPlayer->GetOrientation() );
-		if( pPlayer->HasQuest(3821) && sEAS.GetNearestCreature(pPlayer, 9136) == NULL )
-			sEAS.SpawnCreature( pPlayer, 9136, vect.x, vect.y, vect.z, vect.o, DEFAULT_DESPAWN_TIMER );
-	}
+		void OnActivate(Player * pPlayer)
+		{
+			LocationVector vect(pPlayer->GetPositionX()+RandomFloat(2.0f), pPlayer->GetPositionY()+RandomFloat(2.0f), pPlayer->GetPositionZ(), pPlayer->GetOrientation());
+			if(pPlayer->HasQuest(3821) && sEAS.GetNearestCreature(pPlayer, 9136) == NULL)
+				sEAS.SpawnCreature(pPlayer, 9136, vect.x, vect.y, vect.z, vect.o, DEFAULT_DESPAWN_TIMER);
+		}
 };
 
 class TabletoftheSeven : public GameObjectAIScript
 {
-public:
-	ADD_GAMEOBJECT_FACTORY_FUNCTION(TabletoftheSeven)
-	TabletoftheSeven(GameObject * goinstance) : GameObjectAIScript(goinstance) {}
+	public:
+		ADD_GAMEOBJECT_FACTORY_FUNCTION(TabletoftheSeven)
+		TabletoftheSeven(GameObject * goinstance) : GameObjectAIScript(goinstance) {}
 
-	void OnActivate(Player * pPlayer)
-	{
-		/*if( pPlayer->HasQuest(4296) && !pPlayer->GetItemInterface()->GetItemCount(11470, true) )
-			_gameobject->CastSpell( pPlayer, 15065, true ); // Cast spell: "Create Tablet Transcript".*/
-	}
+		void OnActivate(Player * pPlayer)
+		{
+			/*if( pPlayer->HasQuest(4296) && !pPlayer->GetItemInterface()->GetItemCount(11470, true) )
+				_gameobject->CastSpell( pPlayer, 15065, true ); // Cast spell: "Create Tablet Transcript".*/
+		}
 };
 
 void SetupBurningSteppesGameobjects(ScriptMgr * mgr)
 {
-	mgr->register_gameobject_script( 160445, &DreadmaulRock::Create );		// Sha'ni Proudtusk's Remains
-	mgr->register_gameobject_script( 169294, &TabletoftheSeven::Create );	// Tablet of the Seven
+	mgr->register_gameobject_script(160445, &DreadmaulRock::Create);		// Sha'ni Proudtusk's Remains
+	mgr->register_gameobject_script(169294, &TabletoftheSeven::Create);	// Tablet of the Seven
 }

@@ -20,15 +20,15 @@
 
 class CuregosGold : public GameObjectAIScript
 {
-public:
-	ADD_GAMEOBJECT_FACTORY_FUNCTION(CuregosGold)
-	CuregosGold(GameObject *goinstance) : GameObjectAIScript(goinstance) {}
+	public:
+		ADD_GAMEOBJECT_FACTORY_FUNCTION(CuregosGold)
+		CuregosGold(GameObject *goinstance) : GameObjectAIScript(goinstance) {}
 
-	void OnActivate(Player *pPlayer)
-	{
-		if( pPlayer->HasQuest(2882) )
-			pPlayer->CastSpell( pPlayer, 11462, true ); // Cast spell: "Summon Pirate Treasure and Trigger Mob".
-	}
+		void OnActivate(Player *pPlayer)
+		{
+			if(pPlayer->HasQuest(2882))
+				pPlayer->CastSpell(pPlayer, 11462, true); // Cast spell: "Summon Pirate Treasure and Trigger Mob".
+		}
 };
 
 void SetupTanarisGameobjects(ScriptMgr * mgr)

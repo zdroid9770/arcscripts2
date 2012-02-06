@@ -18,19 +18,6 @@
 
 #include "Setup.h"
 
-class TrollRoofStalker : public CreatureAIScript
-{
-public:
-	ADD_CREATURE_FACTORY_FUNCTION(TrollRoofStalker)
-	TrollRoofStalker(Creature *pCreature) : CreatureAIScript(pCreature) {}
-
-	void OnLoad()
-	{
-		GetUnit()->CastSpell( GetUnit(), 30991, true );
-	}
-};
-
 void SetupOrgrimmarCreature(ScriptMgr * mgr)
 {
-	mgr->register_creature_script( 23090, &TrollRoofStalker::Create );	// Troll Roof Stalker
 }

@@ -20,31 +20,31 @@
 
 class TheFallenExarch : public GameObjectAIScript
 {
-public:
-	ADD_GAMEOBJECT_FACTORY_FUNCTION(TheFallenExarch)
-	TheFallenExarch(GameObject *goinstance) : GameObjectAIScript(goinstance) {}
+	public:
+		ADD_GAMEOBJECT_FACTORY_FUNCTION(TheFallenExarch)
+		TheFallenExarch(GameObject *goinstance) : GameObjectAIScript(goinstance) {}
 
-	void OnActivate(Player *pPlayer)
-	{
-		if( pPlayer->HasQuest(10915) )
-			sEAS.SpawnCreature( pPlayer, 22452, -3365.9f, 5143.19f, -9.00132f, 3.05f, DEFAULT_DESPAWN_TIMER );
-	}
+		void OnActivate(Player *pPlayer)
+		{
+			if(pPlayer->HasQuest(10915))
+				sEAS.SpawnCreature(pPlayer, 22452, -3365.9f, 5143.19f, -9.00132f, 3.05f, DEFAULT_DESPAWN_TIMER);
+		}
 };
 
 class TerokksDownfall : public GameObjectAIScript
 {
-public:
-	ADD_GAMEOBJECT_FACTORY_FUNCTION(TerokksDownfall)
-	TerokksDownfall(GameObject *goinstance) : GameObjectAIScript(goinstance) {}
+	public:
+		ADD_GAMEOBJECT_FACTORY_FUNCTION(TerokksDownfall)
+		TerokksDownfall(GameObject *goinstance) : GameObjectAIScript(goinstance) {}
 
-	void OnActivate(Player *pPlayer)
-	{
-		pPlayer->CastSpell( pPlayer, 41004, false );
-	}
+		void OnActivate(Player *pPlayer)
+		{
+			pPlayer->CastSpell(pPlayer, 41004, false);
+		}
 };
 
 void SetupTerokkarForestGameobjects(ScriptMgr * mgr)
 {
-	mgr->register_gameobject_script( 184999, &TheFallenExarch::Create );	// Auchenai Coffin
-	mgr->register_gameobject_script( 185928, &TerokksDownfall::Create );	// Ancient Skull Pile
+	mgr->register_gameobject_script(184999, &TheFallenExarch::Create);	// Auchenai Coffin
+	mgr->register_gameobject_script(185928, &TerokksDownfall::Create);	// Ancient Skull Pile
 }

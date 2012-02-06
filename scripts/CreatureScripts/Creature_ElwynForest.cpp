@@ -43,7 +43,7 @@ class StormwindGuardAI : public MoonScriptCreatureAI
 			{
 				if(!IsNightItemSet)
 				{
-					SetDisplayWeaponIds(6341, _unit->GetEquippedItem(OFFHAND));	//needs correction
+					SetDisplayWeaponIds(6341, _unit->GetEquippedItem(OFFHAND));
 					IsNightItemSet = true;
 				}
 				SetAIUpdateFreq(MINUTE*5*SEC_IN_MS);

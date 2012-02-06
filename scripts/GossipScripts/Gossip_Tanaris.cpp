@@ -38,9 +38,6 @@ class CurgleCranklehop_Gossip : public Arcemu::Gossip::Script
 				menu.setTextID(1646);
 			menu.Send(plr);
 		}
-
-		void Destroy() { delete this; }
-
 };
 
 class TrentonLighthammer_Gossip : public Arcemu::Gossip::Script
@@ -55,8 +52,6 @@ class TrentonLighthammer_Gossip : public Arcemu::Gossip::Script
 		{
 			Arcemu::Gossip::Menu::SendSimpleMenu(pObject->GetGUID(), 1759, plr);
 		}
-
-		void Destroy() { delete this; }
 };
 
 void SetupTanarisGossip(ScriptMgr* mgr)

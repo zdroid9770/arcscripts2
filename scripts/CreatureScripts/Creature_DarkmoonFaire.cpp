@@ -28,32 +28,24 @@
 
 class Sayge : public CreatureAIScript
 {
-public:
-	ADD_CREATURE_FACTORY_FUNCTION(Sayge)
-	Sayge(Creature *pCreature) : CreatureAIScript(pCreature)
-	{
-		RegisterAIUpdateEvent( 135000 ); // Start initial update after: 2.25mins
-	}
-
-	void AIUpdate()
-	{
-		switch( rand()%4 )
+	public:
+		ADD_CREATURE_FACTORY_FUNCTION(Sayge)
+		Sayge(Creature *pCreature) : CreatureAIScript(pCreature)
 		{
-			case 0:
-				GetUnit()->SendChatMessage( CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, BARK_SAYGE_1 );
-				break;
-			case 1:
-				GetUnit()->SendChatMessage( CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, BARK_SAYGE_2 );
-				break;
-			case 2:
-				GetUnit()->SendChatMessage( CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, BARK_SAYGE_3 );
-				break;
-			case 3:
-				GetUnit()->SendChatMessage( CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, BARK_SAYGE_4 );
-				break;
+			RegisterAIUpdateEvent(135000); // Start initial update after: 2.25mins
 		}
-		ModifyAIUpdateEvent( rand() % 180000 + 300000 ); // Modify timer to a random value between: 3-5mins
-	}
+
+		void AIUpdate()
+		{
+			switch(rand()%4)
+			{
+				case 0: GetUnit()->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, BARK_SAYGE_1); break;
+				case 1: GetUnit()->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, BARK_SAYGE_2); break;
+				case 2: GetUnit()->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, BARK_SAYGE_3); break;
+				case 3: GetUnit()->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, BARK_SAYGE_4); break;
+			}
+			ModifyAIUpdateEvent( rand() % 180000 + 300000 ); // Modify timer to a random value between: 3-5mins
+		}
 };
 
 // Silas Darkmoon
@@ -66,38 +58,26 @@ public:
 
 class SilasDarkmoon : public CreatureAIScript
 {
-public:
-	ADD_CREATURE_FACTORY_FUNCTION(SilasDarkmoon)
-	SilasDarkmoon(Creature *pCreature) : CreatureAIScript(pCreature)
-	{
-		RegisterAIUpdateEvent(180000); // Start initial update after: 3mins
-	}
-
-	void AIUpdate()
-	{
-		switch( rand()%6 )
+	public:
+		ADD_CREATURE_FACTORY_FUNCTION(SilasDarkmoon)
+		SilasDarkmoon(Creature *pCreature) : CreatureAIScript(pCreature)
 		{
-			case 0:
-				GetUnit()->SendChatMessage( CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, BARK_SILAS_DARKMOON_1 );
-				break;
-			case 1:
-				GetUnit()->SendChatMessage( CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, BARK_SILAS_DARKMOON_2 );
-				break;
-			case 2:
-				GetUnit()->SendChatMessage( CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, BARK_SILAS_DARKMOON_3 );
-				break;
-			case 3:
-				GetUnit()->SendChatMessage( CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, BARK_SILAS_DARKMOON_4 );
-				break;
-			case 4:
-				GetUnit()->SendChatMessage( CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, BARK_SILAS_DARKMOON_5 );
-				break;
-			case 5:
-				GetUnit()->SendChatMessage( CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, BARK_SILAS_DARKMOON_6 );
-				break;
+			RegisterAIUpdateEvent(180000); // Start initial update after: 3mins
 		}
-		ModifyAIUpdateEvent( rand() % 300000 + 240000 ); // Modify timer to a random value between: 3-5mins
-	}
+
+		void AIUpdate()
+		{
+			switch(rand()%6)
+			{
+				case 0: GetUnit()->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, BARK_SILAS_DARKMOON_1); break;
+				case 1: GetUnit()->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, BARK_SILAS_DARKMOON_2); break;
+				case 2: GetUnit()->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, BARK_SILAS_DARKMOON_3); break;
+				case 3: GetUnit()->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, BARK_SILAS_DARKMOON_4); break;
+				case 4: GetUnit()->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, BARK_SILAS_DARKMOON_5); break;
+				case 5: GetUnit()->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, BARK_SILAS_DARKMOON_6); break;
+			}
+			ModifyAIUpdateEvent(rand()%300000 + 240000); // Modify timer to a random value between: 3-5mins
+		}
 };
 
 // Gevas Grimegate
@@ -108,32 +88,24 @@ public:
 
 class GevasGrimegate : public CreatureAIScript
 {
-public:
-	ADD_CREATURE_FACTORY_FUNCTION(GevasGrimegate)
-	GevasGrimegate(Creature *pCreature) : CreatureAIScript(pCreature)
-	{
-		RegisterAIUpdateEvent( 60000 ); // Start initial update after: 1mins
-	}
-
-	void AIUpdate()
-	{
-		switch( rand()%4 )
+	public:
+		ADD_CREATURE_FACTORY_FUNCTION(GevasGrimegate)
+		GevasGrimegate(Creature *pCreature) : CreatureAIScript(pCreature)
 		{
-			case 0:
-				GetUnit()->SendChatMessage( CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, BARK_GEVAS_GRIMEGATE_1 );
-				break;
-			case 1:
-				GetUnit()->SendChatMessage( CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, BARK_GEVAS_GRIMEGATE_2 );
-				break;
-			case 2:
-				GetUnit()->SendChatMessage( CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, BARK_GEVAS_GRIMEGATE_3 );
-				break;
-			case 3:
-				GetUnit()->SendChatMessage( CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, BARK_GEVAS_GRIMEGATE_4 );
-				break;
+			RegisterAIUpdateEvent(60000); // Start initial update after: 1mins
 		}
-		ModifyAIUpdateEvent( rand() % 300000 + 180000 ); // Modify timer to a random value between: 3-5mins
-	}
+
+		void AIUpdate()
+		{
+			switch(rand()%4)
+			{
+				case 0: GetUnit()->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, BARK_GEVAS_GRIMEGATE_1); break;
+				case 1: GetUnit()->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, BARK_GEVAS_GRIMEGATE_2); break;
+				case 2: GetUnit()->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, BARK_GEVAS_GRIMEGATE_3); break;
+				case 3: GetUnit()->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, BARK_GEVAS_GRIMEGATE_4); break;
+			}
+			ModifyAIUpdateEvent(rand() % 300000 + 180000); // Modify timer to a random value between: 3-5mins
+		}
 };
 
 // Sylannia
@@ -144,32 +116,24 @@ public:
 
 class Sylannia : public CreatureAIScript
 {
-public:
-	ADD_CREATURE_FACTORY_FUNCTION(Sylannia)
-	Sylannia(Creature *pCreature) : CreatureAIScript(pCreature)
-	{
-		RegisterAIUpdateEvent(120000); // Start initial update after: 2mins
-	}
-
-	void AIUpdate()
-	{
-		switch( rand()%4 )
+	public:
+		ADD_CREATURE_FACTORY_FUNCTION(Sylannia)
+		Sylannia(Creature *pCreature) : CreatureAIScript(pCreature)
 		{
-			case 0:
-				GetUnit()->SendChatMessage( CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, BARK_SYLANNIA_1 );
-				break;
-			case 1:
-				GetUnit()->SendChatMessage( CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, BARK_SYLANNIA_2 );
-				break;
-			case 2:
-				GetUnit()->SendChatMessage( CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, BARK_SYLANNIA_3 );
-				break;
-			case 3:
-				GetUnit()->SendChatMessage( CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, BARK_SYLANNIA_4 );
-				break;
+			RegisterAIUpdateEvent(120000); // Start initial update after: 2mins
 		}
-		ModifyAIUpdateEvent( rand() % 360000 + 180000 ); // Modify timer to a random value between: 3-6mins
-	}
+
+		void AIUpdate()
+		{
+			switch(rand()%4)
+			{
+				case 0: GetUnit()->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, BARK_SYLANNIA_1); break;
+				case 1: GetUnit()->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, BARK_SYLANNIA_2); break;
+				case 2: GetUnit()->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, BARK_SYLANNIA_3); break;
+				case 3: GetUnit()->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, BARK_SYLANNIA_4); break;
+			}
+			ModifyAIUpdateEvent( rand() % 360000 + 180000 ); // Modify timer to a random value between: 3-6mins
+		}
 };
 
 // Stamp Thunderhorn
@@ -181,35 +145,25 @@ public:
 
 class StampThunderhorn : public CreatureAIScript
 {
-public:
-	ADD_CREATURE_FACTORY_FUNCTION(StampThunderhorn)
-	StampThunderhorn(Creature *pCreature) : CreatureAIScript(pCreature)
-	{
-		RegisterAIUpdateEvent(180000); // Start initial update after: 3mins
-	}
-
-	void AIUpdate()
-	{
-		switch( rand()%5 )
+	public:
+		ADD_CREATURE_FACTORY_FUNCTION(StampThunderhorn)
+		StampThunderhorn(Creature *pCreature) : CreatureAIScript(pCreature)
 		{
-			case 0:
-				GetUnit()->SendChatMessage( CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, BARK_STAMP_THUNDERHORN_1 );
-				break;
-			case 1:
-				GetUnit()->SendChatMessage( CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, BARK_STAMP_THUNDERHORN_2 );
-				break;
-			case 2:
-				GetUnit()->SendChatMessage( CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, BARK_STAMP_THUNDERHORN_3 );
-				break;
-			case 3:
-				GetUnit()->SendChatMessage( CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, BARK_STAMP_THUNDERHORN_4 );
-				break;
-			case 4:
-				GetUnit()->SendChatMessage( CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, BARK_STAMP_THUNDERHORN_5 );
-				break;
+			RegisterAIUpdateEvent(180000); // Start initial update after: 3mins
 		}
-		ModifyAIUpdateEvent( rand() % 300000 + 180000 ); // Modify timer to a random value between: 3-5mins
-	}
+
+		void AIUpdate()
+		{
+			switch(rand()%5)
+			{
+				case 0: GetUnit()->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, BARK_STAMP_THUNDERHORN_1); break;
+				case 1: GetUnit()->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, BARK_STAMP_THUNDERHORN_2); break;
+				case 2: GetUnit()->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, BARK_STAMP_THUNDERHORN_3); break;
+				case 3: GetUnit()->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, BARK_STAMP_THUNDERHORN_4); break;
+				case 4: GetUnit()->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, BARK_STAMP_THUNDERHORN_5); break;
+			}
+			ModifyAIUpdateEvent( rand() % 300000 + 180000 ); // Modify timer to a random value between: 3-5mins
+		}
 };
 
 // Lhara
@@ -220,32 +174,24 @@ public:
 
 class Lhara : public CreatureAIScript
 {
-public:
-	ADD_CREATURE_FACTORY_FUNCTION(Lhara)
-	Lhara(Creature *pCreature) : CreatureAIScript(pCreature)
-	{
-		RegisterAIUpdateEvent( 90000 ); // Start initial update after: 1.5mins
-	}
-
-	void AIUpdate()
-	{
-		switch( rand()%4 )
+	public:
+		ADD_CREATURE_FACTORY_FUNCTION(Lhara)
+		Lhara(Creature *pCreature) : CreatureAIScript(pCreature)
 		{
-			case 0:
-				GetUnit()->SendChatMessage( CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, BARK_LHARA_1 );
-				break;
-			case 1:
-				GetUnit()->SendChatMessage( CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, BARK_LHARA_2 );
-				break;
-			case 2:
-				GetUnit()->SendChatMessage( CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, BARK_LHARA_3 );
-				break;
-			case 3:
-				GetUnit()->SendChatMessage( CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, BARK_LHARA_4 );
-				break;
+			RegisterAIUpdateEvent( 90000 ); // Start initial update after: 1.5mins
 		}
-		ModifyAIUpdateEvent( rand() % 360000 + 240000 ); // Modify timer to a random value between: 4-6mins
-	}
+
+		void AIUpdate()
+		{
+			switch(rand()%4)
+			{
+				case 0: GetUnit()->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, BARK_LHARA_1); break;
+				case 1: GetUnit()->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, BARK_LHARA_2); break;
+				case 2: GetUnit()->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, BARK_LHARA_3); break;
+				case 3: GetUnit()->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, BARK_LHARA_4); break;
+			}
+			ModifyAIUpdateEvent(rand()%360000 + 240000); // Modify timer to a random value between: 4-6mins
+		}
 };
 
 // Professor Thaddeus Paleo
@@ -256,32 +202,24 @@ public:
 
 class ProfessorThaddeusPaleo : public CreatureAIScript
 {
-public:
-	ADD_CREATURE_FACTORY_FUNCTION(ProfessorThaddeusPaleo)
-	ProfessorThaddeusPaleo(Creature *pCreature) : CreatureAIScript(pCreature)
-	{
-		RegisterAIUpdateEvent( 210000 ); // Start initial update after: 3.5mins
-	}
-
-	void AIUpdate()
-	{
-		switch( rand()%4 )
+	public:
+		ADD_CREATURE_FACTORY_FUNCTION(ProfessorThaddeusPaleo)
+		ProfessorThaddeusPaleo(Creature *pCreature) : CreatureAIScript(pCreature)
 		{
-			case 0:
-				GetUnit()->SendChatMessage( CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, BARK_PROFESSOR_THADDEUS_PALEO_1 );
-				break;
-			case 1:
-				GetUnit()->SendChatMessage( CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, BARK_PROFESSOR_THADDEUS_PALEO_2 );
-				break;
-			case 2:
-				GetUnit()->SendChatMessage( CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, BARK_PROFESSOR_THADDEUS_PALEO_3 );
-				break;
-			case 3:
-				GetUnit()->SendChatMessage( CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, BARK_PROFESSOR_THADDEUS_PALEO_4 );
-				break;
+			RegisterAIUpdateEvent(210000); // Start initial update after: 3.5mins
 		}
-		ModifyAIUpdateEvent( rand() % 180000 + 300000 ); // Modify timer to a random value between: 3-5mins
-	}
+
+		void AIUpdate()
+		{
+			switch(rand()%4)
+			{
+				case 0: GetUnit()->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, BARK_PROFESSOR_THADDEUS_PALEO_1); break;
+				case 1: GetUnit()->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, BARK_PROFESSOR_THADDEUS_PALEO_2); break;
+				case 2: GetUnit()->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, BARK_PROFESSOR_THADDEUS_PALEO_3); break;
+				case 3: GetUnit()->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, BARK_PROFESSOR_THADDEUS_PALEO_4); break;
+			}
+			ModifyAIUpdateEvent(rand()%180000 + 300000); // Modify timer to a random value between: 3-5mins
+		}
 };
 
 // Darkmoon Faire Carnie
@@ -298,32 +236,24 @@ public:
 #endif
 class Carnies : public CreatureAIScript
 {
-public:
-	ADD_CREATURE_FACTORY_FUNCTION(Carnies)
-	Carnies(Creature *pCreature) : CreatureAIScript(pCreature)
-	{
-		RegisterAIUpdateEvent( 120000 ); // Start initial update after: 2mins
-	}
-
-	void AIUpdate()
-	{
-		switch( rand()%4 )
+	public:
+		ADD_CREATURE_FACTORY_FUNCTION(Carnies)
+		Carnies(Creature *pCreature) : CreatureAIScript(pCreature)
 		{
-			case 0:
-				GetUnit()->SendChatMessage( CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, BARK_CARNIES_1 );
-				break;
-			case 1:
-				GetUnit()->SendChatMessage( CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, BARK_CARNIES_2 );
-				break;
-			case 2:
-				GetUnit()->SendChatMessage( CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, BARK_CARNIES_3 );
-				break;
-			case 3:
-				GetUnit()->SendChatMessage( CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, BARK_CARNIES_4 );
-				break;
+			RegisterAIUpdateEvent(120000); // Start initial update after: 2mins
 		}
-		ModifyAIUpdateEvent( rand() % 300000 + 120000 ); // Modify timer to a random value between: 2-5mins
-	}
+
+		void AIUpdate()
+		{
+			switch(rand()%4)
+			{
+				case 0: GetUnit()->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, BARK_CARNIES_1); break;
+				case 1: GetUnit()->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, BARK_CARNIES_2); break;
+				case 2: GetUnit()->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, BARK_CARNIES_3); break;
+				case 3: GetUnit()->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, BARK_CARNIES_4); break;
+			}
+			ModifyAIUpdateEvent(rand()%300000 + 120000); // Modify timer to a random value between: 2-5mins
+		}
 };
 
 // Flik
@@ -334,32 +264,24 @@ public:
 
 class Flik : public CreatureAIScript
 {
-public:
-	ADD_CREATURE_FACTORY_FUNCTION(Flik)
-	Flik(Creature *pCreature) : CreatureAIScript(pCreature)
-	{
-		RegisterAIUpdateEvent( 180000 ); // Start initial update after: 3mins
-	}
-
-	void AIUpdate()
-	{
-		switch ( rand()%4 )
+	public:
+		ADD_CREATURE_FACTORY_FUNCTION(Flik)
+		Flik(Creature *pCreature) : CreatureAIScript(pCreature)
 		{
-			case 0:
-				GetUnit()->SendChatMessage( CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, BARK_FLIK_1 );
-				break;
-			case 1:
-				GetUnit()->SendChatMessage( CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, BARK_FLIK_2 );
-				break;
-			case 2:
-				GetUnit()->SendChatMessage( CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, BARK_FLIK_3 );
-				break;
-			case 3:
-				GetUnit()->SendChatMessage( CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, BARK_FLIK_4 );
-				break;
+			RegisterAIUpdateEvent( 180000 ); // Start initial update after: 3mins
 		}
-		ModifyAIUpdateEvent( rand() % 240000 + 120000 ); // Modify timer to a random value between: 2-4mins
-	}
+
+		void AIUpdate()
+		{
+			switch (rand()%4)
+			{
+				case 0: GetUnit()->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, BARK_FLIK_1); break;
+				case 1: GetUnit()->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, BARK_FLIK_2); break;
+				case 2: GetUnit()->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, BARK_FLIK_3); break;
+				case 3: GetUnit()->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, BARK_FLIK_4); break;
+			}
+			ModifyAIUpdateEvent(rand()%240000 + 120000); // Modify timer to a random value between: 2-4mins
+		}
 };
 
 // Morja
@@ -367,30 +289,30 @@ public:
 
 class Morja : public CreatureAIScript
 {
-public:
-	ADD_CREATURE_FACTORY_FUNCTION(Morja)
-	Morja(Creature *pCreature) : CreatureAIScript(pCreature)
-	{
-		RegisterAIUpdateEvent( 240000 ); // Start initial update after: 4mins
-	}
+	public:
+		ADD_CREATURE_FACTORY_FUNCTION(Morja)
+		Morja(Creature *pCreature) : CreatureAIScript(pCreature)
+		{
+			RegisterAIUpdateEvent(240000); // Start initial update after: 4mins
+		}
 
-	void AIUpdate()
-	{
-		GetUnit()->SendChatMessage( CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, BARK_MORJA_1 );
-		ModifyAIUpdateEvent( rand() % 360000 + 240000 ); // Modify timer to a random value between: 4-6mins
-	}
+		void AIUpdate()
+		{
+			GetUnit()->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, BARK_MORJA_1);
+			ModifyAIUpdateEvent(rand()%360000 + 240000); // Modify timer to a random value between: 4-6mins
+		}
 };
 
 void SetupDarkmoonFaireCreatures(ScriptMgr * mgr)
 {
-	mgr->register_creature_script( 14822, &Sayge::Create );						// Sayge
-	mgr->register_creature_script( 14823, &SilasDarkmoon::Create );				// Silas Darkmoon
-	mgr->register_creature_script( 14828, &GevasGrimegate::Create );			// Gevas Grimegate
-	mgr->register_creature_script( 14844, &Sylannia::Create );					// Sylannia
-	mgr->register_creature_script( 14845, &StampThunderhorn::Create );			// StampThunderhorn
-	mgr->register_creature_script( 14846, &Lhara::Create );						// Lhara
-	mgr->register_creature_script( 14847, &ProfessorThaddeusPaleo::Create );	// Professor Thaddeus Paleo
-	mgr->register_creature_script( 14849, &Carnies::Create );					// Darkmoon Faire Carnie
-	mgr->register_creature_script( 14860, &Flik::Create );						// Flik
-	mgr->register_creature_script( 14871, &Morja::Create );						// Morja
+	mgr->register_creature_script(14822, &Sayge::Create);						// Sayge
+	mgr->register_creature_script(14823, &SilasDarkmoon::Create);				// Silas Darkmoon
+	mgr->register_creature_script(14828, &GevasGrimegate::Create);			// Gevas Grimegate
+	mgr->register_creature_script(14844, &Sylannia::Create);					// Sylannia
+	mgr->register_creature_script(14845, &StampThunderhorn::Create);			// StampThunderhorn
+	mgr->register_creature_script(14846, &Lhara::Create);						// Lhara
+	mgr->register_creature_script(14847, &ProfessorThaddeusPaleo::Create);	// Professor Thaddeus Paleo
+	mgr->register_creature_script(14849, &Carnies::Create);					// Darkmoon Faire Carnie
+	mgr->register_creature_script(14860, &Flik::Create);						// Flik
+	mgr->register_creature_script(14871, &Morja::Create);						// Morja
 }

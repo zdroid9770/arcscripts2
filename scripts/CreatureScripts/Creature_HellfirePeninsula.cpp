@@ -20,34 +20,29 @@
 
 class Aeranas : public MoonScriptCreatureAI
 {
-public:
-	MOONSCRIPT_FACTORY_FUNCTION(Aeranas, MoonScriptCreatureAI)
-	Aeranas(Creature * pCreature) : MoonScriptCreatureAI(pCreature)
-	{
-		AddSpell(15535, Target_Current, 30.0f, 2.0f, 20);
-		AddSpell(12553, Target_Current, 50.0f, 0, 10);
-	}
-
-	void OnCombatStart(Unit * mTarget)
-	{
-		ParentClass::OnCombatStart(mTarget);
-	}
-
-	void OnCombatStop(Unit * mTarget)
-	{
-		ParentClass::OnCombatStop(mTarget);
-		GetUnit()->Despawn(0,0);
-	}
-
-	void AIUpdate()
-	{
-		if( GetUnit()->GetHealthPct() <= 30 )
+	public:
+		MOONSCRIPT_FACTORY_FUNCTION(Aeranas, MoonScriptCreatureAI)
+		Aeranas(Creature * pCreature) : MoonScriptCreatureAI(pCreature)
 		{
-			WipeHateList();
-			GetUnit()->SetFaction( 35 );
+			AddSpell(15535, Target_Current, 30.0f, 2.0f, 20);
+			AddSpell(12553, Target_Current, 50.0f, 0, 10);
 		}
-		ParentClass::AIUpdate();
-	}
+
+		void OnCombatStop(Unit * mTarget)
+		{
+			ParentClass::OnCombatStop(mTarget);
+			GetUnit()->Despawn(0,0);
+		}
+
+		void AIUpdate()
+		{
+			if(GetUnit()->GetHealthPct() <= 30)
+			{
+				WipeHateList();
+				GetUnit()->SetFaction(35);
+			}
+			ParentClass::AIUpdate();
+		}
 };
 
 void SetupHellfireCreatures(ScriptMgr * mgr)

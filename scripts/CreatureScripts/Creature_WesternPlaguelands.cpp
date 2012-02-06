@@ -20,31 +20,31 @@
 
 class RottingCadaver : public CreatureAIScript
 {
-public:
-	ADD_CREATURE_FACTORY_FUNCTION(RottingCadaver)
-	RottingCadaver(Creature *pCreature) : CreatureAIScript(pCreature) {}
+	public:
+		ADD_CREATURE_FACTORY_FUNCTION(RottingCadaver)
+		RottingCadaver(Creature *pCreature) : CreatureAIScript(pCreature) {}
 
-	void OnDied(Unit *mKiller)
-	{
-		GetUnit()->CastSpell( GetUnit(), 17064, true ); // Cast spell: "Summon Rotting Worms".
-	}
+		void OnDied(Unit *mKiller)
+		{
+			GetUnit()->CastSpell(GetUnit(), 17064, true); // Cast spell: "Summon Rotting Worms".
+		}
 };
 
 class SummonOozeling : public CreatureAIScript
 {
-public:
-	ADD_CREATURE_FACTORY_FUNCTION(SummonOozeling)
-	SummonOozeling(Creature *pCreature) : CreatureAIScript(pCreature) {}
+	public:
+		ADD_CREATURE_FACTORY_FUNCTION(SummonOozeling)
+		SummonOozeling(Creature *pCreature) : CreatureAIScript(pCreature) {}
 
-	void OnDied(Unit *mKiller)
-	{
-		GetUnit()->CastSpell( GetUnit(), 12018, true ); // Cast spell: "Summon Oozeling".
-	}
+		void OnDied(Unit *mKiller)
+		{
+			GetUnit()->CastSpell(GetUnit(), 12018, true); // Cast spell: "Summon Oozeling".
+		}
 };
 
 void SetupWesternPlaguelandsCreature(ScriptMgr * mgr)
 {
-	mgr->register_creature_script( 4474,  &RottingCadaver::Create);		// Rotting Cadaver
-	mgr->register_creature_script( 1806,  &SummonOozeling::Create );	// Vile Slime
-	mgr->register_creature_script( 1808,  &SummonOozeling::Create );	// Devouring Ooze
+	mgr->register_creature_script(4474,  &RottingCadaver::Create);		// Rotting Cadaver
+	mgr->register_creature_script(1806,  &SummonOozeling::Create);	// Vile Slime
+	mgr->register_creature_script(1808,  &SummonOozeling::Create);	// Devouring Ooze
 }

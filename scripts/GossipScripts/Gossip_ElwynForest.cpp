@@ -496,7 +496,6 @@ class SWHarborFlyAround : public Arcemu::Gossip::Script
 			Arcemu::Gossip::Menu menu(pObject->GetGUID(), objmgr.GetGossipTextForNpc(pObject->GetEntry()), Plr->GetSession()->language);
 			menu.AddItem(Arcemu::Gossip::ICON_CHAT, "Yes, please.", 1);
 			menu.AddItem(Arcemu::Gossip::ICON_CHAT, "No, thank you.", 2);
-
 			menu.Send(Plr);
 		}
 
@@ -506,8 +505,6 @@ class SWHarborFlyAround : public Arcemu::Gossip::Script
 			if(Id == 1)
 				Plr->TaxiStart(sTaxiMgr.GetTaxiPath(1041), 25679, 0);
 		}
-
-		void Destroy() { delete this; }
 };
 
 class IanDrake : public Arcemu::Gossip::Script
@@ -526,7 +523,7 @@ class IanDrake : public Arcemu::Gossip::Script
 
 			//player will not allowed to get it too easy :P
 			int nCode = rand()%10+1;
-			if (Id == 1 && Code == (char*)nCode)
+			if (Code == (char*)nCode)
 			{
 				Plr->GetItemInterface()->CalculateFreeSlots(ItemPrototypeStorage.LookupEntry(39656));
 				Plr->GetItemInterface()->AddItemToFreeSlot(objmgr.CreateItem(39656, Plr));              // Tyrael's Hilt

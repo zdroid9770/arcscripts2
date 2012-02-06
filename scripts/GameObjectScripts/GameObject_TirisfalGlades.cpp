@@ -20,27 +20,27 @@
 
 class UlagTheCleaver : public GameObjectAIScript
 {
-public:
-	ADD_GAMEOBJECT_FACTORY_FUNCTION(UlagTheCleaver)
-	UlagTheCleaver(GameObject *goinstance) : GameObjectAIScript(goinstance) {}
+	public:
+		ADD_GAMEOBJECT_FACTORY_FUNCTION(UlagTheCleaver)
+		UlagTheCleaver(GameObject *goinstance) : GameObjectAIScript(goinstance) {}
 
-	void OnActivate(Player *pPlayer)
-	{
-		Creature* Ulag = pPlayer->GetMapMgr()->GetInterface()->GetCreatureNearestCoords(2390.101807f, 336.676788f, 40.015614f, 6390);
-		GameObject* pDoor = pPlayer->GetMapMgr()->GetInterface()->GetGameObjectNearestCoords(2388.480029f, 338.3901f, 40.092899f, 176594);
+		void OnActivate(Player *pPlayer)
+		{
+			Creature* Ulag = pPlayer->GetMapMgr()->GetInterface()->GetCreatureNearestCoords(2390.101807f, 336.676788f, 40.015614f, 6390);
+			GameObject* pDoor = pPlayer->GetMapMgr()->GetInterface()->GetGameObjectNearestCoords(2388.480029f, 338.3901f, 40.092899f, 176594);
 
-		if( !pPlayer->HasQuest(1819) || !pDoor || Ulag )
-			return;
+			if(!pPlayer->HasQuest(1819) || !pDoor || Ulag)
+				return;
 
-		Ulag = sEAS.SpawnCreature(pPlayer, 6390, 2390.101807f, 336.676788f, 40.015614f, 2.259590f, DEFAULT_DESPAWN_TIMER);
-		Ulag->GetAIInterface()->setNextTarget(pPlayer);
-		Ulag->GetAIInterface()->AttackReaction(pPlayer, 1);
-		pDoor->SetUInt32Value(GAMEOBJECT_FLAGS, 0x21); // GO_FLAG_NODESPAWN|GO_FLAG_IN_USE
-		pDoor->SetState(0);
-	}
+			Ulag = sEAS.SpawnCreature(pPlayer, 6390, 2390.101807f, 336.676788f, 40.015614f, 2.259590f, DEFAULT_DESPAWN_TIMER);
+			Ulag->GetAIInterface()->setNextTarget(pPlayer);
+			Ulag->GetAIInterface()->AttackReaction(pPlayer, 1);
+			pDoor->SetUInt32Value(GAMEOBJECT_FLAGS, 0x21); // GO_FLAG_NODESPAWN|GO_FLAG_IN_USE
+			pDoor->SetState(0);
+		}
 };
 
 void SetupTirisfalGladesGameobjects(ScriptMgr * mgr)
 {
-	mgr->register_gameobject_script( 104593, &UlagTheCleaver::Create );	// Mausoleum Trigger
+	mgr->register_gameobject_script(104593, &UlagTheCleaver::Create);	// Mausoleum Trigger
 }

@@ -20,16 +20,16 @@
 
 class CatFigurine : public GameObjectAIScript
 {
-public:
-	ADD_GAMEOBJECT_FACTORY_FUNCTION(CatFigurine)
-	CatFigurine(GameObject *goinstance) : GameObjectAIScript(goinstance) {}
+	public:
+		ADD_GAMEOBJECT_FACTORY_FUNCTION(CatFigurine)
+		CatFigurine(GameObject *goinstance) : GameObjectAIScript(goinstance) {}
 
-	void OnActivate(Player *pPlayer)
-	{
-		LocationVector vect( pPlayer->GetPositionX()+RandomFloat(2.0f), pPlayer->GetPositionY()+RandomFloat(2.0f), pPlayer->GetPositionZ(), pPlayer->GetOrientation() );
-		if( RandomUInt(100) <= 10 )
-			sEAS.SpawnCreature(pPlayer, 3619, vect.x, vect.y, vect.z, vect.o, DEFAULT_DESPAWN_TIMER);
-	}
+		void OnActivate(Player *pPlayer)
+		{
+			LocationVector vect(pPlayer->GetPositionX()+RandomFloat(2.0f), pPlayer->GetPositionY()+RandomFloat(2.0f), pPlayer->GetPositionZ(), pPlayer->GetOrientation());
+			if(RandomUInt(100) <= 10)
+				sEAS.SpawnCreature(pPlayer, 3619, vect.x, vect.y, vect.z, vect.o, DEFAULT_DESPAWN_TIMER);
+		}
 };
 
 void SetupDarkshoreGameobjects(ScriptMgr * mgr)

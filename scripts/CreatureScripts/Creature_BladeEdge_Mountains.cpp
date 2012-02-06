@@ -44,52 +44,52 @@ public:
 
 class BrutebaneStoutTrigger : public CreatureAIScript
 {
-public:
-	ADD_CREATURE_FACTORY_FUNCTION(BrutebaneStoutTrigger)
-	BrutebaneStoutTrigger(Creature *pCreature) : CreatureAIScript(pCreature)
-	{
-		GetUnit()->Root();
-		Plr = _unit->GetMapMgr()->GetInterface()->GetPlayerNearestCoords( _unit->GetPositionX(), _unit->GetPositionY(), _unit->GetPositionZ() );
-
-		uint32 BladespireOgres[] = { 19995, 19998, 20756, 0 };
-		Ogre = sEAS.GetNearestCreature( GetUnit(), BladespireOgres );
-		if( Ogre != NULL )
-			Ogre->GetAIInterface()->_CalcDestinationAndMove( GetUnit(), 0.3f );
-
-		RegisterAIUpdateEvent(1000);
-	}
-
-	void AIUpdate()
-	{
-		if( Ogre == NULL )
-			return;
-
-		if( GetUnit()->CalcDistance( Ogre ) <= 5 )
+	public:
+		ADD_CREATURE_FACTORY_FUNCTION(BrutebaneStoutTrigger)
+		BrutebaneStoutTrigger(Creature *pCreature) : CreatureAIScript(pCreature)
 		{
-			Ogre->SetEquippedItem( MELEE, 28562 );
-			Ogre->SetEmoteState( EMOTE_ONESHOT_EAT_NOSHEATHE );
-			Ogre->SetFaction( 35 );
-			Ogre->SetStandState( STANDSTATE_SIT );
-			Ogre->Despawn( 60000, 3*60*1000 );
+			GetUnit()->Root();
+			Plr = _unit->GetMapMgr()->GetInterface()->GetPlayerNearestCoords(_unit->GetPositionX(), _unit->GetPositionY(), _unit->GetPositionZ());
 
-			GameObject *Mug = sEAS.GetNearestGameObject( GetUnit(), 184315 );
-			if( Mug != NULL )
-				Mug->Despawn(0, 0);
+			uint32 BladespireOgres[] = {19995, 19998, 20756, 0};
+			Ogre = sEAS.GetNearestCreature(GetUnit(), BladespireOgres);
+			if(Ogre != NULL)
+				Ogre->GetAIInterface()->_CalcDestinationAndMove(GetUnit(), 0.3f);
 
-			if( Plr != NULL )
-				sEAS.KillMobForQuest( Plr, 10512, 0 );
-
-			GetUnit()->Despawn( 0, 0 );
+			RegisterAIUpdateEvent(1000);
 		}
-	}
 
-protected:
-	Player*		Plr;
-	Creature*	Ogre;
+		void AIUpdate()
+		{
+			if(Ogre == NULL)
+				return;
+
+			if(GetUnit()->CalcDistance(Ogre) <= 5)
+			{
+				Ogre->SetEquippedItem(MELEE, 28562);
+				Ogre->SetEmoteState(EMOTE_ONESHOT_EAT_NOSHEATHE);
+				Ogre->SetFaction(35);
+				Ogre->SetStandState(STANDSTATE_SIT);
+				Ogre->Despawn(60000, 3*60*1000);
+
+				GameObject *Mug = sEAS.GetNearestGameObject( GetUnit(), 184315 );
+				if(Mug != NULL)
+					Mug->Despawn(0, 0);
+
+				if(Plr != NULL)
+					sEAS.KillMobForQuest(Plr, 10512, 0);
+
+				GetUnit()->Despawn(0, 0);
+			}
+		}
+
+	protected:
+		Player* Plr;
+		Creature* Ogre;
 };
 
 void SetupBladeEdgeMountainsCreature(ScriptMgr * mgr)
 {
-	mgr->register_creature_script( 21823, &NihilTheBanished::Create );		// Nihil the Banished
-	mgr->register_creature_script( 21241, &BrutebaneStoutTrigger::Create );	// Bloodmaul Brutebane Stout Trigger
+	mgr->register_creature_script(21823, &NihilTheBanished::Create);		// Nihil the Banished
+	mgr->register_creature_script(21241, &BrutebaneStoutTrigger::Create);	// Bloodmaul Brutebane Stout Trigger
 }
