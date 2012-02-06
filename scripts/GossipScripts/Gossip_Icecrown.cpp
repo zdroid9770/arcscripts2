@@ -18,24 +18,6 @@
 
 #include "Setup.h"
 
-class GetKraken_Gossip : public Arcemu::Gossip::Script
+void SetupIcecrownGossip(ScriptMgr * mgr)
 {
-	public:
-		void OnHello(Object *pObject, Player *plr)
-		{
-			if(!plr->GetQuestLogForEntry(14108))
-				return;
-
-			Arcemu::Gossip::Menu::SendQuickMenu(pObject->GetGUID(), objmgr.GetGossipTextForNpc(pObject->GetEntry()), plr, 1, Arcemu::Gossip::ICON_CHAT, "Mount the Hippogryph and prepare for battle!");
-		}
-
-		void OnSelectOption(Object *pObject, Player *plr, uint32 Id, const char *Code)
-		{
-			plr->TaxiStart(sTaxiMgr.GetTaxiPath(1268), 22471, 0);
-		}
-};
-
-void SetupIcecrown(ScriptMgr* mgr)
-{
-	mgr->register_creature_gossip(35117, new GetKraken_Gossip);
 }

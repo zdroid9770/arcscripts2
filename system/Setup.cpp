@@ -104,6 +104,7 @@ extern "C" SCRIPT_DECL void _exp_script_register(ScriptMgr* mgr)	// Comment any 
 	SetupAzureMystIsleGossip(mgr);
 	SetupDuratorGossip(mgr);
 	SetupEversongWoodsGossip(mgr);
+	SetupIcecrownGossip(mgr);
 
 	//INSTANCES
 	SetupArcatraz(mgr);

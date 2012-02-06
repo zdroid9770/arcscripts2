@@ -120,6 +120,7 @@ void SetupBlastedLandsGossip(ScriptMgr* mgr);
 void SetupAzureMystIsleGossip(ScriptMgr* mgr);
 void SetupDuratorGossip(ScriptMgr* mgr);
 void SetupEversongWoodsGossip(ScriptMgr* mgr);
+void SetupIcecrownGossip(ScriptMgr * mgr);
 
 //INSTANCE
 void SetupArcatraz(ScriptMgr* mgr);
