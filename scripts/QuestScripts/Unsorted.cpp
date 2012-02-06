@@ -59,47 +59,10 @@ class Quest_Zuluhed_the_Whacked : public QuestScript
 
 };
 
-#define QUEST_CLUCK		 3861
-#define ITEM_CHICKEN_FEED   11109
-
-class Chicken : public CreatureAIScript
-{
-	public:
-		ADD_CREATURE_FACTORY_FUNCTION(Chicken);
-		Chicken(Creature* pCreature) : CreatureAIScript(pCreature) {}
-
-		void OnLoad()
-		{
-			_unit->SetFaction(12);
-			_unit->RemoveFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_QUESTGIVER);
-			RegisterAIUpdateEvent(120000);
-		}
-
-		void AIUpdate()
-		{
-			if(_unit->HasFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_QUESTGIVER))
-				OnLoad();
-		}
-};
-
-class Kaliri : public CreatureAIScript
-{
-	public:
-		ADD_CREATURE_FACTORY_FUNCTION(Kaliri);
-		Kaliri(Creature* pCreature) : CreatureAIScript(pCreature) {}
-
-		void OnLoad()
-		{
-			_unit->SetFaction(35);
-		}
-};
-
 void SetupUnsorted(ScriptMgr* mgr)
 {
 	mgr->register_quest_script(10998, new Quest_Grimoire_Business());
 	mgr->register_quest_script(10996, new Quest_Maggocs_Treasure_Chest());
 	mgr->register_quest_script(10995, new Quest_Grulloc_Has_Two_Skulls());
 	mgr->register_quest_script(10866, new Quest_Zuluhed_the_Whacked());
-	mgr->register_creature_script(620, &Chicken::Create);
-	mgr->register_creature_script(21468, &Kaliri::Create);
 }
