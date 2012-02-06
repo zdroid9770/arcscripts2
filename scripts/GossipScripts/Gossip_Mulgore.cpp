@@ -23,7 +23,7 @@ class ThunderbluffGuard : public Arcemu::Gossip::Script
 	public:
 		void OnHello(Object* pObject, Player* plr)
 		{
-			Arcemu::Gossip::Menu menu(pObject->GetGUID(), 3543);
+			Arcemu::Gossip::Menu menu(pObject->GetGUID(), objmgr.GetGossipTextForNpc(pObject->GetEntry()), plr->GetSession()->language);
 			menu.AddItem(Arcemu::Gossip::ICON_CHAT, "The bank", 1);
 			menu.AddItem(Arcemu::Gossip::ICON_CHAT, "The wind rider master", 2);
 			menu.AddItem(Arcemu::Gossip::ICON_CHAT, "The guild master", 3);
@@ -210,7 +210,7 @@ class BloodhoofGuard : public Arcemu::Gossip::Script
 	public:
 		void OnHello(Object* pObject, Player* plr)
 		{
-			Arcemu::Gossip::Menu menu(pObject->GetGUID(), 3543);
+			Arcemu::Gossip::Menu menu(pObject->GetGUID(), objmgr.GetGossipTextForNpc(pObject->GetEntry()), plr->GetSession()->language);
 			menu.AddItem(Arcemu::Gossip::ICON_CHAT, "The bank", 1);
 			menu.AddItem(Arcemu::Gossip::ICON_CHAT, "The wind rider master", 2);
 			menu.AddItem(Arcemu::Gossip::ICON_CHAT, "The inn", 3);
@@ -354,7 +354,7 @@ class SkornWhitecloud_Gossip : public Arcemu::Gossip::Script
 	public:
 		void OnHello(Object* pObject, Player* plr)
 		{
-			Arcemu::Gossip::Menu::SendQuickMenu(pObject->GetGUID(), 522, plr, 1, Arcemu::Gossip::ICON_CHAT, "Tell me a story, Skorn.");
+			Arcemu::Gossip::Menu::SendQuickMenu(pObject->GetGUID(), objmgr.GetGossipTextForNpc(pObject->GetEntry()), plr, 1, Arcemu::Gossip::ICON_CHAT, "Tell me a story, Skorn.");
 		}
 
 		void OnSelectOption(Object* pObject, Player* plr, uint32 Id, const char* Code)

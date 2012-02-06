@@ -33,15 +33,7 @@ class InnkeeperGossip : public Arcemu::Gossip::Script
 	public:
 		void OnHello(Object* pObject, Player* Plr)
 		{
-			uint32 TextID = 820;
-			uint32 Text = objmgr.GetGossipTextForNpc(pObject->GetEntry());
-			if(Text != 0)
-			{
-				GossipText* text = NpcTextStorage.LookupEntry(Text);
-				if(text != 0)
-					TextID = Text;
-			}
-			Arcemu::Gossip::Menu menu(pObject->GetGUID(), TextID, 0);
+			Arcemu::Gossip::Menu menu(pObject->GetGUID(), objmgr.GetGossipTextForNpc(pObject->GetEntry()), Plr->GetSession()->language);
 
 // Halloween control
 		tm * ct = localtime(&UNIXTIME);

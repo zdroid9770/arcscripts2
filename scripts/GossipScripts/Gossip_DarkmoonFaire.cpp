@@ -38,35 +38,18 @@ class SetupCarnies_Gossip : public GossipScript
 		void GossipHello(Object* pObject, Player* plr)
 		{
 			GossipMenu* Menu;
-			int randGossip;
-			randGossip = rand() % 4;
-			switch(randGossip)
+			switch(rand()%4)
 			{
-				case 0:
-					objmgr.CreateGossipMenuForPlayer(&Menu, pObject->GetGUID(), 50000, plr);
-					break;
-
-				case 1:
-					objmgr.CreateGossipMenuForPlayer(&Menu, pObject->GetGUID(), 50001, plr);
-					break;
-
-				case 2:
-					objmgr.CreateGossipMenuForPlayer(&Menu, pObject->GetGUID(), 50002, plr);
-					break;
-
-				case 3:
-					objmgr.CreateGossipMenuForPlayer(&Menu, pObject->GetGUID(), 50003, plr);
-					break;
+				case 0: objmgr.CreateGossipMenuForPlayer(&Menu, pObject->GetGUID(), 50000, plr); break;
+				case 1: objmgr.CreateGossipMenuForPlayer(&Menu, pObject->GetGUID(), 50001, plr); break;
+				case 2: objmgr.CreateGossipMenuForPlayer(&Menu, pObject->GetGUID(), 50002, plr); break;
+				case 3: objmgr.CreateGossipMenuForPlayer(&Menu, pObject->GetGUID(), 50003, plr); break;
 			}
-
 			Menu->SendTo(plr);
 		}
 
 		void GossipSelectOption(Object* pObject, Player* plr, uint32 Id, uint32 IntId, const char* Code)
 		{
-			if(!pObject->IsCreature())
-				return;
-
 			switch(IntId)
 			{
 				case 1:

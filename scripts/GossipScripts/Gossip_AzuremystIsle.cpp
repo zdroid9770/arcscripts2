@@ -23,7 +23,7 @@ class ExodarGuard : public Arcemu::Gossip::Script
 	public:
 		void OnHello(Object* pObject, Player* Plr)
 		{
-			Arcemu::Gossip::Menu menu(pObject->GetGUID(), 9551);
+			Arcemu::Gossip::Menu menu(pObject->GetGUID(), objmgr.GetGossipTextForNpc(pObject->GetEntry()), Plr->GetSession()->language);
 			menu.AddItem(Arcemu::Gossip::ICON_CHAT, "Auction House"			, 1);
 			menu.AddItem(Arcemu::Gossip::ICON_CHAT, "The Bank"				, 2);
 			menu.AddItem(Arcemu::Gossip::ICON_CHAT, "Hippogryph Master"		, 3);
@@ -244,7 +244,7 @@ class AzureWatchGuard : public Arcemu::Gossip::Script
 	public:
 		void OnHello(Object* pObject, Player* Plr)
 		{
-			Arcemu::Gossip::Menu menu(pObject->GetGUID(), 10066);
+			Arcemu::Gossip::Menu menu(pObject->GetGUID(), objmgr.GetGossipTextForNpc(pObject->GetEntry()), Plr->GetSession()->language);
 			menu.AddItem(Arcemu::Gossip::ICON_CHAT, "Bank"					, 1);
 			menu.AddItem(Arcemu::Gossip::ICON_CHAT, "Hippogryph Master"		, 2);
 			menu.AddItem(Arcemu::Gossip::ICON_CHAT, "Guild Master"			, 3);
@@ -255,7 +255,7 @@ class AzureWatchGuard : public Arcemu::Gossip::Script
 			menu.Send(Plr);
 		}
 
-		void GossipSelectOption(Object* pObject, Player* Plr, uint32 Id, const char * Code)
+		void OnSelectOption(Object* pObject, Player* Plr, uint32 Id, const char * Code)
 		{
 			switch(Id)
 			{

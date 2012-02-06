@@ -45,7 +45,7 @@ class WyrmrestTemple_FlightGossip : public Arcemu::Gossip::Script
 	public:
 		void OnHello(Object* pObject, Player* plr)
 		{
-			Arcemu::Gossip::Menu menu(pObject->GetGUID(), 0);
+			Arcemu::Gossip::Menu menu(pObject->GetGUID(), objmgr.GetGossipTextForNpc(pObject->GetEntry()), plr->GetSession()->language);
 			switch(pObject->GetEntry())
 			{
 				case CN_TOP:
@@ -79,29 +79,14 @@ class WyrmrestTemple_FlightGossip : public Arcemu::Gossip::Script
 			Arcemu::Gossip::Menu::Complete(plr);
 			switch(Id)
 			{
-				case 1:
-					plr->TaxiStart(sTaxiMgr.GetTaxiPath(879), 6371, 0);     // Drake
-					break;
-				case 2:
-					plr->TaxiStart(sTaxiMgr.GetTaxiPath(880), 6371, 0);     // Drake
-					break;
-				case 3:
-					plr->TaxiStart(sTaxiMgr.GetTaxiPath(881), 6371, 0);     // Drake
-					break;
-				case 4:
-					plr->TaxiStart(sTaxiMgr.GetTaxiPath(882), 6371, 0);     // Drake
-					break;
-				case 5:
-					plr->TaxiStart(sTaxiMgr.GetTaxiPath(878), 6371, 0);     // Drake
-					break;
-				case 6:
-					plr->TaxiStart(sTaxiMgr.GetTaxiPath(883), 6371, 0);     // Drake
-					break;
-				default:
-					break;
+				case 1: plr->TaxiStart(sTaxiMgr.GetTaxiPath(879), 6371, 0); break;
+				case 2: plr->TaxiStart(sTaxiMgr.GetTaxiPath(880), 6371, 0); break;
+				case 3: plr->TaxiStart(sTaxiMgr.GetTaxiPath(881), 6371, 0); break;
+				case 4: plr->TaxiStart(sTaxiMgr.GetTaxiPath(882), 6371, 0); break;
+				case 5: plr->TaxiStart(sTaxiMgr.GetTaxiPath(878), 6371, 0); break;
+				case 6: plr->TaxiStart(sTaxiMgr.GetTaxiPath(883), 6371, 0); break;
 			}
 		}
-
 };
 
 void SetupDragonblightGossip(ScriptMgr* mgr)

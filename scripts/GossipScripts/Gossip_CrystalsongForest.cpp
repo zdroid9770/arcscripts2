@@ -23,7 +23,7 @@ class DalaranGuard : public Arcemu::Gossip::Script
 public:
 	void OnHello(Object *pObject, Player *Plr)
 	{
-		Arcemu::Gossip::Menu menu(pObject->GetGUID(), 50000);
+		Arcemu::Gossip::Menu menu(pObject->GetGUID(), objmgr.GetGossipTextForNpc(pObject->GetEntry()), Plr->GetSession()->language);
 		menu.AddItem(Arcemu::Gossip::ICON_CHAT, "Arena"				,1);
 		menu.AddItem(Arcemu::Gossip::ICON_CHAT, "Auction House"		,2);
 		menu.AddItem(Arcemu::Gossip::ICON_CHAT, "Bank"				,3);

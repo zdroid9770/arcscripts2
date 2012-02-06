@@ -23,7 +23,7 @@ class SilvermoonGuard : public Arcemu::Gossip::Script
 	public:
 		void OnHello(Object* pObject, Player* plr)
 		{
-			Arcemu::Gossip::Menu menu(pObject->GetGUID(), 9316);
+			Arcemu::Gossip::Menu menu(pObject->GetGUID(), objmgr.GetGossipTextForNpc(pObject->GetEntry()), plr->GetSession()->language);
 			menu.AddItem(Arcemu::Gossip::ICON_CHAT, "Auction House"		, 1);
 			menu.AddItem(Arcemu::Gossip::ICON_CHAT, "The Bank"			, 2);
 			menu.AddItem(Arcemu::Gossip::ICON_CHAT, "Dragonhawk Master"	, 3);
@@ -281,7 +281,7 @@ class FalconwingGuard : public Arcemu::Gossip::Script
 	public:
 		void OnHello(Object* pObject, Player* Plr)
 		{
-			Arcemu::Gossip::Menu menu(pObject->GetGUID(), 2593);
+			Arcemu::Gossip::Menu menu(pObject->GetGUID(), objmgr.GetGossipTextForNpc(pObject->GetEntry()), Plr->GetSession()->language);
 			menu.AddItem(Arcemu::Gossip::ICON_CHAT, "Bat Handler"		, 1);
 			menu.AddItem(Arcemu::Gossip::ICON_CHAT, "Guild Master"		, 2);
 			menu.AddItem(Arcemu::Gossip::ICON_CHAT, "The Inn"			, 3);

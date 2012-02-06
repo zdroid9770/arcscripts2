@@ -71,7 +71,7 @@ public:
 
 		if(Id == 1)
 		{
-			Plr->Gossip_Complete();
+			Arcemu::Gossip::Menu::Complete(Plr);
 			pCreature->CastSpell(Plr, 46064, true);
 		}else Plr->GetSession()->SendTaxiList(pCreature);
 	}

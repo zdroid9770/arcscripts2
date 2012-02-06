@@ -31,7 +31,7 @@ class XpEliminatorGossip : public Arcemu::Gossip::Script
 public:
 	void OnHello(Object* pObject, Player* plr)
 	{
-		Arcemu::Gossip::Menu menu(pObject->GetGUID(), 14736);
+		Arcemu::Gossip::Menu menu(pObject->GetGUID(), objmgr.GetGossipTextForNpc(pObject->GetEntry()), plr->GetSession()->language);
 		if(plr->CanGainXp())
 			menu.AddItem(Arcemu::Gossip::ICON_CHAT, GOSSIP_DISABLE_XP_GAIN, 1, 100000, GOSSIP_BOXMSG_DISABLE_XP_GAIN);
 		else
@@ -57,7 +57,7 @@ class LockSmith : public Arcemu::Gossip::Script
 public:
 	void OnHello(Object *pObject, Player *Plr)
 	{
-		Arcemu::Gossip::Menu menu(pObject->GetGUID(), 13572);
+		Arcemu::Gossip::Menu menu(pObject->GetGUID(), objmgr.GetGossipTextForNpc(pObject->GetEntry()), Plr->GetSession()->language);
 
 		if(Plr->HasFinishedQuest(3201) && !Plr->GetItemInterface()->GetItemCount(5396, true) )
 			menu.AddItem(Arcemu::Gossip::ICON_CHAT, "I've lost my Key to Searing Gorge.", 1 );

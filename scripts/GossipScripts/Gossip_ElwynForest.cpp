@@ -23,7 +23,7 @@ class StormwindGuard : public Arcemu::Gossip::Script
 	public:
 		void OnHello(Object* pObject, Player* Plr)
 		{
-			Arcemu::Gossip::Menu menu(pObject->GetGUID(), 933);
+			Arcemu::Gossip::Menu menu(pObject->GetGUID(), objmgr.GetGossipTextForNpc(pObject->GetEntry()), Plr->GetSession()->language);
 			menu.AddItem(Arcemu::Gossip::ICON_CHAT, "Auction House"			, 1);
 			menu.AddItem(Arcemu::Gossip::ICON_CHAT, "Bank of Stormwind"		, 2);
 			menu.AddItem(Arcemu::Gossip::ICON_CHAT, "Stormwind Harbor"		, 3);
@@ -275,7 +275,7 @@ class GoldshireGuard : public Arcemu::Gossip::Script
 	public:
 		void OnHello(Object* pObject, Player* Plr)
 		{
-			Arcemu::Gossip::Menu menu(pObject->GetGUID(), 4259);
+			Arcemu::Gossip::Menu menu(pObject->GetGUID(), objmgr.GetGossipTextForNpc(pObject->GetEntry()), Plr->GetSession()->language);
 			menu.AddItem(Arcemu::Gossip::ICON_CHAT, "Bank"                 , 1);
 			menu.AddItem(Arcemu::Gossip::ICON_CHAT, "Gryphon Master"       , 2);
 			menu.AddItem(Arcemu::Gossip::ICON_CHAT, "Guild Master"         , 3);
@@ -467,7 +467,7 @@ class ArchmageMalin_Gossip : public Arcemu::Gossip::Script
 	public:
 		void OnHello(Object* pObject, Player* Plr)
 		{
-			Arcemu::Gossip::Menu menu(pObject->GetGUID(), 11469);
+			Arcemu::Gossip::Menu menu(pObject->GetGUID(), objmgr.GetGossipTextForNpc(pObject->GetEntry()), Plr->GetSession()->language);
 
 			if(Plr->GetQuestLogForEntry(11223))
 				menu.AddItem(Arcemu::Gossip::ICON_CHAT, "Can you send me to Theramore? I have an urgent message for Lady Jaina from Highlord Bolvar.", 1);
@@ -493,7 +493,7 @@ class SWHarborFlyAround : public Arcemu::Gossip::Script
 		void OnHello(Object* pObject, Player* Plr)
 		{
 
-			Arcemu::Gossip::Menu menu(pObject->GetGUID(), 13454);
+			Arcemu::Gossip::Menu menu(pObject->GetGUID(), objmgr.GetGossipTextForNpc(pObject->GetEntry()), Plr->GetSession()->language);
 			menu.AddItem(Arcemu::Gossip::ICON_CHAT, "Yes, please.", 1);
 			menu.AddItem(Arcemu::Gossip::ICON_CHAT, "No, thank you.", 2);
 
@@ -515,7 +515,7 @@ class IanDrake : public Arcemu::Gossip::Script
 	public:
 		void OnHello(Object * pObject, Player* Plr)
 		{
-			Arcemu::Gossip::Menu menu(pObject->GetGUID(), 13441);
+			Arcemu::Gossip::Menu menu(pObject->GetGUID(), objmgr.GetGossipTextForNpc(pObject->GetEntry()), Plr->GetSession()->language);
 			menu.AddItem(Arcemu::Gossip::ICON_CHAT, "I would like to whisper my secret code to you to receive Tyrael's Hilt.", 1, 0, "", true);
 			menu.Send(Plr);
 		}

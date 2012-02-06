@@ -23,7 +23,7 @@ class CurgleCranklehop_Gossip : public Arcemu::Gossip::Script
 	public:
 		void OnHello(Object* pObject, Player* plr)
 		{
-			Arcemu::Gossip::Menu menu(pObject->GetGUID(), 1519);
+			Arcemu::Gossip::Menu menu(pObject->GetGUID(), objmgr.GetGossipTextForNpc(pObject->GetEntry()), plr->GetSession()->language);
 			menu.AddItem(Arcemu::Gossip::ICON_CHAT, "Please tell me more about the hippogryphs.", 1);
 			menu.AddItem(Arcemu::Gossip::ICON_CHAT, "Please tell me more about the Gordunni ogres.", 2);
 			menu.Send(plr);
@@ -48,7 +48,7 @@ class TrentonLighthammer_Gossip : public Arcemu::Gossip::Script
 	public:
 		void OnHello(Object* pObject, Player* plr)
 		{
-			Arcemu::Gossip::Menu::SendQuickMenu(pObject->GetGUID(), 1758, plr, 1, Arcemu::Gossip::ICON_CHAT, "Tell me more, Trenton.");
+			Arcemu::Gossip::Menu::SendQuickMenu(pObject->GetGUID(), objmgr.GetGossipTextForNpc(pObject->GetEntry()), plr, 1, Arcemu::Gossip::ICON_CHAT, "Tell me more, Trenton.");
 		}
 
 		void GossipSelectOption(Object* pObject, Player* plr, uint32 Id, const char* Code)

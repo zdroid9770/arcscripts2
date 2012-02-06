@@ -23,10 +23,7 @@ class CassaCrimsonwing_Gossip : public Arcemu::Gossip::Script
 	public:
 		void OnHello(Object* pObject, Player* plr)
 		{
-			GossipMenu* Menu;
-			objmgr.CreateGossipMenuForPlayer(&Menu, pObject->GetGUID(), 11224, plr);
-
-			Arcemu::Gossip::Menu menu(pObject->GetGUID(), 11224);
+			Arcemu::Gossip::Menu menu(pObject->GetGUID(), objmgr.GetGossipTextForNpc(pObject->GetEntry()), plr->GetSession()->language);
 			if(plr->GetQuestLogForEntry(11142) != NULL)
 				menu.AddItem(Arcemu::Gossip::ICON_CHAT, "Lady Jaina told me to speak to you about using a gryphon to survey Alcaz Island.", 1);
 
@@ -48,7 +45,7 @@ class CaptainGarranVimes_Gossip : public Arcemu::Gossip::Script
 	public:
 		void OnHello(Object* pObject, Player* plr)
 		{
-			Arcemu::Gossip::Menu menu(pObject->GetGUID(), 1793, 0);
+			Arcemu::Gossip::Menu menu(pObject->GetGUID(), objmgr.GetGossipTextForNpc(pObject->GetEntry()), plr->GetSession()->language);
 			sQuestMgr.FillQuestMenu(TO_CREATURE(pObject), plr, menu);
 			if(plr->GetQuestLogForEntry(11123)!=NULL)
 				menu.AddItem(Arcemu::Gossip::ICON_CHAT, "What have you heard of the Shady Rest Inn?", 0);
@@ -60,9 +57,6 @@ class CaptainGarranVimes_Gossip : public Arcemu::Gossip::Script
 		{
 			Arcemu::Gossip::Menu::SendSimpleMenu(pObject->GetGUID(), 1794, plr);
 		}
-
-		void Destroy() { delete this; }
-
 };
 
 void SetupTheramoreGossip(ScriptMgr* mgr)

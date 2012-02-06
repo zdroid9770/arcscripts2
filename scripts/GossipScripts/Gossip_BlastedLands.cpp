@@ -32,10 +32,12 @@ public:
  
 	void OnSelectOption(Object *pObject, Player *Plr, uint32 Id, const char *EnteredCode)
 	{
-		if( sEAS.GetNearestCreature(Plr, 7750 ) == NULL)
+		Arcemu::Gossip::Menu::Complete(Plr);
+
+		if(sEAS.GetNearestCreature(Plr, 7750) == NULL)
 			sEAS.SpawnCreature(Plr, 7750, -10630, -2986.98f, 28.9815f, 4.73538f, 600000 );
 
-		if( sEAS.GetNearestGameObject( Plr, 141980 ) == NULL)
+		if(sEAS.GetNearestGameObject(Plr, 141980) == NULL)
 			sEAS.SpawnGameobject( Plr, 141980, -10633.4f, -2985.83f, 28.986f, 4.74371f, 1, 0, 0, 0.695946f, -0.718095f );
 	}
 };

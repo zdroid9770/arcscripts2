@@ -23,7 +23,7 @@ class MasterHammersmith : public Arcemu::Gossip::Script
 	public:
 		void OnHello(Object* pObject, Player* plr)
 		{
-			Arcemu::Gossip::Menu menu(pObject->GetGUID(), 7245);
+			Arcemu::Gossip::Menu menu(pObject->GetGUID(), objmgr.GetGossipTextForNpc(pObject->GetEntry()), plr->GetSession()->language);
 			menu.AddItem(Arcemu::Gossip::ICON_TRAINER, "Please teach me how to become a hammersmith, Lilith.", 1);
 			menu.AddItem(Arcemu::Gossip::ICON_TRAINER, "I wish to unlearn Hammersmithing!", 2);
 
@@ -92,7 +92,7 @@ class MasterSwordsmith : public Arcemu::Gossip::Script
 	public:
 		void OnHello(Object* pObject, Player* plr)
 		{
-			Arcemu::Gossip::Menu menu(pObject->GetGUID(), 7247);
+			Arcemu::Gossip::Menu menu(pObject->GetGUID(), objmgr.GetGossipTextForNpc(pObject->GetEntry()), plr->GetSession()->language);
 			menu.AddItem(Arcemu::Gossip::ICON_TRAINER, "Please teach me how to become a swordsmith, Seril.", 1);
 			menu.AddItem(Arcemu::Gossip::ICON_TRAINER, "I wish to unlearn Swordsmithing!", 2);
 			menu.Send(plr);
@@ -160,7 +160,7 @@ class MasterAxesmith : public Arcemu::Gossip::Script
 	public:
 		void OnHello(Object* pObject, Player* plr)
 		{
-			Arcemu::Gossip::Menu menu(pObject->GetGUID(), 7243);
+			Arcemu::Gossip::Menu menu(pObject->GetGUID(), objmgr.GetGossipTextForNpc(pObject->GetEntry()), plr->GetSession()->language);
 			menu.AddItem(Arcemu::Gossip::ICON_TRAINER, "Please teach me how to become a axesmith, Kilram.", 1);
 			menu.AddItem(Arcemu::Gossip::ICON_TRAINER, "I wish to unlearn Axesmithing!", 2);
 			menu.Send(plr);

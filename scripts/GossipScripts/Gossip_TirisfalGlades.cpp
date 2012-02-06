@@ -23,7 +23,7 @@ class UndercityGuard : public Arcemu::Gossip::Script
 	public:
 		void OnHello(Object* pObject, Player* Plr)
 		{
-			Arcemu::Gossip::Menu menu(pObject->GetGUID(), 3543);
+			Arcemu::Gossip::Menu menu(pObject->GetGUID(), objmgr.GetGossipTextForNpc(pObject->GetEntry()), Plr->GetSession()->language);
 			menu.AddItem(Arcemu::Gossip::ICON_CHAT, "The bank", 1);
 			menu.AddItem(Arcemu::Gossip::ICON_CHAT, "The bat handler", 2);
 			menu.AddItem(Arcemu::Gossip::ICON_CHAT, "The guild master", 3);
@@ -233,7 +233,7 @@ class UndercityGuardOverseer : public Arcemu::Gossip::Script
 	public:
 		void OnHello(Object* pObject, Player* Plr)
 		{
-			Arcemu::Gossip::Menu menu(pObject->GetGUID(), 15321);
+			Arcemu::Gossip::Menu menu(pObject->GetGUID(), objmgr.GetGossipTextForNpc(pObject->GetEntry()), Plr->GetSession()->language);
 			menu.AddItem(Arcemu::Gossip::ICON_CHAT, "The auction house", 1);
 			menu.AddItem(Arcemu::Gossip::ICON_CHAT, "The bank", 2);
 			menu.AddItem(Arcemu::Gossip::ICON_CHAT, "Barber", 3);
@@ -449,7 +449,7 @@ class BrillGuard : public Arcemu::Gossip::Script
 	public:
 		void OnHello(Object* pObject, Player* Plr)
 		{
-			Arcemu::Gossip::Menu menu(pObject->GetGUID(), 2593);
+			Arcemu::Gossip::Menu menu(pObject->GetGUID(), objmgr.GetGossipTextForNpc(pObject->GetEntry()), Plr->GetSession()->language);
 			menu.AddItem(Arcemu::Gossip::ICON_CHAT, "The bank"			, 1);
 			menu.AddItem(Arcemu::Gossip::ICON_CHAT, "The bat handler"	, 2);
 			menu.AddItem(Arcemu::Gossip::ICON_CHAT, "The inn"			, 3);
@@ -611,7 +611,7 @@ void SetupTirisfalGladesGossip(ScriptMgr* mgr)
 {
 	mgr->register_creature_gossip(5624,  new UndercityGuard);           // Undercity Guardian
 	mgr->register_creature_gossip(36213, new UndercityGuardOverseer);	// Kor'kron Overseer
-	Arcemu::Gossip::Script* brill = new BrillGuard();
+	Arcemu::Gossip::Script* brill = new BrillGuard;
 	mgr->register_creature_gossip(5725, brill);			// Deathguard Lundmark
 	mgr->register_creature_gossip(1738, brill);			// Deathguard Terrence
 	mgr->register_creature_gossip(1652, brill);			// Deathguard Burgess

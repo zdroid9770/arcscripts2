@@ -23,7 +23,7 @@ class IronforgeGuard : public Arcemu::Gossip::Script
 	public:
 		void OnHello(Object* pObject, Player* plr)
 		{
-			Arcemu::Gossip::Menu menu(pObject->GetGUID(), 2760);
+			Arcemu::Gossip::Menu menu(pObject->GetGUID(), objmgr.GetGossipTextForNpc(pObject->GetEntry()), plr->GetSession()->language);
 			menu.AddItem(Arcemu::Gossip::ICON_CHAT, "Auction House"			, 1);
 			menu.AddItem(Arcemu::Gossip::ICON_CHAT, "Bank of Ironforge"		, 2);
 			menu.AddItem(Arcemu::Gossip::ICON_CHAT, "Deeprun Tram"				, 3);
@@ -251,7 +251,7 @@ class KharanosGuard : public Arcemu::Gossip::Script
 	public:
 		void OnHello(Object* pObject, Player* Plr)
 		{
-			Arcemu::Gossip::Menu menu(pObject->GetGUID(), 4287);
+			Arcemu::Gossip::Menu menu(pObject->GetGUID(), objmgr.GetGossipTextForNpc(pObject->GetEntry()), Plr->GetSession()->language);
 			menu.AddItem(Arcemu::Gossip::ICON_CHAT, "Bank"				, 1);
 			menu.AddItem(Arcemu::Gossip::ICON_CHAT, "Gryphon Master"	, 2);
 			menu.AddItem(Arcemu::Gossip::ICON_CHAT, "Guild Master"		, 3);

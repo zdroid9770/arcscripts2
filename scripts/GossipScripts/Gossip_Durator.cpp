@@ -23,7 +23,7 @@ class OrgrimmarGuard : public Arcemu::Gossip::Script
 	public:
 		void OnHello(Object* pObject, Player* plr)
 		{
-			Arcemu::Gossip::Menu menu(pObject->GetGUID(), 2593);
+			Arcemu::Gossip::Menu menu(pObject->GetGUID(), objmgr.GetGossipTextForNpc(pObject->GetEntry()), plr->GetSession()->language);
 			menu.AddItem(Arcemu::Gossip::ICON_CHAT, "The bank", 1);
 			menu.AddItem(Arcemu::Gossip::ICON_CHAT, "The wind rider master", 2);
 			menu.AddItem(Arcemu::Gossip::ICON_CHAT, "The guild master", 3);
@@ -239,7 +239,7 @@ class RazorHillGuard : public Arcemu::Gossip::Script
 	public:
 		void OnHello(Object* pObject, Player* Plr)
 		{
-			Arcemu::Gossip::Menu menu(pObject->GetGUID(), 4037);
+			Arcemu::Gossip::Menu menu(pObject->GetGUID(), objmgr.GetGossipTextForNpc(pObject->GetEntry()), Plr->GetSession()->language);
 			menu.AddItem(Arcemu::Gossip::ICON_CHAT, "The bank"				, 1);
 			menu.AddItem(Arcemu::Gossip::ICON_CHAT, "The wind rider master"	, 2);
 			menu.AddItem(Arcemu::Gossip::ICON_CHAT, "The inn"				, 3);

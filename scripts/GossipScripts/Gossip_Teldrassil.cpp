@@ -23,7 +23,7 @@ class TeldrassilGuard : public Arcemu::Gossip::Script
 	public:
 		void OnHello(Object* pObject, Player* plr)
 		{
-			Arcemu::Gossip::Menu menu(pObject->GetGUID(), 4316);
+			Arcemu::Gossip::Menu menu(pObject->GetGUID(), objmgr.GetGossipTextForNpc(pObject->GetEntry()), plr->GetSession()->language);
 			menu.AddItem(Arcemu::Gossip::ICON_CHAT, "The Bank", 1);
 			menu.AddItem(Arcemu::Gossip::ICON_CHAT, "Rut'Theran Ferry", 2);
 			menu.AddItem(Arcemu::Gossip::ICON_CHAT, "The Guild Master", 3);
@@ -173,7 +173,7 @@ class DarnassusGuard : public Arcemu::Gossip::Script
 	public:
 		void OnHello(Object* pObject, Player* plr)
 		{
-			Arcemu::Gossip::Menu menu(pObject->GetGUID(), 3016);
+			Arcemu::Gossip::Menu menu(pObject->GetGUID(), objmgr.GetGossipTextForNpc(pObject->GetEntry()), plr->GetSession()->language);
 			menu.AddItem(Arcemu::Gossip::ICON_CHAT, "Auction House"      , 1);
 			menu.AddItem(Arcemu::Gossip::ICON_CHAT, "The Bank"           , 2);
 			menu.AddItem(Arcemu::Gossip::ICON_CHAT, "Hippogryph Master"  , 3);
@@ -354,7 +354,7 @@ class ErelasAmbersky_Gossip : public Arcemu::Gossip::Script
 	public:
 		void OnHello(Object* pObject, Player* plr)
 		{
-			Arcemu::Gossip::Menu::SendQuickMenu(pObject->GetGUID(), 2153, plr, 1, Arcemu::Gossip::ICON_CHAT, "Tell me more about these hippogryphs.");
+			Arcemu::Gossip::Menu::SendQuickMenu(pObject->GetGUID(), objmgr.GetGossipTextForNpc(pObject->GetEntry()), plr, 1, Arcemu::Gossip::ICON_CHAT, "Tell me more about these hippogryphs.");
 		}
 
 		void GossipSelectOption(Object* pObject, Player* plr, uint32 Id, const char* Code)

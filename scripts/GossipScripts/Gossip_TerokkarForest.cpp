@@ -23,7 +23,7 @@ class ShattrathGuard : public Arcemu::Gossip::Script
 	public:
 		void OnHello(Object* pObject, Player* plr)
 		{
-			Arcemu::Gossip::Menu menu(pObject->GetGUID(), 10524);
+			Arcemu::Gossip::Menu menu(pObject->GetGUID(), objmgr.GetGossipTextForNpc(pObject->GetEntry()), plr->GetSession()->language);
 			menu.AddItem(Arcemu::Gossip::ICON_CHAT, "World's End Tavern", 1);
 			menu.AddItem(Arcemu::Gossip::ICON_CHAT, "Bank", 2);
 			menu.AddItem(Arcemu::Gossip::ICON_CHAT, "Inn", 3);
@@ -247,7 +247,7 @@ class ExarchNasuun_Gossip : public Arcemu::Gossip::Script
 	public:
 		void OnHello(Object* pObject, Player* plr)
 		{
-			Arcemu::Gossip::Menu menu(pObject->GetGUID(), 12227);
+			Arcemu::Gossip::Menu menu(pObject->GetGUID(), objmgr.GetGossipTextForNpc(pObject->GetEntry()), plr->GetSession()->language);
 #ifdef USE_THE_STATUS
 			menu.AddItem(Arcemu::Gossip::ICON_CHAT, GOSSIP_EXARCH_NASUUN_1, 1);   // this is the status
 			menu.AddItem(Arcemu::Gossip::ICON_CHAT, GOSSIP_EXARCH_NASUUN_2, 2);
@@ -274,7 +274,7 @@ class ZephyrGossipScript : public Arcemu::Gossip::Script
 	public:
 		void OnHello(Object* pObject, Player* Plr)
 		{
-			Arcemu::Gossip::Menu::SendQuickMenu(pObject->GetGUID(), 1, Plr, 1, Arcemu::Gossip::ICON_CHAT, "Bring me to Caverns of Time!");
+			Arcemu::Gossip::Menu::SendQuickMenu(pObject->GetGUID(), objmgr.GetGossipTextForNpc(pObject->GetEntry()), Plr, 1, Arcemu::Gossip::ICON_CHAT, "Bring me to Caverns of Time!");
 		}
 
 		void OnSelectOption(Object* pObject, Player* plr, uint32 Id, const char* EnteredCode)
