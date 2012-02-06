@@ -18,31 +18,6 @@
 
 #include "Setup.h"
 
-class FallenHero : public Arcemu::Gossip::Script
-{
-public:
-	void OnHello(Object *pObject, Player *Plr)
-	{
-		Arcemu::Gossip::Menu menu(pObject->GetGUID(), objmgr.GetGossipTextForNpc(pObject->GetEntry()), Plr->GetSession()->language);
-		if(Plr->HasQuest(11708))
-			menu.AddItem(Arcemu::Gossip::ICON_CHAT, "I need to speak with Corporal.", 1);
-
-		menu.Send(Plr);
-	}
- 
-	void OnSelectOption(Object *pObject, Player *Plr, uint32 Id, const char *EnteredCode)
-	{
-		Arcemu::Gossip::Menu::Complete(Plr);
-
-		if(sEAS.GetNearestCreature(Plr, 7750) == NULL)
-			sEAS.SpawnCreature(Plr, 7750, -10630, -2986.98f, 28.9815f, 4.73538f, 600000 );
-
-		if(sEAS.GetNearestGameObject(Plr, 141980) == NULL)
-			sEAS.SpawnGameobject( Plr, 141980, -10633.4f, -2985.83f, 28.986f, 4.74371f, 1, 0, 0, 0.695946f, -0.718095f );
-	}
-};
-
 void SetupBlastedLandsGossip(ScriptMgr * mgr)
 {
-	mgr->register_creature_gossip(7572, new FallenHero);	// Fallen Hero of the Horde
 }

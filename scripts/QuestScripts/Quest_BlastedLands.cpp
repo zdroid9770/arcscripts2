@@ -18,9 +18,6 @@
 
 #include "Setup.h"
 
-#define SendQuickMenu(textid) objmgr.CreateGossipMenuForPlayer(&Menu, pObject->GetGUID(), textid, plr); \
-	Menu->SendTo(plr);
-
 class HeroesofOld : public QuestScript
 {
 	public:
@@ -44,71 +41,84 @@ class HeroesofOld : public QuestScript
 		}
 };
 
-
-
-class HeroesofOld1 : public GossipScript
+class HeroesofOld1 : public Arcemu::Gossip::Script
 {
 	public:
-		void GossipHello(Object* pObject, Player* plr)
+		void OnHello(Object* pObject, Player* plr)
 		{
-			if(!plr)
-				return;
-
-			GossipMenu* Menu;
-			Creature* general = TO_CREATURE(pObject);
-			if(general == NULL)
-				return;
-
-			objmgr.CreateGossipMenuForPlayer(&Menu, pObject->GetGUID(), 1, plr);
+			Arcemu::Gossip::Menu menu(pObject->GetGUID(), objmgr.GetGossipTextForNpc(pObject->GetEntry()), plr->GetSession()->language);
 			if(plr->GetQuestLogForEntry(2702) || plr->HasFinishedQuest(2702))
-				Menu->AddItem(0, "I need to speak with Corporal.", 1);
-
-			Menu->SendTo(plr);
+				menu.AddItem(Arcemu::Gossip::ICON_CHAT, "I need to speak with Corporal.", 1);
+			menu.Send(plr);
 		}
 
-		void GossipSelectOption(Object* pObject, Player* plr, uint32 Id, uint32 IntId, const char* EnteredCode)
+		void OnSelectOption(Object* pObject, Player* plr, uint32 Id, const char* EnteredCode)
 		{
-			if(!plr)
-				return;
-
 			Creature* general = TO_CREATURE(pObject);
-			if(general == NULL)
-				return;
+			Creature* spawncheckcr = plr->GetMapMgr()->GetInterface()->GetCreatureNearestCoords(plr->GetPositionX(), plr->GetPositionY(), plr->GetPositionZ(), 7750);
 
-			switch(IntId)
+			if(!spawncheckcr)
 			{
-				case 0:
-					GossipHello(pObject, plr);
-					break;
+				general = sEAS.SpawnCreature(plr, 7750, -10619.0f, -2997.0f, 28.8f, 4, 0);
+				general->Despawn(3 * 60 * 1000, 0);
+			}
 
-				case 1:
-					{
-						Creature* spawncheckcr = plr->GetMapMgr()->GetInterface()->GetCreatureNearestCoords(plr->GetPositionX(), plr->GetPositionY(), plr->GetPositionZ(), 7750);
+			GameObject* spawncheckgobj = plr->GetMapMgr()->GetInterface()->GetGameObjectNearestCoords(plr->GetPositionX(), plr->GetPositionY(), plr->GetPositionZ(), 141980);
 
-						if(!spawncheckcr)
-						{
-							general = sEAS.SpawnCreature(plr, 7750, -10619, -2997, 28.8f, 4, 0);
-							general->Despawn(3 * 60 * 1000, 0);
-						}
-
-						GameObject* spawncheckgobj = plr->GetMapMgr()->GetInterface()->GetGameObjectNearestCoords(plr->GetPositionX(), plr->GetPositionY(), plr->GetPositionZ(), 141980);
-
-						if(!spawncheckgobj)
-						{
-							GameObject* generalsbox = sEAS.SpawnGameobject(plr, 141980, -10622, -2994, 28.6f, 4, 4, 0, 0, 0, 0);
-							sEAS.GameobjectDelete(generalsbox, 3 * 60 * 1000);
-						}
-					}
+			if(!spawncheckgobj)
+			{
+				GameObject* generalsbox = sEAS.SpawnGameobject(plr, 141980, -10622.0f, -2994.0f, 28.6f, 4, 4, 0, 0, 0, 0);
+				sEAS.GameobjectDelete(generalsbox, 3 * 60 * 1000);
 			}
 		}
+};
 
+class FallenHero : public Arcemu::Gossip::Script
+{
+	public:
+		void OnHello(Object *pObject, Player *Plr)
+		{
+			Arcemu::Gossip::Menu menu(pObject->GetGUID(), objmgr.GetGossipTextForNpc(pObject->GetEntry()), Plr->GetSession()->language);
+			if(Plr->GetQuestLogForEntry(11708))
+				menu.AddItem(Arcemu::Gossip::ICON_CHAT, "I need to speak with Corporal.", 1);
+
+			menu.Send(Plr);
+		}
+	 
+		void OnSelectOption(Object *pObject, Player *Plr, uint32 Id, const char *EnteredCode)
+		{
+			Arcemu::Gossip::Menu::Complete(Plr);
+
+			if(sEAS.GetNearestCreature(Plr, 7750) == NULL)
+				sEAS.SpawnCreature(Plr, 7750, -10630, -2986.98f, 28.9815f, 4.73538f, 600000 );
+
+			if(sEAS.GetNearestGameObject(Plr, 141980) == NULL)
+				sEAS.SpawnGameobject( Plr, 141980, -10633.4f, -2985.83f, 28.986f, 4.74371f, 1, 0, 0, 0.695946f, -0.718095f );
+		}
+};
+
+class DeathlyUsher : public Arcemu::Gossip::Script
+{
+	public:
+		void OnHello(Object *pObject, Player *Plr)
+		{
+			Arcemu::Gossip::Menu menu(pObject->GetGUID(), objmgr.GetGossipTextForNpc(pObject->GetEntry()), Plr->GetSession()->language);
+			if(Plr->GetQuestLogForEntry(3628) && Plr->HasItemCount(10757, 1))
+				menu.AddItem(Arcemu::Gossip::ICON_CHAT, "I wish to to visit the Rise of the Defiler.", 1);
+			menu.Send(Plr);
+		}
+	 
+		void OnSelectOption(Object *pObject, Player *Plr, uint32 Id, const char *EnteredCode)
+		{
+			Arcemu::Gossip::Menu::Complete(Plr);
+			TO_CREATURE(pObject)->CastSpell(Plr, 12885, true);
+		}
 };
 
 void SetupBlastedLands(ScriptMgr* mgr)
 {
-	QuestScript* HeroesoO = new HeroesofOld();
-	mgr->register_quest_script(2702, HeroesoO);
-
-	GossipScript* gossip1 = new HeroesofOld1();
-	mgr->register_gossip_script(7572, gossip1);
+	mgr->register_quest_script(2702, new HeroesofOld);
+	mgr->register_creature_gossip(7572, new HeroesofOld1);
+	mgr->register_creature_gossip(7572, new FallenHero);	// Fallen Hero of the Horde
+	mgr->register_creature_gossip(8816, new DeathlyUsher);
 }
