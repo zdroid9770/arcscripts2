@@ -24,7 +24,6 @@ class StormwindGuard : public Arcemu::Gossip::Script
 		void OnHello(Object* pObject, Player* Plr)
 		{
 			Arcemu::Gossip::Menu menu(pObject->GetGUID(), 933);
-
 			menu.AddItem(Arcemu::Gossip::ICON_CHAT, "Auction House"			, 1);
 			menu.AddItem(Arcemu::Gossip::ICON_CHAT, "Bank of Stormwind"		, 2);
 			menu.AddItem(Arcemu::Gossip::ICON_CHAT, "Stormwind Harbor"		, 3);
@@ -459,11 +458,6 @@ class GoldshireGuard : public Arcemu::Gossip::Script
 					Plr->Gossip_SendPOI(-9376.12f, -75.23f, 7, 99, 0, "Eldrin");
 					Arcemu::Gossip::Menu::SendSimpleMenu(pObject->GetGUID(), 4285, Plr);
 				}break;
-			case 39:	// Lexicon of Power
-				{
-					Plr->Gossip_SendPOI(-8851.0f, 856.599f, 7, 99, 0, "Stormwind Inscription");
-					Arcemu::Gossip::Menu::SendSimpleMenu(pObject->GetGUID(), 14174, Plr);
-				}break;
 			}
 		}
 };
@@ -505,10 +499,11 @@ class SWHarborFlyAround : public Arcemu::Gossip::Script
 
 			menu.Send(Plr);
 		}
+
 		void OnSelectOption(Object* pObject, Player* Plr, uint32 Id, const char* Code)
 		{
 			Arcemu::Gossip::Menu::Complete(Plr);
-			if(1 == Id)
+			if(Id == 1)
 				Plr->TaxiStart(sTaxiMgr.GetTaxiPath(1041), 25679, 0);
 		}
 
@@ -517,31 +512,35 @@ class SWHarborFlyAround : public Arcemu::Gossip::Script
 
 class IanDrake : public Arcemu::Gossip::Script
 {
-public:
-	void OnHello(Object * pObject, Player* Plr)
-	{
-		Arcemu::Gossip::Menu menu(pObject->GetGUID(), 13441);
-		menu.AddItem(Arcemu::Gossip::ICON_CHAT, "I would like to whisper my secret code to you to receive Tyrael's Hilt.", 1, 0, "", true);
-		menu.Send(Plr);
-	}
-
-	void OnSelectOption(Object * pObject, Player* Plr, uint32 Id, const char * Code)
-	{
-		Arcemu::Gossip::Menu::Complete(Plr);
-		if (Id == 1 && Code=="I'm murloc")
+	public:
+		void OnHello(Object * pObject, Player* Plr)
 		{
-			Plr->GetItemInterface()->CalculateFreeSlots(ItemPrototypeStorage.LookupEntry(39656));
-			Plr->GetItemInterface()->AddItemToFreeSlot(objmgr.CreateItem(39656, Plr));              // Tyrael's Hilt
+			Arcemu::Gossip::Menu menu(pObject->GetGUID(), 13441);
+			menu.AddItem(Arcemu::Gossip::ICON_CHAT, "I would like to whisper my secret code to you to receive Tyrael's Hilt.", 1, 0, "", true);
+			menu.Send(Plr);
 		}
-	}
+
+		void OnSelectOption(Object * pObject, Player* Plr, uint32 Id, const char * Code)
+		{
+			Arcemu::Gossip::Menu::Complete(Plr);
+
+			//player will not allowed to get it too easy :P
+			int nCode = rand()%10+1;
+			if (Id == 1 && Code == (char*)nCode)
+			{
+				Plr->GetItemInterface()->CalculateFreeSlots(ItemPrototypeStorage.LookupEntry(39656));
+				Plr->GetItemInterface()->AddItemToFreeSlot(objmgr.CreateItem(39656, Plr));              // Tyrael's Hilt
+			}
+		}
 };
  
-void SetupStormwindGossip(ScriptMgr* mgr)
+void SetupElwynForestGossip(ScriptMgr* mgr)
 {
-	mgr->register_creature_gossip(68,		new StormwindGuard);				// Stormwind City Guard
-	mgr->register_creature_gossip(1976,		new StormwindGuard);				// Stormwind City Patroller
-	mgr->register_creature_gossip(29712,	new StormwindGuard);				// Stormwind Harbor Guard
-	mgr->register_creature_gossip(2708,		new ArchmageMalin_Gossip); 			// Archmage Malin
+	mgr->register_creature_gossip(68,		new StormwindGuard);			// Stormwind City Guard
+	mgr->register_creature_gossip(1976,		new StormwindGuard);			// Stormwind City Patroller
+	mgr->register_creature_gossip(29712,	new StormwindGuard);			// Stormwind Harbor Guard
+	mgr->register_creature_gossip(1423,		new GoldshireGuard);			// Stormwind Guard 
+	mgr->register_creature_gossip(2708,		new ArchmageMalin_Gossip); 		// Archmage Malin
 	mgr->register_creature_gossip(29154,	new SWHarborFlyAround);
 	mgr->register_creature_gossip(29093,	new IanDrake);
 }

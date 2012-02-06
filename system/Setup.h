@@ -101,24 +101,25 @@ void SetupZulDrakGameobjects(ScriptMgr * mgr);
 //GOSSIP
 void SetupCrystalsongForestGossip(ScriptMgr * mgr);
 void SetupInnkeepers(ScriptMgr* mgr);
-void SetupGuardGossip(ScriptMgr* mgr);
 void SetupTrainerScript(ScriptMgr* mgr);
 void SetupMulgoreGossip(ScriptMgr* mgr);
-void SetupShattrathGossip(ScriptMgr* mgr);
+void SetupTerrokarForestGossip(ScriptMgr* mgr);
 void SetupTanarisGossip(ScriptMgr* mgr);
 void SetupMoongladeGossip(ScriptMgr* mgr);
-void SetupStormwindGossip(ScriptMgr* mgr);
-void SetupDarnassusGossip(ScriptMgr* mgr);
-void SetupUndercityGossip(ScriptMgr* mgr);
-void SetupIronforgeGossip(ScriptMgr* mgr);
-void SetupDalaranGossip(ScriptMgr* mgr);
+void SetupElwynForestGossip(ScriptMgr* mgr);
+void SetupTeldrassilGossip(ScriptMgr* mgr);
+void SetupTirisfalGladesGossip(ScriptMgr* mgr);
+void SetupDunMoroghGossip(ScriptMgr* mgr);
+void SetupCrystalsongForestGossip(ScriptMgr* mgr);
 void SetupTheramoreGossip(ScriptMgr* mgr);
 void SetupDarkmoonFaireGossip(ScriptMgr* mgr);
-void SetupTeldrassilGossip(ScriptMgr* mgr);
 void SetupBoreanTundraGossip(ScriptMgr* mgr);
 void SetupDragonblightGossip(ScriptMgr* mgr);
 void SetupGeneralGossip(ScriptMgr* mgr);
 void SetupBlastedLandsGossip(ScriptMgr* mgr);
+void SetupAzureMystIsleGossip(ScriptMgr* mgr);
+void SetupDuratorGossip(ScriptMgr* mgr);
+void SetupEversongWoodsGossip(ScriptMgr* mgr);
 
 //INSTANCE
 void SetupArcatraz(ScriptMgr* mgr);

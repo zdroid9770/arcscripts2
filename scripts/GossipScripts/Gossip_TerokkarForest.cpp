@@ -288,7 +288,7 @@ class ZephyrGossipScript : public Arcemu::Gossip::Script
 		}
 };
 
-void SetupShattrathGossip(ScriptMgr* mgr)
+void SetupTerrokarForestGossip(ScriptMgr* mgr)
 {
 	mgr->register_creature_gossip(19687, new ShattrathGuard);		// Shattrath City Guard
 	mgr->register_creature_gossip(18568, new ShattrathGuard);		// Shattrath City Guard

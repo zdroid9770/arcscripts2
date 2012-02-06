@@ -85,24 +85,25 @@ extern "C" SCRIPT_DECL void _exp_script_register(ScriptMgr* mgr)	// Comment any 
 	//GOSSIP
 	SetupCrystalsongForestGossip(mgr);
 	SetupInnkeepers(mgr);
-	SetupGuardGossip(mgr);
 	SetupTrainerScript(mgr);
 	SetupMulgoreGossip(mgr);
-	SetupShattrathGossip(mgr);
+	SetupTerrokarForestGossip(mgr);
 	SetupTanarisGossip(mgr);
 	SetupMoongladeGossip(mgr);
-	SetupStormwindGossip(mgr);
-	SetupDarnassusGossip(mgr);
-	SetupUndercityGossip(mgr);
-	SetupIronforgeGossip(mgr);
-	SetupDalaranGossip(mgr);
-	SetupTheramoreGossip(mgr);
+	SetupElwynForestGossip(mgr);
 	SetupTeldrassilGossip(mgr);
+	SetupTirisfalGladesGossip(mgr);
+	SetupDunMoroghGossip(mgr);
+	SetupCrystalsongForestGossip(mgr);
+	SetupTheramoreGossip(mgr);
 	SetupDarkmoonFaireGossip(mgr);
 	SetupBoreanTundraGossip(mgr);
 	SetupDragonblightGossip(mgr);
 	SetupGeneralGossip(mgr);
 	SetupBlastedLandsGossip(mgr);
+	SetupAzureMystIsleGossip(mgr);
+	SetupDuratorGossip(mgr);
+	SetupEversongWoodsGossip(mgr);
 
 	//INSTANCES
 	SetupArcatraz(mgr);

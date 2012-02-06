@@ -23,7 +23,7 @@ class FallenHero : public Arcemu::Gossip::Script
 public:
 	void OnHello(Object *pObject, Player *Plr)
 	{
-		Arcemu::Gossip::Menu menu(pObject->GetGUID(), 1391);
+		Arcemu::Gossip::Menu menu(pObject->GetGUID(), objmgr.GetGossipTextForNpc(pObject->GetEntry()), Plr->GetSession()->language);
 		if(Plr->HasQuest(11708))
 			menu.AddItem(Arcemu::Gossip::ICON_CHAT, "I need to speak with Corporal.", 1);
 

@@ -258,63 +258,63 @@ class UndercityGuardOverseer : public Arcemu::Gossip::Script
 			case 0:	OnHello(pObject, Plr);	break;
 			case 1:     // The auction house
 				{
-					Arcemu::Gossip::Menu::SendSimpleMenu(pObject->GetGUID(), 14900, Plr);
 					Plr->Gossip_SendPOI(1647.9f, 258.49f, 7, 99, 0, "Undercity Auction House");
+					Arcemu::Gossip::Menu::SendSimpleMenu(pObject->GetGUID(), 14900, Plr);
 				}break;
 			case 2:     // The bank
 				{
-					Arcemu::Gossip::Menu::SendSimpleMenu(pObject->GetGUID(), 14901, Plr);
 					Plr->Gossip_SendPOI(1595.64f, 232.45f, 7, 99, 0, "Undercity Bank");
+					Arcemu::Gossip::Menu::SendSimpleMenu(pObject->GetGUID(), 14901, Plr);
 				}break;
 			case 3:     // Barber
 				{
-					Arcemu::Gossip::Menu::SendSimpleMenu(pObject->GetGUID(), 14902, Plr);
 					Plr->Gossip_SendPOI(1576.20f, 193.14f, 7, 99, 0, "Undercity Barber");
+					Arcemu::Gossip::Menu::SendSimpleMenu(pObject->GetGUID(), 14902, Plr);
 				}break;
 			case 4:     // The bat handler
 				{
-					Arcemu::Gossip::Menu::SendSimpleMenu(pObject->GetGUID(), 14903, Plr);
 					Plr->Gossip_SendPOI(1565.9f, 271.43f, 7, 99, 0, "Undercity Bat Handler");
+					Arcemu::Gossip::Menu::SendSimpleMenu(pObject->GetGUID(), 14903, Plr);
 				}break;
 			case 5:    // The battlemaster
 				{
-					Arcemu::Gossip::Menu::SendSimpleMenu(pObject->GetGUID(), 14904, Plr);
 					Plr->Gossip_SendPOI(1300.33f, 350.92f, 7, 99, 0, "Battlemasters Undercity");
+					Arcemu::Gossip::Menu::SendSimpleMenu(pObject->GetGUID(), 14904, Plr);
 				}break;
 			case 6:     // The guild master
 				{
-					Arcemu::Gossip::Menu::SendSimpleMenu(pObject->GetGUID(), 14911, Plr);
 					Plr->Gossip_SendPOI(1594.17f, 205.57f, 7, 99, 0, "Undercity Guild Master");
+					Arcemu::Gossip::Menu::SendSimpleMenu(pObject->GetGUID(), 14911, Plr);
 				}break;
 			case 7:     // The inn
 				{
-					Arcemu::Gossip::Menu::SendSimpleMenu(pObject->GetGUID(), 14913, Plr);
 					Plr->Gossip_SendPOI(1639.43f, 220.99f, 7, 99, 0, "Undercity Inn");
+					Arcemu::Gossip::Menu::SendSimpleMenu(pObject->GetGUID(), 14913, Plr);
 				}break;
 			case 8:     // Locksmith
 				{
-					Arcemu::Gossip::Menu::SendSimpleMenu(pObject->GetGUID(), 14916, Plr);
 					Plr->Gossip_SendPOI(1499.68f, 53.28f, 7, 99, 0, "Undercity Locksmith");
+					Arcemu::Gossip::Menu::SendSimpleMenu(pObject->GetGUID(), 14916, Plr);
 				}break;
 			case 9:     // The mailbox
 				{
-					Arcemu::Gossip::Menu::SendSimpleMenu(pObject->GetGUID(), 14918, Plr);
 					Plr->Gossip_SendPOI(1632.68f, 219.4f, 7, 99, 0, "Undercity Mailbox");
+					Arcemu::Gossip::Menu::SendSimpleMenu(pObject->GetGUID(), 14918, Plr);
 				}break;
 			case 10:     // The stable master
 				{
-					Arcemu::Gossip::Menu::SendSimpleMenu(pObject->GetGUID(), 14924, Plr);
 					Plr->Gossip_SendPOI(1634.18f, 226.76f, 7, 99, 0, "Anya Maulray");
+					Arcemu::Gossip::Menu::SendSimpleMenu(pObject->GetGUID(), 14924, Plr);
 				}break;
 			case 11:     // The weapon master
 				{
-					Arcemu::Gossip::Menu::SendSimpleMenu(pObject->GetGUID(), 14928, Plr);
 					Plr->Gossip_SendPOI(1670.31f, 324.66f, 7, 99, 0, "Archibald");
+					Arcemu::Gossip::Menu::SendSimpleMenu(pObject->GetGUID(), 14928, Plr);
 				}break;
 			case 12:     // The zeppelin master
 				{
-					Arcemu::Gossip::Menu::SendSimpleMenu(pObject->GetGUID(), 14929, Plr);
 					Plr->Gossip_SendPOI(2059.0f, 274.86f, 7, 99, 0, "Undercity Zeppelin");
+					Arcemu::Gossip::Menu::SendSimpleMenu(pObject->GetGUID(), 14929, Plr);
 				}break;
 			case 13:    // A class trainer
 				{
@@ -444,9 +444,182 @@ class UndercityGuardOverseer : public Arcemu::Gossip::Script
 		}
 };
 
-void SetupUndercityGossip(ScriptMgr* mgr)
+class BrillGuard : public Arcemu::Gossip::Script
+{
+	public:
+		void OnHello(Object* pObject, Player* Plr)
+		{
+			Arcemu::Gossip::Menu menu(pObject->GetGUID(), 2593);
+			menu.AddItem(Arcemu::Gossip::ICON_CHAT, "The bank"			, 1);
+			menu.AddItem(Arcemu::Gossip::ICON_CHAT, "The bat handler"	, 2);
+			menu.AddItem(Arcemu::Gossip::ICON_CHAT, "The inn"			, 3);
+			menu.AddItem(Arcemu::Gossip::ICON_CHAT, "The stable master"	, 4);
+			menu.AddItem(Arcemu::Gossip::ICON_CHAT, "A class trainer"	, 5);
+			menu.AddItem(Arcemu::Gossip::ICON_CHAT, "A profession trainer", 6);
+			menu.Send(Plr);
+		}
+
+		void GossipSelectOption(Object* pObject, Player* Plr, uint32 Id, const char * Code)
+		{
+			switch(Id)
+			{
+				case 0: OnHello(pObject, Plr);break;
+				case 1:		// The bank
+					{
+						Plr->Gossip_SendPOI(1595.64f, 232.45f, 7, 99, 0, "Undercity Bank");
+						Arcemu::Gossip::Menu::SendSimpleMenu(pObject->GetGUID(), 4074, Plr);
+					}break;
+				case 2:		// The bat handler
+					{
+					Plr->Gossip_SendPOI(1565.9f, 271.43f, 7, 99, 0, "Undercity Bat Handler");
+						Arcemu::Gossip::Menu::SendSimpleMenu(pObject->GetGUID(), 4075, Plr);
+					}break;
+				case 3:		// The inn
+					{
+						Plr->Gossip_SendPOI(2246.68f, 241.89f, 7, 99, 0, "Gallows` End Tavern"); 
+						Arcemu::Gossip::Menu::SendSimpleMenu(pObject->GetGUID(), 4076, Plr);
+					}break;
+				case 4:		// The stable master
+					{
+						Plr->Gossip_SendPOI(2267.66f, 319.32f, 7, 99, 0, "Morganus");
+						Arcemu::Gossip::Menu::SendSimpleMenu(pObject->GetGUID(), 5978, Plr);
+					}break;
+				case 5:		// A class trainer
+					{
+						Arcemu::Gossip::Menu menu(pObject->GetGUID(), 4292);
+						menu.AddItem(Arcemu::Gossip::ICON_CHAT, "Mage"			, 7);
+						menu.AddItem(Arcemu::Gossip::ICON_CHAT, "Paladin"		, 8);
+						menu.AddItem(Arcemu::Gossip::ICON_CHAT, "Priest"		, 9);
+						menu.AddItem(Arcemu::Gossip::ICON_CHAT, "Rogue"			, 10);
+						menu.AddItem(Arcemu::Gossip::ICON_CHAT, "Warlock"		, 11);
+						menu.AddItem(Arcemu::Gossip::ICON_CHAT, "Warrior"		, 12);
+						menu.Send(Plr);
+					}break;
+				case 6:		// A profession trainer
+					{
+						Arcemu::Gossip::Menu menu(pObject->GetGUID(), 4300);
+						menu.AddItem(Arcemu::Gossip::ICON_CHAT, "Alchemy"			, 13);
+						menu.AddItem(Arcemu::Gossip::ICON_CHAT, "Blacksmithing"		, 14);
+						menu.AddItem(Arcemu::Gossip::ICON_CHAT, "Cooking"			, 15);
+						menu.AddItem(Arcemu::Gossip::ICON_CHAT, "Enchanting"		, 16);
+						menu.AddItem(Arcemu::Gossip::ICON_CHAT, "Engineering"		, 17);
+						menu.AddItem(Arcemu::Gossip::ICON_CHAT, "First Aid"			, 18);
+						menu.AddItem(Arcemu::Gossip::ICON_CHAT, "Fishing"			, 19);
+						menu.AddItem(Arcemu::Gossip::ICON_CHAT, "Herbalism"			, 20);
+						menu.AddItem(Arcemu::Gossip::ICON_CHAT, "Leatherworking"	, 21);
+						menu.AddItem(Arcemu::Gossip::ICON_CHAT, "Mining"			, 22);
+						menu.AddItem(Arcemu::Gossip::ICON_CHAT, "Skinning"			, 23);
+						menu.AddItem(Arcemu::Gossip::ICON_CHAT, "Tailoring"			, 24);
+						menu.Send(Plr);
+					}break;
+				case 7: //Mage
+					{
+						Plr->Gossip_SendPOI(2259.18f, 240.93f, 7, 99, 0, "Cain Firesong");
+						Arcemu::Gossip::Menu::SendSimpleMenu(pObject->GetGUID(), 4077, Plr);
+					}break;		
+				case 8: //Paladin
+					{
+						Plr->Gossip_SendPOI(1298.98f, 316.51f, 7, 99, 0, "Champion Cyssa Downrose");
+						Arcemu::Gossip::Menu::SendSimpleMenu(pObject->GetGUID(), 10108, Plr);
+					}break;
+				case 9: //Priest
+					{
+						Plr->Gossip_SendPOI(2259.18f, 240.93f, 7, 99, 0, "Dark Cleric Beryl");
+						Arcemu::Gossip::Menu::SendSimpleMenu(pObject->GetGUID(), 4078, Plr);
+					}break;
+				case 10: //Rogue
+					{
+						Plr->Gossip_SendPOI(2259.18f, 240.93f, 7, 99, 0, "Marion Call");
+						Arcemu::Gossip::Menu::SendSimpleMenu(pObject->GetGUID(), 4079, Plr);
+					}break;
+				case 11: //Warlock
+					{
+						Plr->Gossip_SendPOI(2259.18f, 240.93f, 7, 99, 0, "Rupert Boch");
+						Arcemu::Gossip::Menu::SendSimpleMenu(pObject->GetGUID(), 4080, Plr);
+					}break;
+				case 12: //Warrior
+					{
+						Plr->Gossip_SendPOI(2256.48f, 240.32f, 7, 99, 0, "Austil de Mon");
+						Arcemu::Gossip::Menu::SendSimpleMenu(pObject->GetGUID(), 4081, Plr);
+					}break;
+				case 13: //Alchemy
+					{
+						Plr->Gossip_SendPOI(2263.25f, 344.23f, 7, 99, 0, "Carolai Anise");
+						Arcemu::Gossip::Menu::SendSimpleMenu(pObject->GetGUID(), 4082, Plr);
+					}break;
+				case 14: //Blacksmithing
+					{
+						Plr->Gossip_SendPOI(1696.0f, 285.0f, 7, 99, 0, "Undercity Blacksmithing Trainer");	
+						Arcemu::Gossip::Menu::SendSimpleMenu(pObject->GetGUID(), 4083, Plr);
+					}break;
+				case 15: //Cooking
+					{
+						Plr->Gossip_SendPOI(1596.34f, 274.68f, 7, 99, 0, "Undercity Cooking Trainer");
+						Arcemu::Gossip::Menu::SendSimpleMenu(pObject->GetGUID(), 4084, Plr);
+					}break;
+				case 16: //Enchanting
+					{
+						Plr->Gossip_SendPOI(2250.35f, 249.12f, 7, 99, 0, "Vance Undergloom");
+						Arcemu::Gossip::Menu::SendSimpleMenu(pObject->GetGUID(), 4085, Plr);
+					}break;
+				case 17: //Engineering
+					{
+						Plr->Gossip_SendPOI(1408.58f, 143.43f, 7, 99, 0, "Undercity Engineering Trainer");
+						Arcemu::Gossip::Menu::SendSimpleMenu(pObject->GetGUID(), 4086, Plr);
+					}break;
+				case 18: //First Aid
+					{
+						Plr->Gossip_SendPOI(2246.68f, 241.89f, 7, 99, 0, "Nurse Neela");
+						Arcemu::Gossip::Menu::SendSimpleMenu(pObject->GetGUID(), 4087, Plr);
+					}break;
+				case 19: //Fishing
+					{
+						Plr->Gossip_SendPOI(2292.37f, -10.72f, 7, 99, 0, "Clyde Kellen");
+						Arcemu::Gossip::Menu::SendSimpleMenu(pObject->GetGUID(), 4088, Plr);
+					}break;
+				case 20: //Herbalism
+					{
+						Plr->Gossip_SendPOI(2268.21f, 331.69f, 7, 99, 0, "Faruza");
+						Arcemu::Gossip::Menu::SendSimpleMenu(pObject->GetGUID(), 4089, Plr);
+					}break;
+				case 21: //Leatherworking
+					{
+						Plr->Gossip_SendPOI(2027.0f, 78.72f, 7, 99, 0, "Shelene Rhobart");
+						Arcemu::Gossip::Menu::SendSimpleMenu(pObject->GetGUID(), 4090, Plr);
+					}break;
+				case 22: //Mining
+					{
+						Plr->Gossip_SendPOI(1642.88f, 335.58f, 7, 99, 0, "Undercity Mining Trainer");
+						Arcemu::Gossip::Menu::SendSimpleMenu(pObject->GetGUID(), 4091, Plr);
+					}break;
+				case 23: //Skinning
+					{
+						Plr->Gossip_SendPOI(2027, 78.72f, 7, 99, 0, "Rand Rhobart");
+						Arcemu::Gossip::Menu::SendSimpleMenu(pObject->GetGUID(), 4092, Plr); 
+					}break;
+				case 24: //Tailoring
+					{
+						Plr->Gossip_SendPOI(2160.45f, 659.93f, 7, 99, 0, "Bowen Brisboise");
+						Arcemu::Gossip::Menu::SendSimpleMenu(pObject->GetGUID(), 4093, Plr);
+					}break;
+			}
+		}
+};
+
+
+void SetupTirisfalGladesGossip(ScriptMgr* mgr)
 {
 	mgr->register_creature_gossip(5624,  new UndercityGuard);           // Undercity Guardian
 	mgr->register_creature_gossip(36213, new UndercityGuardOverseer);	// Kor'kron Overseer
+	Arcemu::Gossip::Script* brill = new BrillGuard();
+	mgr->register_creature_gossip(5725, brill);			// Deathguard Lundmark
+	mgr->register_creature_gossip(1738, brill);			// Deathguard Terrence
+	mgr->register_creature_gossip(1652, brill);			// Deathguard Burgess
+	mgr->register_creature_gossip(1746, brill);			// Deathguard Cyrus
+	mgr->register_creature_gossip(1745, brill);			// Deathguard Morris
+	mgr->register_creature_gossip(1743, brill);			// Deathguard Lawrence
+	mgr->register_creature_gossip(1744, brill);			// Deathguard Mort
+	mgr->register_creature_gossip(1496, brill);			// Deathguard Dillinger
+	mgr->register_creature_gossip(1742, brill);			// Deathguard Bartholomew
 }
  

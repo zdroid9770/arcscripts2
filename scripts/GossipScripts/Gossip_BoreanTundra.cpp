@@ -38,7 +38,7 @@ class FizzcrankGossip : public Arcemu::Gossip::Script
 public:
 	void OnHello(Object *pObject, Player *Plr)
 	{
-		Arcemu::Gossip::Menu menu(pObject->GetGUID(), 12435);
+		Arcemu::Gossip::Menu menu(pObject->GetGUID(), objmgr.GetGossipTextForNpc(pObject->GetEntry()), Plr->GetSession()->language);
 		if( Plr->HasQuest(11708))
 			menu.AddItem(Arcemu::Gossip::ICON_CHAT, "Tell me what's going on out here, Fizzcrank.", 1);
 		menu.Send(Plr);
@@ -59,7 +59,7 @@ class SurristraszGossip : public Arcemu::Gossip::Script
 public:
 	void OnHello(Object *pObject, Player *Plr)
 	{
-		Arcemu::Gossip::Menu menu(pObject->GetGUID(), 12730);
+		Arcemu::Gossip::Menu menu(pObject->GetGUID(), objmgr.GetGossipTextForNpc(pObject->GetEntry()), Plr->GetSession()->language);
 		menu.AddItem(Arcemu::Gossip::ICON_CHAT, "I'd like passage to the Transitus Shield.", 1); 
 		menu.AddItem(Arcemu::Gossip::ICON_FLIGHTMASTER, "May I use a drake to fly elsewhere?", 2);
 		menu.Send(Plr);
@@ -79,7 +79,7 @@ public:
 
 void SetupBoreanTundraGossip(ScriptMgr* mgr)
 {
-	mgr->register_creature_gossip(30051, new TiareGossipScript);		// Tiare
+	mgr->register_creature_gossip(30051, new TiareGossipScript);	// Tiare
 	mgr->register_creature_gossip(25590, new FizzcrankGossip);		// Fizzcrank Fullthrottle
 	mgr->register_creature_gossip(24795, new SurristraszGossip);	// Surristrasz
 }
