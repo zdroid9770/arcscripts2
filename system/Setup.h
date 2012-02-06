@@ -247,7 +247,7 @@ void SetupQuestGossip(ScriptMgr* mgr);
 void SetupQuestHooks(ScriptMgr* mgr);
 void SetupUnsorted(ScriptMgr* mgr);
 void SetupZulDrak(ScriptMgr * mgr);
-
+void SetupIcecrown(ScriptMgr* mgr);
 
 struct ScriptSpell
 {
