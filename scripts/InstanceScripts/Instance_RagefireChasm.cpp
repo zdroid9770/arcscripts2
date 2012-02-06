@@ -18,21 +18,6 @@
 
 #include "Setup.h"
 
-// Searing Blade Warlock AI by Soulshifter
-#define CN_SEARING_BLADE_WARLOCK	11324
-class SearingBladeWarlockAI : public MoonScriptCreatureAI
-{
-	public:
-		MOONSCRIPT_FACTORY_FUNCTION(SearingBladeWarlockAI, MoonScriptCreatureAI);
-		SearingBladeWarlockAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
-		{
-			// Shadow Bolt
-			AddSpell(20791, Target_Current, 20, 3, 0);
-			// Summon Voidwalker -- Doesnt work (Disabled for now)
-			//CastSpellNowNoScheduling(AddSpell(12746, Target_Self, 0, 0, 0));
-		}
-};
-
 /* GAMEOBJECTS */
 class BloodFilledOrb : public GameObjectAIScript
 {
@@ -65,6 +50,5 @@ class BloodFilledOrb : public GameObjectAIScript
 
 void SetupRagefireChasm(ScriptMgr* mgr)
 {
-	mgr->register_creature_script(CN_SEARING_BLADE_WARLOCK, &SearingBladeWarlockAI::Create);
 	mgr->register_gameobject_script(182024, &BloodFilledOrb::Create);
 }
