@@ -37,7 +37,7 @@ class ArcScripts2 : public ThreadBase
 		ArcScripts2();
 		~ArcScripts2();
 
-		typedef std::unordered_map<uint32, StringTextData> TextDataMap;
+		typedef std::map<uint32, StringTextData> TextDataMap;
 
 		bool run();
         void LoadScriptTexts();
