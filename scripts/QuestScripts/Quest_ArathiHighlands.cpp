@@ -18,62 +18,103 @@
 
 #include "Setup.h"
 
-class SunkenTreasure : public QuestScript
+static LocationExtra PhizzlethorpeWP[]=
 {
-public:
-	void OnQuestStart(Player* mTarget, QuestLogEntry* qLogEntry)
-	{
-		float SSX = mTarget->GetPositionX();
-		float SSY = mTarget->GetPositionY();
-		float SSZ = mTarget->GetPositionZ();
-
-		Creature* creat = mTarget->GetMapMgr()->GetInterface()->GetCreatureNearestCoords(SSX, SSY, SSZ, 2768);
-		if(creat == NULL)
-			return;
-		creat->m_escorter = mTarget;
-		creat->GetAIInterface()->setMoveType(11);
-		creat->GetAIInterface()->StopMovement(3000);
-		creat->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, "Defens Me!");
-		creat->SetUInt32Value(UNIT_NPC_FLAGS, 0);
-
-		sEAS.CreateCustomWaypointMap(creat);
-		sEAS.WaypointCreate(creat, -2078.054443f, -2091.207764f, 9.526212f, 4.770276f, 0, 256, 4049);
-		sEAS.WaypointCreate(creat, -2076.626465f, -2109.960449f, 14.320494f, 4.821321f, 0, 256, 4049);
-		sEAS.WaypointCreate(creat, -2072.851074f, -2123.574219f, 18.482662f, 5.623996f, 0, 256, 4049);
-		sEAS.WaypointCreate(creat, -2063.878906f, -2132.617920f, 21.430487f, 5.512474f, 0, 256, 4049);
-		sEAS.WaypointCreate(creat, -2051.495117f, -2145.205811f, 20.500065f, 5.481060f, 0, 256, 4049);
-		sEAS.WaypointCreate(creat, -2044.748291f, -2152.411377f, 20.158432f, 5.437863f, 0, 256, 4049);
-		sEAS.WaypointCreate(creat, -2044.748291f, -2152.411377f, 20.158432f, 5.437863f, 0, 256, 4049);
-		sEAS.WaypointCreate(creat, -2044.748291f, -2152.411377f, 20.158432f, 5.437863f, 0, 256, 4049);
-		sEAS.WaypointCreate(creat, -2044.748291f, -2152.411377f, 20.158432f, 5.437863f, 0, 256, 4049);
-		sEAS.WaypointCreate(creat, -2044.748291f, -2152.411377f, 20.158432f, 5.437863f, 0, 256, 4049);
-		sEAS.WaypointCreate(creat, -2051.495117f, -2145.205811f, 20.500065f, 5.481060f, 0, 256, 4049);
-		sEAS.WaypointCreate(creat, -2063.878906f, -2132.617920f, 21.430487f, 5.512474f, 0, 256, 4049);
-		sEAS.WaypointCreate(creat, -2072.851074f, -2123.574219f, 18.482662f, 5.623996f, 0, 256, 4049);
-		sEAS.WaypointCreate(creat, -2076.626465f, -2109.960449f, 14.320494f, 4.821321f, 0, 256, 4049);
-		sEAS.WaypointCreate(creat, -2078.054443f, -2091.207764f, 9.526212f, 4.770276f, 0, 256, 4049);
-		sEAS.EnableWaypoints(creat);
-	}
+	(-2077.73f, -2091.17f, 9.49f, 0, 0),
+	(-2077.99f, -2105.33f, 13.24f, 0, 0),
+	(-2074.60f, -2109.67f, 14.24f, 0, 0),
+	(-2076.60f, -2117.46f, 16.67f, 0, 0),
+	(-2073.51f, -2123.46f, 18.42f, 0, 2000),
+	(-2073.51f, -2123.46f, 18.42f, 0, 4000),
+	(-2066.60f, -2131.85f, 21.56f, 0, 0),
+	(-2053.85f, -2143.19f, 20.31f, 0, 0),
+	(-2043.49f, -2153.73f, 20.20f, 0, 10000),
+	(-2043.49f, -2153.73f, 20.20f, 0, 20000),
+	(-2043.49f, -2153.73f, 20.20f, 0, 10000),
+	(-2043.49f, -2153.73f, 20.20f, 0, 2000),
+	(-2053.85f, -2143.19f, 20.31f, 0, 0),
+	(-2066.60f, -2131.85f, 21.56f, 0, 0),
+	(-2073.51f, -2123.46f, 18.42f, 0, 0),
+	(-2076.60f, -2117.46f, 16.67f, 0, 0),
+	(-2074.60f, -2109.67f, 14.24f, 0, 0),
+	(-2077.99f, -2105.33f, 13.24f, 0, 0),
+	(-2077.73f, -2091.17f, 9.49f, 0, 0),
+	(-2066.41f, -2086.21f, 8.97f, 0, 6000),
+	(-2066.41f, -2086.21f, 8.97f, 0, 2000)
 };
 
-class Professor_Phizzlethorpe : public CreatureAIScript
+class SunkenTreasure : public QuestScript
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(Professor_Phizzlethorpe);
-		Professor_Phizzlethorpe(Creature* pCreature) : CreatureAIScript(pCreature) {}
-
-		void OnReachWP(uint32 iWaypointId, bool bForwards)
+		void OnQuestStart(Player* mTarget, QuestLogEntry* qLogEntry)
 		{
-			if(iWaypointId == 15)
+			float SSX = mTarget->GetPositionX();
+			float SSY = mTarget->GetPositionY();
+			float SSZ = mTarget->GetPositionZ();
+
+			Creature* creat = mTarget->GetMapMgr()->GetInterface()->GetCreatureNearestCoords(SSX, SSY, SSZ, 2768);
+			if(creat == NULL)
+				return;
+
+			creat->m_escorter = mTarget;
+			creat->GetAIInterface()->setMoveType(11);
+			creat->GetAIInterface()->StopMovement(3000);
+			creat->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, "Ok, $N. Follow me to the cave where I\'ll attempt to harness the power of the rune stone into these goggles.");
+			creat->SetUInt32Value(UNIT_NPC_FLAGS, 0);
+
+			sEAS.CreateCustomWaypointMap(creat);
+			for(uint8 i = 0; i<21; i++)
 			{
-				_unit->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, "Thanks, I found the fact that, it searched");
-				_unit->Despawn(5000, 1000);
-				sEAS.DeleteWaypoints(_unit);
-				if(_unit->m_escorter == NULL)
-					return;
-				Player* plr = _unit->m_escorter;
-				_unit->m_escorter = NULL;
-				plr->GetQuestLogForEntry(665)->SendQuestComplete();
+				if(i<11)
+					sEAS.WaypointCreate(creat, PhizzlethorpeWP[i].x, PhizzlethorpeWP[i].y, PhizzlethorpeWP[i].z, PhizzlethorpeWP[i].o, PhizzlethorpeWP[i].addition, Flag_Walk, 4049);
+				else
+					sEAS.WaypointCreate(creat, PhizzlethorpeWP[i].x, PhizzlethorpeWP[i].y, PhizzlethorpeWP[i].z, PhizzlethorpeWP[i].o, PhizzlethorpeWP[i].addition, Flag_Run, 4049);
+			}
+			sEAS.EnableWaypoints(creat);
+		}
+};
+
+class Professor_Phizzlethorpe : public MoonScriptCreatureAI
+{
+	public:
+		MOONSCRIPT_FACTORY_FUNCTION(Professor_Phizzlethorpe, MoonScriptCreatureAI)
+		Professor_Phizzlethorpe(Creature * pCreature) : MoonScriptCreatureAI(pCreature)
+		{
+			AddEmote(Event_OnCombatStart, "Help!!! Get these things off me so I can get my work done!", Text_Yell, 0);
+		}
+
+		void OnReachWP(uint32 WpId, bool bForwards)
+		{
+			switch(WpId)
+			{
+				case 4: Emote("I discovered this cave on our first day here. I believe the energy in the stone can be used to our advantage.", Text_Yell, 0); break;
+				case 5: Emote("I\'ll begin drawing energy from the stone. Your job, $N, is to defend me. This place is cursed... trust me.", Text_Yell, 0); break;
+				case 8: Emote("%s begins tinkering with the goggles before the stone.", Text_Yell, 0); break;
+				case 9:
+				{
+					MoonScriptCreatureAI * pCreature1 = SpawnCreature(2776, -2056.41f, -2144.01f, 20.59f, 5.70f);
+					if(pCreature1 != NULL)
+						pCreature1->SetDespawnWhenInactive(true);
+
+					MoonScriptCreatureAI * pCreature2 = SpawnCreature(2776, -2050.17f, -2140.02f, 19.54f, 5.17f);
+					if(pCreature2 != NULL)
+						pCreature2->SetDespawnWhenInactive(true);
+				}break;
+				case 10: Emote("Almost done! Just a little longer!", Text_Yell, 0); break;
+				case 11: Emote("I\'ve done it! I have harnessed the power of the stone into the goggles! Let\'s get out of here!", Text_Yell, 0); break;
+				case 19: Emote("Phew! Glad to be back from that creepy cave.", Text_Yell, 0); break;
+				case 20: 
+				{
+					Emote("%s hands one glowing goggles over to Doctor Draxlegauge.", Text_Yell, 0);
+					Emote("Doctor Draxlegauge will give you further instructions, $N. Many thanks for your help!", Text_Yell, 0);
+					_unit->Despawn(5000, 1000);
+					sEAS.DeleteWaypoints(_unit);
+					if(_unit->m_escorter == NULL)
+						return;
+					Player* plr = _unit->m_escorter;
+					_unit->m_escorter = NULL;
+					plr->GetQuestLogForEntry(665)->SendQuestComplete();
+				}break;
 			}
 		}
 };
