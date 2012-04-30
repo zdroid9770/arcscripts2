@@ -141,7 +141,13 @@ class IcecrownCitadelInstanceScript : public MoonInstanceScript
 		void UpdateEvent()
 		{
 			GameObject * pGO1 = FindClosestGameObjectOnMap(GO_OOZE_RELEASE_VALVE, 4432.27f, 3090.88f, 362.253f);
+			if(pGO1 == NULL)
+				return;
+
 			GameObject * pGO2 = FindClosestGameObjectOnMap(GO_GAS_RELEASE_VALVE, 4280.84f, 3090.88f, 362.335f);
+			if(pGO2 == NULL)
+				return;
+
 			if((pGO1->GetState() == State_Active) && (pGO2->GetState() == State_Active))
 				AddGameObjectStateByEntry(GO_SCIENTIST_ENTRANCE, State_Active);
 		}
