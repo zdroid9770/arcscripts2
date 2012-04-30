@@ -18,6 +18,278 @@
 
 #include "Setup.h"
 
+// Quest 1719 The Affray
+
+#define QUEST_THEAFFRAY 1719
+#define NPC_TWIGGYFLATHEAD 6248
+#define NPC_AFFRAYCHALLENGER 6240
+#define NPC_BIGWILL 6238
+#define SPAWNPOINT_TWIGGYFLATHEAD -1686.14f, -4323.04f, 4.28091f
+#define SPAWNPOINT_AFFRAYCHALLENGER -1679.3000488281f, -4328.9599609375f, 2.5859100818634f, 0.0f
+#define SPAWNPOINT_BIGWILL -1705.0f, -4344.0f, 4.8f, 1.2f
+
+class TwiggyFlatheadAI : public CreatureAIScript
+{
+	bool active;
+	uint8 phase; // 0-4 --> killing challengers, 5 --> killing Big Will
+
+public:
+	ADD_CREATURE_FACTORY_FUNCTION(TwiggyFlatheadAI);
+	TwiggyFlatheadAI(Creature* pCreature) : CreatureAIScript(pCreature)
+	{
+		active = false;
+		phase = 0;
+	}
+
+	// public interface for the affray quest
+	void OnPlayerEnteredCircle(Player *pPlayer)
+	{
+		QuestLogEntry *qle = pPlayer->GetQuestLogForEntry(QUEST_THEAFFRAY);
+		if(qle->CanBeFinished() || qle->HasFailed())
+			return;
+
+		// try to start the affray
+		if(Start())
+		{
+			qle->SetTrigger(0);
+			qle->UpdatePlayerFields();
+		}
+	}
+
+	void OnChallengerDied()
+	{
+		GetUnit()->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, "Challenger is down!");
+
+		phase++;
+		if(phase <= 5) // this means we have to fight another challenger.
+			RegisterAIUpdateEvent(20000); // next in 20 seconds
+		else	// we are ready to fight big will
+			RegisterAIUpdateEvent(1000); // in 1 second.
+	}
+
+	void OnChallengerSurvived()
+	{
+		GetUnit()->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, "Challenger Survived!");
+
+		End();
+	}
+
+	void OnBigWillDied()
+	{
+		GetUnit()->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, "The Affray is over!");
+
+		End();
+	}
+
+	void OnBigWillSurvived()
+	{
+		GetUnit()->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, "Big Will Survived!");
+
+		End();
+	}
+
+	// private stuff
+	bool Start()
+	{
+		if(active) return false;
+
+		// all is fine, lets start the affray
+		active = true;
+		phase = 0;
+
+		GetUnit()->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, "The Affray has begun. Choperation. get ready to fight!");
+
+		// after 5 seconds, start
+		RegisterAIUpdateEvent(5000);
+
+		return true;
+	}
+
+	void End()
+	{
+		RemoveAIUpdateEvent();
+		active = false;
+	}
+
+	void AIUpdate()
+	{
+		RemoveAIUpdateEvent();
+
+		// as long as we killed less than 5, spawn a new challenger
+		if(phase < 5)
+		{
+			SpawnChallenger();
+		}
+		else if(phase == 5)
+		{
+			SpawnBigWill();
+		}
+	}
+
+	void SpawnChallenger()
+	{
+		GetUnit()->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, "You! Enter the fray!");
+
+		Creature *challenger = GetUnit()->GetMapMgr()->GetInterface()->SpawnCreature(NPC_AFFRAYCHALLENGER, SPAWNPOINT_AFFRAYCHALLENGER, true, false, 0, 0);
+		if(!challenger)
+		{
+			// when we get here something bad has happened.
+			End();
+			return;
+		}
+	}
+
+	void SpawnBigWill()
+	{
+		GetUnit()->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, "The first stage is over. Big Will... come on down!");
+
+		Creature *will = GetUnit()->GetMapMgr()->GetInterface()->SpawnCreature(NPC_BIGWILL, SPAWNPOINT_BIGWILL, true, false, 0, 0);
+		if(!will)
+		{
+			// when we get here something bad has happened.
+			End(); 
+			return;  
+		}
+	}
+};
+
+class AffrayChallengerAI : public CreatureAIScript
+{
+public:
+	ADD_CREATURE_FACTORY_FUNCTION(AffrayChallengerAI);
+	AffrayChallengerAI(Creature* pCreature) : CreatureAIScript(pCreature) {}
+
+	void OnLoad()
+	{
+		// Get Twiggy Flathead and store him as linked creature to have nice and easy access to him
+		Creature *twiggy = GetUnit()->GetMapMgr()->GetInterface()->GetCreatureNearestCoords(SPAWNPOINT_TWIGGYFLATHEAD, NPC_TWIGGYFLATHEAD);
+		if(twiggy)
+			SetLinkedCreature(twiggy->GetScript());
+
+		// after 3 minutes we will despawn unless something happens
+		RegisterAIUpdateEvent(3*60*1000);
+	}
+
+	void AIUpdate()
+	{
+		RemoveAIUpdateEvent();
+
+		if(GetUnit()->CombatStatus.IsInCombat()) return;
+
+		TwiggyFlatheadAI *twiggy = (TwiggyFlatheadAI *)GetLinkedCreature();
+		if(twiggy)
+			twiggy->OnChallengerSurvived();
+
+		GetUnit()->Despawn(1,0);
+	}
+
+	void OnDied(Unit* mKiller)
+	{
+		RemoveAIUpdateEvent();
+
+		// good! We were killed so notify Twiggy
+		TwiggyFlatheadAI *twiggy = (TwiggyFlatheadAI *)GetLinkedCreature();
+		if(twiggy)
+			twiggy->OnChallengerDied();
+	}
+
+	void OnCombatStop()
+	{
+		RemoveAIUpdateEvent();
+
+		// well, we are alive and our opponent ran away or died.
+		// notify twiggy and despawn
+		TwiggyFlatheadAI *twiggy = (TwiggyFlatheadAI *)GetLinkedCreature();
+		if(twiggy)
+			twiggy->OnChallengerSurvived();
+
+		GetUnit()->Despawn(1,0);
+	}
+};
+
+class BigWillAI : public CreatureAIScript
+{
+public:
+	ADD_CREATURE_FACTORY_FUNCTION(BigWillAI);
+	BigWillAI(Creature* pCreature) : CreatureAIScript(pCreature) {}
+
+	void OnLoad()
+	{
+		// we are friendly on spawn until we reach the battle place
+		GetUnit()->SetFaction(35);
+
+		// Get Twiggy Flathead and store him as linked creature to have nice and easy access to him
+		Creature *twiggy = GetUnit()->GetMapMgr()->GetInterface()->GetCreatureNearestCoords(SPAWNPOINT_TWIGGYFLATHEAD, NPC_TWIGGYFLATHEAD);
+		if(twiggy)
+			SetLinkedCreature(twiggy->GetScript());
+
+		// set path to walk along to the affray
+		sEAS.CreateCustomWaypointMap(GetUnit());
+		sEAS.WaypointCreate(GetUnit(), -1698, -4344.0f, 4.6f, 0.2f, 0, RUN, 0);
+		sEAS.WaypointCreate(GetUnit(), -1684, -4335.0f, 2.9f, 0.7f, 0, RUN, 0);
+		sEAS.WaypointCreate(GetUnit(), -1683, -4329.0f, 2.8f, 0.0f, 0, RUN, 0);
+		sEAS.EnableWaypoints(GetUnit());
+
+		// after 3 minutes we will despawn unless something happens
+		RegisterAIUpdateEvent(3*60*1000);
+	}
+
+	void OnReachWP(uint32 i, bool fwd)
+	{
+		if(i == 3)
+		{
+			sEAS.DeleteWaypoints(GetUnit());
+			GetUnit()->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, "Ready when you are, warrior.");
+			GetUnit()->SetFaction(GetUnit()->GetProto()->Faction);
+		}
+	}
+
+	void AIUpdate()
+	{
+		RemoveAIUpdateEvent();
+
+		if(GetUnit()->CombatStatus.IsInCombat()) return;
+
+		TwiggyFlatheadAI *twiggy = (TwiggyFlatheadAI *)GetLinkedCreature();
+		if(twiggy)
+			twiggy->OnBigWillSurvived();
+
+		GetUnit()->Despawn(1,0);
+	}
+
+	void OnDied(Unit* mKiller)
+	{
+		RemoveAIUpdateEvent();
+
+		// good! We were killed so notify Twiggy
+		TwiggyFlatheadAI *twiggy = (TwiggyFlatheadAI *)GetLinkedCreature();
+		if(twiggy)
+			twiggy->OnBigWillDied();
+	}
+
+	void OnCombatStop()
+	{
+		RemoveAIUpdateEvent();
+
+		// well, we are alive and our opponent ran away or died.
+		// notify twiggy and despawn
+		TwiggyFlatheadAI *twiggy = (TwiggyFlatheadAI *)GetLinkedCreature();
+		if(twiggy)
+			twiggy->OnBigWillSurvived();
+
+		GetUnit()->Despawn(1,0);
+	}
+};
+
+void AreaTriggerHook(Player *pPlayer, uint32 Id)
+{
+	if(Id == 522 && pPlayer->HasQuest(QUEST_THEAFFRAY))
+	{
+		Creature *twiggy = pPlayer->GetMapMgr()->GetInterface()->GetCreatureNearestCoords(-1686.14f, -4323.04f, 4.28091f, NPC_TWIGGYFLATHEAD);
+		if(twiggy)
+			((TwiggyFlatheadAI *)twiggy->GetScript())->OnPlayerEnteredCircle(pPlayer);
+	}
+}
 
 class TheSummoning : public QuestScript
 {
@@ -119,6 +391,12 @@ class BeatBartleby : public QuestScript
 
 void SetupWarrior(ScriptMgr* mgr)
 {
+	// Quest - The Affray
+	mgr->register_creature_script(NPC_TWIGGYFLATHEAD, &TwiggyFlatheadAI::Create);
+	mgr->register_creature_script(NPC_AFFRAYCHALLENGER, &AffrayChallengerAI::Create);
+	mgr->register_creature_script(NPC_BIGWILL, &BigWillAI::Create);
+	mgr->register_hook(SERVER_HOOK_EVENT_ON_AREATRIGGER, (void*)&AreaTriggerHook);
+
 	mgr->register_quest_script(6176, new TheSummoning);
 	mgr->register_creature_script(6090, &Bartleby::Create);
 	mgr->register_quest_script(1640, new BeatBartleby());
