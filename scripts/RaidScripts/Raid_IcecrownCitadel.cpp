@@ -17,11 +17,9 @@
  */
  
 #include "setup.h"
-
 #define MAP_ICC	631
 
-enum IccEncounters
-{
+enum IccEncounters{
     ICC_LORD_MARROWGAR      = 0,
 	ICC_LADY_DEATHWHISPER,
 	ICC_GUNSHIP,
@@ -31,8 +29,24 @@ enum IccEncounters
     ICC_END
 };
 
-enum IcecrownCitadel
-{
+enum IcecrownCitadel_Creatures{
+	NPC_LICH_KING				= 36597,
+	NPC_LORD_MARROWGAR			= 36612,
+	NPC_FESTERGUT				= 36626,
+	NPC_ROTFACE					= 36627,
+	NPC_PROFESSOR_PUTRICIDE		= 36678,
+	NPC_VALITRA_DREAMWALKER		= 36789,
+	NPC_SINDRAGOSA				= 36853,
+	NPC_LADY_DEATHWHISPER		= 36855,
+	NPC_DEATHBRINGER_SAURFANG	= 37813,
+	NPC_BLOOD_QUEEN_LANATHEL	= 37955,
+	NPC_PRINCE_VALANAR			= 37970
+};
+
+enum IcecrownCitadel_GameObjects{
+	GO_SCIENTIST_AIRLOCK_DOOR_GREEN	= 201614,
+	GO_OOZE_RELEASE_VALVE		= 201615,
+	GO_GAS_RELEASE_VALVE		= 201616,
 	GO_SCOURGE_TELEPORTER1		= 202242,
 	GO_SCOURGE_TELEPORTER2		= 202243,
 	GO_SCOURGE_TELEPORTER3		= 202244,
@@ -66,25 +80,70 @@ class IcecrownCitadelInstanceScript : public MoonInstanceScript
 {
 	public:
 		MOONSCRIPT_INSTANCE_FACTORY_FUNCTION(IcecrownCitadelInstanceScript, MoonInstanceScript);
-		IcecrownCitadelInstanceScript(MapMgr* pMapMgr) : MoonInstanceScript(pMapMgr)
-		{
-		}
+		IcecrownCitadelInstanceScript(MapMgr* pMapMgr) : MoonInstanceScript(pMapMgr){}
 
 		void OnPlayerEnter(Player* pPlayer)
 		{
-			//chill of throne
-			pPlayer->CastSpell(pPlayer, 69127, true);
+			pPlayer->CastSpell(pPlayer, 69127, true);	//chill of throne
 		}
 
 		void OnCreatureDeath(Creature* c, Unit* pUnit)
 		{
-			if(c->GetEntry() == 36612)
+			switch(c->GetEntry())
 			{
-				AddGameObjectStateByEntry(GO_MARROWGAR_ENTRANCE, State_Active);
-				AddGameObjectStateByEntry(GO_ICEBLOCK_1, State_Active);
-				AddGameObjectStateByEntry(GO_ICEBLOCK_2, State_Active);
-				AddGameObjectStateByEntry(GO_DAMMED_ENTRANCE, State_Active);
+				case NPC_LORD_MARROWGAR :
+				{
+					AddGameObjectStateByEntry(GO_MARROWGAR_ENTRANCE, State_Active);
+					AddGameObjectStateByEntry(GO_ICEBLOCK_1, State_Active);
+					AddGameObjectStateByEntry(GO_ICEBLOCK_2, State_Active);
+					AddGameObjectStateByEntry(GO_DAMMED_ENTRANCE, State_Active);
+				}break;
+				case NPC_ROTFACE : 
+				{
+					GameObject * pGo1 = FindClosestGameObjectOnMap(GO_OOZE_RELEASE_VALVE, 4432.27f, 3090.88f, 362.253f);
+					if(pGo1 != NULL)
+						pGo1->SetFlags(0);
+				}break;
+				case NPC_FESTERGUT : 
+				{
+					GameObject * pGo2 = FindClosestGameObjectOnMap(GO_GAS_RELEASE_VALVE, 4280.84f, 3090.88f, 362.335f);
+					if(pGo2 != NULL)
+						pGo2->SetFlags(0);
+				}break;
+				default : 
+					break;
 			}
+		}
+
+		void OnGameObjectActivate(GameObject* pGO, Player* pPlayer)
+		{
+			switch(pGO->GetEntry())
+			{
+				case GO_OOZE_RELEASE_VALVE :
+				{
+					pGO->SetState(State_Active);
+					AddGameObjectStateByEntry(GO_SCIENTIST_AIRLOCK_DOOR_GREEN, State_Active);
+					pGO->SetFlags(16);
+					RegisterScriptUpdateEvent();
+				}break;
+				case GO_GAS_RELEASE_VALVE :
+				{
+					pGO->SetState(State_Active);
+					AddGameObjectStateByEntry(GO_SCIENTIST_AIRLOCK_DOOR_ORANGE, State_Active);
+					pGO->SetFlags(16);
+					RegisterScriptUpdateEvent();
+				}break;
+				default:
+					break;
+			}
+		}
+
+		void UpdateEvent()
+		{
+			GameObject * pGO1 = FindClosestGameObjectOnMap(GO_OOZE_RELEASE_VALVE, 4432.27f, 3090.88f, 362.253f);
+			GameObject * pGO2 = FindClosestGameObjectOnMap(GO_GAS_RELEASE_VALVE, 4280.84f, 3090.88f, 362.335f);
+			if((pGO1->GetState() == State_Active) && (pGO2->GetState() == State_Active))
+				AddGameObjectStateByEntry(GO_SCIENTIST_ENTRANCE, State_Active);
 		}
 
 		uint32 GetInstanceData(uint32 pType, uint32 pIndex)
@@ -122,8 +181,7 @@ class IcecrownCitadelInstanceScript : public MoonInstanceScript
 
 
 
-enum TeleporterSpells
-{
+enum TeleporterSpells{
     LIGHT_S_HAMMER_TELEPORT         = 70781,
     ORATORY_OF_THE_DAMNED_TELEPORT  = 70856,
     RAMPART_OF_SKULLS_TELEPORT      = 70857,
@@ -135,13 +193,13 @@ enum TeleporterSpells
 
 static LocationExtra ScourgeTelePos[7]=
 {
-	{-17.1928f, 2211.44f, 30.1158f, 3.14f, 70856},
-	{-503.62f, 2211.47f, 62.8235f, 3.14f, 70856},
-	{-615.145f, 2211.47f, 199.972f, 0, 70857},
-	{-549.131f, 2211.29f, 539.291f, 0, 70858},
-	{4198.42f, 2769.22f, 351.065f, 0, 70859},
-	{4356.580078f, 2565.75f, 220.401993f, 4.90f, 70861},
-	{528.767273f, -2124.845947f, 1043.1f, 3.14f, 70860}
+	{-17.1928f, 2211.44f, 30.1158f, 3.14f, LIGHT_S_HAMMER_TELEPORT},
+	{-503.62f, 2211.47f, 62.8235f, 3.14f, ORATORY_OF_THE_DAMNED_TELEPORT},
+	{-615.145f, 2211.47f, 199.972f, 0, RAMPART_OF_SKULLS_TELEPORT},
+	{-549.131f, 2211.29f, 539.291f, 0, DEATHBRINGER_S_RISE_TELEPORT},
+	{4198.42f, 2769.22f, 351.065f, 0, UPPER_SPIRE_TELEPORT},
+	{4356.580078f, 2565.75f, 220.401993f, 4.90f, SINDRAGOSA_S_LAIR_TELEPORT},
+	{528.767273f, -2124.845947f, 1043.1f, 3.14f, FROZEN_THRONE_TELEPORT}
 };
 
 class ScourgeTeleporterAI : public GameObjectAIScript
@@ -169,13 +227,11 @@ class ScourgeTeleporterAI : public GameObjectAIScript
 class ScourgeTeleporterGossip : public GossipScript
 {
 	public:
-		ScourgeTeleporterGossip() : GossipScript()
-		{
-		}
+		ScourgeTeleporterGossip() : GossipScript(){}
 
 		void OnSelectOption(Object* object, Player* player, uint32 Id, const char* enteredcode)
 		{
-			if(Id >6)
+			if(Id > 6)
 				return;
 
 			Arcemu::Gossip::Menu::Complete(player);
@@ -404,6 +460,6 @@ void SetupIcecrownCitadel(ScriptMgr* mgr)
 	}
 
 	//Lord marrowgar event related
-	mgr->register_creature_script(36612, &LordMarrowgar::Create);
+	mgr->register_creature_script(NPC_LORD_MARROWGAR, &LordMarrowgar::Create);
 	mgr->register_creature_script(NPC_COLD_FLAME, &ColdFlameAI::Create);
 }
