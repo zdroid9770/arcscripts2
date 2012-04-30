@@ -118,8 +118,7 @@ class BeatBartleby : public QuestScript
 
 void SetupWarrior(ScriptMgr* mgr)
 {
-	GossipScript* gossip1 = new TheSummoning();
-	mgr->register_gossip_script(6176, gossip1);
+	mgr->register_gossip_script(6176, new TheSummoning);
 	mgr->register_creature_script(6090, &Bartleby::Create);
 	mgr->register_quest_script(1640, new BeatBartleby());
 }
