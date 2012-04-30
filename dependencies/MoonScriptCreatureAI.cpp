@@ -163,6 +163,12 @@ void MoonScriptCreatureAI::SetFlyMode(bool pValue)
 	}
 }
 
+void MoonScriptCreatureAI::SetFacingToObject(Object * pObject)
+{
+	float Facing = _unit->calcRadAngle(_unit->GetPositionX(), _unit->GetPositionY(), pObject->GetPositionX(), pObject->GetPositionY());
+	_unit->SetFacing(Facing);
+}
+
 bool MoonScriptCreatureAI::GetCanEnterCombat()
 {
 	return _unit->GetAIInterface()->GetAllowedToEnterCombat();
