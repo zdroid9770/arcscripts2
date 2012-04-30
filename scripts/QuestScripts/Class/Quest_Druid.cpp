@@ -42,7 +42,7 @@ class Lunaclaw : public CreatureAIScript
 // Lunaclaw ghost gossip
 #define GOSSIP_GHOST_MOONKIN    "You have fought well, spirit. I ask you to grand me the strenght of your body and the strenght of your heart."
 
-class SCRIPT_DECL MoonkinGhost_Gossip : public GossipScript
+class MoonkinGhost_Gossip : public GossipScript
 {
 	public:
 		void GossipHello(Object* pObject, Player* plr)
@@ -50,11 +50,11 @@ class SCRIPT_DECL MoonkinGhost_Gossip : public GossipScript
 			GossipMenu* Menu;
 			objmgr.CreateGossipMenuForPlayer(&Menu, pObject->GetGUID(), 4714, plr);
 
-			if(plr->GetQuestLogForEntry(6002) != NULL)
+			if(plr->HasQuest(6002))
 			{
 				Menu->AddItem(0, GOSSIP_GHOST_MOONKIN, 1);  //Horde
 			}
-			else if(plr->GetQuestLogForEntry(6001) != NULL)
+			else if(plr->HasQuest(6001))
 			{
 				Menu->AddItem(0, GOSSIP_GHOST_MOONKIN, 2);  //Ally
 			}
@@ -84,11 +84,11 @@ class SCRIPT_DECL MoonkinGhost_Gossip : public GossipScript
 						if(qle == NULL)
 							return;
 
-						if(qle->GetMobCount(0) != 0)
+						if(qle->CanBeFinished())
 							return;
 
-						qle->SetMobCount(0, 1);
-						qle->SendUpdateAddKill(0);
+						qle->Complete();
+						qle->SendQuestComplete();
 						qle->UpdatePlayerFields();
 
 						pCreature->Emote(EMOTE_ONESHOT_WAVE);
@@ -105,11 +105,11 @@ class SCRIPT_DECL MoonkinGhost_Gossip : public GossipScript
 						if(qle == NULL)
 							return;
 
-						if(qle->GetMobCount(0) != 0)
+						if(qle->CanBeFinished())
 							return;
 
-						qle->SetMobCount(0, 1);
-						qle->SendUpdateAddKill(0);
+						qle->Complete();
+						qle->SendQuestComplete();
 						qle->UpdatePlayerFields();
 
 						pCreature->Emote(EMOTE_ONESHOT_WAVE);
@@ -127,7 +127,7 @@ class SCRIPT_DECL MoonkinGhost_Gossip : public GossipScript
 #define GOSSIP_GHOST_BEAR_C    "I seek to understand the importance of strength of the heart."
 #define GOSSIP_GHOST_BEAR_D    "I have heard your words, Great Bear Spirit, and I understand. I now seek your blessings to fully learn the way of the Claw."
 
-class SCRIPT_DECL BearGhost_Gossip : public GossipScript
+class BearGhost_Gossip : public GossipScript
 {
 	public:
 		void GossipHello(Object* pObject, Player* plr)
@@ -249,21 +249,14 @@ class MoongladeQuest : public QuestScript
 		}
 };
 
-
-
 void SetupDruid(ScriptMgr* mgr)
 {
-
-	GossipScript* MoonkinGhostGossip = new MoonkinGhost_Gossip;
-	GossipScript* BearGhostGossip = new BearGhost_Gossip;
-	QuestScript* Moonglade = new MoongladeQuest();
-	mgr->register_quest_script(5921, Moonglade);
-	mgr->register_quest_script(5922, Moonglade);
+	mgr->register_quest_script(5921, new MoongladeQuest);
+	mgr->register_quest_script(5922, new MoongladeQuest);
 	mgr->register_creature_script(12138, &Lunaclaw::Create);
 
 	//Register gossip scripts
-	mgr->register_gossip_script(12144, MoonkinGhostGossip); // Ghost of Lunaclaw
-	mgr->register_gossip_script(11956, BearGhostGossip); // Great Bear Spirit
+	mgr->register_gossip_script(12144, new MoonkinGhost_Gossip); // Ghost of Lunaclaw
+	mgr->register_gossip_script(11956, new BearGhost_Gossip); // Great Bear Spirit
 
 }
-

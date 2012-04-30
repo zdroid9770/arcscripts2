@@ -21,32 +21,32 @@
 
 class TheSummoning : public QuestScript
 {
-public:
-	void OnQuestStart(Player* pPlayer, QuestLogEntry* qLogEntry) {}
-	{
-		Creature *windwatcher = pPlayer->GetMapMgr()->GetInterface()->GetCreatureNearestCoords(pPlayer->GetPositionX(), pPlayer->GetPositionY(), pPlayer->GetPositionZ(), 6176);
-		if(!windwatcher) return;
-
-		// questgiver will walk to the place where Cyclonian is spawned
-		// only walk when we are at home
-		if(windwatcher->CalcDistance(250.839996, -1470.579956, 55.4491) > 1) return;
+	public:
+		void OnQuestStart(Player* pPlayer, QuestLogEntry* qLogEntry)
 		{
-			windwatcher->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, "Follow me");
-			sEAS.CreateCustomWaypointMap(windwatcher);
-			sEAS.WaypointCreate(windwatcher, 269.29, -1433.32, 50.31, 0.19, 0, 0, 0);
-			sEAS.WaypointCreate(windwatcher, 328.52, -1442.03, 40.5, 5.65, 0, 0, 0);
-			sEAS.WaypointCreate(windwatcher, 333.31, -1453.69, 42.01, 4.68, 0, 0, 0);
-			sEAS.EnableWaypoints(windwatcher);
-			windwatcher->GetAIInterface()->setMoveType(11);
-		}
-		windwatcher->Despawn(15*60*1000);
+			Creature *windwatcher = pPlayer->GetMapMgr()->GetInterface()->GetCreatureNearestCoords(pPlayer->GetPositionX(), pPlayer->GetPositionY(), pPlayer->GetPositionZ(), 6176);
+			if(!windwatcher) return;
 
-		// spawn cyclonian if not spawned already
-		Creature *cyclonian = pPlayer->GetMapMgr()->GetInterface()->GetCreatureNearestCoords(323.947, -1483.68, 43.1363, 6239);
-		if(pPlayer->GetMapMgr()->GetInterface()->GetCreatureNearestCoords(323.947, -1483.68, 43.1363, 6239) == NULL)
-			cyclonian = sEAS.SpawnCreature(plr, 6239, 323.947, -1483.68, 43.1363, 0.682991);
-		cyclonian->Despawn(15*60*1000);
-	}
+			// questgiver will walk to the place where Cyclonian is spawned
+			// only walk when we are at home
+			if(windwatcher->CalcDistance(250.839996, -1470.579956, 55.4491) > 1) return;
+			{
+				windwatcher->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, "Follow me");
+				sEAS.CreateCustomWaypointMap(windwatcher);
+				sEAS.WaypointCreate(windwatcher, 269.29, -1433.32, 50.31, 0.19, 0, 0, 0);
+				sEAS.WaypointCreate(windwatcher, 328.52, -1442.03, 40.5, 5.65, 0, 0, 0);
+				sEAS.WaypointCreate(windwatcher, 333.31, -1453.69, 42.01, 4.68, 0, 0, 0);
+				sEAS.EnableWaypoints(windwatcher);
+				windwatcher->GetAIInterface()->setMoveType(11);
+			}
+			windwatcher->Despawn(15*60*1000);
+
+			// spawn cyclonian if not spawned already
+			Creature *cyclonian = pPlayer->GetMapMgr()->GetInterface()->GetCreatureNearestCoords(323.947, -1483.68, 43.1363, 6239);
+			if(pPlayer->GetMapMgr()->GetInterface()->GetCreatureNearestCoords(323.947, -1483.68, 43.1363, 6239) == NULL)
+				cyclonian = sEAS.SpawnCreature(plr, 6239, 323.947, -1483.68, 43.1363, 0.682991);
+			cyclonian->Despawn(15*60*1000);
+		}
 };
 
 class Bartleby : public CreatureAIScript
@@ -94,7 +94,6 @@ class Bartleby : public CreatureAIScript
 		{
 			RemoveAIUpdateEvent();
 		}
-
 };
 
 class BeatBartleby : public QuestScript
