@@ -64,60 +64,60 @@ enum IcecrownCitadel
 
 class IcecrownCitadelInstanceScript : public MoonInstanceScript
 {
-public:
-	MOONSCRIPT_INSTANCE_FACTORY_FUNCTION(IcecrownCitadelInstanceScript, MoonInstanceScript);
-	IcecrownCitadelInstanceScript(MapMgr* pMapMgr) : MoonInstanceScript(pMapMgr)
-	{
-	}
-
-	void OnPlayerEnter(Player* pPlayer)
-	{
-		//chill of throne
-		pPlayer->CastSpell(pPlayer, 69127, true);
-	}
-
-	void OnCreatureDeath(Creature* c, Unit* pUnit)
-	{
-		if(c->GetEntry() == 36612)
+	public:
+		MOONSCRIPT_INSTANCE_FACTORY_FUNCTION(IcecrownCitadelInstanceScript, MoonInstanceScript);
+		IcecrownCitadelInstanceScript(MapMgr* pMapMgr) : MoonInstanceScript(pMapMgr)
 		{
-			AddGameObjectStateByEntry(GO_MARROWGAR_ENTRANCE, State_Active);
-			AddGameObjectStateByEntry(GO_ICEBLOCK_1, State_Active);
-			AddGameObjectStateByEntry(GO_ICEBLOCK_2, State_Active);
-			AddGameObjectStateByEntry(GO_DAMMED_ENTRANCE, State_Active);
 		}
-	}
 
-	uint32 GetInstanceData(uint32 pType, uint32 pIndex)
-	{
-		return mEncounters[pIndex];
-	}
-
-	void SetInstanceData(uint32 pType, uint32 pIndex, uint32 pData)
-	{
-		if(pType != Data_EncounterState)
-			return;
-
-		if(pIndex >= ICC_END)
-			return;
-
-		switch(pIndex)
+		void OnPlayerEnter(Player* pPlayer)
 		{
-			case ICC_LORD_MARROWGAR:
+			//chill of throne
+			pPlayer->CastSpell(pPlayer, 69127, true);
+		}
+
+		void OnCreatureDeath(Creature* c, Unit* pUnit)
+		{
+			if(c->GetEntry() == 36612)
 			{
-				if(pData == State_InProgress)
-					AddGameObjectStateByEntry(GO_MARROWGAR_ENTRANCE, State_Inactive);
-				else if(pData == State_NotStarted)
-					AddGameObjectStateByEntry(GO_MARROWGAR_ENTRANCE, State_Active);
-			}break;
-			default:
-				break;
+				AddGameObjectStateByEntry(GO_MARROWGAR_ENTRANCE, State_Active);
+				AddGameObjectStateByEntry(GO_ICEBLOCK_1, State_Active);
+				AddGameObjectStateByEntry(GO_ICEBLOCK_2, State_Active);
+				AddGameObjectStateByEntry(GO_DAMMED_ENTRANCE, State_Active);
+			}
 		}
 
-		mEncounters[pIndex] = pData;
-	}
+		uint32 GetInstanceData(uint32 pType, uint32 pIndex)
+		{
+			return mEncounters[pIndex];
+		}
 
-protected:
-	uint32 mEncounters[ICC_END];
+		void SetInstanceData(uint32 pType, uint32 pIndex, uint32 pData)
+		{
+			if(pType != Data_EncounterState)
+				return;
+
+			if(pIndex >= ICC_END)
+				return;
+
+			switch(pIndex)
+			{
+				case ICC_LORD_MARROWGAR:
+				{
+					if(pData == State_InProgress)
+						AddGameObjectStateByEntry(GO_MARROWGAR_ENTRANCE, State_Inactive);
+					else if(pData == State_NotStarted)
+						AddGameObjectStateByEntry(GO_MARROWGAR_ENTRANCE, State_Active);
+				}break;
+				default:
+					break;
+			}
+
+			mEncounters[pIndex] = pData;
+		}
+
+	protected:
+		uint32 mEncounters[ICC_END];
 };
 
 
@@ -133,16 +133,7 @@ enum TeleporterSpells
     SINDRAGOSA_S_LAIR_TELEPORT      = 70861
 };
 
-struct ScourgeTeleData
-{
-	float x;
-	float y;
-	float z;
-	float o;
-	uint32 spell;
-};
-
-static ScourgeTeleData ScourgeTelePos[7]=
+static LocationExtra ScourgeTelePos[7]=
 {
 	{-17.1928f, 2211.44f, 30.1158f, 3.14f, 70856},
 	{-503.62f, 2211.47f, 62.8235f, 3.14f, 70856},
@@ -184,8 +175,11 @@ class ScourgeTeleporterGossip : public GossipScript
 
 		void OnSelectOption(Object* object, Player* player, uint32 Id, const char* enteredcode)
 		{
+			if(Id >6)
+				return;
+
 			Arcemu::Gossip::Menu::Complete(player);
-			player->CastSpell(player, ScourgeTelePos[Id].spell, true);
+			player->CastSpell(player, ScourgeTelePos[Id].addition, true);
 			player->SafeTeleport(MAP_ICC, player->GetInstanceID(), ScourgeTelePos[Id].x, ScourgeTelePos[Id].y,  ScourgeTelePos[Id].z, ScourgeTelePos[Id].o);
 		}
 };
@@ -215,6 +209,16 @@ class LordMarrowgar : public MoonScriptBossAI
 		LordMarrowgar(Creature* pCreature) : MoonScriptBossAI(pCreature)
 		{
 			mInstance = GetInstanceScript();
+			switch(GetInstanceMode())
+			{
+				case MODE_NORMAL_10MEN : _unit->SetHealth(6972500); break;
+				case MODE_NORMAL_25MEN : _unit->SetHealth(23706500); break;
+				case MODE_HEROIC_10MEN : _unit->SetHealth(10458750); break;
+				case MODE_HEROIC_25MEN : _unit->SetHealth(31376250); break;
+				default :
+					break;
+			}
+
 			Reset();
 
 			//Bone Storm!
@@ -363,7 +367,6 @@ class LordMarrowgar : public MoonScriptBossAI
 	protected:
 		SpellDesc *sBoneStorm;
 		int32 BoneStormTimer, BoneStormInitTimer, ChargeTimer;
-		uint8 pMode;
 		bool IsBoneStormSet;
 		MoonInstanceScript* mInstance;
 };
@@ -382,43 +385,8 @@ class ColdFlameAI : public MoonScriptCreatureAI
 		{
 			SetCanEnterCombat(false);
 			_unit->CastSpell(_unit, SPELL_COLD_FLAME_0, false);
-			Despawn(14*SEC_IN_MS);
+			Despawn(15*SEC_IN_MS);
 		}
-};
-
-bool BoneStorm(uint32 i, Spell* s)
-{
-	if(s->u_caster == NULL || !s->u_caster->isAlive())
-		return true;
-
-	uint32 Dmg = s->u_caster->GetSpellDidHitResult(s->u_caster, s->GetType(), s->GetProto());
-	Dmg += Dmg/10.0f;
-	s->u_caster->HandleProc(PROC_ON_SPELL_HIT, s->u_caster, (SpellEntry*)s->GetProto()->Id, false, Dmg);
-	return true;
-};
-
-bool ColdFlame(uint32 i, Spell* s)
-{
-	if(s->u_caster == NULL || !s->u_caster->isAlive())
-		return true;
-
-	Player * pTarget = s->GetPlayerTarget();
-	if(pTarget == NULL)
-		return true;
-
-	s->u_caster->CastSpell(pTarget, 69138, false);
-	return true;
-};
-
-bool CallColdFlameBoneStorm(uint32 i, Spell* s)
-{
-	if(s->u_caster == NULL || !s->u_caster->isAlive())
-		return true;
-
-	s->u_caster->CastSpell(s->u_caster, 72701, false);
-	s->u_caster->CastSpell(s->u_caster, 72702, false);
-	s->u_caster->CastSpell(s->u_caster, 72703, false);
-	return true;
 };
 
 void SetupIcecrownCitadel(ScriptMgr* mgr)
@@ -438,7 +406,4 @@ void SetupIcecrownCitadel(ScriptMgr* mgr)
 	//Lord marrowgar event related
 	mgr->register_creature_script(36612, &LordMarrowgar::Create);
 	mgr->register_creature_script(NPC_COLD_FLAME, &ColdFlameAI::Create);
-	mgr->register_dummy_spell(69075, &BoneStorm);
-	mgr->register_dummy_spell(69140, &ColdFlame);
-	mgr->register_dummy_spell(72705, &CallColdFlameBoneStorm);
 }
