@@ -57,9 +57,73 @@ class Baron_Vardus : public CreatureAIScript
 		}
 };
 
-
-void SetupHillsbradFoothills(ScriptMgr* mgr)
+class Flame_of_Azel : public GameObjectAIScript
 {
+	public:
+		ADD_GAMEOBJECT_FACTORY_FUNCTION(Flame_of_Azel)
+		Flame_of_Azel(GameObject *g) : GameObjectAIScript(g) {}
+
+		void OnActivate(Player *pPlayer)
+		{
+			QuestLogEntry *pQuests = pPlayer->GetQuestLogForEntry(553);
+			if(pQuests == NULL)
+				return;
+
+			if(Quests->GetMobCount(0) < Quests->GetQuest()->required_mobcount[0])
+			{
+				Quests->SetMobCount(0, qle->GetMobCount(0)+1);
+				Quests->SendUpdateAddKill(0);
+				Quests->UpdatePlayerFields();
+			}
+		}
+};
+
+class Flame_of_Veraz : public GameObjectAIScript
+{
+	public:
+		ADD_GAMEOBJECT_FACTORY_FUNCTION(Flame_of_Veraz)
+		Flame_of_Veraz(GameObject *g) : GameObjectAIScript(g) {}
+
+		void OnActivate(Player *pPlayer)
+		{
+			QuestLogEntry *pQuests = pPlayer->GetQuestLogForEntry(553);
+			if(pQuests == NULL)
+				return;
+
+			if(Quests->GetMobCount(1) < Quests->GetQuest()->required_mobcount[1])
+			{
+				Quests->SetMobCount(1, qle->GetMobCount(1)+1);
+				Quests->SendUpdateAddKill(1);
+				Quests->UpdatePlayerFields();
+			}
+		}
+};
+
+class Flame_of_Uzel : public GameObjectAIScript
+{
+	public:
+		ADD_GAMEOBJECT_FACTORY_FUNCTION(Flame_of_Uzel)
+		Flame_of_Uzel(GameObject *g) : GameObjectAIScript(g) {}
+
+		void OnActivate(Player *pPlayer)
+		{
+			QuestLogEntry *pQuests = pPlayer->GetQuestLogForEntry(553);
+			if(pQuests == NULL)
+				return;
+
+			if(Quests->GetMobCount(2) < Quests->GetQuest()->required_mobcount[2])
+			{
+				Quests->SetMobCount(2, qle->GetMobCount(2)+1);
+				Quests->SendUpdateAddKill(2);
+				Quests->UpdatePlayerFields();
+			}
+		}
+};
+
+void SetupHillsbradFoothills(ScriptMgr* mgr){
 	mgr->register_creature_script(2306, &Baron_Vardus::Create);
-	mgr->register_quest_script(566, new WantedBaronVardus());
+	mgr->register_quest_script(566, new WantedBaronVardus);
+	mgr->register_gameobject_script(1768, &Flame_of_Azel::Create);
+	mgr->register_gameobject_script(1769, &Flame_of_Veraz::Create);
+	mgr->register_gameobject_script(1770, &Flame_of_Uzel::Create);
 }
