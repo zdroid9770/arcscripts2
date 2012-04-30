@@ -69,6 +69,9 @@ class Flame_of_Azel : public GameObjectAIScript
 			if(pQuests == NULL)
 				return;
 
+			if(!pPlayer->HasItemCount(3710, 1))
+				return;
+
 			if(Quests->GetMobCount(0) < Quests->GetQuest()->required_mobcount[0])
 			{
 				Quests->SetMobCount(0, qle->GetMobCount(0)+1);
@@ -90,6 +93,9 @@ class Flame_of_Veraz : public GameObjectAIScript
 			if(pQuests == NULL)
 				return;
 
+			if(!pPlayer->HasItemCount(3710, 1))
+				return;
+
 			if(Quests->GetMobCount(1) < Quests->GetQuest()->required_mobcount[1])
 			{
 				Quests->SetMobCount(1, qle->GetMobCount(1)+1);
@@ -109,6 +115,9 @@ class Flame_of_Uzel : public GameObjectAIScript
 		{
 			QuestLogEntry *pQuests = pPlayer->GetQuestLogForEntry(553);
 			if(pQuests == NULL)
+				return;
+
+			if(!pPlayer->HasItemCount(3710, 1))
 				return;
 
 			if(Quests->GetMobCount(2) < Quests->GetQuest()->required_mobcount[2])
