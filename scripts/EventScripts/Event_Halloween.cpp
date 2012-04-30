@@ -77,6 +77,7 @@ static LocationExtra WaypointGoldshire[] =
 // Shade of the HorsemanAI
 #define CN_SHADE_OF_THE_HORSEMAN				23543
 #define SHADE_OF_THE_HORSEMAN_SUMMON			42394  //Don't think this one is the correct spell
+#define CN_HEADLESS_HORSEMAN_FIRE				23537
 /*
  * Research
  * NPC:

@@ -72,11 +72,11 @@ class Flame_of_Azel : public GameObjectAIScript
 			if(!pPlayer->HasItemCount(3710, 1))
 				return;
 
-			if(Quests->GetMobCount(0) < Quests->GetQuest()->required_mobcount[0])
+			if(pQuests->GetMobCount(0) < pQuests->GetQuest()->required_mobcount[0])
 			{
-				Quests->SetMobCount(0, qle->GetMobCount(0)+1);
-				Quests->SendUpdateAddKill(0);
-				Quests->UpdatePlayerFields();
+				pQuests->SetMobCount(0, pQuests->GetMobCount(0)+1);
+				pQuests->SendUpdateAddKill(0);
+				pQuests->UpdatePlayerFields();
 			}
 		}
 };
@@ -96,11 +96,11 @@ class Flame_of_Veraz : public GameObjectAIScript
 			if(!pPlayer->HasItemCount(3710, 1))
 				return;
 
-			if(Quests->GetMobCount(1) < Quests->GetQuest()->required_mobcount[1])
+			if(pQuests->GetMobCount(1) < pQuests->GetQuest()->required_mobcount[1])
 			{
-				Quests->SetMobCount(1, qle->GetMobCount(1)+1);
-				Quests->SendUpdateAddKill(1);
-				Quests->UpdatePlayerFields();
+				pQuests->SetMobCount(1, pQuests->GetMobCount(1)+1);
+				pQuests->SendUpdateAddKill(1);
+				pQuests->UpdatePlayerFields();
 			}
 		}
 };
@@ -120,11 +120,11 @@ class Flame_of_Uzel : public GameObjectAIScript
 			if(!pPlayer->HasItemCount(3710, 1))
 				return;
 
-			if(Quests->GetMobCount(2) < Quests->GetQuest()->required_mobcount[2])
+			if(pQuests->GetMobCount(2) < pQuests->GetQuest()->required_mobcount[2])
 			{
-				Quests->SetMobCount(2, qle->GetMobCount(2)+1);
-				Quests->SendUpdateAddKill(2);
-				Quests->UpdatePlayerFields();
+				pQuests->SetMobCount(2, pQuests->GetMobCount(2)+1);
+				pQuests->SendUpdateAddKill(2);
+				pQuests->UpdatePlayerFields();
 			}
 		}
 };
