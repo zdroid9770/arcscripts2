@@ -40,8 +40,11 @@ class AmbassadorFlamelash : public MoonScriptCreatureAI
 				for(uint8 i = 0; i<4; i++)
 				{
 					MoonScriptCreatureAI* pSummon = SpawnCreature(9178, _unit->GetPositionX()-rand()%10, _unit->GetPositionY()-rand()%10, _unit->GetPositionZ(), 0);
-					if(pSummon!=NULL)
+					if(pSummon != NULL)
+					{
 						pSummon->MoveTo(_unit);
+						pSummon->SetDespawnWhenInactive(true);
+					}
 
 					pSummon = NULL;
 				}
