@@ -92,6 +92,6 @@ class ProspectorAnvilwardAI : public MoonScriptCreatureAI
 
 void SetupEversongWoods(ScriptMgr* mgr)
 {
-	mgr->register_gossip_script(15420, new ProspectorAnvilwardGossip);
+	mgr->register_creature_gossip(15420, new ProspectorAnvilwardGossip);
 	mgr->register_creature_script(15420, &ProspectorAnvilwardAI::Create);
 }
