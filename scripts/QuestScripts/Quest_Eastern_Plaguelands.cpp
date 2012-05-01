@@ -45,10 +45,10 @@ class Darrowshire_Spirit : public Arcemu::Gossip::Script
 };
 
 //Tirion Fordring (1855)
-class TirionFordringEastern : public GossipScript
+class TirionFordringEastern : public Arcemu::Gossip::Script
 {
 	public:
-		void GossipHello(Object* pObject, Player* plr)
+		void OnHello(Object* pObject, Player* plr)
 		{
 			Arcemu::Gossip::Menu menu(pObject->GetGUID(), objmgr.GetGossipTextForNpc(pObject->GetEntry()), plr->GetSession()->language);
 			QuestLogEntry* quest = plr->GetQuestLogForEntry(5742);
