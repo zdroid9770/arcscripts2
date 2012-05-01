@@ -65,6 +65,7 @@ void SetupTanarisCreature(ScriptMgr * mgr);
 void SetupTheBarrensCreature(ScriptMgr * mgr);
 void SetupTheScarletEnclaveCreature(ScriptMgr * mgr);
 void SetupWesternPlaguelandsCreature(ScriptMgr * mgr);
+void SetupEasternPlaguelandsCreatures(ScriptMgr * mgr);
 
 //EVENT
 void SetupWinterVeil(ScriptMgr* mgr);
