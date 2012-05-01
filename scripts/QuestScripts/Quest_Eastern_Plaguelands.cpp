@@ -16,30 +16,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 #include "Setup.h"
-
-class Flayer : public CreatureAIScript
+class Darrowshire_Spirit : public Arcemu::Gossip::Script
 {
 	public:
-		Flayer(Creature* pCreature) : CreatureAIScript(pCreature) { }
-		static CreatureAIScript* Create(Creature* c) { return new Flayer(c); }
-
-		void OnDied(Unit* mKiller)
-		{
-			if(!mKiller->IsPlayer())
-				return;
-
-			Creature* creat = _unit->GetMapMgr()->GetInterface()->SpawnCreature(11064, _unit->GetPositionX(), _unit->GetPositionY(), _unit->GetPositionZ(), _unit->GetOrientation(), true, false, 0, 0);
-			if(creat)
-				creat->Despawn(60000, 0);
-		}
-
-};
-
-class Darrowshire_Spirit : public GossipScript
-{
-	public:
-
-		void GossipHello(Object* pObject, Player* plr)
+		void OnHello(Object* pObject, Player* plr)
 		{
 			QuestLogEntry* en = plr->GetQuestLogForEntry(5211);
 
@@ -52,10 +32,7 @@ class Darrowshire_Spirit : public GossipScript
 				en->UpdatePlayerFields();
 			}
 
-			GossipMenu* Menu;
-			objmgr.CreateGossipMenuForPlayer(&Menu, pObject->GetGUID(), 3873, plr);
-
-			Menu->SendTo(plr);
+			Arcemu::Gossip::Menu::SendSimpleMenu(pObject->GetGUID(), 3873, plr);
 
 			if(!pObject || !pObject->IsCreature())
 				return;
@@ -65,32 +42,36 @@ class Darrowshire_Spirit : public GossipScript
 			Spirit->SetUInt64Value(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
 			Spirit->Despawn(4000, 0);
 		}
-
 };
 
-class ArajTheSummoner : public CreatureAIScript
+//Tirion Fordring (1855)
+class TirionFordringEastern : public GossipScript
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(ArajTheSummoner);
-		ArajTheSummoner(Creature* pCreature) : CreatureAIScript(pCreature) { }
-
-		void OnDied(Unit* mKiller)
+		void GossipHello(Object* pObject, Player* plr)
 		{
-			if(!mKiller->IsPlayer())
-				return;
+			Arcemu::Gossip::Menu menu(pObject->GetGUID(), objmgr.GetGossipTextForNpc(pObject->GetEntry()), plr->GetSession()->language);
+			QuestLogEntry* quest = plr->GetQuestLogForEntry(5742);
+			if(plr->HasQuest(5742) && plr->getStandState() == STANDSTATE_SIT)
+				menu.AddItem(Arcemu::Gossip::ICON_CHAT, "I am ready to hear your tale, Tirion.", 1);
+			sQuestMgr.FillQuestMenu(TO_CREATURE(pObject), plr, menu);
+			menu.Send(plr);
+		}
 
-			GameObject* go = sEAS.SpawnGameobject(TO_PLAYER(mKiller), 177241, _unit->GetPositionX(), _unit->GetPositionY(), _unit->GetPositionZ(), _unit->GetOrientation(), 1, 0, 0, 0, 0);
-			sEAS.GameobjectDelete(go, 60000);
+		void OnSelectOption(Object* pObject, Player* Plr, uint32 Id, const char* Code)
+		{
+			switch(Id)
+			{
+				case 1: Arcemu::Gossip::Menu::SendQuickMenu(pObject->GetGUID(), 4493, Plr, 2, Arcemu::Gossip::ICON_CHAT, "Thank you, Tirion.  What of your identity?"); break;
+				case 2: Arcemu::Gossip::Menu::SendQuickMenu(pObject->GetGUID(), 4494, Plr, 3, Arcemu::Gossip::ICON_CHAT, "That is terrible."); break;
+				case 3: Arcemu::Gossip::Menu::SendQuickMenu(pObject->GetGUID(), 4495, Plr, 4, Arcemu::Gossip::ICON_CHAT, "I will, Tirion."); break;
+				case 4: Plr->GetQuestLogForEntry(5742)->SendQuestComplete(); break;
+			}
 		}
 };
 
 void SetupEasternPlaguelands(ScriptMgr* mgr)
 {
-	GossipScript* gs = new Darrowshire_Spirit();
-
-	mgr->register_gossip_script(11064, gs);
-	mgr->register_creature_script(8532, &Flayer::Create);
-	mgr->register_creature_script(8531, &Flayer::Create);
-	mgr->register_creature_script(8530, &Flayer::Create);
-	mgr->register_creature_script(1852, &ArajTheSummoner::Create);
+	mgr->register_creature_gossip(11064, new Darrowshire_Spirit);
+	mgr->register_creature_gossip(1855, new TirionFordringEastern);
 }
