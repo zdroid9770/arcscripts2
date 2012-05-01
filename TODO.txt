@@ -4,11 +4,10 @@ Main
 New features:
 	* Add DoScriptText(in progress)
 	* Add script data (waypoints, texts data, gossip data) loads (not in progress)
-	* MoonScriptEscortAI (in progress)
 
 General:
 	* Add base documentation
 	* Drop CreatureAIScript use from scripts
 	* Update timer's functions
 	* Finish all repo structure regroups
-	* Explicit class functions
+	* Add blizzlike agroo and wipe to instances encounters
