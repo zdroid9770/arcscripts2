@@ -18,6 +18,20 @@
 
 #include "Setup.h"
 
+class ProphecyofAkida : public GameObjectAIScript
+{
+	public:
+		ADD_GAMEOBJECT_FACTORY_FUNCTION(ProphecyofAkida)
+		ProphecyofAkida(GameObject *goinstance) : GameObjectAIScript(goinstance) {}
+
+		void OnActivate(Player *pPlayer)
+		{
+			Creature *prisoner = sEAS.GetNearestCreature(pPlayer, 17375);
+			if(pPlayer->HasQuest(9544) && prisoner)
+				prisoner->Despawn(1, DEFAULT_DESPAWN_TIMER);
+		}
+};
+
 //#define BLIZZLIKE
 
 class DraeneiFishingNet : public GossipScript
@@ -59,17 +73,15 @@ class DraeneiFishingNet : public GossipScript
 					NewCreature->GetAIInterface()->StopMovement(500);
 					NewCreature->setAttackTimer(1000, false);
 					NewCreature->m_noRespawn = true;
-				};
-
+				}
 				return;
-			};
+			}
 
 			sEAS.AddItem(23614, pPlayer);
 			QuestEntry->SendUpdateAddKill(1);
 			QuestEntry->UpdatePlayerFields();
 			pPlayer->Gossip_Complete();
-		};
-
+		}
 };
 
 typedef std::pair< uint64, Creature* > QuestDefinition;
@@ -312,10 +324,11 @@ class ChieftainOomoorooQAI : public CreatureAIScript
 
 void SetupAzuremystIsle(ScriptMgr* mgr)
 {
-	//mgr->register_item_gossip_script( 23654, CREATE_GOSSIPSCRIPT( DraeneiFishingNet ) );
-	/*mgr->register_quest_script( 9539, new TotemofCoo() );
-	mgr->register_quest_script( 9540, new TotemofTikti());
-	mgr->register_quest_script( 9541, new TotemofYor() );
-	mgr->register_quest_script( 9542, new TotemofVark() );*/
+	mgr->register_gameobject_script(181730, &ProphecyofAkida::Create);	// Bristlelimb Cage
+	mgr->register_item_gossip_script(23654, new DraeneiFishingNet);
+	mgr->register_quest_script(9539, new TotemofCoo);
+	mgr->register_quest_script(9540, new TotemofTikti);
+	mgr->register_quest_script(9541, new TotemofYor);
+	mgr->register_quest_script(9542, new TotemofVark);
 	mgr->register_creature_script(17189, &ChieftainOomoorooQAI::Create);
 }

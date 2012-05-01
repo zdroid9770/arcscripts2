@@ -18,6 +18,37 @@
 
 #include "Setup.h"
 
+class BrazierOfEverfount : public GameObjectAIScript
+{
+	public:
+		ADD_GAMEOBJECT_FACTORY_FUNCTION(BrazierOfEverfount)
+		BrazierOfEverfount(GameObject *goinstance) : GameObjectAIScript(goinstance) {}
+
+		void OnActivate(Player *pPlayer)
+		{
+			LocationVector vect(pPlayer->GetPositionX()+RandomFloat(2.0f), pPlayer->GetPositionY()+RandomFloat(2.0f), pPlayer->GetPositionZ(), pPlayer->GetOrientation());
+			if(pPlayer->HasQuest(63))
+				sEAS.SpawnCreature(pPlayer, 5894, vect.x, vect.y, vect.z, vect.o, DEFAULT_DESPAWN_TIMER);
+		}
+};
+
+class DustySpellbooks : public GameObjectAIScript
+{
+	public:
+		ADD_GAMEOBJECT_FACTORY_FUNCTION(DustySpellbooks)
+		DustySpellbooks(GameObject *goinstance) : GameObjectAIScript(goinstance) {}
+
+		void OnLootTaken(Player *pLooter, ItemPrototype *pItemInfo)
+		{
+			if(pLooter->HasQuest(422))
+			{
+				LocationVector vect(pLooter->GetPositionX()+RandomFloat(2.0f), pLooter->GetPositionY()+RandomFloat(2.0f), pLooter->GetPositionZ(), pLooter->GetOrientation());
+				Creature* NewCreature = sEAS.SpawnCreature(pLooter, 1770, vect.x, vect.y, vect.z, vect.o, DEFAULT_DESPAWN_TIMER);
+				NewCreature->SendChatMessage(CHAT_MSG_MONSTER_YELL, LANG_UNIVERSAL, "The Sons of Arugal will rise against all who challenge the power of the Moonrage!");
+			}
+		}
+};
+
 class EscortingErland : public QuestScript
 {
 	public:
@@ -95,8 +126,10 @@ class Nightlash : public CreatureAIScript
 
 void SetupSilverpineForest(ScriptMgr* mgr)
 {
-	/*mgr->register_quest_script(435, new EscortingErland());*/
+	mgr->register_quest_script(435, new EscortingErland);
 	mgr->register_creature_script(1978, &Deathstalker_Erland::Create);
 	mgr->register_creature_script(1773, &Nightlash::Create);
 	mgr->register_creature_script(1772, &Nightlash::Create);
+	mgr->register_gameobject_script(113791, &BrazierOfEverfount::Create);	// Brazier of Everfount
+	mgr->register_gameobject_script(1571,   &DustySpellbooks::Create);	// Dusty Spellbooks
 }

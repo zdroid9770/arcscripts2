@@ -49,7 +49,6 @@ extern "C" SCRIPT_DECL void _exp_script_register(ScriptMgr* mgr)	// Comment any 
 	SetupTheBarrensCreature(mgr);
 	SetupTheScarletEnclaveCreature(mgr);
 	SetupWesternPlaguelandsCreature(mgr);
-	SetupWetlands(mgr);
 
 	//EVENTS
 	SetupWinterVeil(mgr);
@@ -234,6 +233,8 @@ extern "C" SCRIPT_DECL void _exp_script_register(ScriptMgr* mgr)	// Comment any 
 	SetupUnsorted(mgr);
 	SetupZulDrak(mgr);
 	SetupIcecrown(mgr);
+	SetupWesternPlaguelandsQuests(mgr);
+	SetupWetlands(mgr);
 }
 
 #ifdef WIN32

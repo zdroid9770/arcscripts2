@@ -73,8 +73,23 @@ class TabletOfTheSeven : public QuestScript
 		}
 };
 
+class DreadmaulRock : public GameObjectAIScript
+{
+	public:
+		ADD_GAMEOBJECT_FACTORY_FUNCTION(DreadmaulRock)
+		DreadmaulRock(GameObject * goinstance) : GameObjectAIScript(goinstance) {}
+
+		void OnActivate(Player * pPlayer)
+		{
+			LocationVector vect(pPlayer->GetPositionX()+RandomFloat(2.0f), pPlayer->GetPositionY()+RandomFloat(2.0f), pPlayer->GetPositionZ(), pPlayer->GetOrientation());
+			if(pPlayer->HasQuest(3821) && sEAS.GetNearestCreature(pPlayer, 9136) == NULL)
+				sEAS.SpawnCreature(pPlayer, 9136, vect.x, vect.y, vect.z, vect.o, DEFAULT_DESPAWN_TIMER);
+		}
+};
+
 void SetupBurningSteppes(ScriptMgr* mgr)
 {
 	mgr->register_creature_gossip(26596, new ragged_john_gossip);
 	mgr->register_quest_script(4296, new TabletOfTheSeven);
+	mgr->register_gameobject_script(160445, &DreadmaulRock::Create);		// Sha'ni Proudtusk's Remains
 }

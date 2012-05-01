@@ -18,10 +18,32 @@
 
 #include "Setup.h"
 
-//*********************************************************************************************
-//							   The Ring of Blood
-//*********************************************************************************************
+class BringMetheEgg : public GameObjectAIScript
+{
+	public:
+		ADD_GAMEOBJECT_FACTORY_FUNCTION(BringMetheEgg)
+		BringMetheEgg(GameObject *goinstance) : GameObjectAIScript(goinstance) {}
 
+		void OnActivate(Player *pPlayer)
+		{
+			if(pPlayer->HasQuest(10111) && !pPlayer->HasAura(33382))
+				pPlayer->CastSpell(pPlayer, 33382, true);
+		}
+};
+
+class MysteriousEgg : public GameObjectAIScript
+{
+	public:
+		ADD_GAMEOBJECT_FACTORY_FUNCTION(MysteriousEgg)
+		MysteriousEgg(GameObject *goinstance) : GameObjectAIScript(goinstance) {}
+
+		void OnActivate(Player *pPlayer)
+		{
+			LocationVector vect(pPlayer->GetPositionX()+RandomFloat(2.0f), pPlayer->GetPositionY()+RandomFloat(2.0f), pPlayer->GetPositionZ(), pPlayer->GetOrientation());
+			if(pPlayer->HasQuest(10111) && sEAS.GetNearestCreature(pPlayer, 19055))
+				sEAS.SpawnCreature(pPlayer, 19055, vect.x, vect.y, vect.z, vect.o, DEFAULT_DESPAWN_TIMER);
+		}
+};
 
 class Quest_The_Ring_of_Blood_The_Final_Challenge : public QuestScript
 {
@@ -365,23 +387,21 @@ class LumpGossipScript : public GossipScript
 
 };
 
-
-
-
 void SetupNagrand(ScriptMgr* mgr)
 {
+	mgr->register_gameobject_script(183146, &BringMetheEgg::Create);	// Jump-a-tron 4000
+	mgr->register_gameobject_script(183147, &MysteriousEgg::Create);	// Mysterious Egg
+
 	mgr->register_creature_script(18351, &NotOnMyWatch::Create);
 	mgr->register_creature_script(18069, &mogorQAI::Create);
 
-	mgr->register_quest_script(9977, new Quest_The_Ring_of_Blood_The_Final_Challenge());
-	mgr->register_quest_script(9973, new Quest_The_Ring_of_Blood_The_Warmaul_Champion());
-	mgr->register_quest_script(9972, new Quest_The_Ring_of_Blood_Skragath());
-	mgr->register_quest_script(9970, new Quest_The_Ring_of_Blood_Rokdar_the_Sundered_Lord());
-	mgr->register_quest_script(9967, new Quest_The_Ring_of_Blood_The_Blue_Brothers());
-	mgr->register_quest_script(9962, new Quest_The_Ring_of_Blood_Brokentoe());
+	mgr->register_quest_script(9977, new Quest_The_Ring_of_Blood_The_Final_Challenge);
+	mgr->register_quest_script(9973, new Quest_The_Ring_of_Blood_The_Warmaul_Champion);
+	mgr->register_quest_script(9972, new Quest_The_Ring_of_Blood_Skragath);
+	mgr->register_quest_script(9970, new Quest_The_Ring_of_Blood_Rokdar_the_Sundered_Lord);
+	mgr->register_quest_script(9967, new Quest_The_Ring_of_Blood_The_Blue_Brothers);
+	mgr->register_quest_script(9962, new Quest_The_Ring_of_Blood_Brokentoe);
 
-	GossipScript* LumpGossip = new LumpGossipScript;
-	mgr->register_gossip_script(18351, LumpGossip);
-
+	mgr->register_gossip_script(18351, new LumpGossipScript);
 }
 

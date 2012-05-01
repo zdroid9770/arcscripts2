@@ -37,7 +37,6 @@ public:
 		sEAS.EventCreatureSay( GetUnit(), "All of Draenor shall quake beneath my feet! i Will destroy this world and reshape it in my immage!", 10000 );
 		sEAS.EventCreatureSay( GetUnit(), "Where shall i Begin? i cannot bother myself with a worm such as yourself. Theres a World to be Conquered!", 15000 );
 		sEAS.EventCreatureSay( GetUnit(), "No doubt the fools that banished me are long dead. i shall take the wing and survey my new demense, Pray to whatever gods you hold dear that we do not meet again.", 20000 );
-
 		GetUnit()->Despawn( 25000, 0 );
 	}
 };

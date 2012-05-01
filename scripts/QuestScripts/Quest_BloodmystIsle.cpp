@@ -21,6 +21,50 @@
 #define SendQuickMenu(textid) objmgr.CreateGossipMenuForPlayer(&Menu, pObject->GetGUID(), textid, plr); \
     Menu->SendTo(plr);
 
+class BarrelOfFilth : public GameObjectAIScript
+{
+	public:
+		ADD_GAMEOBJECT_FACTORY_FUNCTION(BarrelOfFilth)
+		BarrelOfFilth(GameObject * goinstance) : GameObjectAIScript(goinstance) {}
+
+		void OnActivate(Player * pPlayer)
+		{
+			LocationVector vect(pPlayer->GetPositionX()+RandomFloat(2.0f), pPlayer->GetPositionY()+RandomFloat(2.0f), pPlayer->GetPositionZ(), pPlayer->GetOrientation());
+			if(pPlayer->HasQuest(9508))
+				sEAS.SpawnCreature(pPlayer, 17359, vect.x, vect.y, vect.z, vect.o, DEFAULT_DESPAWN_TIMER);
+		}
+};
+
+class Razormaw : public GameObjectAIScript
+{
+	public:
+		ADD_GAMEOBJECT_FACTORY_FUNCTION(Razormaw)
+		Razormaw(GameObject * goinstance) : GameObjectAIScript(goinstance) {}
+
+		void OnActivate(Player * pPlayer)
+		{
+			if(pPlayer->HasQuest(9689))
+				sEAS.SpawnCreature(pPlayer, 17592, -1203.8f, -12424.7f, 95.36f, 4.7f, DEFAULT_DESPAWN_TIMER);
+		}
+};
+
+class SavingPrincessStillpine : public GameObjectAIScript // TODO: Find what it do on retail.
+{
+	public:
+		ADD_GAMEOBJECT_FACTORY_FUNCTION(SavingPrincessStillpine)
+		SavingPrincessStillpine(GameObject *goinstance) : GameObjectAIScript(goinstance) {}
+
+		void OnActivate(Player *pPlayer)
+		{
+			if(!pPlayer->HasQuest(9667))
+				return;
+
+			Creature *Princess = sEAS.GetNearestCreature(pPlayer, 17682);
+			if(Princess != NULL)
+				Princess->Despawn(1000, DEFAULT_DESPAWN_TIMER);
+		}
+};
+
 class TheKesselRun : public QuestScript
 {
 	public:
@@ -290,6 +334,9 @@ class WebbedCreature : public CreatureAIScript
 
 void SetupBloodmystIsle(ScriptMgr* mgr)
 {
+	mgr->register_gameobject_script(181699, &BarrelOfFilth::Create);			// Barrel of Filth
+	mgr->register_gameobject_script(181988, &Razormaw::Create);					// Ever-burning Pyre
+	mgr->register_gameobject_script(181928, &SavingPrincessStillpine::Create);	// Princess Stillpine's Cage
 	mgr->register_quest_script(9663, new TheKesselRun);
 	mgr->register_gossip_script(17440, new TheKesselRun1);
 	mgr->register_gossip_script(17116, new TheKesselRun2);

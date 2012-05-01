@@ -158,8 +158,8 @@ class ManaThistle : public GameObjectAIScript
 void SetupMiscGameobjects(ScriptMgr * mgr)
 {
 	mgr->register_gameobject_script(173232, &Blacksmithing_Plans_Use::Create);	// Blacksmithing Plans
-	mgr->register_gameobject_script(191538, &DeathGate1::Create);					// Doodad_Nox_portal_purple_bossroom01
-	mgr->register_gameobject_script(191539, &DeathGate2::Create);					// Doodad_Nox_portal_purple_bossroom17
-	mgr->register_gameobject_script(180515, &Blastenheimer5000::Create);			// Blastenheimer 5000 Ultra Cannon
+	mgr->register_gameobject_script(191538, &DeathGate1::Create);				// Doodad_Nox_portal_purple_bossroom01
+	mgr->register_gameobject_script(191539, &DeathGate2::Create);				// Doodad_Nox_portal_purple_bossroom17
+	mgr->register_gameobject_script(180515, &Blastenheimer5000::Create);		// Blastenheimer 5000 Ultra Cannon
 	mgr->register_gameobject_script(181281, &ManaThistle::Create);				// Mana Thistle
 }

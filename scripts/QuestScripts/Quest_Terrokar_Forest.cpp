@@ -21,6 +21,19 @@
 #define SendQuickMenu(textid) objmgr.CreateGossipMenuForPlayer(&Menu, pObject->GetGUID(), textid, plr); \
 	Menu->SendTo(plr);
 
+class TheFallenExarch : public GameObjectAIScript
+{
+	public:
+		ADD_GAMEOBJECT_FACTORY_FUNCTION(TheFallenExarch)
+		TheFallenExarch(GameObject *goinstance) : GameObjectAIScript(goinstance) {}
+
+		void OnActivate(Player *pPlayer)
+		{
+			if(pPlayer->HasQuest(10915))
+				sEAS.SpawnCreature(pPlayer, 22452, -3365.9f, 5143.19f, -9.00132f, 3.05f, DEFAULT_DESPAWN_TIMER);
+		}
+};
+
 // Threat from Above
 class ThreatFromAboveQAI : public CreatureAIScript
 {
@@ -181,8 +194,6 @@ class AnImproperBurial : public CreatureAIScript
 		}
 };
 
-
-
 class TheMomentofTruth : public GossipScript
 {
 	public:
@@ -232,11 +243,11 @@ class TheMomentofTruth : public GossipScript
 					break;
 			}
 		}
-
 };
 
 void SetupTerrokarForest(ScriptMgr* mgr)
 {
+	mgr->register_gameobject_script(184999, &TheFallenExarch::Create);	// Auchenai Coffin
 	mgr->register_creature_script(22144, &ThreatFromAboveQAI::Create);
 	mgr->register_creature_script(22143, &ThreatFromAboveQAI::Create);
 	mgr->register_creature_script(22148, &ThreatFromAboveQAI::Create);

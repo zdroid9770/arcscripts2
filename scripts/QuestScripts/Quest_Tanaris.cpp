@@ -20,7 +20,18 @@
 
 #define SendQuickMenu(textid) objmgr.CreateGossipMenuForPlayer(&Menu, pObject->GetGUID(), textid, plr); \ Menu->SendTo(plr);
 
+class CuregosGold : public GameObjectAIScript
+{
+	public:
+		ADD_GAMEOBJECT_FACTORY_FUNCTION(CuregosGold)
+		CuregosGold(GameObject *goinstance) : GameObjectAIScript(goinstance) {}
 
+		void OnActivate(Player *pPlayer)
+		{
+			if(pPlayer->HasQuest(2882))
+				pPlayer->CastSpell(pPlayer, 11462, true); // Cast spell: "Summon Pirate Treasure and Trigger Mob".
+		}
+};
 
 class SpiritScreeches : public GossipScript
 {
@@ -42,9 +53,6 @@ class SpiritScreeches : public GossipScript
 
 				Menu->SendTo(plr);
 			}
-
-
-
 		}
 
 		void GossipSelectOption(Object* pObject, Player* plr, uint32 Id, uint32 IntId, const char* EnteredCode)
@@ -135,11 +143,8 @@ class StewardOfTime : public GossipScript
 
 void SetupTanaris(ScriptMgr* mgr)
 {
-	GossipScript* Screeches = new SpiritScreeches();
-	mgr->register_gossip_script(8612, Screeches);
-
+	mgr->register_gameobject_script(142189, &CuregosGold::Create);	// Inconspicuous Landmark
+	mgr->register_gossip_script(8612, new SpiritScreeches);
 	mgr->register_creature_script(8612, &ScreecherSpirit::Create);
-
-	GossipScript* StewardOfTimeGossip = new StewardOfTime();
-	mgr->register_gossip_script(20142, StewardOfTimeGossip);
+	mgr->register_gossip_script(20142, new StewardOfTime);
 }

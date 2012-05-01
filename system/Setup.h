@@ -65,7 +65,6 @@ void SetupTanarisCreature(ScriptMgr * mgr);
 void SetupTheBarrensCreature(ScriptMgr * mgr);
 void SetupTheScarletEnclaveCreature(ScriptMgr * mgr);
 void SetupWesternPlaguelandsCreature(ScriptMgr * mgr);
-void SetupWetlands(ScriptMgr *mgr);
 
 //EVENT
 void SetupWinterVeil(ScriptMgr* mgr);
@@ -249,6 +248,8 @@ void SetupQuestHooks(ScriptMgr* mgr);
 void SetupUnsorted(ScriptMgr* mgr);
 void SetupZulDrak(ScriptMgr * mgr);
 void SetupIcecrown(ScriptMgr* mgr);
+void SetupWesternPlaguelandsQuests(ScriptMgr * mgr);
+void SetupWetlands(ScriptMgr *mgr);
 
 struct ScriptSpell
 {

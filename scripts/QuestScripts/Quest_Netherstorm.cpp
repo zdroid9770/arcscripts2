@@ -18,6 +18,19 @@
 
 #include "Setup.h"
 
+class EthereumTransponderZeta : public GameObjectAIScript
+{
+	public:
+		ADD_GAMEOBJECT_FACTORY_FUNCTION(EthereumTransponderZeta)
+		EthereumTransponderZeta(GameObject *goinstance) : GameObjectAIScript(goinstance) {}
+
+		void OnActivate(Player * pPlayer)
+		{
+			if(pPlayer->HasQuest(10339) && sEAS.GetNearestCreature(pPlayer, 20482) == NULL)
+				sEAS.SpawnCreature(pPlayer, 20482, 4017.96f, 2315.91f, 116.418f, pPlayer->GetOrientation()+3.14f, DEFAULT_DESPAWN_TIMER);
+		}
+};
+
 class Veronia : public GossipScript
 {
 	public:
@@ -42,13 +55,12 @@ class Veronia : public GossipScript
 					break;
 			}
 		}
-
 };
 
 
 
 void SetupNetherstorm(ScriptMgr* mgr)
 {
-	mgr->register_gossip_script(20162, new Veronia());
-
+	mgr->register_gameobject_script(184383, &EthereumTransponderZeta::Create);	// Ethereum Transponder Zeta
+	mgr->register_gossip_script(20162, new Veronia);
 }

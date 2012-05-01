@@ -35,21 +35,7 @@ class KaliriNest : public GameObjectAIScript
 		}
 };
 
-class HaaleshiAltar : public GameObjectAIScript
-{
-	public:
-		HaaleshiAltar(GameObject* goinstance) : GameObjectAIScript(goinstance) {}
-		static GameObjectAIScript *Create(GameObject * GO) { return new HaaleshiAltar(GO); }
-
-		void OnActivate(Player * plr)
-		{
-			if(plr->HasQuest(9418))
-				sEAS.SpawnCreature(plr, 17085, -1323.14f, 4042.12f, 117.0f, plr->GetOrientation()+float(M_PI), 360000);
-		}
-};
-
 void SetupHellfirePeninsulaGameobjects(ScriptMgr * mgr)
 {
 	mgr->register_gameobject_script(181582, &KaliriNest::Create);
-	mgr->register_gameobject_script(181606, &HaaleshiAltar::Create);
 }
