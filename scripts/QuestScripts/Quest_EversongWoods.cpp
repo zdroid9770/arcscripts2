@@ -18,141 +18,77 @@
 
 #include "Setup.h"
 
-static LocationExtra ProspectorAnvilwardWaypoints[] =
+static LocationExtra ProspectorAnvilwardWaypoints[]=
 {
-	{ 9294.834f, -6681.092f, 22.428f, 1.284f, 0 },
-	{ 9297.834f, -6671.092f, 22.387f, 0.793f, 0 },
-	{ 9310.375f, -6658.936f, 22.43f,  2.046f, 0 },
-	{ 9306.596f, -6650.905f, 25.222f, 2.666f, 0 },
-	{ 9299.666f, -6648.099f, 28.39f,  3.468f, 0 },
-	{ 9292.345f, -6650.509f, 30.908f, 4.249f, 0 },
-	{ 9289.426f, -6657.825f, 31.829f, 6.154f, 0 },
-	{ 9294.095f, -6658.863f, 34.482f, 6.063f, 0 },
+	{9294.78f, -6682.51f, 22.42f, 	0},
+	{9298.27f, -6667.99f, 22.42f, 	0},
+	{9309.63f, -6658.84f, 22.43f, 	0},
+	{9304.43f, -6649.31f, 26.46f, 	0},
+	{9298.83f, -6648.00f, 28.61f, 	0},
+	{9291.06f, -6653.46f, 31.83f,	2500},
+	{9289.08f, -6660.17f, 31.85f,	5000},
+	{9291.06f, -6653.46f, 31.83f, 	0}
 };
 
-class ProspectorAnvilwardGossip : public GossipScript
+class ProspectorAnvilwardGossip : public Arcemu::Gossip::Script
 {
 	public:
-		void GossipHello(Object* pObject, Player* Plr);
-		void GossipSelectOption(Object* pObject, Player* Plr, uint32 Id, uint32 IntId, const char* EnteredCode);
-		void GossipEnd(Object* pObject, Player* Plr) { Plr->CloseGossip(); }
+		void OnHello(Object* pObject, Player* Plr)
+		{
+			Arcemu::Gossip::Menu menu(pObject->GetGUID(), objmgr.GetGossipTextForNpc(pObject->GetEntry()), Plr->GetSession()->language);
+			if(Plr->HasQuest(8483))
+				menu.AddItem(Arcemu::Gossip::ICON_CHAT, "I need a moment of your time, sir.", 1);
+			menu.Send(Plr);
+		}
+
+		void OnSelectOption(Object* pObject, Player* Plr, uint32 Id, const char* EnteredCode)
+		{
+			switch(Id)
+			{
+				case 1: Arcemu::Gossip::Menu::SendQuickMenu(pObject->GetGUID(), 8240, Plr, 2, Arcemu::Gossip::ICON_CHAT, "Why... yes, of course. I've something to show you right inside this building, Mr. Anvilward."); break;
+				case 2:
+				{
+					Arcemu::Gossip::Menu::Complete(Plr);
+					TO_CREATURE(pObject)->GetAIInterface()->setMoveType(MOVEMENTTYPE_FORWARDTHANSTOP);
+				}break;
+			}
+		}
 };
 
-void ProspectorAnvilwardGossip::GossipHello(Object* pObject, Player* Plr)
-{
-	GossipMenu* Menu;
-	objmgr.CreateGossipMenuForPlayer(&Menu, pObject->GetGUID(), 2, Plr);
-
-	Menu->AddItem(0, "Show me...", 1);
-
-	Menu->SendTo(Plr);
-}
-
-void ProspectorAnvilwardGossip::GossipSelectOption(Object* pObject, Player* Plr, uint32 Id, uint32 IntId, const char* EnteredCode)
-{
-	if(!pObject->IsCreature())
-		return;
-	Creature* _unit = TO< Creature* >(pObject);
-	switch(IntId)
-	{
-		case 1:
-			{
-				QuestLogEntry* qLogEntry = Plr->GetQuestLogForEntry(8483);
-				if(qLogEntry != NULL)
-				{
-					_unit->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, "Follow me!");
-					_unit->m_custom_waypoint_map = new WayPointMap;
-					_unit->GetAIInterface()->SetWaypointMap(_unit->m_custom_waypoint_map);
-					WayPoint* wp = new WayPoint;
-					wp->id = 1;
-					wp->x = _unit->GetSpawnX();
-					wp->y = _unit->GetSpawnY();
-					wp->z = _unit->GetSpawnZ() + 2.05f;
-					wp->o = _unit->GetSpawnO();
-					wp->flags = 256;
-					wp->backwardskinid = wp->forwardskinid = _unit->GetDisplayId();
-					wp->backwardemoteid = wp->forwardemoteid = 0;
-					wp->backwardemoteoneshot = wp->forwardemoteoneshot = false;
-					wp->waittime = 0;
-					_unit->m_custom_waypoint_map->push_back(wp);
-					for(uint32 i = 0; i < sizeof(ProspectorAnvilwardWaypoints) / sizeof(LocationExtra); i++)
-					{
-						wp = new WayPoint;
-						wp->id = i + 2;
-						wp->x = ProspectorAnvilwardWaypoints[i].x;
-						wp->y = ProspectorAnvilwardWaypoints[i].y;
-						wp->z = ProspectorAnvilwardWaypoints[i].z;
-						wp->o = ProspectorAnvilwardWaypoints[i].o;
-						wp->flags = 256;
-						wp->backwardskinid = wp->forwardskinid = _unit->GetDisplayId();
-						wp->backwardemoteid = wp->forwardemoteid = 0;
-						wp->backwardemoteoneshot = wp->forwardemoteoneshot = false;
-						wp->waittime = 0;
-						_unit->m_custom_waypoint_map->push_back(wp);
-					}
-				}
-				else
-				{
-					_unit->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, "I have nothing for you. Go away!");
-				}
-				GossipEnd(pObject, Plr);
-			}
-			break;
-	}
-}
-
-class ProspectorAnvilwardAI : public CreatureAIScript
+class ProspectorAnvilwardAI : public MoonScriptCreatureAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(ProspectorAnvilwardAI);
-		ProspectorAnvilwardAI(Creature* c) : CreatureAIScript(c)
+		MOONSCRIPT_FACTORY_FUNCTION(ProspectorAnvilwardAI, MoonScriptCreatureAI)
+		ProspectorAnvilwardAI(Creature * pCreature) : MoonScriptCreatureAI(pCreature)
 		{
+			for(uint8 i = 0; i<8; i++)
+				AddWaypoint(CreateWaypoint(i, ProspectorAnvilwardWaypoints[i].addition, Flag_Walk, ProspectorAnvilwardWaypoints[i]));
+
+			SetMoveType(Move_None);
 		}
 
-		void OnReachWP(uint32 iWaypointId, bool bForwards)
+		void OnReachWP(uint32 Id, bool bForwards)
 		{
-			if(iWaypointId == sizeof(ProspectorAnvilwardWaypoints) / sizeof(LocationExtra) && bForwards)
+			switch(Id)
 			{
-				_unit->GetAIInterface()->SetWaypointMap(NULL, false);
-				_unit->SetFaction(14);
-				RegisterAIUpdateEvent(10000);
-			}
-			else if(iWaypointId == 2 && !bForwards)
-			{
-				_unit->GetAIInterface()->SetWaypointMap(NULL);
-				_unit->m_custom_waypoint_map = NULL;
-				_unit->GetAIInterface()->MoveTo(_unit->GetSpawnX(), _unit->GetSpawnY(), _unit->GetSpawnZ() + 2.05f, _unit->GetSpawnO());
-				_unit->SetFaction(35);
-			}
-		}
-
-		void AIUpdate()
-		{
-			if(!_unit->CombatStatus.IsInCombat())
-			{
-				RemoveAIUpdateEvent();
-				_unit->GetAIInterface()->SetWaypointMap(_unit->m_custom_waypoint_map);
+				case 0: Emote("Very well. Let\'s see what you have to show me, $N.", Text_Yell, 0); break;
+				case 5: Emote("What manner of trick is this, $R? If you seek to ambush me, I warn you I will not go down quietly!", Text_Yell, 0);
+				case 6: _unit->SetFaction(24); break;
 			}
 		}
 
 		void OnDied(Unit* mKiller)
 		{
-			RemoveAIUpdateEvent();
-			if(_unit->GetAIInterface()->GetWaypointMap() != NULL)
-				_unit->GetAIInterface()->SetWaypointMap(NULL);
-			else if(_unit->m_custom_waypoint_map != NULL)
-			{
-				for(WayPointMap::iterator itr = _unit->m_custom_waypoint_map->begin(); itr != _unit->m_custom_waypoint_map->end(); ++itr)
-					delete(*itr);
-				delete _unit->m_custom_waypoint_map;
-			}
-			_unit->m_custom_waypoint_map = NULL;
-
 			_unit->SetFaction(35);
+			ParentClass::OnDied(mKiller);
+		}
+
+		void OnCombatStop(Unit* pTarget)
+		{
+			_unit->SetFaction(35);
+			ParentClass::OnCombatStop(pTarget);
 		}
 };
-
-
 
 void SetupEversongWoods(ScriptMgr* mgr)
 {
