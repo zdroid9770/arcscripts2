@@ -253,7 +253,6 @@ class LordMarrowgar : public MoonScriptBossAI
 
 			//Bone Storm!
 			sBoneStorm = AddSpell(SPELL_BONE_STORM, Target_Self, 0, 3, 0, 0, 0, false, "BONE STORM!", Text_Yell, 16946, "Lord Marrowgar creates a whirling of bone!");
-			AddPhaseSpell(2, AddSpell(SPELL_COLDFLAME_BONESTORM, Target_Self, 100.0f, 0, 5));
 
 			SetEnrageInfo(AddSpell(SPELL_LM_BERSERK, Target_Self, 0, 0, 0, 0, 0, false, "THE MASTER'S RAGE COURSES THROUGH ME!", Text_Yell, 16945), MINUTE*10*SEC_IN_MS);
 
@@ -352,7 +351,7 @@ class LordMarrowgar : public MoonScriptBossAI
 						if(pTarget != NULL)
 						{
 							MoveTo(pTarget->GetPositionX(), pTarget->GetPositionY(), pTarget->GetPositionZ());
-							SpawnColdFlame();
+							_unit->CastSpell(_unit, SPELL_COLDFLAME_BONESTORM, false);
 						}
 						pTarget = NULL;
 						ResetTimer(ChargeTimer, 5*SEC_IN_MS);
@@ -373,25 +372,6 @@ class LordMarrowgar : public MoonScriptBossAI
 				}break;
 			}
 			ParentClass::AIUpdate();
-		}
-
-		void SpawnColdFlame()
-		{
-			//Spawn cold flame x form
-			float PosX, PosY, PosZ;
-			float IncrValue = 5.0f;
-
-			GetCurrentPosition(PosX, PosY, PosZ);
-
-			//creating loop to spawn x
-			for(uint8 ColdFlameCount = 0; ColdFlameCount<MAX_COLDFLAMES_XFORM; ColdFlameCount++)
-			{
-				SpawnCreature(NPC_COLD_FLAME, PosX+IncrValue, PosY, PosZ);
-				SpawnCreature(NPC_COLD_FLAME, PosX, PosY-IncrValue, PosZ);
-				SpawnCreature(NPC_COLD_FLAME, PosX-IncrValue, PosY, PosZ);
-				SpawnCreature(NPC_COLD_FLAME, PosX, PosY+IncrValue, PosZ);
-				IncrValue += 5.0f;
-			}
 		}
 
 	protected:
