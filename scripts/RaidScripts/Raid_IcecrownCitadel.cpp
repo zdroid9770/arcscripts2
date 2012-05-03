@@ -17,64 +17,7 @@
  */
  
 #include "setup.h"
-#define MAP_ICC	631
-
-enum IccEncounters{
-    ICC_LORD_MARROWGAR      = 0,
-	ICC_LADY_DEATHWHISPER,
-	ICC_GUNSHIP,
-	ICC_SAURFANG,
-	ICC_SINDRAGOSA,
-	ICC_LICH_KING,
-    ICC_END
-};
-
-enum IcecrownCitadel_Creatures{
-	NPC_LICH_KING				= 36597,
-	NPC_LORD_MARROWGAR			= 36612,
-	NPC_FESTERGUT				= 36626,
-	NPC_ROTFACE					= 36627,
-	NPC_PROFESSOR_PUTRICIDE		= 36678,
-	NPC_VALITRA_DREAMWALKER		= 36789,
-	NPC_SINDRAGOSA				= 36853,
-	NPC_LADY_DEATHWHISPER		= 36855,
-	NPC_DEATHBRINGER_SAURFANG	= 37813,
-	NPC_BLOOD_QUEEN_LANATHEL	= 37955,
-	NPC_PRINCE_VALANAR			= 37970
-};
-
-enum IcecrownCitadel_GameObjects{
-	GO_SCIENTIST_AIRLOCK_DOOR_GREEN	= 201614,
-	GO_OOZE_RELEASE_VALVE		= 201615,
-	GO_GAS_RELEASE_VALVE		= 201616,
-	GO_SCOURGE_TELEPORTER1		= 202242,
-	GO_SCOURGE_TELEPORTER2		= 202243,
-	GO_SCOURGE_TELEPORTER3		= 202244,
-	GO_SCOURGE_TELEPORTER4		= 202245,
-	GO_SCOURGE_TELEPORTER5		= 202235,
-	GO_MARROWGAR_ENTRANCE		= 201857,
-	GO_ICEBLOCK_1				= 201910,
-	GO_ICEBLOCK_2				= 201911,
-	GO_DAMMED_ENTRANCE			= 201563,
-	GO_LADY_DEATHWISPER_ELEVATOR	= 202220,
-	GO_SAURFANGS_DOOR			= 201825,
-	GO_GREEN_PLAGUE_ENTRANCE	= 201370,
-	GO_ORANGE_PLAGUE_ENTRANCE	= 201371,
-	GO_SCIENTIST_AIRLOCK_DOOR_ORANGE = 201613,
-	GO_SCIENTIST_ENTRANCE		= 201372,
-	GO_CRIMSON_HALL_DOOR		= 201376,
-	GO_BLOOD_ELF_COUNCIL_DOOR_L	= 201378,
-	GO_BLOOD_ELF_COUNCIL_DOOR_R	= 201377,
-	GO_GREEN_DRAGON_ENTRANCE	= 201375,
-	GO_CACHE_OF_THE_DREAMWALKER	= 202339,
-	GO_GREEN_DRAGON_BOSS_EXIT	= 201374,
-	GO_SINDRAGOSA_ENTRANCE_DOOR	= 201373,
-	GO_SINDRAGOSA_SHORTCUT_EXIT_DOOR = 201379,
-	
-	
-	GO_BLOODWING_DOOR	= 201920,
-	GO_FROSTWING_DOOR	= 201919
-};
+#include "Raid_IcecrownCitadel.h"
 
 class IcecrownCitadelInstanceScript : public MoonInstanceScript
 {
@@ -91,20 +34,20 @@ class IcecrownCitadelInstanceScript : public MoonInstanceScript
 		{
 			switch(c->GetEntry())
 			{
-				case NPC_LORD_MARROWGAR :
+				case NPC_LORD_MARROWGAR:
 				{
 					AddGameObjectStateByEntry(GO_MARROWGAR_ENTRANCE, State_Active);
 					AddGameObjectStateByEntry(GO_ICEBLOCK_1, State_Active);
 					AddGameObjectStateByEntry(GO_ICEBLOCK_2, State_Active);
 					AddGameObjectStateByEntry(GO_DAMMED_ENTRANCE, State_Active);
 				}break;
-				case NPC_ROTFACE : 
+				case NPC_ROTFACE: 
 				{
 					GameObject * pGo1 = FindClosestGameObjectOnMap(GO_OOZE_RELEASE_VALVE, 4432.27f, 3090.88f, 362.253f);
 					if(pGo1 != NULL)
 						pGo1->SetFlags(0);
 				}break;
-				case NPC_FESTERGUT : 
+				case NPC_FESTERGUT: 
 				{
 					GameObject * pGo2 = FindClosestGameObjectOnMap(GO_GAS_RELEASE_VALVE, 4280.84f, 3090.88f, 362.335f);
 					if(pGo2 != NULL)
@@ -149,7 +92,10 @@ class IcecrownCitadelInstanceScript : public MoonInstanceScript
 				return;
 
 			if((pGO1->GetState() == State_Active) && (pGO2->GetState() == State_Active))
+			{
+				AddGameObjectStateByEntry(GO_SCIENTIST_DOOR_COLLISION, State_Active);
 				AddGameObjectStateByEntry(GO_SCIENTIST_ENTRANCE, State_Active);
+			}
 		}
 
 		uint32 GetInstanceData(uint32 pType, uint32 pIndex)
@@ -177,7 +123,6 @@ class IcecrownCitadelInstanceScript : public MoonInstanceScript
 				default:
 					break;
 			}
-
 			mEncounters[pIndex] = pData;
 		}
 
@@ -212,22 +157,46 @@ class ScourgeTeleporterAI : public GameObjectAIScript
 {
 	public:
 		ADD_GAMEOBJECT_FACTORY_FUNCTION(ScourgeTeleporterAI)
-		ScourgeTeleporterAI(GameObject* go) : GameObjectAIScript(go){}
+		ScourgeTeleporterAI(GameObject* go) : GameObjectAIScript(go)
+		{
+			pInstance = go->GetMapMgr()->GetScript();
+			if(pInstance == NULL)
+				return;
+		}
 		~ScourgeTeleporterAI() {}
 
 		void OnActivate(Player* player)
 		{
-			GossipMenu* menu = NULL;
+			if(player->getcombatstatus())
+				return;
+
+			GossipMenu* menu;
 			objmgr.CreateGossipMenuForPlayer(&menu, _gameobject->GetGUID(), 0, player);
 			menu->AddItem(Arcemu::Gossip::ICON_CHAT, "Teleport to Light's Hammer.", 0);
-			menu->AddItem(Arcemu::Gossip::ICON_CHAT, "Teleport to the Oratory of the Damned.", 1);
-			menu->AddItem(Arcemu::Gossip::ICON_CHAT, "Teleport to the Rampart of Skulls.", 2);
-			menu->AddItem(Arcemu::Gossip::ICON_CHAT, "Teleport to the Deathbringer's Rise.", 3);
-			menu->AddItem(Arcemu::Gossip::ICON_CHAT, "Teleport to the Upper Spire.", 4);
-			menu->AddItem(Arcemu::Gossip::ICON_CHAT, "Teleport to Sindragosa's Lair", 5);
-			menu->AddItem(Arcemu::Gossip::ICON_CHAT, "Teleport to Frozen Throne", 6);
+			if(pInstance->GetInstanceData(Data_EncounterState, ICC_LORD_MARROWGAR) == State_Finished)
+				menu->AddItem(Arcemu::Gossip::ICON_CHAT, "Teleport to the Oratory of the Damned.", 1);
+			if(pInstance->GetInstanceData(Data_EncounterState, ICC_LADY_DEATHWHISPER) == State_Finished)
+				menu->AddItem(Arcemu::Gossip::ICON_CHAT, "Teleport to the Rampart of Skulls.", 2);
+			if(pInstance->GetInstanceData(Data_EncounterState, ICC_GUNSHIP) == State_Finished)
+				menu->AddItem(Arcemu::Gossip::ICON_CHAT, "Teleport to the Deathbringer's Rise.", 3);
+			if(pInstance->GetInstanceData(Data_EncounterState, ICC_SAURFANG) == State_Finished)
+				menu->AddItem(Arcemu::Gossip::ICON_CHAT, "Teleport to the Upper Spire.", 4);
+			if(pInstance->GetInstanceData(Data_EncounterState, ICC_SAURFANG) == State_Finished
+				&& pInstance->GetInstanceData(Data_EncounterState, ICC_PROFESSOR_PUTRICIDE) == State_Finished
+				&& pInstance->GetInstanceData(Data_EncounterState, ICC_BLOOD_QUEEN_LANATHEL) == State_Finished
+				&& pInstance->GetInstanceData(Data_EncounterState, ICC_VALITRA_DREAMWALKER) == State_Finished)
+				menu->AddItem(Arcemu::Gossip::ICON_CHAT, "Teleport to Sindragosa's Lair", 5);
+			if(pInstance->GetInstanceData(Data_EncounterState, ICC_SAURFANG) == State_Finished
+				&& pInstance->GetInstanceData(Data_EncounterState, ICC_PROFESSOR_PUTRICIDE) == State_Finished
+				&& pInstance->GetInstanceData(Data_EncounterState, ICC_BLOOD_QUEEN_LANATHEL) == State_Finished
+				&& pInstance->GetInstanceData(Data_EncounterState, ICC_VALITRA_DREAMWALKER) == State_Finished
+				&& pInstance->GetInstanceData(Data_EncounterState, ICC_SINDRAGOSA) == State_Finished)
+				menu->AddItem(Arcemu::Gossip::ICON_CHAT, "Teleport to Frozen Throne", 6);
 			menu->SendTo(player);
 		}
+
+	private:
+		InstanceScript * pInstance;
 };
 
 class ScourgeTeleporterGossip : public GossipScript
