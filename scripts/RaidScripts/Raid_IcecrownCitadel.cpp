@@ -186,8 +186,7 @@ class ScourgeTeleporterAI : public GameObjectAIScript
 				&& pInstance->GetInstanceData(Data_EncounterState, ICC_BLOOD_QUEEN_LANATHEL) == State_Finished
 				&& pInstance->GetInstanceData(Data_EncounterState, ICC_VALITRA_DREAMWALKER) == State_Finished)
 				menu->AddItem(Arcemu::Gossip::ICON_CHAT, "Teleport to Sindragosa's Lair", 5);
-			if(pInstance->GetInstanceData(Data_EncounterState, ICC_SAURFANG) == State_Finished
-				&& pInstance->GetInstanceData(Data_EncounterState, ICC_PROFESSOR_PUTRICIDE) == State_Finished
+			if(pInstance->GetInstanceData(Data_EncounterState, ICC_PROFESSOR_PUTRICIDE) == State_Finished
 				&& pInstance->GetInstanceData(Data_EncounterState, ICC_BLOOD_QUEEN_LANATHEL) == State_Finished
 				&& pInstance->GetInstanceData(Data_EncounterState, ICC_VALITRA_DREAMWALKER) == State_Finished
 				&& pInstance->GetInstanceData(Data_EncounterState, ICC_SINDRAGOSA) == State_Finished)
