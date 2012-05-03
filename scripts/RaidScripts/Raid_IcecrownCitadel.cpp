@@ -338,12 +338,9 @@ class LordMarrowgar : public MoonScriptBossAI
 				{
 					if(!IsBoneStormSet)
 					{
-						SpawnColdFlame();
 						ChargeTimer = AddTimer(5*SEC_IN_MS);
 						IsBoneStormSet = true;
 					}
-
-					_unit->CastSpell(_unit, SPELL_BONE_STORM_EFFECT, false);
 
 					if(IsTimerFinished(ChargeTimer))
 					{
@@ -399,6 +396,32 @@ class ColdFlameAI : public MoonScriptCreatureAI
 		}
 };
 
+class BoneSpikeAI : public MoonScriptCreatureAI
+{
+	public:
+		MOONSCRIPT_FACTORY_FUNCTION(BoneSpikeAI, MoonScriptCreatureAI);
+		BoneSpikeAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature) {}
+
+		void OnLoad()
+		{
+			_unit->CastSpell(GetNearestPlayer(), 46598, true);	//Ride vehicle
+			ParentClass::OnLoad();
+		}
+
+		void OnDied(Unit * mKiller)
+		{
+			mKiller->RemoveAura(69065);	//impaled
+			_unit->Despawn(0, 0);
+			ParentClass::OnDied(mKiller);
+		}
+
+		void AIUpdate()
+		{
+			_unit->CastSpell(_unit, 69065, false);
+			ParentClass::AIUpdate();
+		}
+};
+
 void SetupIcecrownCitadel(ScriptMgr* mgr)
 {
 	mgr->register_instance_script(MAP_ICC, &IcecrownCitadelInstanceScript::Create);
@@ -416,4 +439,5 @@ void SetupIcecrownCitadel(ScriptMgr* mgr)
 	//Lord marrowgar event related
 	mgr->register_creature_script(NPC_LORD_MARROWGAR, &LordMarrowgar::Create);
 	mgr->register_creature_script(NPC_COLD_FLAME, &ColdFlameAI::Create);
+	mgr->register_creature_script(NPC_BONE_SPIKE, &BoneSpikeAI::Create);
 }
