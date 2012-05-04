@@ -215,7 +215,6 @@ enum MarrowgarSpells
 	SPELL_LM_BERSERK		= 47008,
 	SPELL_BONE_SLICE		= 69055,
 	SPELL_BONE_STORM		= 69076,
-	SPELL_BONE_STORM_EFFECT	= 69075,
 	SPELL_BONE_SPIKE		= 69057,
 	SPELL_COLDFLAME			= 69140,
 	SPELL_COLDFLAME_BONESTORM	= 72705
@@ -340,7 +339,7 @@ class LordMarrowgar : public MoonScriptBossAI
 
 					if(IsTimerFinished(ChargeTimer))
 					{
-						Unit* pTarget = GetBestPlayerTarget(TargetFilter_ClosestNotCurrent, 0, 70.0f);
+						Unit* pTarget = GetBestPlayerTarget(TargetFilter_Closest/*NotCurrent*/, 0, 70.0f);
 						if(pTarget != NULL)
 						{
 							MoveTo(pTarget->GetPositionX(), pTarget->GetPositionY(), pTarget->GetPositionZ());
@@ -418,6 +417,21 @@ class BoneSpikeAI : public MoonScriptCreatureAI
 		}
 };
 
+bool ColdFlame_BoneStorm(uint32 i, Spell* s)
+{
+	s->u_caster->CastSpell(s->u_caster, 72701, true);
+	s->u_caster->CastSpell(s->u_caster, 72702, true);
+	s->u_caster->CastSpell(s->u_caster, 72703, true);
+	s->u_caster->CastSpell(s->u_caster, 72704, true);
+	return true;
+}
+
+bool ColdFlame(uint32 i, Spell* s)
+{
+	s->u_caster->CastSpell(s->u_caster, s->CalculateEffect(uint32(s->m_spellInfo->Effect), s->GetUnitTarget()), 0);
+	return true;
+}
+
 void SetupIcecrownCitadel(ScriptMgr* mgr)
 {
 	mgr->register_instance_script(MAP_ICC, &IcecrownCitadelInstanceScript::Create);
@@ -436,4 +450,6 @@ void SetupIcecrownCitadel(ScriptMgr* mgr)
 	mgr->register_creature_script(NPC_LORD_MARROWGAR, &LordMarrowgar::Create);
 	mgr->register_creature_script(NPC_COLD_FLAME, &ColdFlameAI::Create);
 	mgr->register_creature_script(NPC_BONE_SPIKE, &BoneSpikeAI::Create);
+	mgr->register_script_effect(SPELL_COLDFLAME_BONESTORM, &ColdFlame_BoneStorm);
+	mgr->register_script_effect(69147, &ColdFlame_BoneStorm);
 }
