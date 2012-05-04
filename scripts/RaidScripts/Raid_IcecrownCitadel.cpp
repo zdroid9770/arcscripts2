@@ -451,5 +451,5 @@ void SetupIcecrownCitadel(ScriptMgr* mgr)
 	mgr->register_creature_script(NPC_COLD_FLAME, &ColdFlameAI::Create);
 	mgr->register_creature_script(NPC_BONE_SPIKE, &BoneSpikeAI::Create);
 	mgr->register_script_effect(SPELL_COLDFLAME_BONESTORM, &ColdFlame_BoneStorm);
-	mgr->register_script_effect(69147, &ColdFlame_BoneStorm);
+	mgr->register_script_effect(69147, &ColdFlame);
 }
