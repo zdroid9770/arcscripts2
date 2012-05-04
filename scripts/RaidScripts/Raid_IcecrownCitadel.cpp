@@ -157,17 +157,16 @@ class ScourgeTeleporterAI : public GameObjectAIScript
 {
 	public:
 		ADD_GAMEOBJECT_FACTORY_FUNCTION(ScourgeTeleporterAI)
-		ScourgeTeleporterAI(GameObject* go) : GameObjectAIScript(go)
-		{
-			pInstance = go->GetMapMgr()->GetScript();
-			if(pInstance == NULL)
-				return;
-		}
+		ScourgeTeleporterAI(GameObject* go) : GameObjectAIScript(go){}
 		~ScourgeTeleporterAI() {}
 
 		void OnActivate(Player* player)
 		{
 			if(player->getcombatstatus())
+				return;
+
+			IcecrownCitadelInstanceScript * pInstance = (IcecrownCitadelInstanceScript*)player->GetMapMgr()->GetScript();
+			if(pInstance == NULL)
 				return;
 
 			GossipMenu* menu;
@@ -193,9 +192,6 @@ class ScourgeTeleporterAI : public GameObjectAIScript
 				menu->AddItem(Arcemu::Gossip::ICON_CHAT, "Teleport to Frozen Throne", 6);
 			menu->SendTo(player);
 		}
-
-	private:
-		InstanceScript * pInstance;
 };
 
 class ScourgeTeleporterGossip : public GossipScript
