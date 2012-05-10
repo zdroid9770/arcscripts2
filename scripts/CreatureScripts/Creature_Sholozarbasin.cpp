@@ -18,6 +18,20 @@
 
 #include "Setup.h"
 
+class PrimordialDrakeEggAI : public MoonScriptCreatureAI
+{
+	public:
+		MOONSCRIPT_FACTORY_FUNCTION(PrimordialDrakeEggAI, MoonScriptCreatureAI);
+		PrimordialDrakeEggAI(Creature* c) : MoonScriptCreatureAI(c) {}
+
+		void OnDied(Unit *mKiller)
+		{
+			SpawnCreature(28389);	//Primordial Hatchling
+			ParentClass::OnDied(mKiller);
+		}
+};
+
 void SetupSHolozarBasinCreature(ScriptMgr * mgr)
 {
+	mgr->register_creature_script(28408, &PrimordialDrakeEggAI::Create);
 }
