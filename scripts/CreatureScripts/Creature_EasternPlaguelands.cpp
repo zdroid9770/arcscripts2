@@ -29,9 +29,10 @@ class MobsGhoulFlayer : public MoonScriptCreatureAI
 			if(!mKiller->IsPlayer())
 				return;
 
-			MoonScriptCreatureAI * c = SpawnCreature(11064, _unit->GetPositionX(), _unit->GetPositionY(), _unit->GetPositionZ(), _unit->GetOrientation());
-			if(c)
+			if(MoonScriptCreatureAI * c = SpawnCreature(11064, _unit->GetPositionX(), _unit->GetPositionY(), _unit->GetPositionZ(), _unit->GetOrientation()))
 				c->Despawn(60*SEC_IN_MS);
+
+			ParentClass::OnDied(mKiller);
 		}
 };
 
@@ -46,9 +47,10 @@ class ArajTheSummoner : public MoonScriptCreatureAI
 			if(!mKiller->IsPlayer())
 				return;
 
-			GameObject* go = sEAS.SpawnGameobject(TO_PLAYER(mKiller), 177241, _unit->GetPositionX(), _unit->GetPositionY(), _unit->GetPositionZ(), _unit->GetOrientation(), 1, 0, 0, 0, 0);
-			if(go)
+			if(GameObject* go = sEAS.SpawnGameobject(TO_PLAYER(mKiller), 177241, _unit->GetPositionX(), _unit->GetPositionY(), _unit->GetPositionZ(), _unit->GetOrientation(), 1, 0, 0, 0, 0))
 				sEAS.GameobjectDelete(go, 60000);
+
+			ParentClass::OnDied(mKiller);
 		}
 };
 
@@ -63,7 +65,23 @@ class CursedMageAI : public MoonScriptCreatureAI
 
 		void OnDied(Unit* mKiller)
 		{
-			_unit->CastSpell(mKiller, 16567, true);
+			_unit->CastSpell(mKiller, 16567, true);	//Tainted Mind
+			ParentClass::OnDied(mKiller);
+		}
+};
+
+class CarrionDevourerAI : public MoonScriptCreatureAI
+{
+	public:
+		MOONSCRIPT_FACTORY_FUNCTION(CarrionDevourerAI, MoonScriptCreatureAI);
+		CarrionDevourerAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
+		{
+			AddSpell(16449, Target_Current, 30, 0, 8);	//Maggot Slime
+		}
+
+		void OnDied(Unit* mKiller)
+		{
+			_unit->CastSpell(mKiller, 17197, true);	//Maggot Goo
 			ParentClass::OnDied(mKiller);
 		}
 };
@@ -75,4 +93,5 @@ void SetupEasternPlaguelandsCreatures(ScriptMgr * mgr)
 	mgr->register_creature_script(8532,  &MobsGhoulFlayer::Create);
 	mgr->register_creature_script(1852, &ArajTheSummoner::Create);
 	mgr->register_creature_script(8524, &CursedMageAI::Create);
+	mgr->register_creature_script(8605, &CarrionDevourerAI::Create);
 }
