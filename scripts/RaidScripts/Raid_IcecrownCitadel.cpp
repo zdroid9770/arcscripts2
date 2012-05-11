@@ -424,13 +424,19 @@ bool ColdFlame_BoneStorm(uint32 i, Spell* s)
 	s->u_caster->CastSpell(s->u_caster, 72703, true);
 	s->u_caster->CastSpell(s->u_caster, 72704, true);
 	return true;
-}
+};
 
 bool ColdFlame(uint32 i, Spell* s)
 {
-	s->u_caster->CastSpell(s->u_caster, s->CalculateEffect(uint32(s->m_spellInfo->Effect), s->GetUnitTarget()), 0);
+	s->u_caster->CastSpell(s->u_caster, s->CalculateEffect(uint32(s->m_spellInfo->Effect), s->GetUnitTarget()), false);
 	return true;
-}
+};
+
+bool ColdFlameRandom(uint32 i, Spell* s)
+{
+	s->u_caster->CastSpell(s->u_caster, s->CalculateEffect(uint32(s->m_spellInfo->Effect), s->GetUnitTarget()), false);
+	return true;
+};
 
 void SetupIcecrownCitadel(ScriptMgr* mgr)
 {
@@ -452,4 +458,5 @@ void SetupIcecrownCitadel(ScriptMgr* mgr)
 	mgr->register_creature_script(NPC_BONE_SPIKE, &BoneSpikeAI::Create);
 	mgr->register_script_effect(SPELL_COLDFLAME_BONESTORM, &ColdFlame_BoneStorm);
 	mgr->register_script_effect(69147, &ColdFlame);
+	mgr->register_script_effect(69140, &ColdFlameRandom);
 }
