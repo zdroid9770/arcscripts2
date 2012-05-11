@@ -52,6 +52,7 @@ extern "C" SCRIPT_DECL void _exp_script_register(ScriptMgr* mgr)	// Comment any 
 	SetupEasternPlaguelandsCreatures(mgr);
 	SetupSHolozarBasinCreature(mgr);
 	SetupBurningStepesCreature(mgr);
+	SetupDuskwoodCreature(mgr);
 
 	//EVENTS
 	SetupWinterVeil(mgr);
