@@ -18,23 +18,6 @@
 
 #include "Setup.h"
 
-class BlackBroodlingAI : public MoonScriptCreatureAI
-{
-	public:
-		MOONSCRIPT_FACTORY_FUNCTION(BlackBroodlingAI, MoonScriptCreatureAI);
-		BlackBroodlingAI(Creature* c) : MoonScriptCreatureAI(c) {}
-
-		void OnDied(Unit *mKiller)
-		{
-			if(mKiller->IsPlayer())
-			{
-				if(TO_PLAYER(mKiller)->HasQuest(4726))
-					_unit->CastSpell(_unit, 16027, true);	//Create Broodling Essence
-			}
-			ParentClass::OnDied(mKiller);
-		}
-};
-
 class ragged_john_gossip : public Arcemu::Gossip::Script
 {
 	public:
