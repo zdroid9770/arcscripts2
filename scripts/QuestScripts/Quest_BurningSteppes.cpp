@@ -87,7 +87,7 @@ class DreadmaulRock : public GameObjectAIScript
 		}
 };
 
-class BlackBroodlingAI : public MoonScriptCreatureAI
+class BroodlingAI : public MoonScriptCreatureAI
 {
 	public:
 		MOONSCRIPT_FACTORY_FUNCTION(BlackBroodlingAI, MoonScriptCreatureAI);
@@ -120,5 +120,7 @@ void SetupBurningSteppes(ScriptMgr* mgr)
 	mgr->register_creature_gossip(9563, new ragged_john_gossip);
 	mgr->register_quest_script(4296, new TabletOfTheSeven);
 	mgr->register_gameobject_script(160445, &DreadmaulRock::Create);		// Sha'ni Proudtusk's Remains
-	mgr->register_creature_script(7047, &BlackBroodlingAI::Create);
+	mgr->register_creature_script(7047, &BroodlingAI::Create);
+	mgr->register_creature_script(7048, &BroodlingAI::Create);
+	mgr->register_creature_script(7049, &BroodlingAI::Create);
 }
