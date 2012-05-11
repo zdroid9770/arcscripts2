@@ -18,19 +18,20 @@
 
 #include "Setup.h"
 
-class KirithAI : public CreatureAIScript
+class KirithAI : public MoonScriptCreatureAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(KirithAI)
-		KirithAI(Creature *pCreature) : CreatureAIScript(pCreature)  {}
+		MOONSCRIPT_FACTORY_FUNCTION(KirithAI, MoonScriptCreatureAI);
+		KirithAI(Creature* c) : MoonScriptCreatureAI(c) {}
 
 		void OnDied(Unit *mKiller)
 		{
-			GetUnit()->CastSpell(GetUnit(), 10853, true);
+			_unit->CastSpell(_unit, 10853, true);
+			ParentClass::OnDied(mKiller);
 		}
 };
 
 void SetupBlastedLandsCreature(ScriptMgr * mgr)
 {
-	mgr->register_creature_script( 7728,  &KirithAI::Create );	// Kirith the Damned
+	mgr->register_creature_script(7728,  &KirithAI::Create);	// Kirith the Damned
 }

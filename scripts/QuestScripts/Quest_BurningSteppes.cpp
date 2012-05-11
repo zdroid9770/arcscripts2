@@ -18,6 +18,23 @@
 
 #include "Setup.h"
 
+class BlackBroodlingAI : public MoonScriptCreatureAI
+{
+	public:
+		MOONSCRIPT_FACTORY_FUNCTION(BlackBroodlingAI, MoonScriptCreatureAI);
+		BlackBroodlingAI(Creature* c) : MoonScriptCreatureAI(c) {}
+
+		void OnDied(Unit *mKiller)
+		{
+			if(mKiller->IsPlayer())
+			{
+				if(TO_PLAYER(mKiller)->HasQuest(4726))
+					_unit->CastSpell(_unit, 16027, true);	//Create Broodling Essence
+			}
+			ParentClass::OnDied(mKiller);
+		}
+};
+
 class ragged_john_gossip : public Arcemu::Gossip::Script
 {
 	public:
@@ -87,9 +104,37 @@ class DreadmaulRock : public GameObjectAIScript
 		}
 };
 
+class BlackBroodlingAI : public MoonScriptCreatureAI
+{
+	public:
+		MOONSCRIPT_FACTORY_FUNCTION(BlackBroodlingAI, MoonScriptCreatureAI);
+		BlackBroodlingAI(Creature* c) : MoonScriptCreatureAI(c)
+		{
+			GotSpell = false;
+		}
+
+		void AIUpdate()
+		{
+			if(_unit->GetCurrentSpell() == 16007 && !GotSpell)
+				GotSpell = true;
+		}
+
+		void OnDied(Unit *mKiller)
+		{
+			if(TO_PLAYER(mKiller)->HasQuest(4726) && GotSpell)
+				_unit->CastSpell(_unit, 16027, true);	//Create Broodling Essence
+
+			ParentClass::OnDied(mKiller);
+		}
+
+	private:
+		bool GotSpell;
+};
+
 void SetupBurningSteppes(ScriptMgr* mgr)
 {
-	mgr->register_creature_gossip(26596, new ragged_john_gossip);
+	mgr->register_creature_gossip(9563, new ragged_john_gossip);
 	mgr->register_quest_script(4296, new TabletOfTheSeven);
 	mgr->register_gameobject_script(160445, &DreadmaulRock::Create);		// Sha'ni Proudtusk's Remains
+	mgr->register_creature_script(7047, &BlackBroodlingAI::Create);
 }
