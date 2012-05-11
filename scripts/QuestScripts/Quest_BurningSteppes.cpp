@@ -98,8 +98,9 @@ class BlackBroodlingAI : public MoonScriptCreatureAI
 
 		void AIUpdate()
 		{
-			if(_unit->GetCurrentSpell() == 16007 && !GotSpell)
+			if(_unit->HasAura(16007) && !GotSpell)
 				GotSpell = true;
+			ParentClass::AIUpdate();
 		}
 
 		void OnDied(Unit *mKiller)
