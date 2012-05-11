@@ -52,10 +52,27 @@ class ArajTheSummoner : public MoonScriptCreatureAI
 		}
 };
 
+class CursedMageAI : public MoonScriptCreatureAI
+{
+	public:
+		MOONSCRIPT_FACTORY_FUNCTION(CursedMageAI, MoonScriptCreatureAI);
+		CursedMageAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
+		{
+			AddSpell(20829, Target_Current, 30, 1, 5);	//Arcane Bolt
+		}
+
+		void OnDied(Unit* mKiller)
+		{
+			_unit->CastSpell(mKiller, 16567, true);
+			ParentClass::OnDied(mKiller);
+		}
+};
+
 void SetupEasternPlaguelandsCreatures(ScriptMgr * mgr)
 {
 	mgr->register_creature_script(8530,  &MobsGhoulFlayer::Create);
 	mgr->register_creature_script(8531,  &MobsGhoulFlayer::Create);
 	mgr->register_creature_script(8532,  &MobsGhoulFlayer::Create);
 	mgr->register_creature_script(1852, &ArajTheSummoner::Create);
+	mgr->register_creature_script(8524, &CursedMageAI::Create);
 }
