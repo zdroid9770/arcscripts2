@@ -252,7 +252,7 @@ class LordMarrowgar : public MoonScriptBossAI
 			SetEnrageInfo(AddSpell(SPELL_LM_BERSERK, Target_Self, 0, 0, 0, 0, 0, false, "THE MASTER'S RAGE COURSES THROUGH ME!", Text_Yell, 16945), MINUTE*10*SEC_IN_MS);
 
 			//normal phase
-			AddPhaseSpell(1, AddSpell(SPELL_BONE_SLICE, Target_Current, 25.0f, 0, rand()%10+1));
+			AddPhaseSpell(1, AddSpell(SPELL_BONE_SLICE, Target_Current, 25.0f, 0, 10));
 			AddPhaseSpell(1, AddSpell(SPELL_COLDFLAME, Target_RandomPlayer, 100.0f, 0, 5));
 
 			if((GetInstanceMode() == MODE_HEROIC_10MEN) || (GetInstanceMode() == MODE_HEROIC_25MEN))
@@ -272,8 +272,8 @@ class LordMarrowgar : public MoonScriptBossAI
 
 		void Reset()
 		{
-			IsBoneStormSet = false;
-			BoneStormTimer = BoneStormInitTimer = ChargeTimer = INVALIDATE_TIMER;
+			BoneStormTimer = ChargeTimer = INVALIDATE_TIMER;
+			Stage = -1;
 			SetBehavior(Behavior_Default);
 			_unit->SetSpeeds(RUN, 8.0f);
 		}
@@ -306,77 +306,58 @@ class LordMarrowgar : public MoonScriptBossAI
 			ParentClass::OnDied(mKiller);
 		}
 
+
 		void AIUpdate()
 		{
-			switch(GetPhase())
+			if(IsTimerFinished(BoneStormTimer) && GetPhase() == 1 && Stage == -1)
+				Stage++;
+
+			if(Stage == 0)
 			{
-				case 1:	//Initial bone storm
+				ClearHateList();
+				SetBehavior(Behavior_Spell);
+				_unit->SetSpeeds(RUN, 18.0f);
+				SetPhase(2, sBoneStorm);
+				if(_unit->HasAura(SPELL_BONE_STORM))
 				{
-					if(IsTimerFinished(BoneStormTimer))
-					{
-						ClearHateList();
-						SetBehavior(Behavior_Spell);
-						_unit->SetSpeeds(RUN, 18.0f);
-						SetPhase(2, sBoneStorm);
-					}
-				}break;
-				case 2:	//perform bone storm
-				{
-					BoneStormInitTimer = AddTimer(3*SEC_IN_MS);
-					if(IsTimerFinished(BoneStormInitTimer))
-					{
-						SetPhase(3);
-						RemoveTimer(BoneStormInitTimer);
-					}
-				}break;
-				case 3: //bone storm phase
-				{
-					if(!IsBoneStormSet)
-					{
-						ChargeTimer = AddTimer(5*SEC_IN_MS);
-						IsBoneStormSet = true;
-					}
-
-					if(IsTimerFinished(ChargeTimer))
-					{
-						Unit* pTarget = GetBestPlayerTarget(TargetFilter_Closest/*NotCurrent*/, 0, 70.0f);
-						if(pTarget != NULL)
-						{
-							MoveTo(pTarget->GetPositionX(), pTarget->GetPositionY(), pTarget->GetPositionZ());
-							_unit->CastSpell(_unit, SPELL_COLDFLAME_BONESTORM, false);
-						}
-						pTarget = NULL;
-						ResetTimer(ChargeTimer, 5*SEC_IN_MS);
-					}
-
-					if(!_unit->HasAura(SPELL_BONE_STORM))
-						SetPhase(4);
-				}break;
-				case 4:	//removing bone storm phase
-				{
-					_unit->SetSpeeds(RUN, 8.0f);
-					SetBehavior(Behavior_Default);
-					RemoveTimer(ChargeTimer);
-					IsBoneStormSet = false;
-					ResetTimer(BoneStormTimer, 60*SEC_IN_MS);
-					AggroRandomPlayer();
-					SetPhase(1);
-				}break;
+					_unit->CastSpell(_unit, SPELL_COLDFLAME_BONESTORM, false);
+					ChargeTimer = AddTimer(5*SEC_IN_MS);
+					Stage++;
+				}
 			}
-			ParentClass::AIUpdate();
-		}
+			else if(Stage == 1)
+			{
+				if(IsTimerFinished(ChargeTimer))
+				{
+					Unit* pTarget = GetBestPlayerTarget(TargetFilter_Closest/*NotCurrent*/, 0, 70.0f);	//only for testing!
+					if(pTarget != NULL)
+					{
+						MoveTo(pTarget->GetPositionX(), pTarget->GetPositionY(), pTarget->GetPositionZ());
+						_unit->CastSpell(_unit, SPELL_COLDFLAME_BONESTORM, false);
+					}
+					pTarget = NULL;
+					ResetTimer(ChargeTimer, 5*SEC_IN_MS);
+				}
+			}
+
+			if(!_unit->HasAura(SPELL_BONE_STORM) && Stage == 1)
+			{
+				_unit->SetSpeeds(RUN, 8.0f);
+				SetBehavior(Behavior_Default);
+				RemoveTimer(ChargeTimer);
+				AggroRandomPlayer();
+				ResetTimer(BoneStormTimer, 60*SEC_IN_MS);
+				Stage = -1;
+				SetPhase(1);
+			}
+		ParentClass::AIUpdate();
+	}
 
 	protected:
 		SpellDesc *sBoneStorm;
-		int32 BoneStormTimer, BoneStormInitTimer, ChargeTimer;
-		bool IsBoneStormSet;
+		int8 Stage;
+		int32 BoneStormTimer, ChargeTimer;
 		MoonInstanceScript* mInstance;
-};
-
-enum ColdFlameSpells
-{
-    SPELL_COLD_FLAME_0	= 69145,
-    SPELL_COLD_FLAME_1	= 69147
 };
 
 class ColdFlameAI : public MoonScriptCreatureAI
@@ -386,8 +367,12 @@ class ColdFlameAI : public MoonScriptCreatureAI
 		ColdFlameAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			SetCanEnterCombat(false);
-			_unit->CastSpell(_unit, SPELL_COLD_FLAME_0, false);
 			Despawn(15*SEC_IN_MS);
+		}
+
+		void AIUpdate()
+		{
+			_unit->CastSpell(_unit, 69146, false);
 		}
 };
 
@@ -400,6 +385,7 @@ class BoneSpikeAI : public MoonScriptCreatureAI
 		void OnLoad()
 		{
 			_unit->CastSpell(GetNearestPlayer(), 46598, true);	//Ride vehicle
+			_unit->CastSpell(_unit, 69065, false);	//impaled
 			ParentClass::OnLoad();
 		}
 
@@ -410,31 +396,32 @@ class BoneSpikeAI : public MoonScriptCreatureAI
 			ParentClass::OnDied(mKiller);
 		}
 
-		void AIUpdate()
+		void OnTargetDied(Unit * pUnit)
 		{
-			_unit->CastSpell(_unit, 69065, false);
-			ParentClass::AIUpdate();
+			_unit->Despawn(0, 0);
+			ParentClass::OnTargetDied(pUnit);
 		}
 };
 
 bool ColdFlame_BoneStorm(uint32 i, Spell* s)
 {
-	s->u_caster->CastSpell(s->u_caster, 72701, true);
-	s->u_caster->CastSpell(s->u_caster, 72702, true);
-	s->u_caster->CastSpell(s->u_caster, 72703, true);
-	s->u_caster->CastSpell(s->u_caster, 72704, true);
+	s->u_caster->CastSpell(s->u_caster, 72701, false);
+	s->u_caster->CastSpell(s->u_caster, 72702, false);
+	s->u_caster->CastSpell(s->u_caster, 72703, false);
+	s->u_caster->CastSpell(s->u_caster, 72704, false);
 	return true;
 };
 
 bool ColdFlame(uint32 i, Spell* s)
 {
-	s->u_caster->CastSpell(s->u_caster, s->CalculateEffect(uint32(s->m_spellInfo->Effect), s->GetUnitTarget()), false);
+	s->u_caster->CastSpell(s->u_caster, 69146, false);
+	//s->u_caster->CastSpell(s->u_caster, 33801, false);	need more information about this
 	return true;
 };
 
 bool ColdFlameRandom(uint32 i, Spell* s)
 {
-	s->u_caster->CastSpell(s->u_caster, s->CalculateEffect(uint32(s->m_spellInfo->Effect), s->GetUnitTarget()), false);
+	s->u_caster->CastSpell(s->u_caster, 69138, false);
 	return true;
 };
 
@@ -446,7 +433,7 @@ void SetupIcecrownCitadel(ScriptMgr* mgr)
 	mgr->register_gameobject_script(202223, &ScourgeTeleporterAI::Create);
 	mgr->register_go_gossip_script(202223, new ScourgeTeleporterGossip);
 
-	for(uint8 i = 0; i<5; i++)
+	for(uint8 i = 0; i < 5; i++)
 	{
 		mgr->register_gameobject_script(202242+i, &ScourgeTeleporterAI::Create);
 		mgr->register_go_gossip(202242+i, new ScourgeTeleporterGossip);
