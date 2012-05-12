@@ -31,7 +31,7 @@ class RottedOneAI : public MoonScriptCreatureAI
 			_unit->CastSpell(_unit, 3428, true);
 			ParentClass::OnDied(mKiller);
 		}
-}
+};
 
 void SetupDuskwoodCreature(ScriptMgr * mgr)
 {
