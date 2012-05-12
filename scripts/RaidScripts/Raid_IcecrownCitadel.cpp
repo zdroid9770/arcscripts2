@@ -372,7 +372,8 @@ class ColdFlameAI : public MoonScriptCreatureAI
 
 		void AIUpdate()
 		{
-			_unit->CastSpell(_unit, 69146, false);
+			_unit->CastSpell(_unit, 69145, false);
+			ParentClass::AIUpdate();
 		}
 };
 
@@ -405,10 +406,9 @@ class BoneSpikeAI : public MoonScriptCreatureAI
 
 bool ColdFlame_BoneStorm(uint32 i, Spell* s)
 {
+	s->u_caster->CastSpell(s->u_caster, 72700, false);
 	s->u_caster->CastSpell(s->u_caster, 72701, false);
 	s->u_caster->CastSpell(s->u_caster, 72702, false);
-	s->u_caster->CastSpell(s->u_caster, 72703, false);
-	s->u_caster->CastSpell(s->u_caster, 72704, false);
 	return true;
 };
 
