@@ -156,39 +156,39 @@ static LocationExtra ScourgeTelePos[7]=
 class ScourgeTeleporterAI : public GameObjectAIScript
 {
 	public:
-		ADD_GAMEOBJECT_FACTORY_FUNCTION(ScourgeTeleporterAI)
 		ScourgeTeleporterAI(GameObject* go) : GameObjectAIScript(go){}
 		~ScourgeTeleporterAI() {}
+		ADD_GAMEOBJECT_FACTORY_FUNCTION(ScourgeTeleporterAI)
 
 		void OnActivate(Player* player)
 		{
-			if(player->getcombatstatus())
-				return;
-
 			IcecrownCitadelInstanceScript * pInstance = (IcecrownCitadelInstanceScript*)player->GetMapMgr()->GetScript();
-			if(pInstance == NULL)
+			if(!pInstance)
 				return;
 
-			GossipMenu* menu;
+			GossipMenu* menu = NULL;
 			objmgr.CreateGossipMenuForPlayer(&menu, _gameobject->GetGUID(), 0, player);
 			menu->AddItem(Arcemu::Gossip::ICON_CHAT, "Teleport to Light's Hammer.", 0);
+
 			if(pInstance->GetInstanceData(Data_EncounterState, ICC_LORD_MARROWGAR) == State_Finished)
 				menu->AddItem(Arcemu::Gossip::ICON_CHAT, "Teleport to the Oratory of the Damned.", 1);
+
 			if(pInstance->GetInstanceData(Data_EncounterState, ICC_LADY_DEATHWHISPER) == State_Finished)
 				menu->AddItem(Arcemu::Gossip::ICON_CHAT, "Teleport to the Rampart of Skulls.", 2);
+
 			if(pInstance->GetInstanceData(Data_EncounterState, ICC_GUNSHIP) == State_Finished)
 				menu->AddItem(Arcemu::Gossip::ICON_CHAT, "Teleport to the Deathbringer's Rise.", 3);
+
 			if(pInstance->GetInstanceData(Data_EncounterState, ICC_SAURFANG) == State_Finished)
 				menu->AddItem(Arcemu::Gossip::ICON_CHAT, "Teleport to the Upper Spire.", 4);
+
 			if(pInstance->GetInstanceData(Data_EncounterState, ICC_SAURFANG) == State_Finished
 				&& pInstance->GetInstanceData(Data_EncounterState, ICC_PROFESSOR_PUTRICIDE) == State_Finished
 				&& pInstance->GetInstanceData(Data_EncounterState, ICC_BLOOD_QUEEN_LANATHEL) == State_Finished
 				&& pInstance->GetInstanceData(Data_EncounterState, ICC_VALITRA_DREAMWALKER) == State_Finished)
 				menu->AddItem(Arcemu::Gossip::ICON_CHAT, "Teleport to Sindragosa's Lair", 5);
-			if(pInstance->GetInstanceData(Data_EncounterState, ICC_PROFESSOR_PUTRICIDE) == State_Finished
-				&& pInstance->GetInstanceData(Data_EncounterState, ICC_BLOOD_QUEEN_LANATHEL) == State_Finished
-				&& pInstance->GetInstanceData(Data_EncounterState, ICC_VALITRA_DREAMWALKER) == State_Finished
-				&& pInstance->GetInstanceData(Data_EncounterState, ICC_SINDRAGOSA) == State_Finished)
+
+			if(pInstance->GetInstanceData(Data_EncounterState, ICC_SINDRAGOSA) == State_Finished)
 				menu->AddItem(Arcemu::Gossip::ICON_CHAT, "Teleport to Frozen Throne", 6);
 			menu->SendTo(player);
 		}
