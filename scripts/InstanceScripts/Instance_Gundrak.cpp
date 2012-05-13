@@ -347,8 +347,7 @@ class GundrakScript : public MoonInstanceScript
 				case CN_DRAKKARI_COLOSSUS:
 					{
 						SetInstanceData(Data_EncounterState, CN_DRAKKARI_COLOSSUS, State_Finished);
-						pAltar = GetGameObjectByGuid(mColossusAltarGUID);
-						if(pAltar)
+						if(pAltar = GetGameObjectByGuid(mColossusAltarGUID))
 							pAltar->RemoveFlag(GAMEOBJECT_FLAGS, GO_FLAG_UNCLICKABLE);
 					}
 					break;
@@ -367,42 +366,42 @@ class GundrakScript : public MoonInstanceScript
 
 class SladranAI : public MoonScriptCreatureAI
 {
-public:
-		MOONSCRIPT_FACTORY_FUNCTION(SladranAI, MoonScriptCreatureAI);
-		SladranAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
-		{
-			mInstance = GetInstanceScript();
+	public:
+			MOONSCRIPT_FACTORY_FUNCTION(SladranAI, MoonScriptCreatureAI);
+			SladranAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
+			{
+				mInstance = GetInstanceScript();
 
-			SpellDesc* sdPoisonNova = AddSpell(POISON_NOVA, Target_Self, 10, 3.5f, 16);
-			sdPoisonNova->AddAnnouncement("Slad'ran begins to cast Poison Nova!");
+				SpellDesc* sdPoisonNova = AddSpell(POISON_NOVA, Target_Self, 10, 3.5f, 16);
+				sdPoisonNova->AddAnnouncement("Slad'ran begins to cast Poison Nova!");
 
-			AddSpell(POWERFUL_BITE, Target_Current, 25, 0, 6);
-			AddSpell(VENOM_BOLT, Target_RandomPlayerNotCurrent, 18, 1.5f, 8);
+				AddSpell(POWERFUL_BITE, Target_Current, 25, 0, 6);
+				AddSpell(VENOM_BOLT, Target_RandomPlayerNotCurrent, 18, 1.5f, 8);
 
-			AddEmote(Event_OnCombatStart, "Drakkari gonna kill anybody who trespass on these lands!", Text_Yell, 14443);
-			AddEmote(Event_OnTargetDied,  "Ye not breathin'! Good.", Text_Yell, 14446);
-			AddEmote(Event_OnTargetDied,  "You scared now?", Text_Yell, 14447);
-			AddEmote(Event_OnTargetDied,  "I'll eat you next, mon!" , Text_Yell, 14448);
-			AddEmote(Event_OnDied, "I sssee now... Ssscourge wasss not... our greatessst enemy...", Text_Yell, 14449);
-		};
+				AddEmote(Event_OnCombatStart, "Drakkari gonna kill anybody who trespass on these lands!", Text_Yell, 14443);
+				AddEmote(Event_OnTargetDied,  "Ye not breathin'! Good.", Text_Yell, 14446);
+				AddEmote(Event_OnTargetDied,  "You scared now?", Text_Yell, 14447);
+				AddEmote(Event_OnTargetDied,  "I'll eat you next, mon!" , Text_Yell, 14448);
+				AddEmote(Event_OnDied, "I sssee now... Ssscourge wasss not... our greatessst enemy...", Text_Yell, 14449);
+			}
 
-		void OnCombatStart(Unit* pTarget)
-		{
-			if(mInstance)
-				mInstance->SetInstanceData(Data_EncounterState, _unit->GetEntry(), State_InProgress);
+			void OnCombatStart(Unit* pTarget)
+			{
+				if(mInstance)
+					mInstance->SetInstanceData(Data_EncounterState, _unit->GetEntry(), State_InProgress);
 
-			ParentClass::OnCombatStart(pTarget);
-		};
+				ParentClass::OnCombatStart(pTarget);
+			}
 
-		void OnCombatStop(Unit* pTarget)
-		{
-			if(mInstance)
-				mInstance->SetInstanceData(Data_EncounterState, _unit->GetEntry(), State_Performed);
+			void OnCombatStop(Unit* pTarget)
+			{
+				if(mInstance)
+					mInstance->SetInstanceData(Data_EncounterState, _unit->GetEntry(), State_Performed);
 
-			ParentClass::OnCombatStop(pTarget);
-		};
+				ParentClass::OnCombatStop(pTarget);
+			}
 
-		MoonInstanceScript* mInstance;
+			MoonInstanceScript* mInstance;
 };
 
 /////////////////////////////////////////////////////////////////////////////////
@@ -413,7 +412,7 @@ public:
 
 class GalDarahAI : public MoonScriptCreatureAI
 {
-public:
+	public:
 		MOONSCRIPT_FACTORY_FUNCTION(GalDarahAI, MoonScriptCreatureAI);
 		GalDarahAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
@@ -426,7 +425,7 @@ public:
 			AddEmote(Event_OnTargetDied,  "Who needs gods, when WE ARE GODS!", Text_Yell, 14437);
 			AddEmote(Event_OnTargetDied,  "I told ya so!" , Text_Yell, 14438);
 			AddEmote(Event_OnDied, "Even the mighty... can fall.", Text_Yell, 14439);
-		};
+		}
 
 		void OnCombatStart(Unit* pTarget)
 		{
@@ -434,7 +433,7 @@ public:
 				mInstance->SetInstanceData(Data_EncounterState, _unit->GetEntry(), State_InProgress);
 
 			ParentClass::OnCombatStart(pTarget);
-		};
+		}
 
 		void OnCombatStop(Unit* pTarget)
 		{
@@ -442,7 +441,7 @@ public:
 				mInstance->SetInstanceData(Data_EncounterState, _unit->GetEntry(), State_Performed);
 
 			ParentClass::OnCombatStop(pTarget);
-		};
+		}
 
 		MoonInstanceScript* mInstance;
 };
@@ -450,7 +449,6 @@ public:
 void SetupGundrak(ScriptMgr* mgr)
 {
 	mgr->register_instance_script(MAP_GUNDRAK, &GundrakScript::Create);
-
 	mgr->register_creature_script(CN_SLADRAN, &SladranAI::Create);
 	mgr->register_creature_script(CN_GAL_DARAH, &GalDarahAI::Create);
-};
+}

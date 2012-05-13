@@ -43,13 +43,13 @@ class MaidenOfGriefAI : public MoonScriptCreatureAI
 			AddEmote(Event_OnTargetDied, "You had it coming!", Text_Yell, 13490);
 			AddEmote(Event_OnTargetDied, "Why must it be this way?", Text_Yell, 13491);
 			AddEmote(Event_OnDied, "I hope you all rot! I never...wanted...this.", Text_Yell, 13493);
-		};
+		}
 
 		void OnCombatStart(Unit* pTarget)
 		{
 			mShock->TriggerCooldown();
 			ParentClass::OnCombatStart(pTarget);
-		};
+		}
 
 	protected:
 		SpellDesc* mShock;

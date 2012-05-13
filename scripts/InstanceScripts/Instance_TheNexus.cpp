@@ -55,153 +55,153 @@ enum NexusEncounterList
 
 class AnomalusAI : public MoonScriptCreatureAI
 {
-public:
-	MOONSCRIPT_FACTORY_FUNCTION(AnomalusAI, MoonScriptCreatureAI);
-	AnomalusAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
-	{
-		AddEmote(Event_OnDied, "Of course.", Text_Yell, 13187);
-		AddEmote(Event_OnCombatStart, "Chaos beckons.", Text_Yell, 13186);
-
-		mInstance = GetInstanceScript();
-		AddSpell(SPARK, Target_RandomPlayer, 80.0f, 0, 3);
-
-		mSummon = 0;
-	}
-
-	void OnCombatStart(Unit* mTarget)
-	{
-		mSummon = 0;
-		mRift = false;
-		mSummonTimer = AddTimer(HeroicInt(14000, 18000));
-
-		if(mInstance)
-			mInstance->SetInstanceData(Data_EncounterState, NEXUS_ANOMALUS, State_InProgress);
-
-		ParentClass::OnCombatStart(mTarget);
-	}
-
-	void AIUpdate()
-	{
-		if((GetHealthPercent() <= 50 && mSummon == 0))
-			mSummon += 1;
-
-		if(mSummon == 1)
-			ChargeRift();
-
-		if(IsTimerFinished(mSummonTimer) && mRift == false)
+	public:
+		MOONSCRIPT_FACTORY_FUNCTION(AnomalusAI, MoonScriptCreatureAI);
+		AnomalusAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
-			SummonRift(false);
-			ResetTimer(mSummonTimer, IsHeroic() ? 14000 : 18000);
+			AddEmote(Event_OnDied, "Of course.", Text_Yell, 13187);
+			AddEmote(Event_OnCombatStart, "Chaos beckons.", Text_Yell, 13186);
+
+			mInstance = GetInstanceScript();
+			AddSpell(SPARK, Target_RandomPlayer, 80.0f, 0, 3);
+
+			mSummon = 0;
 		}
 
-		if(mRift == true && (GetLinkedCreature() == NULL || ! GetLinkedCreature()->IsAlive()))
+		void OnCombatStart(Unit* mTarget)
 		{
-			RemoveAura(47748);
+			mSummon = 0;
 			mRift = false;
+			mSummonTimer = AddTimer(HeroicInt(14000, 18000));
+
+			if(mInstance)
+				mInstance->SetInstanceData(Data_EncounterState, NEXUS_ANOMALUS, State_InProgress);
+
+			ParentClass::OnCombatStart(mTarget);
 		}
 
-		ParentClass::AIUpdate();
-	}
-
-	void SummonRift(bool bToCharge)
-	{
-		if(!bToCharge)
-			Emote("Reality... unwoven.", Text_Yell, 13188);
-
-		Announce("Anomalus opens a Chaotic Rift!");
-		//we are linked with CN_CHAOTIC_RIFT.
-		CreatureAIScript* chaoticRift = SpawnCreature(CN_CHAOTIC_RIFT, _unit->GetPositionX() + 13.5f, _unit->GetPositionY(), _unit->GetPositionZ(), _unit->GetOrientation(), false);
-		if(chaoticRift != NULL)
+		void AIUpdate()
 		{
-			SetLinkedCreature(chaoticRift);
-			chaoticRift->SetLinkedCreature(this);
+			if((GetHealthPercent() <= 50 && mSummon == 0))
+				mSummon += 1;
+
+			if(mSummon == 1)
+				ChargeRift();
+
+			if(IsTimerFinished(mSummonTimer) && mRift == false)
+			{
+				SummonRift(false);
+				ResetTimer(mSummonTimer, IsHeroic() ? 14000 : 18000);
+			}
+
+			if(mRift == true && (GetLinkedCreature() == NULL || ! GetLinkedCreature()->IsAlive()))
+			{
+				RemoveAura(47748);
+				mRift = false;
+			}
+
+			ParentClass::AIUpdate();
 		}
-	}
 
-	void ChargeRift()
-	{
-		SummonRift(true);
+		void SummonRift(bool bToCharge)
+		{
+			if(!bToCharge)
+				Emote("Reality... unwoven.", Text_Yell, 13188);
 
-		Announce("Anomalus shields himself and diverts his power to the rifts!");
-		Emote("Indestructible.", Text_Yell, 13189);
-		ApplyAura(47748);   // me immune
-		SetCanMove(false);
+			Announce("Anomalus opens a Chaotic Rift!");
+			//we are linked with CN_CHAOTIC_RIFT.
+			CreatureAIScript* chaoticRift = SpawnCreature(CN_CHAOTIC_RIFT, _unit->GetPositionX() + 13.5f, _unit->GetPositionY(), _unit->GetPositionZ(), _unit->GetOrientation(), false);
+			if(chaoticRift != NULL)
+			{
+				SetLinkedCreature(chaoticRift);
+				chaoticRift->SetLinkedCreature(this);
+			}
+		}
 
-		mRift = true;
-		mSummon += 1;
-	}
+		void ChargeRift()
+		{
+			SummonRift(true);
 
-	void OnDied(Unit* pKiller)
-	{
-		if(mInstance)
-			mInstance->SetInstanceData(Data_EncounterState, NEXUS_ANOMALUS, State_Finished);
+			Announce("Anomalus shields himself and diverts his power to the rifts!");
+			Emote("Indestructible.", Text_Yell, 13189);
+			ApplyAura(47748);   // me immune
+			SetCanMove(false);
 
-		ParentClass::OnDied(pKiller);
-	}
+			mRift = true;
+			mSummon += 1;
+		}
 
-	void OnCombatStop(Unit* pTarget)
-	{
-		if(mInstance)
-			mInstance->SetInstanceData(Data_EncounterState, NEXUS_ANOMALUS, State_Performed);
+		void OnDied(Unit* pKiller)
+		{
+			if(mInstance)
+				mInstance->SetInstanceData(Data_EncounterState, NEXUS_ANOMALUS, State_Finished);
 
-		ParentClass::OnCombatStop(pTarget);
-	}
+			ParentClass::OnDied(pKiller);
+		}
 
-private:
-	int32					mSummonTimer;
-	uint8					mSummon;
-	bool					mRift;
-	MoonInstanceScript*		mInstance;
+		void OnCombatStop(Unit* pTarget)
+		{
+			if(mInstance)
+				mInstance->SetInstanceData(Data_EncounterState, NEXUS_ANOMALUS, State_Performed);
+
+			ParentClass::OnCombatStop(pTarget);
+		}
+
+	private:
+		int32					mSummonTimer;
+		uint8					mSummon;
+		bool					mRift;
+		MoonInstanceScript*		mInstance;
 };
 
 class ChaoticRiftAI : public MoonScriptCreatureAI
 {
-public:
-	MOONSCRIPT_FACTORY_FUNCTION(ChaoticRiftAI, MoonScriptCreatureAI);
-	ChaoticRiftAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
-	{
-		SetCanEnterCombat(false);
-		AddSpell(SUMMON_MANA_WRAITH, Target_Self, 30, 0, dbcSpell.LookupEntryForced(SUMMON_MANA_WRAITH)->RecoveryTime);
-		AddSpell(CHAOTIC_ENERGY_BURST, Target_RandomPlayer, 30, 0, dbcSpell.LookupEntryForced(CHAOTIC_ENERGY_BURST)->RecoveryTime);
-	}
+	public:
+		MOONSCRIPT_FACTORY_FUNCTION(ChaoticRiftAI, MoonScriptCreatureAI);
+		ChaoticRiftAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
+		{
+			SetCanEnterCombat(false);
+			AddSpell(SUMMON_MANA_WRAITH, Target_Self, 30, 0, dbcSpell.LookupEntryForced(SUMMON_MANA_WRAITH)->RecoveryTime);
+			AddSpell(CHAOTIC_ENERGY_BURST, Target_RandomPlayer, 30, 0, dbcSpell.LookupEntryForced(CHAOTIC_ENERGY_BURST)->RecoveryTime);
+		}
 
-	void OnLoad()
-	{
-		ApplyAura(CHAOTIC_RIFT_AURA);
-		Despawn(40000, 0);
-		ParentClass::OnLoad();
-	}
+		void OnLoad()
+		{
+			ApplyAura(CHAOTIC_RIFT_AURA);
+			Despawn(40000, 0);
+			ParentClass::OnLoad();
+		}
 
-	void OnDied(Unit*  mKiller)
-	{
-		Despawn(2000, 0);
-		ParentClass::OnDied(mKiller);
-	}
+		void OnDied(Unit*  mKiller)
+		{
+			Despawn(2000, 0);
+			ParentClass::OnDied(mKiller);
+		}
 
-	void OnCombatStop(Unit* pTarget)
-	{
-		Despawn(2000, 0);
-		ParentClass::OnCombatStop(pTarget);
-	}
+		void OnCombatStop(Unit* pTarget)
+		{
+			Despawn(2000, 0);
+			ParentClass::OnCombatStop(pTarget);
+		}
 };
 
 class CraziedManaWrathAI : public MoonScriptCreatureAI
 {
-public:
-	MOONSCRIPT_FACTORY_FUNCTION(CraziedManaWrathAI, MoonScriptCreatureAI);
-	CraziedManaWrathAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature) {};
+	public:
+		MOONSCRIPT_FACTORY_FUNCTION(CraziedManaWrathAI, MoonScriptCreatureAI);
+		CraziedManaWrathAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature) {};
 
-	void OnCombatStop(Unit* pTarget)
-	{
-		Despawn(2000, 0);
-		ParentClass::OnCombatStop(pTarget);
-	}
+		void OnCombatStop(Unit* pTarget)
+		{
+			Despawn(2000, 0);
+			ParentClass::OnCombatStop(pTarget);
+		}
 
-	void OnDied(Unit*  mKiller)
-	{
-		Despawn(2000, 0);
-		ParentClass::OnDied(mKiller);
-	}
+		void OnDied(Unit*  mKiller)
+		{
+			Despawn(2000, 0);
+			ParentClass::OnDied(mKiller);
+		}
 };
 
 
@@ -240,49 +240,81 @@ static Location FormSpawns[] =
 
 class TelestraBossAI : public MoonScriptBossAI
 {
-public:
-	MOONSCRIPT_FACTORY_FUNCTION(TelestraBossAI, MoonScriptBossAI);
-	TelestraBossAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
-	{
-		mInstance = GetInstanceScript();
-		AddSpell(ICE_NOVA, Target_Self, 25.0f, 2.0, 15);
-		AddSpell(FIREBOMB, Target_RandomPlayer, 35.0f, 1.5, 5);
-		AddSpell(GRAVITY_WELL, Target_Self, 15.0f, 0.5, 20);
-
-		mAddCount = 0;
-
-		AddEmote(Event_OnCombatStart, "You know what they say about curiosity. ", Text_Yell, 13319);
-		AddEmote(Event_OnDied, "Damn the... luck.", Text_Yell, 13320);
-		AddEmote(Event_OnTargetDied, "Death becomes you!", Text_Yell, 13324);
-		mAddArray[0] = mAddArray[1] = mAddArray[2] = NULL;
-	}
-
-	void AIUpdate()
-	{
-		if(GetPhase() == 1 && GetHealthPercent() <= 25)
+	public:
+		MOONSCRIPT_FACTORY_FUNCTION(TelestraBossAI, MoonScriptBossAI);
+		TelestraBossAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
 		{
-			switch(rand() % 2)
-			{
-				case 0: Emote("I'll give you more than you can handle.", Text_Yell, 13321); break;
-				case 1: Emote("There's plenty of me to go around.", Text_Yell, 13322); break;
-			}
-			
-			SetPhase(2);
-			SetCanMove(false);
-			SetAllowRanged(false);
-			SetAllowSpell(false);
-			SetAllowTargeting(false);
-			ApplyAura(60191);
+			mInstance = GetInstanceScript();
+			AddSpell(ICE_NOVA, Target_Self, 25.0f, 2.0, 15);
+			AddSpell(FIREBOMB, Target_RandomPlayer, 35.0f, 1.5, 5);
+			AddSpell(GRAVITY_WELL, Target_Self, 15.0f, 0.5, 20);
 
-			for(int i = 0; i < 3; ++i)
-			{
-				mAddArray[i] = _unit->GetMapMgr()->GetInterface()->SpawnCreature(CN_TELESTRA_FIRE + i, FormSpawns[i].x, FormSpawns[i].y, FormSpawns[i].z, FormSpawns[i].o, true, true, 0, 0);
-				if(mAddArray[i] != NULL)
-					++mAddCount;
-			}
+			mAddCount = 0;
+
+			AddEmote(Event_OnCombatStart, "You know what they say about curiosity. ", Text_Yell, 13319);
+			AddEmote(Event_OnDied, "Damn the... luck.", Text_Yell, 13320);
+			AddEmote(Event_OnTargetDied, "Death becomes you!", Text_Yell, 13324);
+			mAddArray[0] = mAddArray[1] = mAddArray[2] = NULL;
 		}
 
-		if(GetPhase() == 2)
+		void AIUpdate()
+		{
+			if(GetPhase() == 1 && GetHealthPercent() <= 25)
+			{
+				switch(rand() % 2)
+				{
+					case 0: Emote("I'll give you more than you can handle.", Text_Yell, 13321); break;
+					case 1: Emote("There's plenty of me to go around.", Text_Yell, 13322); break;
+				}
+				
+				SetPhase(2);
+				SetCanMove(false);
+				SetAllowRanged(false);
+				SetAllowSpell(false);
+				SetAllowTargeting(false);
+				ApplyAura(60191);
+
+				for(int i = 0; i < 3; ++i)
+				{
+					mAddArray[i] = _unit->GetMapMgr()->GetInterface()->SpawnCreature(CN_TELESTRA_FIRE + i, FormSpawns[i].x, FormSpawns[i].y, FormSpawns[i].z, FormSpawns[i].o, true, true, 0, 0);
+					if(mAddArray[i] != NULL)
+						++mAddCount;
+				}
+			}
+
+			if(GetPhase() == 2)
+			{
+				for(int i = 0; i < 3; ++i)
+				{
+					if(mAddArray[i] != NULL)
+					{
+						mAddArray[i]->Despawn(1000, 0);
+						mAddArray[i] = NULL;
+						--mAddCount;
+					}
+				}
+
+				if(mAddCount != 0)
+					return;
+
+				Emote("Now to finish the job!", Text_Yell, 13323);
+				RemoveAura(60191);
+				SetCanMove(true);
+				SetPhase(HeroicInt(1, 3));   //3 disables p2
+			}
+
+			ParentClass::AIUpdate();
+		}
+
+		void OnCombatStart(Unit* pTarget)
+		{
+			if(mInstance)
+				mInstance->SetInstanceData(Data_EncounterState, NEXUS_TELESTRA, State_InProgress);
+
+			ParentClass::OnCombatStart(pTarget);
+		}
+
+		void OnCombatStop(Unit* pTarget)
 		{
 			for(int i = 0; i < 3; ++i)
 			{
@@ -290,120 +322,88 @@ public:
 				{
 					mAddArray[i]->Despawn(1000, 0);
 					mAddArray[i] = NULL;
-					--mAddCount;
 				}
 			}
 
-			if(mAddCount != 0)
-				return;
+			if(mInstance)
+				mInstance->SetInstanceData(Data_EncounterState, NEXUS_TELESTRA, State_Performed);
 
-			Emote("Now to finish the job!", Text_Yell, 13323);
-			RemoveAura(60191);
-			SetCanMove(true);
-			SetPhase(HeroicInt(1, 3));   //3 disables p2
+			ParentClass::OnCombatStop(pTarget);
 		}
 
-		ParentClass::AIUpdate();
-	}
-
-	void OnCombatStart(Unit* pTarget)
-	{
-		if(mInstance)
-			mInstance->SetInstanceData(Data_EncounterState, NEXUS_TELESTRA, State_InProgress);
-
-		ParentClass::OnCombatStart(pTarget);
-	}
-
-	void OnCombatStop(Unit* pTarget)
-	{
-		for(int i = 0; i < 3; ++i)
+		void OnDied(Unit* pKiller)
 		{
-			if(mAddArray[i] != NULL)
+			for(int i = 0; i < 3; ++i)
 			{
-				mAddArray[i]->Despawn(1000, 0);
-				mAddArray[i] = NULL;
+				if(mAddArray[i] != NULL)
+				{
+					mAddArray[i]->Despawn(1000, 0);
+					mAddArray[i] = NULL;
+				}
 			}
+
+			if(mInstance)
+				mInstance->SetInstanceData(Data_EncounterState, NEXUS_TELESTRA, State_Finished);
+
+			ParentClass::OnDied(pKiller);
 		}
 
-		if(mInstance)
-			mInstance->SetInstanceData(Data_EncounterState, NEXUS_TELESTRA, State_Performed);
-
-		ParentClass::OnCombatStop(pTarget);
-	}
-
-	void OnDied(Unit* pKiller)
-	{
-		for(int i = 0; i < 3; ++i)
-		{
-			if(mAddArray[i] != NULL)
-			{
-				mAddArray[i]->Despawn(1000, 0);
-				mAddArray[i] = NULL;
-			}
-		}
-
-		if(mInstance)
-			mInstance->SetInstanceData(Data_EncounterState, NEXUS_TELESTRA, State_Finished);
-
-		ParentClass::OnDied(pKiller);
-	}
-
-private:
-	Creature*   mAddArray[3];
-	bool        mHeroic;
-	int32       mAddCount;
-	MoonInstanceScript* mInstance;
+	private:
+		Creature*   mAddArray[3];
+		bool        mHeroic;
+		int32       mAddCount;
+		MoonInstanceScript* mInstance;
 };
 
 class TelestraFireAI : public MoonScriptCreatureAI
 {
-public:
-	MOONSCRIPT_FACTORY_FUNCTION(TelestraFireAI, MoonScriptCreatureAI);
-	TelestraFireAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
-	{
-		AddSpell(FIRE_BLAST, Target_RandomPlayer, 30.0f, 0, 14);
-		AddSpell(SCORCH, Target_Current, 100.0f, 1, 3);
-	}
+	public:
+		MOONSCRIPT_FACTORY_FUNCTION(TelestraFireAI, MoonScriptCreatureAI);
+		TelestraFireAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
+		{
+			AddSpell(FIRE_BLAST, Target_RandomPlayer, 30.0f, 0, 14);
+			AddSpell(SCORCH, Target_Current, 100.0f, 1, 3);
+		}
 
-	void OnLoad()
-	{
-		AggroNearestUnit();
-		ParentClass::OnLoad();
-	}
+		void OnLoad()
+		{
+			AggroNearestUnit();
+			ParentClass::OnLoad();
+		}
 };
 
 class TelestraFrostAI : public MoonScriptCreatureAI
 {
-public:
-	MOONSCRIPT_FACTORY_FUNCTION(TelestraFrostAI, MoonScriptCreatureAI);
-	TelestraFrostAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
-	{
-		AddSpell(BLIZZARD, Target_RandomPlayerDestination, 20.0f, 0, 20);
-		AddSpell(ICE_BARB, Target_RandomPlayer, 25.0f, 0.5, 6);
-	}
+	public:
+		MOONSCRIPT_FACTORY_FUNCTION(TelestraFrostAI, MoonScriptCreatureAI);
+		TelestraFrostAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
+		{
+			AddSpell(BLIZZARD, Target_RandomPlayerDestination, 20.0f, 0, 20);
+			AddSpell(ICE_BARB, Target_RandomPlayer, 25.0f, 0.5, 6);
+		}
 
-	void OnLoad()
-	{
-		AggroNearestUnit();
-		ParentClass::OnLoad();
-	}
+		void OnLoad()
+		{
+			AggroNearestUnit();
+			ParentClass::OnLoad();
+		}
 };
 
 class TelestraArcaneAI : public MoonScriptCreatureAI
 {
-public:
-	MOONSCRIPT_FACTORY_FUNCTION(TelestraArcaneAI, MoonScriptCreatureAI);
-	TelestraArcaneAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
-	{
-		AddSpell(TIME_STOP, Target_Self, 30.0f, 1.5, 30);
-		AddSpell(CRITTER, Target_RandomPlayer, 25.0f, 0, 20);
-	}
+	public:
+		MOONSCRIPT_FACTORY_FUNCTION(TelestraArcaneAI, MoonScriptCreatureAI);
+		TelestraArcaneAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
+		{
+			AddSpell(TIME_STOP, Target_Self, 30.0f, 1.5, 30);
+			AddSpell(CRITTER, Target_RandomPlayer, 25.0f, 0, 20);
+		}
 
-	void OnLoad()
-	{
-		AggroNearestUnit();
-		ParentClass::OnLoad();
-	}
+		void OnLoad()
+		{
+			AggroNearestUnit();
+			ParentClass::OnLoad();
+		}
 };
 
 ////////////////////////////////////////////////////////////////////////////////////////////
@@ -427,84 +427,84 @@ public:
 
 class OrmorokAI : public MoonScriptCreatureAI
 {
-public:
-	MOONSCRIPT_FACTORY_FUNCTION(OrmorokAI, MoonScriptCreatureAI);
-	OrmorokAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
-	{
-		AddEmote(Event_OnCombatStart, "Noo!", Text_Yell, 13328);
-		AddEmote(Event_OnDied, "Aaggh!", Text_Yell, 13330);
-
-		mInstance = GetInstanceScript();
-		AddSpell(TRAMPLE, Target_Current, 30.0f, 0, 9);
-		AddSpell(SPELL_REFLECTION, Target_Self, 35.0f, 2.0f, 15);
-		AddSpell(CRYSTAL_SPIKES, Target_Self, 25.0f, 0, 12, 0, 0, false, "Bleed!", Text_Yell, 13332);
-
-		mEnraged = false;
-	}
-
-	void OnCombatStart(Unit* pTarget)
-	{
-		mEnraged = false;
-		ParentClass::OnCombatStart(pTarget);
-	}
-
-	void AIUpdate()
-	{
-		if(GetHealthPercent() <= 25 && !mEnraged)
+	public:
+		MOONSCRIPT_FACTORY_FUNCTION(OrmorokAI, MoonScriptCreatureAI);
+		OrmorokAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
-			ApplyAura(FRENZY);
-			Announce("Ormorok the Tree-Shaper goes into a frenzy!");
-			mEnraged = true;
+			AddEmote(Event_OnCombatStart, "Noo!", Text_Yell, 13328);
+			AddEmote(Event_OnDied, "Aaggh!", Text_Yell, 13330);
+
+			mInstance = GetInstanceScript();
+			AddSpell(TRAMPLE, Target_Current, 30.0f, 0, 9);
+			AddSpell(SPELL_REFLECTION, Target_Self, 35.0f, 2.0f, 15);
+			AddSpell(CRYSTAL_SPIKES, Target_Self, 25.0f, 0, 12, 0, 0, false, "Bleed!", Text_Yell, 13332);
+
+			mEnraged = false;
 		}
 
-		ParentClass::AIUpdate();
-	}
+		void OnCombatStart(Unit* pTarget)
+		{
+			mEnraged = false;
+			ParentClass::OnCombatStart(pTarget);
+		}
 
-	void OnDied(Unit* pKiller)
-	{
-		if(mInstance)
-			mInstance->SetInstanceData(Data_EncounterState, NEXUS_ORMOROK, State_Finished);
+		void AIUpdate()
+		{
+			if(GetHealthPercent() <= 25 && !mEnraged)
+			{
+				ApplyAura(FRENZY);
+				Announce("Ormorok the Tree-Shaper goes into a frenzy!");
+				mEnraged = true;
+			}
 
-		ParentClass::OnDied(pKiller);
-	}
+			ParentClass::AIUpdate();
+		}
 
-private:
-	SpellDesc*	mCrystalSpikes;
-	bool		mEnraged;
-	MoonInstanceScript* mInstance;
+		void OnDied(Unit* pKiller)
+		{
+			if(mInstance)
+				mInstance->SetInstanceData(Data_EncounterState, NEXUS_ORMOROK, State_Finished);
+
+			ParentClass::OnDied(pKiller);
+		}
+
+	private:
+		SpellDesc*	mCrystalSpikes;
+		bool		mEnraged;
+		MoonInstanceScript* mInstance;
 };
 
 class CrystalSpikeAI : public MoonScriptBossAI
 {
-public:
-	MOONSCRIPT_FACTORY_FUNCTION(CrystalSpikeAI, MoonScriptBossAI);
-	CrystalSpikeAI(Creature* pCreature) : MoonScriptBossAI(pCreature) {};
+	public:
+		MOONSCRIPT_FACTORY_FUNCTION(CrystalSpikeAI, MoonScriptBossAI);
+		CrystalSpikeAI(Creature* pCreature) : MoonScriptBossAI(pCreature) {};
 
-	void OnLoad()
-	{
-		SetCanEnterCombat(false);
-		SetCanMove(false);
-		_unit->SetUInt64Value(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
-
-		Despawn(4500, 0);
-		RegisterAIUpdateEvent(500);
-		m_part = 0;
-
-		ParentClass::OnLoad();
-	}
-
-		void AIUpdate()
+		void OnLoad()
 		{
-			m_part += 1;
+			SetCanEnterCombat(false);
+			SetCanMove(false);
+			_unit->SetUInt64Value(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
 
-			if(m_part == 1)
-				ApplyAura(SPELL_CRYSTAL_SPIKE_VISUAL);
-			else if(m_part == 5)
-				ApplyAura(SPELL_CRYSTAL_SPIKE);
+			Despawn(4500, 0);
+			RegisterAIUpdateEvent(500);
+			m_part = 0;
+
+			ParentClass::OnLoad();
 		}
 
-private:
-	uint8	m_part;
+			void AIUpdate()
+			{
+				m_part += 1;
+
+				if(m_part == 1)
+					ApplyAura(SPELL_CRYSTAL_SPIKE_VISUAL);
+				else if(m_part == 5)
+					ApplyAura(SPELL_CRYSTAL_SPIKE);
+			}
+
+	private:
+		uint8	m_part;
 };
 
 ////////////////////////////////////////////////////////////////////////////////////////////
@@ -522,49 +522,49 @@ private:
 
 class KeristraszaAI : public MoonScriptCreatureAI
 {
-public:
-	MOONSCRIPT_FACTORY_FUNCTION(KeristraszaAI, MoonScriptCreatureAI);
-	KeristraszaAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
-	{
-		AddEmote(Event_OnCombatStart, "Preserve? Why? There's no truth in it. No no no... only in the taking! I see that now!", Text_Yell, 13450);
-		AddEmote(Event_OnTargetDied, "Now we've come to the truth!", Text_Yell, 13453);
-		AddEmote(Event_OnDied, "Dragonqueen... Life-Binder... preserve... me.", Text_Yell, 13454);
-
-		AddSpell(CRYSTALFIRE_BREATH, Target_Self, 30.0f, 1, 14);
-		AddSpell(CRYSTAL_CHAINS, Target_RandomPlayer, 30.0f, 0, 12);
-		AddSpell(TAIL_SWEEP, Target_Self, 40.0f, 0, 8);
-
-		AddSpell(CRYSTALLIZE, Target_Self, 25.0f, 0, 22, 0, 0, false, "Stay. Enjoy your final moments.", Text_Yell, 13451);
-
-		mEnraged = false;
-		SetCanEnterCombat(false);
-	}
-
-	void OnLoad()
-	{
-		ApplyAura(47543);   // frozen prison
-		ParentClass::OnLoad();
-	}
-
-	void AIUpdate()
-	{
-		if(!mEnraged && GetHealthPercent() <= 25)
+	public:
+		MOONSCRIPT_FACTORY_FUNCTION(KeristraszaAI, MoonScriptCreatureAI);
+		KeristraszaAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
-			ApplyAura(ENRAGE);
-			mEnraged = true;
+			AddEmote(Event_OnCombatStart, "Preserve? Why? There's no truth in it. No no no... only in the taking! I see that now!", Text_Yell, 13450);
+			AddEmote(Event_OnTargetDied, "Now we've come to the truth!", Text_Yell, 13453);
+			AddEmote(Event_OnDied, "Dragonqueen... Life-Binder... preserve... me.", Text_Yell, 13454);
+
+			AddSpell(CRYSTALFIRE_BREATH, Target_Self, 30.0f, 1, 14);
+			AddSpell(CRYSTAL_CHAINS, Target_RandomPlayer, 30.0f, 0, 12);
+			AddSpell(TAIL_SWEEP, Target_Self, 40.0f, 0, 8);
+
+			AddSpell(CRYSTALLIZE, Target_Self, 25.0f, 0, 22, 0, 0, false, "Stay. Enjoy your final moments.", Text_Yell, 13451);
+
+			mEnraged = false;
+			SetCanEnterCombat(false);
 		}
-	}
 
-	void Release()
-	{
-		SetCanEnterCombat(true);
-		RemoveAura(47543);
-		ApplyAura(INTENSE_COLD);
-	}
+		void OnLoad()
+		{
+			ApplyAura(47543);   // frozen prison
+			ParentClass::OnLoad();
+		}
 
-private:
-	bool		mEnraged;
-	SpellDesc*	mCrystalize;
+		void AIUpdate()
+		{
+			if(!mEnraged && GetHealthPercent() <= 25)
+			{
+				ApplyAura(ENRAGE);
+				mEnraged = true;
+			}
+		}
+
+		void Release()
+		{
+			SetCanEnterCombat(true);
+			RemoveAura(47543);
+			ApplyAura(INTENSE_COLD);
+		}
+
+	private:
+		bool		mEnraged;
+		SpellDesc*	mCrystalize;
 };
 
 // Nexus Instance script
@@ -572,111 +572,111 @@ private:
 
 class NexusScript : public MoonInstanceScript
 {
-public:
-	MOONSCRIPT_INSTANCE_FACTORY_FUNCTION(NexusScript, MoonInstanceScript);
-	NexusScript(MapMgr* pMapMgr) : MoonInstanceScript(pMapMgr)
-	{
-		mAnomalusGUID = 0;
-		mTelestraGUID = 0;
-		mOrmorokGUID = 0;
-		mKeristraszaGUID = 0;
-
-		mCSCount = 0;
-
-		for(uint32 i = 0; i < NEXUS_END; ++i)
-			m_uiEncounters[i] = State_NotStarted;
-	}
-
-	void SetInstanceData(uint32 pType, uint32 pIndex, uint32 pData)
-	{
-		if(pType != Data_EncounterState)
-			return;
-
-		if(pIndex >= NEXUS_END)
-			return;
-
-		m_uiEncounters[pIndex] = pData;
-
-		if(pData == State_Finished)
+	public:
+		MOONSCRIPT_INSTANCE_FACTORY_FUNCTION(NexusScript, MoonInstanceScript);
+		NexusScript(MapMgr* pMapMgr) : MoonInstanceScript(pMapMgr)
 		{
-			GameObject* pSphere = NULL;
+			mAnomalusGUID = 0;
+			mTelestraGUID = 0;
+			mOrmorokGUID = 0;
+			mKeristraszaGUID = 0;
 
-			switch(pIndex)
+			mCSCount = 0;
+
+			for(uint32 i = 0; i < NEXUS_END; ++i)
+				m_uiEncounters[i] = State_NotStarted;
+		}
+
+		void SetInstanceData(uint32 pType, uint32 pIndex, uint32 pData)
+		{
+			if(pType != Data_EncounterState)
+				return;
+
+			if(pIndex >= NEXUS_END)
+				return;
+
+			m_uiEncounters[pIndex] = pData;
+
+			if(pData == State_Finished)
 			{
-				case NEXUS_ANOMALUS: pSphere = GetGameObjectBySqlId(ANOMALUS_CS); break;
-				case NEXUS_TELESTRA: pSphere = GetGameObjectBySqlId(TELESTRA_CS); break;
-				case NEXUS_ORMOROK: pSphere = GetGameObjectBySqlId(ORMOROK_CS); break;
+				GameObject* pSphere = NULL;
+
+				switch(pIndex)
+				{
+					case NEXUS_ANOMALUS: pSphere = GetGameObjectBySqlId(ANOMALUS_CS); break;
+					case NEXUS_TELESTRA: pSphere = GetGameObjectBySqlId(TELESTRA_CS); break;
+					case NEXUS_ORMOROK: pSphere = GetGameObjectBySqlId(ORMOROK_CS); break;
+				}
+
+				if(pSphere != NULL)
+					pSphere->SetState(GAMEOBJECT_STATE_OPEN);
+			}
+		}
+
+		uint32 GetInstanceData(uint32 pType, uint32 pIndex)
+		{
+			return m_uiEncounters[pIndex];
+		}
+
+		void OnCreaturePushToWorld(Creature* pCreature)
+		{
+			switch(pCreature->GetEntry())
+			{
+				case CN_KERISTRASZA: mKeristraszaGUID = pCreature->GetLowGUID(); break;
+				case CN_ANOMALUS: mAnomalusGUID = pCreature->GetLowGUID(); break;
+				case CN_TELESTRA: mTelestraGUID = pCreature->GetLowGUID(); break;
+				case CN_ORMOROK: mOrmorokGUID = pCreature->GetLowGUID(); break;
+			}
+		}
+
+		void OnGameObjectPushToWorld(GameObject* pGameObject)
+		{
+			switch(pGameObject->GetEntry())
+			{
+				case ANOMALUS_CS: pGameObject->SetFlag(GAMEOBJECT_FLAGS, GO_FLAG_UNCLICKABLE); break;
+				case TELESTRA_CS: pGameObject->SetFlag(GAMEOBJECT_FLAGS, GO_FLAG_UNCLICKABLE); break;
+				case ORMOROK_CS: pGameObject->SetFlag(GAMEOBJECT_FLAGS, GO_FLAG_UNCLICKABLE); break;
+			}
+		}
+
+		void OnGameObjectActivate(GameObject* pGameObject, Player* pPlayer)
+		{
+			switch(pGameObject->GetEntry())
+			{
+				case ANOMALUS_CS:
+				{
+					pGameObject->SetFlag(GAMEOBJECT_FLAGS, GO_FLAG_UNCLICKABLE);
+					++mCSCount;
+				}break;
+				case TELESTRA_CS:
+				{
+					pGameObject->SetFlag(GAMEOBJECT_FLAGS, GO_FLAG_UNCLICKABLE);
+					++mCSCount;
+				}break;
+				case ORMOROK_CS:
+				{
+					pGameObject->SetFlag(GAMEOBJECT_FLAGS, GO_FLAG_UNCLICKABLE);
+					++mCSCount;
+				}break;
 			}
 
-			if(pSphere != NULL)
-				pSphere->SetState(GAMEOBJECT_STATE_OPEN);
-		}
-	}
-
-	uint32 GetInstanceData(uint32 pType, uint32 pIndex)
-	{
-		return m_uiEncounters[pIndex];
-	}
-
-	void OnCreaturePushToWorld(Creature* pCreature)
-	{
-		switch(pCreature->GetEntry())
-		{
-			case CN_KERISTRASZA: mKeristraszaGUID = pCreature->GetLowGUID(); break;
-			case CN_ANOMALUS: mAnomalusGUID = pCreature->GetLowGUID(); break;
-			case CN_TELESTRA: mTelestraGUID = pCreature->GetLowGUID(); break;
-			case CN_ORMOROK: mOrmorokGUID = pCreature->GetLowGUID(); break;
-		}
-	}
-
-	void OnGameObjectPushToWorld(GameObject* pGameObject)
-	{
-		switch(pGameObject->GetEntry())
-		{
-			case ANOMALUS_CS: pGameObject->SetFlag(GAMEOBJECT_FLAGS, GO_FLAG_UNCLICKABLE); break;
-			case TELESTRA_CS: pGameObject->SetFlag(GAMEOBJECT_FLAGS, GO_FLAG_UNCLICKABLE); break;
-			case ORMOROK_CS: pGameObject->SetFlag(GAMEOBJECT_FLAGS, GO_FLAG_UNCLICKABLE); break;
-		}
-	}
-
-	void OnGameObjectActivate(GameObject* pGameObject, Player* pPlayer)
-	{
-		switch(pGameObject->GetEntry())
-		{
-			case ANOMALUS_CS:
+			if(mCSCount == 3)   // release last boss
 			{
-				pGameObject->SetFlag(GAMEOBJECT_FLAGS, GO_FLAG_UNCLICKABLE);
-				++mCSCount;
-			}break;
-			case TELESTRA_CS:
-			{
-				pGameObject->SetFlag(GAMEOBJECT_FLAGS, GO_FLAG_UNCLICKABLE);
-				++mCSCount;
-			}break;
-			case ORMOROK_CS:
-			{
-				pGameObject->SetFlag(GAMEOBJECT_FLAGS, GO_FLAG_UNCLICKABLE);
-				++mCSCount;
-			}break;
+				Creature* pKeristrasza = GetCreatureByGuid(mKeristraszaGUID);
+				if(pKeristrasza == NULL)
+					return;
+
+				KeristraszaAI* pKeristraszaAI = TO< KeristraszaAI* >(pKeristrasza->GetScript());
+				if(pKeristraszaAI == NULL)
+					return;
+
+				pKeristraszaAI->Release();
+			}
 		}
 
-		if(mCSCount == 3)   // release last boss
-		{
-			Creature* pKeristrasza = GetCreatureByGuid(mKeristraszaGUID);
-			if(pKeristrasza == NULL)
-				return;
-
-			KeristraszaAI* pKeristraszaAI = TO< KeristraszaAI* >(pKeristrasza->GetScript());
-			if(pKeristraszaAI == NULL)
-				return;
-
-			pKeristraszaAI->Release();
-		}
-	}
-
-protected:
-	uint32 mAnomalusGUID, mTelestraGUID, mOrmorokGUID, mKeristraszaGUID, m_uiEncounters[NEXUS_END];
-	uint8 mCSCount;
+	protected:
+		uint32 mAnomalusGUID, mTelestraGUID, mOrmorokGUID, mKeristraszaGUID, m_uiEncounters[NEXUS_END];
+		uint8 mCSCount;
 };
 
 void SetupNexus(ScriptMgr* mgr)

@@ -42,7 +42,7 @@ class VishasAI : public MoonScriptCreatureAI
 			AddEmote(Event_OnTargetDied, "Purged by pain!", Text_Yell, 5848);
 
 			m_uiSay = 0;
-		};
+		}
 
 		void OnCombatStop(Unit* pTarget)
 		{
@@ -249,8 +249,7 @@ class MograineAI : public MoonScriptCreatureAI
 
 		void OnDied(Unit* mKiller)
 		{
-			GameObject * pDoor = _unit->GetMapMgr()->GetInterface()->GetGameObjectNearestCoords(1173.01f, 1389.91f, 31.9723f, 104600);
-			if(pDoor != NULL)
+			if(GameObject * pDoor = _unit->GetMapMgr()->GetInterface()->GetGameObjectNearestCoords(1173.01f, 1389.91f, 31.9723f, 104600))
 				pDoor->SetState(GAMEOBJECT_STATE_OPEN);
 		}
 };
@@ -275,12 +274,8 @@ class WhitemaneAI : public MoonScriptBossAI
 			SetPhase(1);
 		}
 
-		void OnDamageTaken(Unit* mAttacker, uint32 fAmount)
+		void AIUpdate()
 		{
-			if(fAmount < 5)
-				return;
-	
-			// <50% hp -> We go to phase 1
 			if(GetHealthPercent() <= 50 && GetPhase() == 1)
 			{
 				SetPhase(2);
@@ -323,13 +318,12 @@ class FairbanksAI : public MoonScriptCreatureAI
 class ScarletTorch : public GameObjectAIScript
 {
 	public:
+		ADD_GAMEOBJECT_FACTORY_FUNCTION(ScarletTorch)
 		ScarletTorch(GameObject* goinstance) : GameObjectAIScript(goinstance) {}
-		static GameObjectAIScript* Create(GameObject* GO) { return new ScarletTorch(GO); }
 
 		void OnActivate(Player* pPlayer)
 		{
-			GameObject* SecretDoor = pPlayer->GetMapMgr()->GetInterface()->GetGameObjectNearestCoords(1167.79f, 1347.26f, 31.5494f, 97700);
-			if(SecretDoor != NULL)
+			if(GameObject* SecretDoor = pPlayer->GetMapMgr()->GetInterface()->GetGameObjectNearestCoords(1167.79f, 1347.26f, 31.5494f, 97700))
 				SecretDoor->SetState(SecretDoor->GetState() == GAMEOBJECT_STATE_CLOSED ? GAMEOBJECT_STATE_OPEN : GAMEOBJECT_STATE_CLOSED);
 		}
 };
@@ -337,13 +331,12 @@ class ScarletTorch : public GameObjectAIScript
 class ArmoryLever : public GameObjectAIScript
 {
 	public:
+		ADD_GAMEOBJECT_FACTORY_FUNCTION(ArmoryLever)
 		ArmoryLever(GameObject* goinstance) : GameObjectAIScript(goinstance) {}
-		static GameObjectAIScript* Create(GameObject* GO) { return new ArmoryLever(GO); }
 
 		void OnActivate(Player* pPlayer)
 		{
-			GameObject* ArmoryDoor = pPlayer->GetMapMgr()->GetInterface()->GetGameObjectNearestCoords(2886.31f, -827.261f, 160.336f, 101851);
-			if(ArmoryDoor != NULL)
+			if(GameObject* ArmoryDoor = pPlayer->GetMapMgr()->GetInterface()->GetGameObjectNearestCoords(2886.31f, -827.261f, 160.336f, 101851))
 				ArmoryDoor->SetState(ArmoryDoor->GetState() == GAMEOBJECT_STATE_CLOSED ? GAMEOBJECT_STATE_OPEN : GAMEOBJECT_STATE_CLOSED);
 		}
 };
@@ -351,13 +344,12 @@ class ArmoryLever : public GameObjectAIScript
 class CathedralLever: public GameObjectAIScript
 {
 	public:
+		ADD_GAMEOBJECT_FACTORY_FUNCTION(CathedralLever)
 		CathedralLever(GameObject* goinstance) : GameObjectAIScript(goinstance) {}
-		static GameObjectAIScript* Create(GameObject* GO) { return new CathedralLever(GO); }
 
 		void OnActivate(Player* pPlayer)
 		{
-			GameObject* CathedralDoor = pPlayer->GetMapMgr()->GetInterface()->GetGameObjectNearestCoords(2908.18f, -818.203f, 160.332f, 101850);
-			if(CathedralDoor != NULL)
+			if(GameObject* CathedralDoor = pPlayer->GetMapMgr()->GetInterface()->GetGameObjectNearestCoords(2908.18f, -818.203f, 160.332f, 101850))
 				CathedralDoor->SetState(CathedralDoor->GetState() == GAMEOBJECT_STATE_CLOSED ? GAMEOBJECT_STATE_OPEN : GAMEOBJECT_STATE_CLOSED);
 		}
 };
