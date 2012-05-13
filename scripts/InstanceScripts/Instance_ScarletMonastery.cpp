@@ -251,7 +251,7 @@ class MograineAI : public MoonScriptCreatureAI
 		{
 			GameObject * pDoor = _unit->GetMapMgr()->GetInterface()->GetGameObjectNearestCoords(1173.01f, 1389.91f, 31.9723f, 104600);
 			if(pDoor != NULL)
-				pDoor->SetState(State_Active);
+				pDoor->SetState(GAMEOBJECT_STATE_OPEN);
 		}
 };
 
@@ -330,7 +330,7 @@ class ScarletTorch : public GameObjectAIScript
 		{
 			GameObject* SecretDoor = pPlayer->GetMapMgr()->GetInterface()->GetGameObjectNearestCoords(1167.79f, 1347.26f, 31.5494f, 97700);
 			if(SecretDoor != NULL)
-				SecretDoor->SetState(SecretDoor->GetState() == State_Inactive ? State_Active : State_Inactive);
+				SecretDoor->SetState(SecretDoor->GetState() == GAMEOBJECT_STATE_CLOSED ? GAMEOBJECT_STATE_OPEN : GAMEOBJECT_STATE_CLOSED);
 		}
 };
 
@@ -344,7 +344,7 @@ class ArmoryLever : public GameObjectAIScript
 		{
 			GameObject* ArmoryDoor = pPlayer->GetMapMgr()->GetInterface()->GetGameObjectNearestCoords(2886.31f, -827.261f, 160.336f, 101851);
 			if(ArmoryDoor != NULL)
-				ArmoryDoor->SetState(ArmoryDoor->GetState() == State_Inactive ? State_Active : State_Inactive);
+				ArmoryDoor->SetState(ArmoryDoor->GetState() == GAMEOBJECT_STATE_CLOSED ? GAMEOBJECT_STATE_OPEN : GAMEOBJECT_STATE_CLOSED);
 		}
 };
 
@@ -358,7 +358,7 @@ class CathedralLever: public GameObjectAIScript
 		{
 			GameObject* CathedralDoor = pPlayer->GetMapMgr()->GetInterface()->GetGameObjectNearestCoords(2908.18f, -818.203f, 160.332f, 101850);
 			if(CathedralDoor != NULL)
-				CathedralDoor->SetState(CathedralDoor->GetState() == State_Inactive ? State_Active : State_Inactive);
+				CathedralDoor->SetState(CathedralDoor->GetState() == GAMEOBJECT_STATE_CLOSED ? GAMEOBJECT_STATE_OPEN : GAMEOBJECT_STATE_CLOSED);
 		}
 };
 

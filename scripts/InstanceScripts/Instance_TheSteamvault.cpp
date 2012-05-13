@@ -2579,10 +2579,8 @@ class WarlordKalitreshAI : public CreatureAIScript
 
 		void OnCombatStop(Unit* mTarget)
 		{
-			GameObject* Gate = NULL;
-			Gate = _unit->GetMapMgr()->GetInterface()->GetGameObjectNearestCoords(-95.774361f, -439.608612f, 3.382976f, 183049);
-			if(Gate)
-				Gate->SetState(0);
+			if(GameObject* Gate = _unit->GetMapMgr()->GetInterface()->GetGameObjectNearestCoords(-95.774361f, -439.608612f, 3.382976f, 183049))
+				Gate->SetState(GAMEOBJECT_STATE_OPEN);
 
 			_unit->GetAIInterface()->SetAllowedToEnterCombat(true);
 			_unit->GetAIInterface()->m_canMove = true;
@@ -2593,6 +2591,7 @@ class WarlordKalitreshAI : public CreatureAIScript
 
 			if(_unit->FindAura(37076))
 				_unit->RemoveAura(37076);
+
 			if(_unit->FindAura(36453))
 				_unit->RemoveAura(36453);
 

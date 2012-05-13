@@ -35,13 +35,6 @@ enum DataType
     Data_UnspecifiedType		= 2
 };
 
-enum GameObjectState
-{
-    State_Active,		// Door: open
-    State_Inactive,		// Door: closed
-	State_Alternative	// Door: explosed
-};
-
 struct BossData
 {
 	BossData(EncounterState pState)
@@ -70,7 +63,7 @@ struct BossData
 class MoonInstanceScript;
 
 typedef std::map< uint32, BossData >							EncounterMap;
-typedef std::map< uint32, GameObjectState >						GameObjectEntryMap;
+typedef std::map< uint32, GO_STATE >							GameObjectEntryMap;
 typedef std::vector< uint32 >									IdVector;
 typedef std::set< uint32 >										IdSet;
 typedef std::map< uint32, IdVector >							EntryIdMap;
@@ -105,8 +98,8 @@ class MoonInstanceScript : public InstanceScript
 		GameObject*					FindClosestGameObjectOnMap(uint32 pEntry, float pX, float pY, float pZ);
 		GameObject*					SpawnGameObject(uint32 pEntry, float pX, float pY, float pZ, float pO);
 		GameObjectSet				FindGameObjectsOnMap(uint32 pEntry);
-		void						AddGameObjectStateByEntry(uint32 pEntry, GameObjectState pState, bool pUseQuery = false);
-		void						AddGameObjectStateById(uint32 pId, GameObjectState pState);
+		void						AddGameObjectStateByEntry(uint32 pEntry, GO_STATE pState, bool pUseQuery = false);
+		void						AddGameObjectStateById(uint32 pId, GO_STATE pState);
 
 		//function:: AddLeverStateByEntry
 		//pEntry is door entry, which should be opened

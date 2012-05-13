@@ -49,17 +49,14 @@ class GildedBrazier : public GameObjectAIScript
 				float SSZ = pPlayer->GetPositionZ();
 				float SSO = pPlayer->GetOrientation();
 
-				GameObject* Brazier = pPlayer->GetMapMgr()->GetInterface()->GetGameObjectNearestCoords(SSX, SSY, SSZ, 181956);
-				if(Brazier)
+				if(GameObject* Brazier = pPlayer->GetMapMgr()->GetInterface()->GetGameObjectNearestCoords(SSX, SSY, SSZ, 181956))
 				{
-					Brazier->SetState(0);
+					Brazier->SetState(GAMEOBJECT_STATE_OPEN);
 					pPlayer->GetMapMgr()->GetInterface()->SpawnCreature(17716, SSX, SSY, SSZ, SSO, true, false, 0, 0)->Despawn(600000, 0);
 				}
 			}
 			else
-			{
 				pPlayer->BroadcastMessage("Missing required quest : The First Trial");
-			}
 		}
 };
 

@@ -1697,14 +1697,10 @@ class DARKWEAVERSYTHAI : public CreatureAIScript
 			_unit->SendChatMessage(CHAT_MSG_MONSTER_YELL, LANG_UNIVERSAL, "No more life, no more pain!"); // It's talking so <censored>
 			_unit->PlaySoundToSet(10508);
 
-			GameObject* LakkasCage = _unit->GetMapMgr()->GetInterface()->GetGameObjectNearestCoords(-160.813f, 157.043f, 0.194095f, 183051);
 			Creature* mLakka = _unit->GetMapMgr()->GetInterface()->GetCreatureNearestCoords(-160.813f, 157.043f, 0.194095f, 18956);
 
-			if(LakkasCage != NULL)
-			{
-				LakkasCage->SetState(0);
+			if(GameObject* LakkasCage = _unit->GetMapMgr()->GetInterface()->GetGameObjectNearestCoords(-160.813f, 157.043f, 0.194095f, 183051))
 				LakkasCage->SetUInt32Value(GAMEOBJECT_FLAGS, LakkasCage->GetUInt32Value(GAMEOBJECT_FLAGS) - 1);
-			}
 
 			if(mLakka != NULL && mLakka->GetScript())
 			{
@@ -1931,9 +1927,8 @@ class TALONKINGIKISSAI : public CreatureAIScript
 			_unit->SendChatMessage(CHAT_MSG_MONSTER_YELL, LANG_UNIVERSAL, "Ikiss will not... die!");
 			_unit->PlaySoundToSet(10560);
 
-			GameObject* IkissDoor = _unit->GetMapMgr()->GetInterface()->GetGameObjectNearestCoords(43.079f, 149.505f, 0.034f, 183398);
-			if(IkissDoor != NULL)
-				IkissDoor->SetState(0);
+			if(GameObject* IkissDoor = _unit->GetMapMgr()->GetInterface()->GetGameObjectNearestCoords(43.079f, 149.505f, 0.034f, 183398))
+				IkissDoor->SetState(GAMEOBJECT_STATE_OPEN);
 
 			RemoveAIUpdateEvent();
 		}

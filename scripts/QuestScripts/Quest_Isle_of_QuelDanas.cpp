@@ -36,10 +36,9 @@ class ScryingOrb : public GameObjectAIScript
 				float SSY = pPlayer->GetPositionY();
 				float SSZ = pPlayer->GetPositionZ();
 
-				GameObject* pOrb = pPlayer->GetMapMgr()->GetInterface()->GetGameObjectNearestCoords(SSX, SSY, SSZ, 187578);
-				if(pOrb)
+				if(GameObject* pOrb = pPlayer->GetMapMgr()->GetInterface()->GetGameObjectNearestCoords(SSX, SSY, SSZ, 187578))
 				{
-					pOrb->SetState(0);
+					pOrb->SetState(GAMEOBJECT_STATE_OPEN);
 					qle->SetMobCount(0, 1);
 					qle->SendUpdateAddKill(0);
 					qle->UpdatePlayerFields();
@@ -47,9 +46,7 @@ class ScryingOrb : public GameObjectAIScript
 				return;
 			}
 			else
-			{
 				pPlayer->BroadcastMessage("Missing required quest : The Scryer's Scryer");
-			}
 		}
 };
 

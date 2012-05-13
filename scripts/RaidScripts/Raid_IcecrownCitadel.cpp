@@ -36,10 +36,10 @@ class IcecrownCitadelInstanceScript : public MoonInstanceScript
 			{
 				case NPC_LORD_MARROWGAR:
 				{
-					AddGameObjectStateByEntry(GO_MARROWGAR_ENTRANCE, State_Active);
-					AddGameObjectStateByEntry(GO_ICEBLOCK_1, State_Active);
-					AddGameObjectStateByEntry(GO_ICEBLOCK_2, State_Active);
-					AddGameObjectStateByEntry(GO_DAMMED_ENTRANCE, State_Active);
+					AddGameObjectStateByEntry(GO_MARROWGAR_ENTRANCE, GAMEOBJECT_STATE_OPEN);
+					AddGameObjectStateByEntry(GO_ICEBLOCK_1, GAMEOBJECT_STATE_OPEN);
+					AddGameObjectStateByEntry(GO_ICEBLOCK_2, GAMEOBJECT_STATE_OPEN);
+					AddGameObjectStateByEntry(GO_DAMMED_ENTRANCE, GAMEOBJECT_STATE_OPEN);
 				}break;
 				case NPC_ROTFACE: 
 				{
@@ -64,15 +64,15 @@ class IcecrownCitadelInstanceScript : public MoonInstanceScript
 			{
 				case GO_OOZE_RELEASE_VALVE :
 				{
-					pGO->SetState(State_Active);
-					AddGameObjectStateByEntry(GO_SCIENTIST_AIRLOCK_DOOR_GREEN, State_Active);
+					pGO->SetState(GAMEOBJECT_STATE_OPEN);
+					AddGameObjectStateByEntry(GO_SCIENTIST_AIRLOCK_DOOR_GREEN, GAMEOBJECT_STATE_OPEN);
 					pGO->SetFlags(16);
 					RegisterScriptUpdateEvent();
 				}break;
 				case GO_GAS_RELEASE_VALVE :
 				{
-					pGO->SetState(State_Active);
-					AddGameObjectStateByEntry(GO_SCIENTIST_AIRLOCK_DOOR_ORANGE, State_Active);
+					pGO->SetState(GAMEOBJECT_STATE_OPEN);
+					AddGameObjectStateByEntry(GO_SCIENTIST_AIRLOCK_DOOR_ORANGE, GAMEOBJECT_STATE_OPEN);
 					pGO->SetFlags(16);
 					RegisterScriptUpdateEvent();
 				}break;
@@ -91,10 +91,10 @@ class IcecrownCitadelInstanceScript : public MoonInstanceScript
 			if(pGO2 == NULL)
 				return;
 
-			if((pGO1->GetState() == State_Active) && (pGO2->GetState() == State_Active))
+			if((pGO1->GetState() == GAMEOBJECT_STATE_OPEN) && (pGO2->GetState() == GAMEOBJECT_STATE_OPEN))
 			{
-				AddGameObjectStateByEntry(GO_SCIENTIST_DOOR_COLLISION, State_Active);
-				AddGameObjectStateByEntry(GO_SCIENTIST_ENTRANCE, State_Active);
+				AddGameObjectStateByEntry(GO_SCIENTIST_DOOR_COLLISION, GAMEOBJECT_STATE_OPEN);
+				AddGameObjectStateByEntry(GO_SCIENTIST_ENTRANCE, GAMEOBJECT_STATE_OPEN);
 			}
 		}
 
@@ -116,9 +116,9 @@ class IcecrownCitadelInstanceScript : public MoonInstanceScript
 				case ICC_LORD_MARROWGAR:
 				{
 					if(pData == State_InProgress)
-						AddGameObjectStateByEntry(GO_MARROWGAR_ENTRANCE, State_Inactive);
+						AddGameObjectStateByEntry(GO_MARROWGAR_ENTRANCE, GAMEOBJECT_STATE_CLOSED);
 					else if(pData == State_NotStarted)
-						AddGameObjectStateByEntry(GO_MARROWGAR_ENTRANCE, State_Active);
+						AddGameObjectStateByEntry(GO_MARROWGAR_ENTRANCE, GAMEOBJECT_STATE_OPEN);
 				}break;
 				default:
 					break;
@@ -174,10 +174,13 @@ class ScourgeTeleporterAI : public GameObjectAIScript
 				menu->AddItem(Arcemu::Gossip::ICON_CHAT, "Teleport to the Oratory of the Damned.", 1);
 
 			if(pInstance->GetInstanceData(Data_EncounterState, ICC_LADY_DEATHWHISPER) == State_Finished)
+			{
 				menu->AddItem(Arcemu::Gossip::ICON_CHAT, "Teleport to the Rampart of Skulls.", 2);
-
-			if(pInstance->GetInstanceData(Data_EncounterState, ICC_GUNSHIP) == State_Finished)
 				menu->AddItem(Arcemu::Gossip::ICON_CHAT, "Teleport to the Deathbringer's Rise.", 3);
+			}
+			//check for gunship is disabled temporally, until this event will done - it requires much hard coding.
+			/*if( pInstance->GetInstanceData(Data_EncounterState, ICC_GUNSHIP) == State_Finished)
+				menu->AddItem(Arcemu::Gossip::ICON_CHAT, "Teleport to the Deathbringer's Rise.", 3);*/
 
 			if(pInstance->GetInstanceData(Data_EncounterState, ICC_SAURFANG) == State_Finished)
 				menu->AddItem(Arcemu::Gossip::ICON_CHAT, "Teleport to the Upper Spire.", 4);
@@ -240,8 +243,6 @@ class LordMarrowgar : public MoonScriptBossAI
 				case MODE_NORMAL_25MEN : _unit->SetHealth(23706500); break;
 				case MODE_HEROIC_10MEN : _unit->SetHealth(10458750); break;
 				case MODE_HEROIC_25MEN : _unit->SetHealth(31376250); break;
-				default :
-					break;
 			}
 
 			Reset();
@@ -329,7 +330,7 @@ class LordMarrowgar : public MoonScriptBossAI
 			{
 				if(IsTimerFinished(ChargeTimer))
 				{
-					Unit* pTarget = GetBestPlayerTarget(TargetFilter_Closest/*NotCurrent*/, 0, 70.0f);	//only for testing!
+					Unit* pTarget = GetBestPlayerTarget(TargetFilter_ClosestNotCurrent, 0, 70.0f);
 					if(pTarget != NULL)
 					{
 						MoveTo(pTarget->GetPositionX(), pTarget->GetPositionY(), pTarget->GetPositionZ());
@@ -372,7 +373,7 @@ class ColdFlameAI : public MoonScriptCreatureAI
 
 		void AIUpdate()
 		{
-			_unit->CastSpell(_unit, 69145, false);
+			_unit->CastSpell(_unit, 69146, false);
 			ParentClass::AIUpdate();
 		}
 };

@@ -36,7 +36,7 @@ class UlagTheCleaver : public GameObjectAIScript
 			Ulag->GetAIInterface()->setNextTarget(pPlayer);
 			Ulag->GetAIInterface()->AttackReaction(pPlayer, 1);
 			pDoor->SetUInt32Value(GAMEOBJECT_FLAGS, 0x21); // GO_FLAG_NODESPAWN|GO_FLAG_IN_USE
-			pDoor->SetState(0);
+			pDoor->SetState(GAMEOBJECT_STATE_OPEN);
 		}
 };
 

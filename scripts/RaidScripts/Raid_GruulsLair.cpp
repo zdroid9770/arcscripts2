@@ -153,12 +153,8 @@ class HighKingMaulgarAI : public MoonScriptBossAI
 		void OnDied(Unit* mKiller)
 		{
 			ParentClass::OnDied(mKiller);
-
-			GameObject* pDoor = mKiller->GetMapMgr()->GetInterface()->GetGameObjectNearestCoords(95.26f, 251.836f, 0.47f, 183817);
-			if(pDoor != NULL)
-			{
-				pDoor->SetState(0);
-			}
+			if(GameObject* pDoor = mKiller->GetMapMgr()->GetInterface()->GetGameObjectNearestCoords(95.26f, 251.836f, 0.47f, 183817))
+				pDoor->SetState(GAMEOBJECT_STATE_OPEN);
 		}
 
 		void AIUpdate()
@@ -167,9 +163,7 @@ class HighKingMaulgarAI : public MoonScriptBossAI
 				return;
 
 			if(GetPhase() == 1 && GetHealthPercent() <= 50)
-			{
 				SetPhase(2, mEnrage);
-			}
 
 			ParentClass::AIUpdate();
 		}
@@ -189,12 +183,8 @@ class HighKingMaulgarAI : public MoonScriptBossAI
 
 					switch(RandomText)
 					{
-						case 0:
-							Emote("You not kill next one so easy!", Text_Yell, 11369);
-							break;
-						case 1:
-							Emote("Does not prove anything!", Text_Yell, 11370);
-							break;
+						case 0: Emote("You not kill next one so easy!", Text_Yell, 11369); break;
+						case 1: Emote("Does not prove anything!", Text_Yell, 11370); break;
 					}
 
 					mLastYell = RandomText;
@@ -491,18 +481,16 @@ class GruulTheDragonkillerAI : public MoonScriptCreatureAI
 		{
 			ParentClass::OnCombatStop(pTarget);
 
-			GameObject* pGate = _unit->GetMapMgr()->GetInterface()->GetGameObjectNearestCoords(166.897f, 368.226f, 16.9209f, 184662);
-			if(pGate != NULL)
-				pGate->SetState(0);
+			if(GameObject* pGate = _unit->GetMapMgr()->GetInterface()->GetGameObjectNearestCoords(166.897f, 368.226f, 16.9209f, 184662))
+				pGate->SetState(GAMEOBJECT_STATE_OPEN);
 		}
 
 		void OnDied(Unit* mKiller)
 		{
 			ParentClass::OnDied(mKiller);
 
-			GameObject* pGate = _unit->GetMapMgr()->GetInterface()->GetGameObjectNearestCoords(166.897f, 368.226f, 16.9209f, 184662);
-			if(pGate != NULL)
-				pGate->SetState(0);
+			if(GameObject* pGate = _unit->GetMapMgr()->GetInterface()->GetGameObjectNearestCoords(166.897f, 368.226f, 16.9209f, 184662))
+				pGate->SetState(GAMEOBJECT_STATE_OPEN);
 		}
 
 		void AIUpdate()
@@ -516,14 +504,11 @@ class GruulTheDragonkillerAI : public MoonScriptCreatureAI
 						RemoveAura(GRUUL_THE_DRAGONKILLER_GROWTH);
 						mGrowthStacks = 0;
 					}
+
 					if(mGrowthStacks != 29)
-					{
 						ResetTimer(mGrowthTimer, 30000);
-					}
 					else if(mGrowthStacks == 29)
-					{
 						ResetTimer(mGrowthTimer, 300000);
-					}
 
 					ApplyAura(GRUUL_THE_DRAGONKILLER_GROWTH);
 					++mGrowthStacks;

@@ -148,7 +148,7 @@ class LegionObelisk : public GameObjectAIScript
 			if( !obelisk1 || !obelisk2 || !obelisk3 || !obelisk4 || !obelisk5 )
 				return;
 
-			_gameobject->SetState(0);
+			_gameobject->SetState(GAMEOBJECT_STATE_OPEN);
 			if(obelisk1->GetState() == 0 && obelisk2->GetState() == 0 && obelisk3->GetState() == 0 && obelisk4->GetState() == 0 && obelisk5->GetState() == 0)
 				sEAS.SpawnCreature(pPlayer, 19963, 2943.59f, 4779.05f, 284.49f, 1.89f, DEFAULT_DESPAWN_TIMER);
 

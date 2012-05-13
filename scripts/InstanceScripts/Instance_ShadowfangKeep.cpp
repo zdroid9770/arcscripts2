@@ -40,8 +40,8 @@ class ShadowfangKeepInstanceScript : public MoonInstanceScript
 		{
 			switch(c->GetEntry())
 			{
-				case CN_VOIDWALKER: AddGameObjectStateByEntry(18972, State_Active); break;
-				case CN_NENDOS: AddGameObjectStateByEntry(18971, State_Active); break;
+				case CN_VOIDWALKER: AddGameObjectStateByEntry(18972, GAMEOBJECT_STATE_OPEN); break;
+				case CN_NENDOS: AddGameObjectStateByEntry(18971, GAMEOBJECT_STATE_OPEN); break;
 			}
 		}
 };

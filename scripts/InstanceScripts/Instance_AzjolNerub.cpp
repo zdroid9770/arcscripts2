@@ -62,7 +62,7 @@ public:
 	{
 		GameObject* Doors = GetNearestGameObject(192395);
 		if(Doors != NULL)
-			Doors->SetState(State_Active);
+			Doors->SetState(GAMEOBJECT_STATE_OPEN);
 
 		ParentClass::OnDied(pKiller);
 	}

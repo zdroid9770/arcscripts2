@@ -162,7 +162,7 @@ GameObject* MoonInstanceScript::GetGameObjectByGuid(uint32 pGuid)
 	return mInstance->GetGameObject(pGuid);
 }
 
-void MoonInstanceScript::AddGameObjectStateByEntry(uint32 pEntry, GameObjectState pState, bool pUseQuery)
+void MoonInstanceScript::AddGameObjectStateByEntry(uint32 pEntry, GO_STATE pState, bool pUseQuery)
 {
 	if(pEntry == NULL)
 		return;
@@ -203,7 +203,7 @@ void MoonInstanceScript::AddGameObjectStateByEntry(uint32 pEntry, GameObjectStat
 	}
 }
 
-void MoonInstanceScript::AddGameObjectStateById(uint32 pId, GameObjectState pState)
+void MoonInstanceScript::AddGameObjectStateById(uint32 pId, GO_STATE pState)
 {
 	if(pId == NULL)
 		return;
@@ -237,7 +237,7 @@ void MoonInstanceScript::AddLeverStateByEntry(uint32 pEntry)
 {
 	GameObject* pGo = GetGameObjectBySqlId(pEntry);
 	if(pGo != NULL)
-		pGo->SetState(pGo->GetState() == State_Inactive ? State_Active : State_Inactive);
+		pGo->SetState(pGo->GetState() == GAMEOBJECT_STATE_CLOSED ? GAMEOBJECT_STATE_OPEN : GAMEOBJECT_STATE_CLOSED);
 }
 
 float MoonInstanceScript::GetRangeToObject(Object* pObjectA, Object* pObjectB)

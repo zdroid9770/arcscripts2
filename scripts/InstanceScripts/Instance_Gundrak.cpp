@@ -214,7 +214,7 @@ class GundrakScript : public MoonInstanceScript
 					mCombatDoorsGUID = pGameObject->GetLowGUID();
 					break;
 			}
-		};
+		}
 
 		void OnGameObjectActivate(GameObject* pGameObject, Player* pPlayer)
 		{
@@ -222,9 +222,8 @@ class GundrakScript : public MoonInstanceScript
 			{
 				case GO_ALTAR1_SLADRAN:
 					{
-						GameObject* pStatue = GetGameObjectByGuid(mSladranStatueGUID);
-						if(pStatue)
-							pStatue->SetState(pStatue->GetState() == 1 ? 0 : 1);
+						if(GameObject* pStatue = GetGameObjectByGuid(mSladranStatueGUID))
+							pStatue->SetState(pStatue->GetState() == GAMEOBJECT_STATE_CLOSED ? GAMEOBJECT_STATE_OPEN : GAMEOBJECT_STATE_CLOSED);
 
 						pGameObject->SetFlag(GAMEOBJECT_FLAGS, GO_FLAG_UNCLICKABLE);
 						mStatueCount++;
@@ -232,9 +231,8 @@ class GundrakScript : public MoonInstanceScript
 					break;
 				case GO_ALTAR2_COLOSSUS:
 					{
-						GameObject* pStatue = GetGameObjectByGuid(mColossusStatueGUID);
-						if(pStatue)
-							pStatue->SetState(pStatue->GetState() == 1 ? 0 : 1);
+						if(GameObject* pStatue = GetGameObjectByGuid(mColossusStatueGUID))
+							pStatue->SetState(pStatue->GetState() == GAMEOBJECT_STATE_CLOSED ? GAMEOBJECT_STATE_OPEN : GAMEOBJECT_STATE_CLOSED);
 
 						pGameObject->SetFlag(GAMEOBJECT_FLAGS, GO_FLAG_UNCLICKABLE);
 						mStatueCount++;
@@ -242,26 +240,24 @@ class GundrakScript : public MoonInstanceScript
 					break;
 				case GO_ALTAR3_MOORABI:
 					{
-						GameObject* pStatue = GetGameObjectByGuid(mMoorabiStatueGUID);
-						if(pStatue)
-							pStatue->SetState(pStatue->GetState() == 1 ? 0 : 1);
+						if(GameObject* pStatue = GetGameObjectByGuid(mMoorabiStatueGUID))
+							pStatue->SetState(pStatue->GetState() == GAMEOBJECT_STATE_CLOSED ? GAMEOBJECT_STATE_OPEN : GAMEOBJECT_STATE_CLOSED);
 
 						pGameObject->SetFlag(GAMEOBJECT_FLAGS, GO_FLAG_UNCLICKABLE);
 						mStatueCount++;
 					}
 					break;
-			};
+			}
 
 			if(mStatueCount < 3)
 				return;
 
-			GameObject* pTrapDoors = GetGameObjectByGuid(mTrapDoorGUID);
-			GameObject* pCoilision = GetGameObjectByGuid(mCoilisionGUID);
-			if(pTrapDoors)
-				pTrapDoors->SetState(pTrapDoors->GetState() == 1 ? 0 : 1);
-			if(pCoilision)
-				pCoilision->SetState(pCoilision->GetState() == 1 ? 0 : 1);
-		};
+			if(GameObject* pTrapDoors = GetGameObjectByGuid(mTrapDoorGUID))
+				pTrapDoors->SetState(pTrapDoors->GetState() == 1 ? GAMEOBJECT_STATE_OPEN : 1);
+
+			if(GameObject* pCoilision = GetGameObjectByGuid(mCoilisionGUID))
+				pCoilision->SetState(pCoilision->GetState() == 1 ? GAMEOBJECT_STATE_OPEN : 1);
+		}
 
 		void SetInstanceData(uint32 pType, uint32 pIndex, uint32 pData)
 		{
@@ -284,15 +280,15 @@ class GundrakScript : public MoonInstanceScript
 			switch(pData)
 			{
 				case State_InProgress:
-					pDoors->SetState(pDoors->GetState() == 1 ? 0 : 1);
+					pDoors->SetState(pDoors->GetState() == GAMEOBJECT_STATE_CLOSED ? GAMEOBJECT_STATE_OPEN : GAMEOBJECT_STATE_CLOSED);
 					break;
 				case State_NotStarted:
 				case State_Performed:
 				case State_Finished:
-					pDoors->SetState(pDoors->GetState() == 1 ? 0 : 1);
+					pDoors->SetState(pDoors->GetState() == GAMEOBJECT_STATE_CLOSED ? GAMEOBJECT_STATE_OPEN : GAMEOBJECT_STATE_CLOSED);
 					break;
 			}
-		};
+		}
 
 		uint32 GetInstanceData(uint32 pType, uint32 pIndex)
 		{
@@ -304,7 +300,7 @@ class GundrakScript : public MoonInstanceScript
 				return 0;
 
 			return (*Iter).second.mState;
-		};
+		}
 
 		void OnCreatureDeath(Creature* pVictim, Unit* pKiller)
 		{
@@ -321,36 +317,30 @@ class GundrakScript : public MoonInstanceScript
 				case CN_MOORABI:
 					{
 						SetInstanceData(Data_EncounterState, CN_MOORABI, State_Finished);
-
-						pAltar = GetGameObjectByGuid(mMoorabiAltarGUID);
-						if(pAltar)
+						if(pAltar = GetGameObjectByGuid(mMoorabiAltarGUID))
 							pAltar->RemoveFlag(GAMEOBJECT_FLAGS, GO_FLAG_UNCLICKABLE);
 
 						if(mInstance->iInstanceMode != MODE_HEROIC)
 							return;
 
-						pDoors = GetGameObjectByGuid(mEckDoorsGUID);
-						if(pDoors)
-							pDoors->SetState(0);
+						if(pDoors = GetGameObjectByGuid(mEckDoorsGUID))
+							pDoors->SetState(GAMEOBJECT_STATE_OPEN);
 					}
 					break;
 				case CN_GAL_DARAH:
 					{
 						SetInstanceData(Data_EncounterState, CN_GAL_DARAH, State_Finished);
-						pDoors = GetGameObjectByGuid(mDoor1GUID);
-						if(pDoors)
-							pDoors->SetState(0);
+						if(pDoors = GetGameObjectByGuid(mDoor1GUID))
+							pDoors->SetState(GAMEOBJECT_STATE_OPEN);
 
-						pDoors = GetGameObjectByGuid(mDoor2GUID);
-						if(pDoors)
-							pDoors->SetState(0);
+						if(pDoors = GetGameObjectByGuid(mDoor2GUID))
+							pDoors->SetState(GAMEOBJECT_STATE_OPEN);
 					}
 					break;
 				case CN_SLADRAN:
 					{
 						SetInstanceData(Data_EncounterState, CN_SLADRAN, State_Finished);
-						pAltar = GetGameObjectByGuid(mSladranAltarGUID);
-						if(pAltar)
+						if(pAltar = GetGameObjectByGuid(mSladranAltarGUID))
 							pAltar->RemoveFlag(GAMEOBJECT_FLAGS, GO_FLAG_UNCLICKABLE);
 					}
 					break;
@@ -362,14 +352,9 @@ class GundrakScript : public MoonInstanceScript
 							pAltar->RemoveFlag(GAMEOBJECT_FLAGS, GO_FLAG_UNCLICKABLE);
 					}
 					break;
-				case CN_ECK:
-					{
-						SetInstanceData(Data_EncounterState, CN_ECK, State_Finished);
-					}
-					break;
-			};
-		};
-
+				case CN_ECK: SetInstanceData(Data_EncounterState, CN_ECK, State_Finished); break;
+			}
+		}
 };
 
 /////////////////////////////////////////////////////////////////////////////////

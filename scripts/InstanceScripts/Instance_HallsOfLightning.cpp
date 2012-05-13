@@ -59,7 +59,7 @@ class HallsOfLightningScript : public MoonInstanceScript
 			mLokenDoorsGUID = 0;
 			mIonarDoors1GUID = 0;
 			mIonarDoors2GUID = 0;
-		};
+		}
 
 		void OnCreaturePushToWorld(Creature* pCreature)
 		{
@@ -89,32 +89,21 @@ class HallsOfLightningScript : public MoonInstanceScript
 						mEncounters.insert(EncounterMap::value_type(CN_IONAR, BossData(0, mIonarGUID)));
 					}
 					break;
-			};
-		};
+			}
+		}
 
 		void OnGameObjectPushToWorld(GameObject* pGameObject)
 		{
 			switch(pGameObject->GetEntry())
 			{
-				case GO_GENERAL_DOORS:
-					mGeneralDoorsGUID = pGameObject->GetLowGUID();
-					break;
-				case GO_VOLKHAN_DOORS:
-					mVolkhanDoorsGUID = pGameObject->GetLowGUID();
-					break;
-				case GO_LOKEN_DOORS:
-					mLokenDoorsGUID = pGameObject->GetLowGUID();
-					break;
-				case GO_IONAR_DOORS1:
-					mIonarDoors1GUID = pGameObject->GetLowGUID();
-					break;
-				case GO_IONAR_DOORS2:
-					mIonarDoors2GUID = pGameObject->GetLowGUID();
-					break;
+				case GO_GENERAL_DOORS: mGeneralDoorsGUID = pGameObject->GetLowGUID(); break;
+				case GO_VOLKHAN_DOORS: mVolkhanDoorsGUID = pGameObject->GetLowGUID(); break;
+				case GO_LOKEN_DOORS: mLokenDoorsGUID = pGameObject->GetLowGUID(); break;
+				case GO_IONAR_DOORS1: mIonarDoors1GUID = pGameObject->GetLowGUID(); break;
+				case GO_IONAR_DOORS2: mIonarDoors2GUID = pGameObject->GetLowGUID(); break;
 			}
-
 			ParentClass::OnGameObjectPushToWorld(pGameObject);
-		};
+		}
 
 		void SetInstanceData(uint32 pType, uint32 pIndex, uint32 pData)
 		{
@@ -123,7 +112,7 @@ class HallsOfLightningScript : public MoonInstanceScript
 				return;
 
 			(*Iter).second.mState = (EncounterState)pData;
-		};
+		}
 
 		uint32 GetInstanceData(uint32 pType, uint32 pIndex)
 		{
@@ -135,7 +124,7 @@ class HallsOfLightningScript : public MoonInstanceScript
 				return 0;
 
 			return (*Iter).second.mState;
-		};
+		}
 
 		void OnCreatureDeath(Creature* pVictim, Unit* pKiller)
 		{
@@ -150,43 +139,32 @@ class HallsOfLightningScript : public MoonInstanceScript
 			{
 				case CN_GENERAL_BJARNGRIM:
 					{
-						SetInstanceData(Data_EncounterState, CN_GENERAL_BJARNGRIM, State_Finished);
-						pDoors = GetGameObjectByGuid(mGeneralDoorsGUID);
-						if(pDoors)
-							pDoors->SetState(0);
-					}
-					break;
+						if(pDoors = GetGameObjectByGuid(mGeneralDoorsGUID))
+							pDoors->SetState(GAMEOBJECT_STATE_OPEN);
+					}break;
 				case CN_VOLKHAN:
 					{
 						SetInstanceData(Data_EncounterState, CN_VOLKHAN, State_Finished);
-						pDoors = GetGameObjectByGuid(mVolkhanDoorsGUID);
-						if(pDoors)
-							pDoors->SetState(0);
-					}
-					break;
+						if(pDoors = GetGameObjectByGuid(mVolkhanDoorsGUID))
+							pDoors->SetState(GAMEOBJECT_STATE_OPEN);
+					}break;
 				case CN_LOKEN:
 					{
 						SetInstanceData(Data_EncounterState, CN_LOKEN, State_Finished);
-						pDoors = GetGameObjectByGuid(mLokenDoorsGUID);
-						if(pDoors)
-							pDoors->SetState(0);
-					}
-					break;
+						if(pDoors = GetGameObjectByGuid(mLokenDoorsGUID))
+							pDoors->SetState(GAMEOBJECT_STATE_OPEN);
+					}break;
 				case CN_IONAR:
 					{
 						SetInstanceData(Data_EncounterState, CN_IONAR, State_Finished);
-						pDoors = GetGameObjectByGuid(mIonarDoors1GUID);
-						if(pDoors)
-							pDoors->SetState(0);
+						if(pDoors = GetGameObjectByGuid(mIonarDoors1GUID))
+							pDoors->SetState(GAMEOBJECT_STATE_OPEN);
 
-						pDoors = GetGameObjectByGuid(mIonarDoors2GUID);
-						if(pDoors)
-							pDoors->SetState(0);
-					}
-					break;
-			};
-		};
-
+						if(pDoors = GetGameObjectByGuid(mIonarDoors2GUID))
+							pDoors->SetState(GAMEOBJECT_STATE_OPEN);
+					}break;
+			}
+		}
 };
 
 /////////////////////////////////////////////////////////////////////////////////
@@ -245,7 +223,7 @@ public:
 			AddEmote(Event_OnDied, "How can it be...? Flesh is not... stronger!", Text_Yell, 14156);
 
 			mStanceTimer = INVALIDATE_TIMER;
-		};
+		}
 
 		void OnCombatStart(Unit* pTarget)
 		{
@@ -256,7 +234,7 @@ public:
 
 			if(mInstance)
 				mInstance->SetInstanceData(Data_EncounterState, _unit->GetEntry(), State_InProgress);
-		};
+		}
 
 		void OnCombatStop(Unit* pTarget)
 		{
@@ -264,7 +242,7 @@ public:
 				mInstance->SetInstanceData(Data_EncounterState, _unit->GetEntry(), State_Performed);
 
 			ParentClass::OnCombatStop(pTarget);
-		};
+		}
 
 		void AIUpdate()
 		{
@@ -272,57 +250,48 @@ public:
 			{
 				switch(GetPhase())
 				{
-					case STANCE_BATTLE:
-						switchStance(RandomUInt(1) + 2);
-						break;
-					case STANCE_BERSERKER:
-						if(RandomUInt(1) == 1)
-							switchStance(STANCE_BATTLE);
-						else
-							switchStance(STANCE_DEFENSIVE);
-						break;
-					case STANCE_DEFENSIVE:
-						switchStance(RandomUInt(1) + 1);
-						break;
-				};
-
-
+					case STANCE_BATTLE: switchStance(RandomUInt(1) + 2); break;
+					case STANCE_BERSERKER: switchStance(RandomUInt(1) == 1 ? STANCE_BATTLE : STANCE_DEFENSIVE); break;
+					case STANCE_DEFENSIVE: switchStance(RandomUInt(1) + 1); break;
+				}
 				ResetTimer(mStanceTimer, TIMER_STANCE_CHANGE + (RandomUInt(7) * 1000));
-			};
-
+			}
 			ParentClass::AIUpdate();
-		};
+		}
 
 		void switchStance(int32 pStance)
 		{
 			switch(pStance)
 			{
 				case STANCE_BATTLE:
+				{
 					ApplyAura(SPELL_BATTLE_AURA);
 					ApplyAura(SPELL_BATTLE_STANCE);
 					Emote("Defend yourself, for all the good it will do!", Text_Yell, 14151);
 					Announce("General Bjarngrim switches to Battle Stance!");
 					SetPhase(1);
-					break;
+				}break;
 				case STANCE_BERSERKER:
+				{
 					ApplyAura(SPELL_BERSERKER_AURA);
 					ApplyAura(SPELL_BERSERKER_STANCE);
 					Emote("GRAAAAAH! Behold the fury of iron and steel! ", Text_Yell, 14152);
 					Announce("General Bjarngrim switches to Berserker Stance!");
 					SetPhase(2);
-					break;
+				}break;
 				case STANCE_DEFENSIVE:
+				{
 					ApplyAura(SPELL_DEFENSIVE_AURA);
 					ApplyAura(SPELL_DEFENSIVE_STANCE);
 					Emote("Give me your worst! ", Text_Yell, 14150);
 					Announce("General Bjarngrim switches to Defensive Stance!");
 					SetPhase(3);
-					break;
+				}break;
 			}
-		};
+		}
 
 	private:
-		int32		        mStanceTimer;
+		int32	mStanceTimer;
 		MoonInstanceScript* mInstance;
 };
 
@@ -392,7 +361,7 @@ class Volkhan : public MoonScriptCreatureAI
 
 			if(mInstance)
 				mInstance->SetInstanceData(Data_EncounterState, _unit->GetEntry(), State_InProgress);
-		};
+		}
 
 		void OnCombatStop(Unit* pTarget)
 		{
@@ -400,7 +369,7 @@ class Volkhan : public MoonScriptCreatureAI
 				mInstance->SetInstanceData(Data_EncounterState, _unit->GetEntry(), State_Performed);
 
 			ParentClass::OnCombatStop(pTarget);
-		};
+		}
 
 		void AIUpdate()
 		{
@@ -418,7 +387,7 @@ class Volkhan : public MoonScriptCreatureAI
 					DoStomp();
 					ResetTimer(mStompTimer, TIMER_STOMP + (RandomUInt(6) * 1000));
 				}
-			};
+			}
 
 			if(GetHealthPercent() <= (100 - (20 * mPhase)))
 			{
@@ -428,7 +397,7 @@ class Volkhan : public MoonScriptCreatureAI
 			}
 
 			ParentClass::AIUpdate();
-		};
+		}
 
 		void OnReachWP(uint32 iWaypointId, bool bForwards)
 		{
@@ -436,24 +405,17 @@ class Volkhan : public MoonScriptCreatureAI
 			{
 				switch(RandomUInt(2))
 				{
-					case 0:
-						Emote("Life from the lifelessness... death for you.",			Text_Yell, 13961);
-						break;
-					case 1:
-						Emote("Nothing is wasted in the process. You will see....",	Text_Yell, 13962);
-						break;
-				};
+					case 0: Emote("Life from the lifelessness... death for you.", Text_Yell, 13961); break;
+					case 1: Emote("Nothing is wasted in the process. You will see....",	Text_Yell, 13962); break;
+				}
 
 				MoonScriptCreatureAI* pAnvil = GetNearestCreature(CN_VOLKHANS_ANVIL);
-				if(pAnvil)
-					_unit->CastSpell(pAnvil->GetUnit(), SPELL_TEMPER, true);
-				else
-					_unit->CastSpell(GetUnit(), SPELL_TEMPER, true);
+				_unit->CastSpell(pAnvil ? pAnvil->GetUnit() : GetUnit() , SPELL_TEMPER, true);
 
 				SetCanEnterCombat(true);
 				_unit->GetAIInterface()->AttackReaction(GetNearestPlayer() , 1);   // hackfix
-			};
-		};
+			}
+		}
 
 		void DoStomp()
 		{
@@ -465,11 +427,10 @@ class Volkhan : public MoonScriptCreatureAI
 					pCreature->CastSpell(pCreature, SPELL_SHATTER, true);
 
 					pCreature->Despawn(1000, 0);
-				};
-			};
-
+				}
+			}
 			m_bStomp = false;
-		};
+		}
 
 		SpellDesc*	        mTemper;
 		SpellDesc*	        mStomp;
@@ -488,7 +449,7 @@ class MoltenGolem : public MoonScriptCreatureAI
 		{
 			AddSpell(SPELL_BLAST_WAVE, Target_Self, 25, 0, 20);
 			AddSpell(SPELL_IMMOLATION_STRIKE, Target_Current, 15, 0, 15);
-		};
+		}
 
 		void OnDied(Unit* pKiller)
 		{
@@ -505,7 +466,7 @@ class BrittleGolem : public MoonScriptCreatureAI
 		{
 			SetCanEnterCombat(false);
 			SetCanMove(false);
-		};
+		}
 };
 
 class VolkhansAnvil : public MoonScriptCreatureAI
@@ -517,8 +478,7 @@ class VolkhansAnvil : public MoonScriptCreatureAI
 			_unit->GetAIInterface()->SetAllowedToEnterCombat(false);
 			_unit->SetUInt64Value(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
 			SetCanMove(false);
-		};
-
+		}
 };
 
 
@@ -552,7 +512,7 @@ class IonarAI : public MoonScriptBossAI
 			AddEmote(Event_OnTargetDied, "You attempt the impossible", Text_Yell, 14457);
 			AddEmote(Event_OnTargetDied, "Your spark of life is..extinguished!", Text_Yell, 14458);
 			AddEmote(Event_OnDied, "Master... you have guests.", Text_Yell, 14459);
-		};
+		}
 
 		void OnCombatStart(Unit* pTarget)
 		{
@@ -560,7 +520,7 @@ class IonarAI : public MoonScriptBossAI
 
 			if(mInstance)
 				mInstance->SetInstanceData(Data_EncounterState, _unit->GetEntry(), State_InProgress);
-		};
+		}
 
 		void OnCombatStop(Unit* pTarget)
 		{
@@ -568,7 +528,7 @@ class IonarAI : public MoonScriptBossAI
 
 			if(mInstance)
 				mInstance->SetInstanceData(Data_EncounterState, _unit->GetEntry(), State_Performed);
-		};
+		}
 
 		MoonInstanceScript* mInstance;
 };
@@ -605,7 +565,7 @@ class LokenAI : public MoonScriptCreatureAI
 			mRespondTimer = AddTimer(TIMER_RESPOND);
 			RegisterAIUpdateEvent(1000);
 			mSpeech = 1;
-		};
+		}
 
 		void OnCombatStart(Unit* pTarget)
 		{
@@ -617,7 +577,7 @@ class LokenAI : public MoonScriptCreatureAI
 
 			if(mInstance)
 				mInstance->SetInstanceData(Data_EncounterState, _unit->GetEntry(), State_InProgress);
-		};
+		}
 
 		void OnCombatStop(Unit* pTarget)
 		{
@@ -626,13 +586,13 @@ class LokenAI : public MoonScriptCreatureAI
 
 			if(mInstance)
 				mInstance->SetInstanceData(Data_EncounterState, _unit->GetEntry(), State_Performed);
-		};
+		}
 
 		void OnDied(Unit* pKiller)
 		{
 			RemoveAuraOnPlayers(PULSING_SHOCKWAVE_AURA);
 			ParentClass::OnDied(pKiller);
-		};
+		}
 
 		void AIUpdate()
 		{
@@ -640,21 +600,15 @@ class LokenAI : public MoonScriptCreatureAI
 			{
 				switch(RandomUInt(2))
 				{
-					case 0:
-						Emote("You cannot hide from fate!",			Text_Yell,	14163);
-						break;
-					case 1:
-						Emote("Come closer. I will make it quick.",	Text_Yell,	14164);
-						break;
-					case 2:
-						Emote("Your flesh cannot hold out for long.",	Text_Yell,	14165);
-						break;
-				};
+					case 0: Emote("You cannot hide from fate!", Text_Yell, 14163); break;
+					case 1: Emote("Come closer. I will make it quick.", Text_Yell, 14164); break;
+					case 2: Emote("Your flesh cannot hold out for long.",	Text_Yell,	14165); break;
+				}
 
 				Announce("Loken begins to cast Lightning Nova!");
 				CastSpellNowNoScheduling(mNova);
 				ResetTimer(mNovaTimer, TIMER_NOVA + (RandomUInt(8) * 1000));
-			};
+			}
 
 			if(mSpeech == 4)
 				return;
@@ -663,28 +617,22 @@ class LokenAI : public MoonScriptCreatureAI
 			{
 				switch(mSpeech)
 				{
-					case 1:
-						Emote("You stare blindly into the abyss!",	                                    Text_Yell, 14169);
-						break;
-					case 2:
-						Emote("Your ignorance is profound. Can you not see where this path leads?",    Text_Yell, 14170);
-						break;
-					case 3:
-						Emote("You cross the precipice of oblivion!",                                  Text_Yell, 14171);
-						break;
-						++mSpeech;
-				};
-			};
+					case 1: Emote("You stare blindly into the abyss!", Text_Yell, 14169); break;
+					case 2: Emote("Your ignorance is profound. Can you not see where this path leads?", Text_Yell, 14170); break;
+					case 3: Emote("You cross the precipice of oblivion!", Text_Yell, 14171); break;
+				}
+				++mSpeech;
+			}
 
 			if(IsTimerFinished(mRespondTimer))
 			{
 				Emote("My master has shown me the future, and you have no place in it. Azeroth will be reborn in darkness. Yogg-Saron shall be released! The Pantheon shall fall!", Text_Yell, 14161);
 				RemoveTimer(mRespondTimer);
 				RemoveAIUpdateEvent();
-			};
+			}
 
 			ParentClass::AIUpdate();
-		};
+		}
 
 		SpellDesc*	mNova;
 		MoonInstanceScript* mInstance;

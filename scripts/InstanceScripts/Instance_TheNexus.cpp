@@ -609,7 +609,7 @@ public:
 			}
 
 			if(pSphere != NULL)
-				pSphere->SetState(State_Active);
+				pSphere->SetState(GAMEOBJECT_STATE_OPEN);
 		}
 	}
 

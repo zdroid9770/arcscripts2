@@ -68,13 +68,13 @@ class ArcatrazInstanceScript : public MoonInstanceScript
 				{
 					GameObject* pGo1 = GetGameObjectByGuid(CoreSecurityBetaGuid);
 					if(pGo1 != NULL)
-						pGo1->SetState(State_Active);
+						pGo1->SetState(GAMEOBJECT_STATE_OPEN);
 				}break;
 				case CN_WRATH_SCRYER_SOCCOTHRATES:
 				{
 					GameObject* pGo2 = GetGameObjectByGuid(CoreSecurityAlphaGuid);
 					if(pGo2 != NULL)
-						pGo2->SetState(State_Active);
+						pGo2->SetState(GAMEOBJECT_STATE_OPEN);
 				}break;
 			}
 		}
@@ -94,31 +94,31 @@ class ArcatrazInstanceScript : public MoonInstanceScript
 					{
 						GameObject* pGo1 = GetGameObjectByGuid(WardenShieldGuid);
 						if(pGo1 != NULL)
-							pGo1->SetState(State_Active);
+							pGo1->SetState(GAMEOBJECT_STATE_OPEN);
 					}break;
 					case 2:	//first orb
 					{
 						GameObject* pGo2 = GetGameObjectByGuid(OrbGuid[0]);
 						if(pGo2 != NULL)
-							pGo2->SetState(State_Active);
+							pGo2->SetState(GAMEOBJECT_STATE_OPEN);
 					}break;
 					case 3:	//second orb
 					{
 						GameObject* pGo3 = GetGameObjectByGuid(OrbGuid[1]);
 						if(pGo3 != NULL)
-							pGo3->SetState(State_Active);
+							pGo3->SetState(GAMEOBJECT_STATE_OPEN);
 					}break;
 					case 4:	//third orb
 					{
 						GameObject* pGo4 = GetGameObjectByGuid(OrbGuid[2]);
 						if(pGo4 != NULL)
-							pGo4->SetState(State_Active);
+							pGo4->SetState(GAMEOBJECT_STATE_OPEN);
 					}break;
 					case 5:	//four orb
 					{
 						GameObject* pGo5 = GetGameObjectByGuid(OrbGuid[3]);
 						if(pGo5 != NULL)
-							pGo5->SetState(State_Active);
+							pGo5->SetState(GAMEOBJECT_STATE_OPEN);
 					}break;
 				}
 			}

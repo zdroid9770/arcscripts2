@@ -91,26 +91,26 @@ public:
 			{
 				GameObject* pDoor5 = GetGameObjectByGuid(mFactoryDoor_GUID);
 				if(pDoor5 != NULL)
-					pDoor5->SetState(pDoor5->GetState()==State_Inactive ? State_Active : State_Inactive);
+					pDoor5->SetState(pDoor5->GetState()==GAMEOBJECT_STATE_CLOSED ? GAMEOBJECT_STATE_OPEN : GAMEOBJECT_STATE_CLOSED);
 			}break;
 		case GO_IRONCLAD_LEVER:
 			{
 				GameObject* pDoor6 = GetGameObjectByGuid(mFactoryDoor_GUID);
 				//Door can be opened by lever if state isn't 2
 				if(pDoor6 != NULL && pDoor6->GetState() != 2)
-					pDoor6->SetState(pDoor6->GetState() == State_Inactive ? State_Active : State_Inactive);
+					pDoor6->SetState(pDoor6->GetState() == GAMEOBJECT_STATE_CLOSED ? GAMEOBJECT_STATE_OPEN : GAMEOBJECT_STATE_CLOSED);
 			}break;
 		case GO_SNEED_DOOR_LEVER:
 			{
 				GameObject* pDoor7 = FindClosestGameObjectOnMap(GO_HEAVY_DOOR, Doors[1].x, Doors[1].y, Doors[1].z);
 				if(pDoor7 != NULL)
-					pDoor7->SetState(pDoor7->GetState() == State_Inactive ? State_Active : State_Inactive);
+					pDoor7->SetState(pDoor7->GetState() == GAMEOBJECT_STATE_CLOSED ? GAMEOBJECT_STATE_OPEN : GAMEOBJECT_STATE_CLOSED);
 			}break;
 		case GO_GILNID_DOOR_LEVER:
 			{
 				GameObject* pDoor8 = FindClosestGameObjectOnMap(GO_HEAVY_DOOR, Doors[0].x, Doors[0].y, Doors[0].z);
 				if(pDoor8 != NULL)
-					pDoor8->SetState(pDoor8->GetState() == State_Inactive ? State_Active : State_Inactive);
+					pDoor8->SetState(pDoor8->GetState() == GAMEOBJECT_STATE_CLOSED ? GAMEOBJECT_STATE_OPEN : GAMEOBJECT_STATE_CLOSED);
 			}break;
 		}
 	}
@@ -123,7 +123,7 @@ public:
 			{
 				GameObject* pDoor1 = GetGameObjectByGuid(mFactoryDoor_GUID);
 				if(pDoor1!=NULL)
-					pDoor1->SetState(State_Active);
+					pDoor1->SetState(GAMEOBJECT_STATE_OPEN);
 			}break;
 		case NPC_SNEEDS_SHREDDER:
 			SpawnCreature(NPC_SNEED, pCreature->GetPositionX(), pCreature->GetPositionY(), pCreature->GetPositionZ(), pCreature->GetOrientation());
@@ -132,13 +132,13 @@ public:
 			{
 				GameObject* pDoor2 = FindClosestGameObjectOnMap(GO_HEAVY_DOOR, Doors[0].x, Doors[0].y, Doors[0].z);
 				if(pDoor2!=NULL)
-					pDoor2->SetState(State_Active);
+					pDoor2->SetState(GAMEOBJECT_STATE_OPEN);
 			}break;
 		case NPC_SNEED:
 			{
 				GameObject* pDoor3 = FindClosestGameObjectOnMap(GO_HEAVY_DOOR, Doors[1].x, Doors[1].y, Doors[1].z);
 				if(pDoor3!=NULL)
-					pDoor3->SetState(State_Active);
+					pDoor3->SetState(GAMEOBJECT_STATE_OPEN);
 			}break;
 		}
 	}

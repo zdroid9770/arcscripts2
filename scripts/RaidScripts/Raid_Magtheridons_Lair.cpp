@@ -409,9 +409,8 @@ class MagtheridonTriggerAI : public CreatureAIScript
 						// If less than half of alive channelers is out of combat we open Magtheridon's gate
 						if(AliveInCombat < AliveChannelers.size() / 2)
 						{
-							GameObject*  Gate = _unit->GetMapMgr()->GetInterface()->GetGameObjectNearestCoords(-72.5866f, 1.559f, 0.0f, 183847);
-							if(Gate)
-								Gate->SetState(0);
+							if(GameObject*  Gate = _unit->GetMapMgr()->GetInterface()->GetGameObjectNearestCoords(-72.5866f, 1.559f, 0.0f, 183847))
+								Gate->SetState(GAMEOBJECT_STATE_OPEN);
 						}
 						// After doing our job we can clear temporary channeler list
 						AliveChannelers.clear();
@@ -1361,21 +1360,18 @@ class MagtheridonAI : public CreatureAIScript
 			if(_unit->HasFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_ATTACKABLE_9) || _unit->HasFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_ATTACKABLE_2))
 				return;
 
-			GameObject*  Gate = NULL;
 			for(int i = 0; i < 6; i++)
 			{
-				Gate = _unit->GetMapMgr()->GetInterface()->GetGameObjectNearestCoords(Columns[i].x, Columns[i].y, Columns[i].z, 184634 + i);
-				if(Gate)
-					Gate->SetState(1);
+				if(GameObject* Gate = _unit->GetMapMgr()->GetInterface()->GetGameObjectNearestCoords(Columns[i].x, Columns[i].y, Columns[i].z, 184634 + i))
+					Gate->SetState(GAMEOBJECT_STATE_CLOSED);
 			}
 
-			Gate = _unit->GetMapMgr()->GetInterface()->GetGameObjectNearestCoords(0.0f, 0.0f, 0.0f, 184653);
-			if(Gate)
-				Gate->SetState(1);
+			if(GameObject* Gate1 = _unit->GetMapMgr()->GetInterface()->GetGameObjectNearestCoords(0.0f, 0.0f, 0.0f, 184653))
+				Gate1->SetState(GAMEOBJECT_STATE_CLOSED);
 
-			Gate = _unit->GetMapMgr()->GetInterface()->GetGameObjectNearestCoords(-72.5866f, 1.559f, 0.0f, 183847);
-			if(Gate)
-				Gate->SetState(0);
+			
+			if(GameObject* Gate1 = _unit->GetMapMgr()->GetInterface()->GetGameObjectNearestCoords(-72.5866f, 1.559f, 0.0f, 183847))
+				Gate1->SetState(GAMEOBJECT_STATE_OPEN);
 		}
 
 		void OnDied(Unit* mKiller)
@@ -1527,28 +1523,22 @@ class MagtheridonAI : public CreatureAIScript
 
 				if(timer_caveIn == 3)
 				{
-					GameObject*  Gate = NULL;
 					for(int i = 0; i < 6; i++)
 					{
-						Gate = _unit->GetMapMgr()->GetInterface()->GetGameObjectNearestCoords(Columns[i].x, Columns[i].y, Columns[i].z, 184634 + i);
-						if(Gate)
-							Gate->SetState(0);
+						if(GameObject* Gate = _unit->GetMapMgr()->GetInterface()->GetGameObjectNearestCoords(Columns[i].x, Columns[i].y, Columns[i].z, 184634 + i))
+							Gate->SetState(GAMEOBJECT_STATE_OPEN);
 					}
 
-					Gate = _unit->GetMapMgr()->GetInterface()->GetGameObjectNearestCoords(0.0f, 0.0f, 0.0f, 184653);
-					if(Gate)
-						Gate->SetState(0);
+					if(GameObject* Gate = _unit->GetMapMgr()->GetInterface()->GetGameObjectNearestCoords(0.0f, 0.0f, 0.0f, 184653))
+						Gate->SetState(GAMEOBJECT_STATE_OPEN);
 				}
 
 				if(timer_caveIn == 5)
 				{
 					for(int i = 0; i < 6; i++)
 					{
-						Unit* Trigger = _unit->GetMapMgr()->GetInterface()->GetCreatureNearestCoords(CaveInPos[i].x, CaveInPos[i].y, CaveInPos[i].z, 17474);
-						if(Trigger)
-						{
+						if(Unit* Trigger = _unit->GetMapMgr()->GetInterface()->GetCreatureNearestCoords(CaveInPos[i].x, CaveInPos[i].y, CaveInPos[i].z, 17474))
 							Trigger->CastSpellAoF(CaveInPos[i].x, CaveInPos[i].y, CaveInPos[i].z, spells[5].info, spells[5].instant);
-						}
 					}
 
 					timer_caveIn = 0;

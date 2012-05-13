@@ -3048,20 +3048,12 @@ class SapphironAI : public CreatureAIScript
 
 			for(int i = 1; i < 21; i++)
 			{
-				GameObject* IceBlock = NULL;
-				IceBlock = _unit->GetMapMgr()->GetInterface()->GetGameObjectNearestCoords(IceBlocks[i].x, IceBlocks[i].y, IceBlocks[i].z, ICE_BLOCK_GO);
-				if(IceBlock != NULL)
-				{
+				if(GameObject* IceBlock = _unit->GetMapMgr()->GetInterface()->GetGameObjectNearestCoords(IceBlocks[i].x, IceBlocks[i].y, IceBlocks[i].z, ICE_BLOCK_GO))
 					IceBlock->Delete();
-				}
 			}
 
-			GameObject* Waterfall = NULL;
-			Waterfall = _unit->GetMapMgr()->GetInterface()->GetGameObjectNearestCoords(3536.852783f, -5159.951172f, 143.636139f, FROSTWYRM_WATERFALL_DOOR);
-			if(Waterfall != NULL)
-			{
-				Waterfall->SetState(0);
-			}
+			if(GameObject* Waterfall = _unit->GetMapMgr()->GetInterface()->GetGameObjectNearestCoords(3536.852783f, -5159.951172f, 143.636139f, FROSTWYRM_WATERFALL_DOOR))
+				Waterfall->SetState(GAMEOBJECT_STATE_OPEN);
 
 			_unit->GetAIInterface()->setMoveType(MOVEMENTTYPE_DONTMOVEWP);
 			_unit->GetAIInterface()->SetAllowedToEnterCombat(true);
@@ -3787,7 +3779,7 @@ class KelthuzadAI : public CreatureAIScript
 		{
 			GameObject*  KelGate  = _unit->GetMapMgr()->GetInterface()->GetGameObjectNearestCoords(3635.44f, -5090.33f, 143.205f, 181228);
 			if(KelGate != NULL)
-				KelGate->SetState(0);
+				KelGate->SetState(GAMEOBJECT_STATE_OPEN);
 
 			for(int i = 0; i < 4; i++)
 			{
@@ -3842,7 +3834,7 @@ class KelthuzadAI : public CreatureAIScript
 		{
 			GameObject*  KelGate  = _unit->GetMapMgr()->GetInterface()->GetGameObjectNearestCoords(3635.44f, -5090.33f, 143.205f, 181228);
 			if(KelGate != NULL)
-				KelGate->SetState(0);
+				KelGate->SetState(GAMEOBJECT_STATE_OPEN);
 
 			for(int i = 0; i < 4; i++)
 			{
@@ -4071,9 +4063,8 @@ class KelthuzadAI : public CreatureAIScript
 
 					for(int i = 0; i < 4; i++)
 					{
-						GameObject*  WindowGate  = _unit->GetMapMgr()->GetInterface()->GetGameObjectNearestCoords(Guardians[i].x, Guardians[i].y, Guardians[i].z, 200002);
-						if(WindowGate)
-							WindowGate->SetState(0);
+						if(GameObject*  WindowGate  = _unit->GetMapMgr()->GetInterface()->GetGameObjectNearestCoords(Guardians[i].x, Guardians[i].y, Guardians[i].z, 200002))
+							WindowGate->SetState(GAMEOBJECT_STATE_OPEN);
 					}
 				}
 

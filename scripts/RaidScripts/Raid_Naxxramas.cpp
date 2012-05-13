@@ -45,22 +45,22 @@ class NaxxramasScript : public MoonInstanceScript
 					}
 					break;
 				case CN_PATCHWERK:
-					AddGameObjectStateByEntry(181123, State_Active);
+					AddGameObjectStateByEntry(181123, GAMEOBJECT_STATE_OPEN);
 					break;
 				case CN_GLUTH:
 					{
-						AddGameObjectStateByEntry(181120, State_Active);
-						AddGameObjectStateByEntry(181121, State_Active);
+						AddGameObjectStateByEntry(181120, GAMEOBJECT_STATE_OPEN);
+						AddGameObjectStateByEntry(181121, GAMEOBJECT_STATE_OPEN);
 					}
 					break;
 				case CN_ANUBREKHAN:
 					{
-						AddGameObjectStateByEntry(181195, State_Active);
-						AddGameObjectStateByEntry(194022, State_Active);
+						AddGameObjectStateByEntry(181195, GAMEOBJECT_STATE_OPEN);
+						AddGameObjectStateByEntry(194022, GAMEOBJECT_STATE_OPEN);
 					}
 					break;
 				case CN_GRAND_WIDOW_FAERLINA:
-					AddGameObjectStateByEntry(181209, State_Active);
+					AddGameObjectStateByEntry(181209, GAMEOBJECT_STATE_OPEN);
 					break;
 			};
 		};
@@ -628,14 +628,10 @@ void GrandWidowFaerlinaAI::OnCombatStart(Unit* pTarget)
 		WebGate->SetState(1);
 
 	for(set< NaxxramasWorshipperAI* >::iterator Iter = mWorshippers.begin(); Iter != mWorshippers.end(); ++Iter)
-	{
 		(*Iter)->AggroNearestPlayer(200);
-	};
 
 	for(set< NaxxramasFollowerAI* >::iterator Iter = mFollowers.begin(); Iter != mFollowers.end(); ++Iter)
-	{
 		(*Iter)->AggroNearestPlayer(200);
-	};
 };
 
 void GrandWidowFaerlinaAI::OnCombatStop(Unit* pTarget)
@@ -643,16 +639,15 @@ void GrandWidowFaerlinaAI::OnCombatStop(Unit* pTarget)
 	ParentClass::OnCombatStop(pTarget);
 	mPoisonVolleyBoltTimer = mFrenzyTimer = INVALIDATE_TIMER;
 
-	GameObject* WebGate = _unit->GetMapMgr()->GetInterface()->GetGameObjectNearestCoords(3318.65f, -3695.85f, 259.094f, 181235);
-	if(WebGate != NULL)
-		WebGate->SetState(0);
+	if(GameObject* WebGate = _unit->GetMapMgr()->GetInterface()->GetGameObjectNearestCoords(3318.65f, -3695.85f, 259.094f, 181235))
+		WebGate->SetState(GAMEOBJECT_STATE_OPEN);
 
 	for(set< NaxxramasWorshipperAI* >::iterator Iter = mWorshippers.begin(); Iter != mWorshippers.end(); ++Iter)
 	{
 		(*Iter)->mGrandWidow = NULL;
 		if(IsAlive())
 			(*Iter)->Despawn();
-	};
+	}
 
 	mWorshippers.clear();
 
@@ -661,7 +656,7 @@ void GrandWidowFaerlinaAI::OnCombatStop(Unit* pTarget)
 		(*Iter)->mGrandWidow = NULL;
 		if(IsAlive())
 			(*Iter)->Despawn();
-	};
+	}
 
 	mFollowers.clear();
 
@@ -670,14 +665,13 @@ void GrandWidowFaerlinaAI::OnCombatStop(Unit* pTarget)
 		MoonScriptCreatureAI* AddAI = NULL;
 		for(uint32 i = 0; i < 4; ++i)
 		{
-			AddAI = SpawnCreature(CN_NAXXRAMAS_WORSHIPPER, 3353.364502f + Worshippers[ i ].x, -3620.322998f, 260.996857f, 4.725017f);
-			if(AddAI != NULL)
+			if(AddAI = SpawnCreature(CN_NAXXRAMAS_WORSHIPPER, 3353.364502f + Worshippers[ i ].x, -3620.322998f, 260.996857f, 4.725017f))
 			{
 				AddAI->GetUnit()->m_noRespawn = true;
 				TO< NaxxramasWorshipperAI* >(AddAI)->mGrandWidow = this;
 				mWorshippers.insert(TO< NaxxramasWorshipperAI* >(AddAI));
-			};
-		};
+			}
+		}
 
 		if(IsHeroic())
 		{
@@ -689,10 +683,10 @@ void GrandWidowFaerlinaAI::OnCombatStop(Unit* pTarget)
 					AddAI->GetUnit()->m_noRespawn = true;
 					TO< NaxxramasFollowerAI* >(AddAI)->mGrandWidow = this;
 					mFollowers.insert(TO< NaxxramasFollowerAI* >(AddAI));
-				};
-			};
-		};
-	};
+				}
+			}
+		}
+	}
 };
 
 void GrandWidowFaerlinaAI::AIUpdate()
@@ -1295,20 +1289,18 @@ void NothThePlaguebringerAI::OnCombatStop(Unit* pTarget)
 	ParentClass::OnCombatStop(pTarget);
 	if(_unit->GetMapMgr() != NULL && _unit->GetMapMgr()->GetInterface() != NULL)
 	{
-		GameObject* Gate = _unit->GetMapMgr()->GetInterface()->GetGameObjectNearestCoords(2740.689209f, -3489.697266f, 262.117767f, 181200);
-		if(Gate != NULL)
-			Gate->SetState(0);
+		if(GameObject* Gate = _unit->GetMapMgr()->GetInterface()->GetGameObjectNearestCoords(2740.689209f, -3489.697266f, 262.117767f, 181200))
+			Gate->SetState(GAMEOBJECT_STATE_OPEN);
 
-		Gate = _unit->GetMapMgr()->GetInterface()->GetGameObjectNearestCoords(2683.670654f, -3556.429688f, 261.823334f, 181201);
-		if(Gate != NULL)
-			Gate->SetState(0);
-	};
+		if(GameObject* Gate = _unit->GetMapMgr()->GetInterface()->GetGameObjectNearestCoords(2683.670654f, -3556.429688f, 261.823334f, 181201))
+			Gate->SetState(GAMEOBJECT_STATE_OPEN);
+	}
 
 	for(set< PlaguedWarriorAI* >::iterator Iter = mWarriors.begin(); Iter != mWarriors.end(); ++Iter)
 	{
 		(*Iter)->mNothAI = NULL;
 		(*Iter)->Despawn();
-	};
+	}
 
 	mWarriors.clear();
 
@@ -1316,7 +1308,7 @@ void NothThePlaguebringerAI::OnCombatStop(Unit* pTarget)
 	{
 		(*Iter)->mNothAI = NULL;
 		(*Iter)->Despawn();
-	};
+	}
 
 	mChampions.clear();
 
@@ -1324,7 +1316,7 @@ void NothThePlaguebringerAI::OnCombatStop(Unit* pTarget)
 	{
 		(*Iter)->mNothAI = NULL;
 		(*Iter)->Despawn();
-	};
+	}
 
 	mGuardians.clear();
 };
@@ -1783,14 +1775,12 @@ void HeiganTheUncleanAI::OnCombatStop(Unit* pTarget)
 	SetTargetToChannel(NULL, 0);
 	if(_unit->GetMapMgr() != NULL && _unit->GetMapMgr()->GetInterface() != NULL)
 	{
-		GameObject* Gate = _unit->GetMapMgr()->GetInterface()->GetGameObjectNearestCoords(2790.709961f, -3708.669922f, 276.584991f, 181202);
-		if(Gate != NULL)
-			Gate->SetState(0);
+		if(GameObject* Gate = _unit->GetMapMgr()->GetInterface()->GetGameObjectNearestCoords(2790.709961f, -3708.669922f, 276.584991f, 181202))
+			Gate->SetState(GAMEOBJECT_STATE_OPEN);
 
-		Gate = _unit->GetMapMgr()->GetInterface()->GetGameObjectNearestCoords(2771.718506f, -3739.965820f, 273.616211f, 181203);
-		if(Gate != NULL)
-			Gate->SetState(0);
-	};
+		if(GameObject* Gate = _unit->GetMapMgr()->GetInterface()->GetGameObjectNearestCoords(2771.718506f, -3739.965820f, 273.616211f, 181203))
+			Gate->SetState(GAMEOBJECT_STATE_OPEN);
+	}
 
 	mFissures.clear();
 };
