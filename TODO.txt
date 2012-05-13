@@ -11,3 +11,7 @@ General:
 	* Update timer's functions
 	* Finish all repo structure regroups
 	* Add blizzlike agroo and wipe to instances encounters
+
+Mechanar trashes
+20478, 19510, 20990, 19167, 19231, 19712, 19716, 19713
+20481, 19168, 20988, 20059, 19735, 19166
