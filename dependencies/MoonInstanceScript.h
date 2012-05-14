@@ -146,6 +146,7 @@ class MoonInstanceScript : public InstanceScript
 
 		// Data get / set - idea taken from ScriptDev2
 		virtual void				SetInstanceData(uint32 pType, uint32 pIndex, uint32 pData);
+		virtual void				SetInstanceData(uint32 pIndex, uint32 pData);
 		virtual uint32				GetInstanceData(uint32 pType, uint32 pIndex);
 
 		// Creature / GameObject

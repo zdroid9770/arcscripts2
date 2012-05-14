@@ -416,6 +416,10 @@ void MoonInstanceScript::SetInstanceData(uint32 pType, uint32 pIndex, uint32 pDa
 {
 }
 
+void MoonInstanceScript::SetInstanceData(uint32 pIndex, uint32 pData)
+{
+}
+
 uint32 MoonInstanceScript::GetInstanceData(uint32 pType, uint32 pIndex)
 {
 	return 0;
