@@ -98,16 +98,14 @@ class IcecrownCitadelInstanceScript : public MoonInstanceScript
 			}
 		}
 
-		uint32 GetInstanceData(uint32 pType, uint32 pIndex)
+		uint32 GetInstanceData(uint32 pIndex)
 		{
 			return mEncounters[pIndex];
+			MoonInstanceScript::GetInstanceData(pIndex);
 		}
 
-		void SetInstanceData(uint32 pType, uint32 pIndex, uint32 pData)
+		void SetInstanceData(uint32 pIndex, uint32 pData)
 		{
-			if(pType != Data_EncounterState)
-				return;
-
 			if(pIndex >= ICC_END)
 				return;
 
@@ -124,6 +122,7 @@ class IcecrownCitadelInstanceScript : public MoonInstanceScript
 					break;
 			}
 			mEncounters[pIndex] = pData;
+			MoonInstanceScript::SetInstanceData(pIndex, pData);
 		}
 
 	protected:
@@ -170,10 +169,10 @@ class ScourgeTeleporterAI : public GameObjectAIScript
 			objmgr.CreateGossipMenuForPlayer(&menu, _gameobject->GetGUID(), 0, player);
 			menu->AddItem(Arcemu::Gossip::ICON_CHAT, "Teleport to Light's Hammer.", 0);
 
-			if(pInstance->GetInstanceData(Data_EncounterState, ICC_LORD_MARROWGAR) == State_Finished)
+			if(pInstance->GetInstanceData(ICC_LORD_MARROWGAR) == State_Finished)
 				menu->AddItem(Arcemu::Gossip::ICON_CHAT, "Teleport to the Oratory of the Damned.", 1);
 
-			if(pInstance->GetInstanceData(Data_EncounterState, ICC_LADY_DEATHWHISPER) == State_Finished)
+			if(pInstance->GetInstanceData(ICC_LADY_DEATHWHISPER) == State_Finished)
 			{
 				menu->AddItem(Arcemu::Gossip::ICON_CHAT, "Teleport to the Rampart of Skulls.", 2);
 				menu->AddItem(Arcemu::Gossip::ICON_CHAT, "Teleport to the Deathbringer's Rise.", 3);
@@ -182,16 +181,16 @@ class ScourgeTeleporterAI : public GameObjectAIScript
 			/*if( pInstance->GetInstanceData(Data_EncounterState, ICC_GUNSHIP) == State_Finished)
 				menu->AddItem(Arcemu::Gossip::ICON_CHAT, "Teleport to the Deathbringer's Rise.", 3);*/
 
-			if(pInstance->GetInstanceData(Data_EncounterState, ICC_SAURFANG) == State_Finished)
+			if(pInstance->GetInstanceData(ICC_SAURFANG) == State_Finished)
 				menu->AddItem(Arcemu::Gossip::ICON_CHAT, "Teleport to the Upper Spire.", 4);
 
-			if(pInstance->GetInstanceData(Data_EncounterState, ICC_SAURFANG) == State_Finished
-				&& pInstance->GetInstanceData(Data_EncounterState, ICC_PROFESSOR_PUTRICIDE) == State_Finished
-				&& pInstance->GetInstanceData(Data_EncounterState, ICC_BLOOD_QUEEN_LANATHEL) == State_Finished
-				&& pInstance->GetInstanceData(Data_EncounterState, ICC_VALITRA_DREAMWALKER) == State_Finished)
+			if(pInstance->GetInstanceData(ICC_SAURFANG) == State_Finished
+				&& pInstance->GetInstanceData(ICC_PROFESSOR_PUTRICIDE) == State_Finished
+				&& pInstance->GetInstanceData(ICC_BLOOD_QUEEN_LANATHEL) == State_Finished
+				&& pInstance->GetInstanceData(ICC_VALITRA_DREAMWALKER) == State_Finished)
 				menu->AddItem(Arcemu::Gossip::ICON_CHAT, "Teleport to Sindragosa's Lair", 5);
 
-			if(pInstance->GetInstanceData(Data_EncounterState, ICC_SINDRAGOSA) == State_Finished)
+			if(pInstance->GetInstanceData(ICC_SINDRAGOSA) == State_Finished)
 				menu->AddItem(Arcemu::Gossip::ICON_CHAT, "Teleport to Frozen Throne", 6);
 			menu->SendTo(player);
 		}
@@ -220,6 +219,7 @@ enum MarrowgarSpells
 	SPELL_BONE_STORM		= 69076,
 	SPELL_BONE_SPIKE		= 69057,
 	SPELL_COLDFLAME			= 69140,
+	SPELL_SOUL_FEAST		= 71203,
 	SPELL_COLDFLAME_BONESTORM	= 72705
 };
 
@@ -248,14 +248,13 @@ class LordMarrowgar : public MoonScriptBossAI
 			Reset();
 
 			//Bone Storm!
-			sBoneStorm = AddSpell(SPELL_BONE_STORM, Target_Self, 0, 3, 0, 0, 0, false, "BONE STORM!", Text_Yell, 16946, "Lord Marrowgar creates a whirling of bone!");
+			sBoneStorm = AddSpell(SPELL_BONE_STORM, Target_Self, 0, 3, -1, 0, 0, false, "BONE STORM!", Text_Yell, 16946, "Lord Marrowgar creates a whirling of bone!");
 
 			SetEnrageInfo(AddSpell(SPELL_LM_BERSERK, Target_Self, 0, 0, 0, 0, 0, false, "THE MASTER'S RAGE COURSES THROUGH ME!", Text_Yell, 16945), MINUTE*10*SEC_IN_MS);
 
 			//normal phase
-			AddPhaseSpell(1, AddSpell(SPELL_BONE_SLICE, Target_Current, 25.0f, 0, 10));
-			AddPhaseSpell(1, AddSpell(SPELL_COLDFLAME, Target_RandomPlayer, 100.0f, 0, 5));
-
+			AddPhaseSpell(1, AddSpell(SPELL_BONE_SLICE, Target_Current, 25.0f, 0, -1));
+			AddPhaseSpell(1, AddSpell(SPELL_COLDFLAME, Target_Self, 30, 0, -1));
 			if((GetInstanceMode() == MODE_HEROIC_10MEN) || (GetInstanceMode() == MODE_HEROIC_25MEN))
 			{
 				SpellDesc* sBoneSpike = AddPhaseSpell(1, AddSpell(SPELL_BONE_SPIKE, Target_RandomPlayer, 25.0f, 0, rand()%20+15));
@@ -273,7 +272,6 @@ class LordMarrowgar : public MoonScriptBossAI
 
 		void Reset()
 		{
-			BoneStormTimer = ChargeTimer = INVALIDATE_TIMER;
 			Stage = -1;
 			SetBehavior(Behavior_Default);
 			_unit->SetSpeeds(RUN, 8.0f);
@@ -284,7 +282,7 @@ class LordMarrowgar : public MoonScriptBossAI
 			BoneStormTimer = AddTimer(30*SEC_IN_MS);
 
 			if(mInstance)
-				mInstance->SetInstanceData(Data_EncounterState, ICC_LORD_MARROWGAR, State_InProgress);
+				mInstance->SetInstanceData(ICC_LORD_MARROWGAR, State_InProgress);
 
 			ParentClass::OnCombatStart(pUnit);
 		}
@@ -294,7 +292,7 @@ class LordMarrowgar : public MoonScriptBossAI
 			Reset();
 
 			if(mInstance)
-				mInstance->SetInstanceData(Data_EncounterState, ICC_LORD_MARROWGAR, State_NotStarted);
+				mInstance->SetInstanceData(ICC_LORD_MARROWGAR, State_NotStarted);
 
 			ParentClass::OnCombatStop(mTarget);
 		}
@@ -302,8 +300,9 @@ class LordMarrowgar : public MoonScriptBossAI
 		void OnDied(Unit* mKiller)
 		{
 			if(mInstance)
-				mInstance->SetInstanceData(Data_EncounterState, ICC_LORD_MARROWGAR, State_Finished);
+				mInstance->SetInstanceData(ICC_LORD_MARROWGAR, State_Finished);
 
+			_unit->CastSpell(_unit, SPELL_SOUL_FEAST, false);
 			ParentClass::OnDied(mKiller);
 		}
 
@@ -351,8 +350,8 @@ class LordMarrowgar : public MoonScriptBossAI
 				Stage = -1;
 				SetPhase(1);
 			}
-		ParentClass::AIUpdate();
-	}
+			ParentClass::AIUpdate();
+		}
 
 	protected:
 		SpellDesc *sBoneStorm;
@@ -363,6 +362,7 @@ class LordMarrowgar : public MoonScriptBossAI
 
 class ColdFlameAI : public MoonScriptCreatureAI
 {
+	MoonInstanceScript* mInstance;
 	public:
 		MOONSCRIPT_FACTORY_FUNCTION(ColdFlameAI, MoonScriptCreatureAI);
 		ColdFlameAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
@@ -370,13 +370,14 @@ class ColdFlameAI : public MoonScriptCreatureAI
 			StopMovement();
 			SetCanMove(false);
 			SetCanEnterCombat(false);
-			RegisterAIUpdateEvent(1000);
+			_unit->SetUInt64Value(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
 			Despawn(15*SEC_IN_MS);
+			RegisterAIUpdateEvent(1000);
 		}
 
 		void AIUpdate()
 		{
-			_unit->CastSpell(_unit, 69146, false);
+			_unit->CastSpell(_unit, 69147, false);
 			ParentClass::AIUpdate();
 		}
 };
@@ -419,7 +420,7 @@ bool ColdFlame_BoneStorm(uint32 i, Spell* s)
 bool ColdFlame(uint32 i, Spell* s)
 {
 	s->u_caster->CastSpell(s->u_caster, 69146, false);
-	//s->u_caster->CastSpell(s->u_caster, 33801, false);	need more information about this
+	s->u_caster->CastSpell(s->u_caster, 69145, false);
 	return true;
 };
 
