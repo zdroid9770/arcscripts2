@@ -425,6 +425,11 @@ uint32 MoonInstanceScript::GetInstanceData(uint32 pType, uint32 pIndex)
 	return 0;
 }
 
+uint32 MoonInstanceScript::GetInstanceData(uint32 pIndex)
+{
+	return 0;
+}
+
 void MoonInstanceScript::OnCreatureDeath(Creature* pVictim, Unit* pKiller)
 {
 }
