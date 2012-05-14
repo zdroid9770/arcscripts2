@@ -367,7 +367,10 @@ class ColdFlameAI : public MoonScriptCreatureAI
 		MOONSCRIPT_FACTORY_FUNCTION(ColdFlameAI, MoonScriptCreatureAI);
 		ColdFlameAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
+			StopMovement();
+			SetCanMove(false);
 			SetCanEnterCombat(false);
+			RegisterAIUpdateEvent(1000);
 			Despawn(15*SEC_IN_MS);
 		}
 
