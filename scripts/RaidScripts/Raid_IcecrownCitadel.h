@@ -58,9 +58,14 @@ uint32 IccBossEntries[]=
 
 struct IccCreatureStats
 {
-	uint32 entry;
-	uint32 Health[4];
-	int32 Mana[4];
+	uint32 Health_10_normal;
+	uint32 Health_25_normal;
+	uint32 Health_10_heroic;
+	uint32 Health_25_heroic;
+	int32 Mana_10_normal;
+	int32 Mana_25_normal;
+	int32 Mana_10_heroic;
+	int32 Mana_25_heroic;
 };
 
 static IccCreatureStats ICC_boss_stat_Data[]=

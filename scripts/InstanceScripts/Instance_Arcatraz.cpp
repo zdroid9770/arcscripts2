@@ -21,7 +21,7 @@
 #define	WARDEN_MELLICHAR 0
 #define CN_DALLIAH_THE_DOOMSAYER 20885
 #define CN_WRATH_SCRYER_SOCCOTHRATES 20886
-enum eUnits
+enum InstanceArcatraz
 {
     CONTAINMENT_CORE_SECURITY_FIELD_ALPHA = 184318, //door opened when Wrath-Scryer Soccothrates dies
     CONTAINMENT_CORE_SECURITY_FIELD_BETA  = 184319, //door opened when Dalliah the Doomsayer dies
@@ -41,7 +41,7 @@ class ArcatrazInstanceScript : public MoonInstanceScript
 		MOONSCRIPT_INSTANCE_FACTORY_FUNCTION(ArcatrazInstanceScript, MoonInstanceScript);
 		ArcatrazInstanceScript(MapMgr* pMapMgr) : MoonInstanceScript(pMapMgr) 
 		{
-			WardenShieldGuid = CoreSecurityAlphaGuid = CoreSecurityBetaGuid = NULL;
+			WardenShieldGuid = CoreSecurityAlphaGuid = CoreSecurityBetaGuid = 0;
 			for(uint32 i=0; i<=3; i++)
 				OrbGuid[i] = 0;
 		}
@@ -66,14 +66,12 @@ class ArcatrazInstanceScript : public MoonInstanceScript
 			{
 				case CN_DALLIAH_THE_DOOMSAYER:
 				{
-					GameObject* pGo1 = GetGameObjectByGuid(CoreSecurityBetaGuid);
-					if(pGo1 != NULL)
-						pGo1->SetState(GAMEOBJECT_STATE_OPEN);
+					if(GameObject* pGo = GetGameObjectByGuid(CoreSecurityBetaGuid))
+						pGo->SetState(GAMEOBJECT_STATE_OPEN);
 				}break;
 				case CN_WRATH_SCRYER_SOCCOTHRATES:
 				{
-					GameObject* pGo2 = GetGameObjectByGuid(CoreSecurityAlphaGuid);
-					if(pGo2 != NULL)
+					if(GameObject* pGo2 = GetGameObjectByGuid(CoreSecurityAlphaGuid))
 						pGo2->SetState(GAMEOBJECT_STATE_OPEN);
 				}break;
 			}
@@ -92,33 +90,28 @@ class ArcatrazInstanceScript : public MoonInstanceScript
 				{
 					case 1:	//agroo
 					{
-						GameObject* pGo1 = GetGameObjectByGuid(WardenShieldGuid);
-						if(pGo1 != NULL)
-							pGo1->SetState(GAMEOBJECT_STATE_OPEN);
+						if(GameObject* pGo = GetGameObjectByGuid(WardenShieldGuid))
+							pGo->SetState(GAMEOBJECT_STATE_OPEN);
 					}break;
 					case 2:	//first orb
 					{
-						GameObject* pGo2 = GetGameObjectByGuid(OrbGuid[0]);
-						if(pGo2 != NULL)
-							pGo2->SetState(GAMEOBJECT_STATE_OPEN);
+						if(GameObject* pGo = GetGameObjectByGuid(OrbGuid[0]))
+							pGo->SetState(GAMEOBJECT_STATE_OPEN);
 					}break;
 					case 3:	//second orb
 					{
-						GameObject* pGo3 = GetGameObjectByGuid(OrbGuid[1]);
-						if(pGo3 != NULL)
-							pGo3->SetState(GAMEOBJECT_STATE_OPEN);
+						if(GameObject* pGo = GetGameObjectByGuid(OrbGuid[1]))
+							pGo->SetState(GAMEOBJECT_STATE_OPEN);
 					}break;
 					case 4:	//third orb
 					{
-						GameObject* pGo4 = GetGameObjectByGuid(OrbGuid[2]);
-						if(pGo4 != NULL)
-							pGo4->SetState(GAMEOBJECT_STATE_OPEN);
+						if(GameObject* pGo = GetGameObjectByGuid(OrbGuid[2]))
+							pGo->SetState(GAMEOBJECT_STATE_OPEN);
 					}break;
 					case 5:	//four orb
 					{
-						GameObject* pGo5 = GetGameObjectByGuid(OrbGuid[3]);
-						if(pGo5 != NULL)
-							pGo5->SetState(GAMEOBJECT_STATE_OPEN);
+						if(GameObject* pGo = GetGameObjectByGuid(OrbGuid[3]))
+							pGo->SetState(GAMEOBJECT_STATE_OPEN);
 					}break;
 				}
 			}

@@ -20,7 +20,6 @@
 #include "Raid_IcecrownCitadel.h"
 
 //Thanks Mangos, MangosR2, TrinityCore and Scriptdev2 teams for some information
-//MAIN TODO: horde and alliance spawns
 
 class IcecrownCitadelInstanceScript : public MoonInstanceScript
 {
@@ -42,44 +41,70 @@ class IcecrownCitadelInstanceScript : public MoonInstanceScript
 		void OnPlayerEnter(Player* pPlayer)
 		{
 			pPlayer->CastSpell(pPlayer, 69127, true);	//chill of throne
-			if(pPlayer->GetTeam() == TEAM_ALLIANCE)
-			{
+			if(pPlayer->GetTeam() == TEAM_ALLIANCE)	
+			{//Alliance phase
 				pPlayer->CastSpell(pPlayer, 55774, true);
 				pPlayer->CastSpell(pPlayer, 73828, true);
 			}
 			else
-			{
+			{//Horde phase
 				pPlayer->CastSpell(pPlayer, 55773, true);
 				pPlayer->CastSpell(pPlayer, 73822, true);
 			}
 		}
 
-		void SetCreatureStats(uint8 id, uint8 Difficulty, Creature * c)
+		void SetCreatureStats(uint8 id, Creature * c)
 		{
-			uint32 Health = ICC_boss_stat_Data[id].Health[Difficulty];
-			int32 Mana = ICC_boss_stat_Data[id].Mana[Difficulty];
-			c->SetMaxHealth(Health);
-			c->SetHealthPct(100);
-			c->SetMaxPower(POWER_TYPE_MANA, Mana);
+			uint32 hp = 0;
+			int32 mp = 0;
+			switch(mInstance->iInstanceMode)
+			{
+				case MODE_NORMAL_10MEN:
+				{
+					hp = ICC_boss_stat_Data[id].Health_10_normal;
+					mp = ICC_boss_stat_Data[id].Mana_10_normal;
+				}break;
+				case MODE_NORMAL_25MEN:
+				{
+					hp = ICC_boss_stat_Data[id].Health_25_normal;
+					mp = ICC_boss_stat_Data[id].Mana_25_normal;
+				}break;
+				case MODE_HEROIC_10MEN:
+				{
+					hp = ICC_boss_stat_Data[id].Health_10_heroic;
+					mp = ICC_boss_stat_Data[id].Mana_10_heroic;
+				}break;
+				case MODE_HEROIC_25MEN:
+				{
+					hp = ICC_boss_stat_Data[id].Health_25_heroic;
+					mp = ICC_boss_stat_Data[id].Mana_25_heroic;
+				}break;
+			}
+			c->SetHealth(hp > 0 ? hp : c->GetHealth());
+			c->SetHealthPct(100);	//required to avoid cheating, because when setting, boss is regenerating hp...
+
+			//no need to set this for all, only for them, who has mana...
+			//deathbringer saurfang - not sure, but i think, he has runic power (no need to set this here)
+			if(c->GetPower(POWER_TYPE_MANA) != 0)
+				c->SetPower(POWER_TYPE_MANA, mp>0 ? mp : c->GetPower(POWER_TYPE_MANA));
 		}
 
 		void OnCreaturePushToWorld(Creature* c)
 		{
-			uint8 Difficulty = mInstance->iInstanceMode;
 			//bosses stats
 			switch(c->GetEntry())
 			{
-				case NPC_LICH_KING: SetCreatureStats(10, Difficulty, c); break;
-				case NPC_LORD_MARROWGAR: SetCreatureStats(0, Difficulty, c); break;
-				case NPC_FESTERGUT: SetCreatureStats(3, Difficulty, c); break;
-				case NPC_ROTFACE: SetCreatureStats(4, Difficulty, c); break;
-				case NPC_PROFESSOR_PUTRICIDE: SetCreatureStats(5, Difficulty, c); break;
-				case NPC_VALITRA_DREAMWALKER: SetCreatureStats(6, Difficulty, c); break;
-				case NPC_SINDRAGOSA: SetCreatureStats(6, Difficulty, c); break;
-				case NPC_LADY_DEATHWHISPER: SetCreatureStats(1, Difficulty, c); break;
-				case NPC_DEATHBRINGER_SAURFANG: SetCreatureStats(2, Difficulty, c); break;
-				case NPC_BLOOD_QUEEN_LANATHEL: SetCreatureStats(1, Difficulty, c); break;
-				case NPC_PRINCE_VALANAR: SetCreatureStats(8, Difficulty, c); break;
+				case NPC_LICH_KING: SetCreatureStats(10, c); break;
+				case NPC_LORD_MARROWGAR: SetCreatureStats(0, c); break;
+				case NPC_FESTERGUT: SetCreatureStats(3, c); break;
+				case NPC_ROTFACE: SetCreatureStats(4, c); break;
+				case NPC_PROFESSOR_PUTRICIDE: SetCreatureStats(5, c); break;
+				case NPC_VALITRA_DREAMWALKER: SetCreatureStats(6, c); break;
+				case NPC_SINDRAGOSA: SetCreatureStats(6, c); break;
+				case NPC_LADY_DEATHWHISPER: SetCreatureStats(1, c); break;
+				case NPC_DEATHBRINGER_SAURFANG: SetCreatureStats(2, c); break;
+				case NPC_BLOOD_QUEEN_LANATHEL: SetCreatureStats(1, c); break;
+				case NPC_PRINCE_VALANAR: SetCreatureStats(8, c); break;
 			}
 		}
 
