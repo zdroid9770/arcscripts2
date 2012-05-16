@@ -19,42 +19,100 @@
 #include "setup.h"
 #include "Raid_IcecrownCitadel.h"
 
+//Thanks Mangos, MangosR2, TrinityCore and Scriptdev2 teams for some information
+//MAIN TODO: horde and alliance spawns
+
 class IcecrownCitadelInstanceScript : public MoonInstanceScript
 {
 	public:
 		MOONSCRIPT_INSTANCE_FACTORY_FUNCTION(IcecrownCitadelInstanceScript, MoonInstanceScript);
-		IcecrownCitadelInstanceScript(MapMgr* pMapMgr) : MoonInstanceScript(pMapMgr){}
+		IcecrownCitadelInstanceScript(MapMgr* pMapMgr) : MoonInstanceScript(pMapMgr)
+		{
+			mInstance->GetInstanceID();
+			if(mInstance->pInstance->m_killedNpcs.size() > 0)
+			{
+				for(uint8 i = 0; i<ICC_END; i++)
+				{
+					if(mInstance->pInstance->m_killedNpcs.find(IccBossEntries[i]) != mInstance->pInstance->m_killedNpcs.end())
+						SetInstanceData(i, State_Finished);
+				}
+			}
+		}
 
 		void OnPlayerEnter(Player* pPlayer)
 		{
 			pPlayer->CastSpell(pPlayer, 69127, true);	//chill of throne
+			if(pPlayer->GetTeam() == TEAM_ALLIANCE)
+			{
+				pPlayer->CastSpell(pPlayer, 55774, true);
+				pPlayer->CastSpell(pPlayer, 73828, true);
+			}
+			else
+			{
+				pPlayer->CastSpell(pPlayer, 55773, true);
+				pPlayer->CastSpell(pPlayer, 73822, true);
+			}
+		}
+
+		void SetCreatureStats(uint8 id, uint8 Difficulty, Creature * c)
+		{
+			uint32 Health = ICC_boss_stat_Data[id].Health[Difficulty];
+			int32 Mana = ICC_boss_stat_Data[id].Mana[Difficulty];
+			c->SetMaxHealth(Health);
+			c->SetHealthPct(100);
+			c->SetMaxPower(POWER_TYPE_MANA, Mana);
+		}
+
+		void OnCreaturePushToWorld(Creature* c)
+		{
+			uint8 Difficulty = mInstance->iInstanceMode;
+			//bosses stats
+			switch(c->GetEntry())
+			{
+				case NPC_LICH_KING: SetCreatureStats(10, Difficulty, c); break;
+				case NPC_LORD_MARROWGAR: SetCreatureStats(0, Difficulty, c); break;
+				case NPC_FESTERGUT: SetCreatureStats(3, Difficulty, c); break;
+				case NPC_ROTFACE: SetCreatureStats(4, Difficulty, c); break;
+				case NPC_PROFESSOR_PUTRICIDE: SetCreatureStats(5, Difficulty, c); break;
+				case NPC_VALITRA_DREAMWALKER: SetCreatureStats(6, Difficulty, c); break;
+				case NPC_SINDRAGOSA: SetCreatureStats(6, Difficulty, c); break;
+				case NPC_LADY_DEATHWHISPER: SetCreatureStats(1, Difficulty, c); break;
+				case NPC_DEATHBRINGER_SAURFANG: SetCreatureStats(2, Difficulty, c); break;
+				case NPC_BLOOD_QUEEN_LANATHEL: SetCreatureStats(1, Difficulty, c); break;
+				case NPC_PRINCE_VALANAR: SetCreatureStats(8, Difficulty, c); break;
+			}
 		}
 
 		void OnCreatureDeath(Creature* c, Unit* pUnit)
 		{
 			switch(c->GetEntry())
 			{
-				case NPC_LORD_MARROWGAR:
-				{
-					AddGameObjectStateByEntry(GO_MARROWGAR_ENTRANCE, GAMEOBJECT_STATE_OPEN);
-					AddGameObjectStateByEntry(GO_ICEBLOCK_1, GAMEOBJECT_STATE_OPEN);
-					AddGameObjectStateByEntry(GO_ICEBLOCK_2, GAMEOBJECT_STATE_OPEN);
-					AddGameObjectStateByEntry(GO_DAMMED_ENTRANCE, GAMEOBJECT_STATE_OPEN);
-				}break;
 				case NPC_ROTFACE: 
 				{
-					GameObject * pGo1 = FindClosestGameObjectOnMap(GO_OOZE_RELEASE_VALVE, 4432.27f, 3090.88f, 362.253f);
-					if(pGo1 != NULL)
-						pGo1->SetFlags(0);
+					if(GameObject * pGo = FindClosestGameObjectOnMap(GO_OOZE_RELEASE_VALVE, 4432.27f, 3090.88f, 362.253f))
+						pGo->SetFlags(0);
 				}break;
 				case NPC_FESTERGUT: 
 				{
-					GameObject * pGo2 = FindClosestGameObjectOnMap(GO_GAS_RELEASE_VALVE, 4280.84f, 3090.88f, 362.335f);
-					if(pGo2 != NULL)
-						pGo2->SetFlags(0);
+					if(GameObject * pGo = FindClosestGameObjectOnMap(GO_GAS_RELEASE_VALVE, 4280.84f, 3090.88f, 362.335f))
+						pGo->SetFlags(0);
 				}break;
 				default : 
 					break;
+			}
+		}
+
+		void OnGameObjectPushToWorld(GameObject* g)
+		{
+			switch(g->GetEntry())
+			{
+				case GO_ICEBLOCK_1:
+				case GO_ICEBLOCK_2:
+				case GO_DAMMED_ENTRANCE:
+				{
+					if(GetInstanceData(ICC_LORD_MARROWGAR) == State_Finished)
+						g->SetState(GAMEOBJECT_STATE_OPEN);
+				}break;
 			}
 		}
 
@@ -76,8 +134,6 @@ class IcecrownCitadelInstanceScript : public MoonInstanceScript
 					pGO->SetFlags(16);
 					RegisterScriptUpdateEvent();
 				}break;
-				default:
-					break;
 			}
 		}
 
@@ -117,6 +173,13 @@ class IcecrownCitadelInstanceScript : public MoonInstanceScript
 						AddGameObjectStateByEntry(GO_MARROWGAR_ENTRANCE, GAMEOBJECT_STATE_CLOSED);
 					else if(pData == State_NotStarted)
 						AddGameObjectStateByEntry(GO_MARROWGAR_ENTRANCE, GAMEOBJECT_STATE_OPEN);
+					else if(pData == State_Finished)
+					{
+						AddGameObjectStateByEntry(GO_DAMMED_ENTRANCE, GAMEOBJECT_STATE_OPEN);
+						AddGameObjectStateByEntry(GO_MARROWGAR_ENTRANCE, GAMEOBJECT_STATE_OPEN);
+						AddGameObjectStateByEntry(GO_ICEBLOCK_1, GAMEOBJECT_STATE_OPEN);
+						AddGameObjectStateByEntry(GO_ICEBLOCK_2, GAMEOBJECT_STATE_OPEN);
+					}
 				}break;
 				default:
 					break;
@@ -144,10 +207,10 @@ enum TeleporterSpells{
 static LocationExtra ScourgeTelePos[7]=
 {
 	{-17.1928f, 2211.44f, 30.1158f, 3.14f, LIGHT_S_HAMMER_TELEPORT},
-	{-503.62f, 2211.47f, 62.8235f, 3.14f, ORATORY_OF_THE_DAMNED_TELEPORT},
+	{-503.62f, 2211.47f, 62.8235f, 3.14f, ORATORY_OF_THE_DAMNED_TELEPORT, },
 	{-615.145f, 2211.47f, 199.972f, 0, RAMPART_OF_SKULLS_TELEPORT},
-	{-549.131f, 2211.29f, 539.291f, 0, DEATHBRINGER_S_RISE_TELEPORT},
-	{4198.42f, 2769.22f, 351.065f, 0, UPPER_SPIRE_TELEPORT},
+	{-549.131f, 2211.29f, 539.291f, 0, UPPER_SPIRE_TELEPORT},
+	{4198.42f, 2769.22f, 351.065f, 0, DEATHBRINGER_S_RISE_TELEPORT},
 	{4356.580078f, 2565.75f, 220.401993f, 4.90f, SINDRAGOSA_S_LAIR_TELEPORT},
 	{528.767273f, -2124.845947f, 1043.1f, 3.14f, FROZEN_THRONE_TELEPORT}
 };
@@ -165,6 +228,7 @@ class ScourgeTeleporterAI : public GameObjectAIScript
 			if(!pInstance)
 				return;
 
+			_gameobject->SetState(GAMEOBJECT_STATE_OPEN);
 			GossipMenu* menu = NULL;
 			objmgr.CreateGossipMenuForPlayer(&menu, _gameobject->GetGUID(), 0, player);
 			menu->AddItem(Arcemu::Gossip::ICON_CHAT, "Teleport to Light's Hammer.", 0);
@@ -207,11 +271,12 @@ class ScourgeTeleporterGossip : public GossipScript
 				return;
 
 			Arcemu::Gossip::Menu::Complete(player);
-			player->CastSpell(player, ScourgeTelePos[Id].addition, true);
+			//player->CastSpell(player, ScourgeTelePos[Id].addition, true);
 			player->SafeTeleport(MAP_ICC, player->GetInstanceID(), ScourgeTelePos[Id].x, ScourgeTelePos[Id].y,  ScourgeTelePos[Id].z, ScourgeTelePos[Id].o);
 		}
 };
 
+//LORD MARROWGAR ENCOUNTER
 enum MarrowgarSpells
 {
 	SPELL_LM_BERSERK		= 47008,
@@ -230,21 +295,13 @@ enum LM_Summons
     NPC_COLD_FLAME			= 36672
 };
 
-class LordMarrowgar : public MoonScriptBossAI
+class LordMarrowgarAI : public MoonScriptBossAI
 {
 	public:
-		MOONSCRIPT_FACTORY_FUNCTION(LordMarrowgar, MoonScriptBossAI);
-		LordMarrowgar(Creature* pCreature) : MoonScriptBossAI(pCreature)
+		MOONSCRIPT_FACTORY_FUNCTION(LordMarrowgarAI, MoonScriptBossAI);
+		LordMarrowgarAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
 		{
 			mInstance = GetInstanceScript();
-			switch(GetInstanceMode())
-			{
-				case MODE_NORMAL_10MEN : _unit->SetHealth(6972500); break;
-				case MODE_NORMAL_25MEN : _unit->SetHealth(23706500); break;
-				case MODE_HEROIC_10MEN : _unit->SetHealth(10458750); break;
-				case MODE_HEROIC_25MEN : _unit->SetHealth(31376250); break;
-			}
-
 			Reset();
 
 			//Bone Storm!
@@ -272,6 +329,7 @@ class LordMarrowgar : public MoonScriptBossAI
 
 		void Reset()
 		{
+			BoneStormTimer = ChargeTimer = -1;
 			Stage = -1;
 			SetBehavior(Behavior_Default);
 			_unit->SetSpeeds(RUN, 8.0f);
@@ -306,7 +364,6 @@ class LordMarrowgar : public MoonScriptBossAI
 			ParentClass::OnDied(mKiller);
 		}
 
-
 		void AIUpdate()
 		{
 			if(IsTimerFinished(BoneStormTimer) && GetPhase() == 1 && Stage == -1)
@@ -320,7 +377,7 @@ class LordMarrowgar : public MoonScriptBossAI
 				SetPhase(2, sBoneStorm);
 				if(_unit->HasAura(SPELL_BONE_STORM))
 				{
-					_unit->CastSpell(_unit, SPELL_COLDFLAME_BONESTORM, false);
+					_unit->CastSpell(_unit, SPELL_COLDFLAME_BONESTORM, true);
 					ChargeTimer = AddTimer(5*SEC_IN_MS);
 					Stage++;
 				}
@@ -329,13 +386,11 @@ class LordMarrowgar : public MoonScriptBossAI
 			{
 				if(IsTimerFinished(ChargeTimer))
 				{
-					Unit* pTarget = GetBestPlayerTarget(TargetFilter_ClosestNotCurrent, 0, 70.0f);
-					if(pTarget != NULL)
+					if(Unit* pTarget = GetBestPlayerTarget(TargetFilter_ClosestNotCurrent, 0, 70.0f))
 					{
 						MoveTo(pTarget->GetPositionX(), pTarget->GetPositionY(), pTarget->GetPositionZ());
-						_unit->CastSpell(_unit, SPELL_COLDFLAME_BONESTORM, false);
+						_unit->CastSpell(_unit, SPELL_COLDFLAME_BONESTORM, true);
 					}
-					pTarget = NULL;
 					ResetTimer(ChargeTimer, 5*SEC_IN_MS);
 				}
 			}
@@ -411,9 +466,10 @@ class BoneSpikeAI : public MoonScriptCreatureAI
 
 bool ColdFlame_BoneStorm(uint32 i, Spell* s)
 {
-	s->u_caster->CastSpell(s->u_caster, 72700, false);
-	s->u_caster->CastSpell(s->u_caster, 72701, false);
-	s->u_caster->CastSpell(s->u_caster, 72702, false);
+	s->u_caster->CastSpell(s->u_caster, 72701, true);
+	s->u_caster->CastSpell(s->u_caster, 72702, true);
+	s->u_caster->CastSpell(s->u_caster, 72703, true);
+	s->u_caster->CastSpell(s->u_caster, 72704, true);
 	return true;
 };
 
@@ -428,6 +484,140 @@ bool ColdFlameRandom(uint32 i, Spell* s)
 {
 	s->u_caster->CastSpell(s->u_caster, 69138, false);
 	return true;
+};
+
+//LADY DEATHWHISPER ENCOUNTER
+enum LadyDeathwhisper{
+	SPELL_MANA_BARRIER              = 70842,
+    SPELL_SHADOW_BOLT               = 71254,
+    SPELL_DEATH_AND_DECAY           = 71001,
+    SPELL_DOMINATE_MIND_H           = 71289,
+    SPELL_FROSTBOLT                 = 71420,
+    SPELL_FROSTBOLT_VOLLEY          = 72905,
+    SPELL_TOUCH_OF_INSIGNIFICANCE   = 71204,
+    SPELL_SUMMON_SHADE              = 71363,
+    SPELL_SHADOW_CHANNELING         = 43897, // Prefight, during intro
+    SPELL_DARK_TRANSFORMATION_T     = 70895,
+    SPELL_DARK_EMPOWERMENT_T        = 70896,
+    SPELL_DARK_MARTYRDOM_T          = 70897
+};
+
+static LocationExtra LD_SummonPositions[] ={
+    {-578.7066f, 2154.167f, 51.01529f, 1.692969f, 37890}, // 1 Left Door 1 (Cult Fanatic)
+    {-598.9028f, 2155.005f, 51.01530f, 1.692969f, 37949}, // 2 Left Door 2 (Cult Adherent)
+    {-619.2864f, 2154.460f, 51.01530f, 1.692969f, 37890}, // 3 Left Door 3 (Cult Fanatic)
+    {-578.6996f, 2269.856f, 51.01529f, 4.590216f, 37949}, // 4 Right Door 1 (Cult Adherent)
+    {-598.9688f, 2269.264f, 51.01529f, 4.590216f, 37890}, // 5 Right Door 2 (Cult Fanatic)
+    {-619.4323f, 2268.523f, 51.01530f, 4.590216f, 37949}, // 6 Right Door 3 (Cult Adherent)
+    {-524.2480f, 2211.920f, 62.90960f, 3.141592f, 0} // 7 Upper (Random Cultist)
+};
+
+class LadyDeathwhisperAI : public MoonScriptBossAI
+{
+	public:
+		MOONSCRIPT_FACTORY_FUNCTION(LadyDeathwhisperAI, MoonScriptBossAI);
+		LadyDeathwhisperAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
+		{
+			DominateHandTimer = SummonCultistTimer = -1;
+			Count = 0;
+			SetEnrageInfo(AddSpell(26662, Target_Self, 0, 0, 0), MINUTE*10*SEC_IN_MS);
+			SetCanMove(false);
+
+			//Both phases
+			AddSpell(SPELL_DEATH_AND_DECAY, Target_RandomPlayer, 30, 0, -1);
+			DominateHand = AddSpell(SPELL_DOMINATE_MIND_H, Target_RandomPlayer, 0, 0, -1);
+
+			//Phase 1
+			AddPhaseSpell(1, AddSpell(SPELL_SHADOW_BOLT, Target_RandomPlayer, 20, 2, -1));
+			AddPhaseSpell(2, AddSpell(SPELL_FROSTBOLT, Target_Current, 20, 2, -1));
+			AddPhaseSpell(2, AddSpell(SPELL_FROSTBOLT_VOLLEY, Target_Self, 25, 0, -1));
+			LeftSide = true;
+		}
+
+		void OnCombatStart(Unit * pAttacker)
+		{
+			DominateHandTimer = AddTimer(27*SEC_IN_MS);
+			SummonCultistTimer = AddTimer((20+rand()%10)*SEC_IN_MS);
+			_unit->CastSpell(_unit, SPELL_MANA_BARRIER, true);
+			ParentClass::OnCombatStart(pAttacker);
+		}
+
+		void OnCombatStop(Unit* pUnit)
+		{
+			for(uint8 i = 0; i<7; i++)
+			{
+				if(pSummons[i])
+					pSummons[i]->Despawn();
+			}
+		}
+
+		uint8 GetAlliveSummonsCount()
+		{
+			uint8 count = 0;
+			for(uint8 i = 0; i<7; i++)
+			{
+				if(pSummons[i]->IsAlive() && pSummons[i])
+					count++;
+			}
+			return count;
+		}
+
+		void AIUpdate()
+		{
+			if(IsTimerFinished(DominateHandTimer))
+			{
+				CastSpell(DominateHand);
+				Count++;
+				if(Count != 3)
+					ResetTimer(DominateHandTimer, (40+rand()%5)*SEC_IN_MS);
+			}
+
+			if(IsTimerFinished(SummonCultistTimer))
+			{
+				if(GetAlliveSummonsCount() == 0)
+				{
+					for(uint8 i = 0; i<6; i++)
+					{
+						if(LeftSide && i<3)
+						{
+							//Left
+							if(pSummons[i] = SpawnCreature(LD_SummonPositions[i].addition, LD_SummonPositions[i].x, LD_SummonPositions[i].y, LD_SummonPositions[i].z, LD_SummonPositions[i].o))
+								pSummons[i]->ApplyAura(41236);	//Teleport Visual
+							LeftSide = true;
+						}
+						else
+						{
+							//Right
+							if(pSummons[i] = SpawnCreature(LD_SummonPositions[i].addition, LD_SummonPositions[i].x, LD_SummonPositions[i].y, LD_SummonPositions[i].z, LD_SummonPositions[i].o))
+								pSummons[i]->ApplyAura(41236);	//Teleport Visual
+							LeftSide = false;
+						}
+					}
+
+					if(Is25ManRaid())
+					{
+						if(pSummons[6] = SpawnCreature(rand()%2 ? 37949 : 37890, LD_SummonPositions[6].x, LD_SummonPositions[6].y, LD_SummonPositions[6].z, LD_SummonPositions[6].o))
+							pSummons[6]->ApplyAura(41236);	//Teleport Visual
+					}
+				}
+				ResetTimer(SummonCultistTimer, 60*SEC_IN_MS);
+			}
+
+			if(GetManaPercent() == 0 && GetPhase() == 1)
+			{
+				SetCanMove(false);
+				SetPhase(2);
+			}
+
+			ParentClass::AIUpdate();
+		}
+
+	private:
+		SpellDesc * DominateHand;
+		uint8 Count;
+		int32 DominateHandTimer, SummonCultistTimer;
+		MoonScriptCreatureAI * pSummons[7];
+		bool LeftSide;
 };
 
 void SetupIcecrownCitadel(ScriptMgr* mgr)
@@ -445,10 +635,13 @@ void SetupIcecrownCitadel(ScriptMgr* mgr)
 	}
 
 	//Lord marrowgar event related
-	mgr->register_creature_script(NPC_LORD_MARROWGAR, &LordMarrowgar::Create);
+	mgr->register_creature_script(NPC_LORD_MARROWGAR, &LordMarrowgarAI::Create);
 	mgr->register_creature_script(NPC_COLD_FLAME, &ColdFlameAI::Create);
 	mgr->register_creature_script(NPC_BONE_SPIKE, &BoneSpikeAI::Create);
 	mgr->register_script_effect(SPELL_COLDFLAME_BONESTORM, &ColdFlame_BoneStorm);
 	mgr->register_script_effect(69147, &ColdFlame);
 	mgr->register_script_effect(69140, &ColdFlameRandom);
+
+	//Lady DeathWhisper event related
+	//mgr->register_creature_script(NPC_LADY_DEATHWHISPER, &LadyDeathwhisperAI::Create);
 }

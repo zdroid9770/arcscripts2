@@ -16,12 +16,13 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+//General entries/structs/data
 #define MAP_ICC	631
 
 enum IccEncounters{
     ICC_LORD_MARROWGAR,
 	ICC_LADY_DEATHWHISPER,
-	ICC_GUNSHIP,
+	//ICC_GUNSHIP,
 	ICC_SAURFANG,
 	ICC_FESTERGUT,
 	ICC_ROTFACE,
@@ -34,7 +35,7 @@ enum IccEncounters{
     ICC_END
 };
 
-enum IcecrownCitadel_Creatures{
+enum IcecrownCitadel_Bosses{
 	NPC_LICH_KING				= 36597,
 	NPC_LORD_MARROWGAR			= 36612,
 	NPC_FESTERGUT				= 36626,
@@ -46,6 +47,36 @@ enum IcecrownCitadel_Creatures{
 	NPC_DEATHBRINGER_SAURFANG	= 37813,
 	NPC_BLOOD_QUEEN_LANATHEL	= 37955,
 	NPC_PRINCE_VALANAR			= 37970
+};
+
+//only for instance script
+uint32 IccBossEntries[]=
+{	NPC_LICH_KING, NPC_LORD_MARROWGAR, NPC_FESTERGUT, NPC_ROTFACE,
+	NPC_PROFESSOR_PUTRICIDE, NPC_VALITRA_DREAMWALKER, NPC_SINDRAGOSA, NPC_LADY_DEATHWHISPER,
+	NPC_DEATHBRINGER_SAURFANG, NPC_BLOOD_QUEEN_LANATHEL, NPC_PRINCE_VALANAR
+};
+
+struct IccCreatureStats
+{
+	uint32 entry;
+	uint32 Health[4];
+	int32 Mana[4];
+};
+
+static IccCreatureStats ICC_boss_stat_Data[]=
+{
+	{6972500, 23700000, 10500000, 31376000, 0, 0, 0, 0},	//Lord Marrowgar
+	{3000000, 13400000, 6000000, 26800000, 3300000, 3300000, 11000000, 13900000},	//Lady Deathwhisper
+	//{0, 0, 0, 0, 0, 0, 0, 0},
+	{8785000, 31860000, 12300000, 43930000, 0, 0, 0, 0},	//Deathbringer Saurfang
+	{9412000, 40440000, 13700000, 52200000, 0, 0, 0, 0},	//festergut
+	{7320000, 36257000, 10458000, 47413000, 0, 0, 0, 0},	//Rotface
+	{9761500, 42000000, 13670000, 50200000, 0, 0, 0, 0},	//Professor Putricide
+	{12000000, 35999000, 12000000, 35999000, 0, 0, 0, 0},	//Valithria Dreamwalker
+	{14200000, 59400000, 18900000, 71300000, 0, 0, 0, 0},	//Blood-Queen Lana'thel
+	{5620000, 22500000, 7624000, 30497000, 0, 0, 0, 0},		//Prince Valanar (TODO trash stats)
+	{11156000, 38348000, 13950000, 45950000, 0, 0, 0, 0},	//Sindragosa
+	{17431250, 61009376, 29458812, 103151168, 0, 0, 0, 0}	//The Lich King
 };
 
 enum IcecrownCitadel_GameObjects{
