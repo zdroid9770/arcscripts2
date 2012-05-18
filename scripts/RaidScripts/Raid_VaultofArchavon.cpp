@@ -70,10 +70,10 @@ class VaulOfArchavon : public MoonInstanceScript
 };
 
 #define SPELL_ROCK_SHARDS		58678
-#define	SPELL_CRUSHING_LEAP		Raid25manInst(58963, 60895)
-#define	SPELL_STOMP				Raid25manInst(58663, 60880)
-#define SPELL_IMPALE			Raid25manInst(58666, 60882)
-#define	SPELL_CHOCKING_CLOUD	Raid25manInst(58965, 61672)
+#define	SPELL_CRUSHING_LEAP		58963
+#define	SPELL_STOMP				58663
+#define SPELL_IMPALE			58666
+#define	SPELL_CHOCKING_CLOUD	58965
 #define	SPELL_ARCHAVON_BERSERK	47008
 
 class ArchavonAI : public MoonScriptBossAI
@@ -83,11 +83,11 @@ class ArchavonAI : public MoonScriptBossAI
 		ArchavonAI(Creature *pCreature) : MoonScriptBossAI(pCreature)
 		{
 			mStompTimer = INVALIDATE_TIMER;
-			SetEnrageInfo(AddSpell(SPELL_ARCHAVON_BERSERK, Target_Self, 0.0f, 0, 0), MINUTE*5*SEC_IN_MS);
+			SetEnrageInfo(AddSpell(SPELL_ARCHAVON_BERSERK, Target_Self, 0, 0, 0), MINUTE*5*SEC_IN_MS);
 		
-			AddSpell(SPELL_ROCK_SHARDS, Target_Self, 20.0f, 0.5f, 0);
-			AddSpell(SPELL_CRUSHING_LEAP, Target_RandomPlayer, 30.0f, 0, 0);
-			AddSpell(SPELL_CHOCKING_CLOUD, Target_RandomPlayer, 30.0f, 0, 0);
+			AddSpell(SPELL_ROCK_SHARDS, Target_Self, 20, 0.5f, 0);
+			AddSpell(SPELL_CRUSHING_LEAP, Target_RandomPlayer, 30, 0, 0);
+			AddSpell(SPELL_CHOCKING_CLOUD, Target_RandomPlayer, 30, 0, 0);
 		}
 
 		void OnCombatStart(Unit *mTarget)
@@ -115,8 +115,8 @@ class ArchavonAI : public MoonScriptBossAI
 		int32 mStompTimer;
 };
 
-#define	SPELL_CHAIN_LIGHTNING	Raid25manInst(64213, 64215)
-#define SPELL_LIGHTNING_NOVA	Raid25manInst(64216, 65279)
+#define	SPELL_CHAIN_LIGHTNING	64213
+#define SPELL_LIGHTNING_NOVA	64216
 #define SPELL_EMALON_BERSERK	26662
 #define SPELL_OVERCHARGE		64218
 
@@ -127,7 +127,7 @@ class EmalonAI : public MoonScriptBossAI
 		EmalonAI(Creature *pCreature) : MoonScriptBossAI(pCreature)
 		{
 			mInstance = GetInstanceScript();
-			SetEnrageInfo(AddSpell(SPELL_EMALON_BERSERK, Target_Self, 0.0f, 0, 0), MINUTE*6*SEC_IN_MS);
+			SetEnrageInfo(AddSpell(SPELL_EMALON_BERSERK, Target_Self, 0, 0, 0), MINUTE*6*SEC_IN_MS);
 			AddSpell(SPELL_CHAIN_LIGHTNING, Target_RandomPlayer, 20, 1, 5);
 			AddSpell(SPELL_LIGHTNING_NOVA, Target_Self, 30, 5, 40);
 			//mSpellOverchargeTimer = -1;
@@ -229,10 +229,10 @@ class EmalonMinionAI : public MoonScriptBossAI
 
 // Spells Koralon
 #define NPC_KORALON				35013
-#define	SPELL_BURNING_BREATH	Raid25manInst(66665, 67328)
+#define	SPELL_BURNING_BREATH	66665
 #define	SPELL_BURNING_FURY		66721
-#define	SPELL_FLAME_CINDER		Raid25manInst(66684, 66681)
-#define	SPELL_METEOR_FISTS		Raid25manInst(66725, 67333)
+#define	SPELL_FLAME_CINDER		66684
+#define	SPELL_METEOR_FISTS		66725
 
 class KoralonAI : public MoonScriptBossAI
 {
@@ -240,8 +240,8 @@ class KoralonAI : public MoonScriptBossAI
 		MOONSCRIPT_FACTORY_FUNCTION(KoralonAI, MoonScriptBossAI);
 		KoralonAI(Creature *pCreature) : MoonScriptBossAI(pCreature)
 		{
-			AddSpell(SPELL_METEOR_FISTS, Target_Self, 35.0f, 1.5f, 45);
-			AddSpell(SPELL_FLAME_CINDER, Target_Self, 30.0f, 0, 30);
+			AddSpell(SPELL_METEOR_FISTS, Target_Self, 35, 1.5f, 45);
+			AddSpell(SPELL_FLAME_CINDER, Target_Self, 30, 0, 30);
 			mBreathTimer = mBurningFuryTimer = -1;
 		}
 
@@ -275,9 +275,9 @@ class KoralonAI : public MoonScriptBossAI
 
 // Toravon
 #define NPC_TORAVAN				38433
-#define	SPELL_FREEZING_GROUND	Raid25manInst(72090, 72104)    // don't know cd... using 20 secs.
-#define	SPELL_FROZEN_ORB		Raid25manInst(72091, 72095)
-#define	SPELL_WHITEOUT          Raid25manInst(72034, 72096)    // Every 38 sec. cast. (after SPELL_FROZEN_ORB)
+#define	SPELL_FREEZING_GROUND	72090
+#define	SPELL_FROZEN_ORB		72091
+#define	SPELL_WHITEOUT          72034
 #define	SPELL_FROZEN_MALLET     71993
 
 // Frost Warder
@@ -298,7 +298,7 @@ class ToravonAI : public MoonScriptBossAI
 		MOONSCRIPT_FACTORY_FUNCTION(ToravonAI, MoonScriptBossAI);
 		ToravonAI(Creature *pCreature) : MoonScriptBossAI(pCreature)
 		{
-			AddSpell(SPELL_FREEZING_GROUND, Target_RandomPlayer, 30.0f, 0, 20);
+			AddSpell(SPELL_FREEZING_GROUND, Target_RandomPlayer, 30, 0, 20);
 			mFrozenOrbTimer = -1;
 		}
 
