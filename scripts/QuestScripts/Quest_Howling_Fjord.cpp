@@ -18,6 +18,45 @@
 
 #include "Setup.h"
 
+// Quest 11221
+class DeathstalkerRazaelGossip : public Arcemu::Gossip::Script
+{
+	public:
+		void OnHello(Object* pObject, Player* plr)
+		{
+			if(plr->HasQuest(11221))
+				Arcemu::Gossip::Menu::SendQuickMenu(pObject->GetGUID(), 11562, plr, 0, Arcemu::Gossip::ICON_CHAT, "High Executor Anselm requests your report.");
+			else
+				Arcemu::Gossip::Menu::SendSimpleMenu(pObject->GetGUID(), objmgr.GetGossipTextForNpc(pObject->GetEntry()), plr);
+		}
+
+		void OnSelectOption(Object* pObject, Player* plr, uint32 Id, const char* Code)
+		{
+			if(Id == 0)
+				TO_CREATURE(pObject)->CastSpell(plr, 42756, true);
+		}
+};
+
+class DarkRangerLyanaGossip : public Arcemu::Gossip::Script
+{
+	public:
+		void OnHello(Object* pObject, Player* plr)
+		{
+			if(plr->HasQuest(11221))
+				Arcemu::Gossip::Menu::SendQuickMenu(pObject->GetGUID(), 11586, plr, 0, Arcemu::Gossip::ICON_CHAT, "High Executor Anselm requests your report.");
+			else
+				Arcemu::Gossip::Menu::SendSimpleMenu(pObject->GetGUID(), objmgr.GetGossipTextForNpc(pObject->GetEntry()), plr);
+		}
+
+		void OnSelectOption(Object* pObject, Player* plr, uint32 Id, const char* Code)
+		{
+			if(Id == 0)
+				TO_CREATURE(pObject)->CastSpell(plr, 42799, true);
+		}
+};
+
+//Quest 
+//Quest 11230
 class NorthFleet : public CreatureAIScript
 {
 	public:
@@ -44,6 +83,7 @@ class NorthFleet : public CreatureAIScript
 		}
 };
 
+//Quest 11397
 class ChillmereScourge : public CreatureAIScript
 {
 	public:
@@ -70,6 +110,7 @@ class ChillmereScourge : public CreatureAIScript
 		}
 };
 
+//Quest 11283
 class Baleheim : public CreatureAIScript
 {
 	public:
@@ -96,28 +137,26 @@ class Baleheim : public CreatureAIScript
 		}
 };
 
-class Plaguethis_Gossip : public GossipScript
+//Quest 11332
+class Plaguethis_Gossip : public Arcemu::Gossip::Script
 {
 	public:
-		void GossipHello(Object* pObject, Player* plr)
+		void OnHello(Object* pObject, Player* plr)
 		{
-			GossipMenu* Menu;
-			objmgr.CreateGossipMenuForPlayer(&Menu, pObject->GetGUID(), 40002, plr);
-			Menu->AddItem(0, "Where would you like to fly too ?", 2);
+			Arcemu::Gossip::Menu menu(pObject->GetGUID(), objmgr.GetGossipTextForNpc(pObject->GetEntry()), plr->GetSession()->language);
+			menu.AddItem(Arcemu::Gossip::ICON_CHAT, "Where would you like to fly too ?", 2);
 			if(plr->GetQuestLogForEntry(11332) != NULL)
-				Menu->AddItem(0, "Greer, i need a gryphon to ride and some bombs to drop on New Agamand!", 1);
+				menu.AddItem(Arcemu::Gossip::ICON_CHAT, "Greer, i need a gryphon to ride and some bombs to drop on New Agamand!", 1);
 
+			//He is quest giver
+			sQuestMgr.FillQuestMenu(TO_CREATURE(pObject), plr, menu);
 
-			Menu->SendTo(plr);
+			menu.Send(plr);
 		}
 
-		void GossipSelectOption(Object* pObject, Player* plr, uint32 Id, uint32 IntId, const char* Code)
+		void OnSelectOption(Object* pObject, Player* plr, uint32 Id, const char* Code)
 		{
-			Creature* pCreature = (pObject->IsCreature()) ? TO_CREATURE(pObject) : NULL;
-			if(pCreature == NULL)
-				return;
-
-			switch(IntId)
+			switch(Id)
 			{
 				case 1:
 					{
@@ -127,6 +166,7 @@ class Plaguethis_Gossip : public GossipScript
 
 						if(!plr->GetItemInterface()->AddItemToFreeSlot(item))
 						{
+							//World Strings?
 							plr->GetSession()->SendNotification("No free slots were found in your inventory!");
 							item->DeleteMe();
 						}
@@ -137,29 +177,19 @@ class Plaguethis_Gossip : public GossipScript
 							                        item->GetItemRandomPropertyId(), item->GetStackCount());
 
 						}
-
-						if(pCreature->GetEntry() == 23859)
-						{
-							TaxiPath* path = sTaxiMgr.GetTaxiPath(745);
-							plr->TaxiStart(path, 17759, 0);
-						}
-						break;
-					}
-				case 2:
-					{
-						plr->GetSession()->SendTaxiList(pCreature);
-						break;
-					}
+						plr->TaxiStart(sTaxiMgr.GetTaxiPath(745), 17759, 0);
+					}break;
+				case 2: plr->GetSession()->SendTaxiList(TO_CREATURE(pObject)); break;
 			}
 		}
 
 };
 
-
 void SetupHowlingFjord(ScriptMgr* mgr)
 {
-	GossipScript* Plague = new Plaguethis_Gossip();  // thx  Dzjhenghiz
-	mgr->register_gossip_script(23859, Plague);
+	mgr->register_creature_gossip(23998, new DeathstalkerRazaelGossip);
+	mgr->register_creature_gossip(23998, new DarkRangerLyanaGossip);
+	mgr->register_creature_gossip(23859, new Plaguethis_Gossip); // thx  Dzjhenghiz
 
 	mgr->register_creature_script(23643, &ChillmereScourge::Create);
 	mgr->register_creature_script(23645, &ChillmereScourge::Create);
