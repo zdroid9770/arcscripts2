@@ -188,7 +188,7 @@ class Plaguethis_Gossip : public Arcemu::Gossip::Script
 void SetupHowlingFjord(ScriptMgr* mgr)
 {
 	mgr->register_creature_gossip(23998, new DeathstalkerRazaelGossip);
-	mgr->register_creature_gossip(23998, new DarkRangerLyanaGossip);
+	mgr->register_creature_gossip(23778, new DarkRangerLyanaGossip);
 	mgr->register_creature_gossip(23859, new Plaguethis_Gossip); // thx  Dzjhenghiz
 
 	mgr->register_creature_script(23643, &ChillmereScourge::Create);
