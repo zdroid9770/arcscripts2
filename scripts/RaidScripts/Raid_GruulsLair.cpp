@@ -111,7 +111,6 @@ class HighKingMaulgarAI : public MoonScriptBossAI
 			AddEmote(Event_OnTargetDied, "", Text_Emote, 11374);
 			AddEmote(Event_OnDied, "Grull... will crush you!", Text_Yell, 11376);
 
-			mLastYell = -1;
 			mAliveAdds = 0;
 		}
 
@@ -120,7 +119,6 @@ class HighKingMaulgarAI : public MoonScriptBossAI
 			SetDisplayWeapon(true, true);
 
 			mAliveAdds = 0;
-			mLastYell = -1;
 			for(int i = 0; i < 4; ++i)
 			{
 				Unit* pAdd = ForceCreatureFind(Adds[i]);
@@ -173,7 +171,6 @@ class HighKingMaulgarAI : public MoonScriptBossAI
 						case 0: Emote("You not kill next one so easy!", Text_Yell, 11369); break;
 						case 1: Emote("Does not prove anything!", Text_Yell, 11370); break;
 					}
-					mLastYell = RandomText;
 				}
 				else if(mAliveAdds == 1)
 				{
@@ -186,7 +183,6 @@ class HighKingMaulgarAI : public MoonScriptBossAI
 		}
 
 		uint32		mAliveAdds;
-		int32		mLastYell;
 		SpellDesc*	mEnrage;
 };
 
