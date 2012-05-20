@@ -79,7 +79,7 @@ class VaulOfArchavon : public MoonInstanceScript
 class ArchavonAI : public MoonScriptBossAI
 {
 	public:
-		MOONSCRIPT_FACTORY_FUNCTION(ArchavonAI, MoonScriptBossAI);
+		ADD_CREATURE_FACTORY_FUNCTION(ArchavonAI)
 		ArchavonAI(Creature *pCreature) : MoonScriptBossAI(pCreature)
 		{
 			mStompTimer = INVALIDATE_TIMER;
@@ -93,7 +93,6 @@ class ArchavonAI : public MoonScriptBossAI
 		void OnCombatStart(Unit *mTarget)
 		{
 			mStompTimer = AddTimer(45*SEC_IN_MS);
-			ParentClass::OnCombatStart(mTarget);
 		}
 
 		void AIUpdate()
@@ -107,8 +106,6 @@ class ArchavonAI : public MoonScriptBossAI
 
 			if(_unit->GetCurrentSpell() == (Spell*)SPELL_CRUSHING_LEAP)
 				_unit->CastSpell(_unit, SPELL_CHOCKING_CLOUD, false);
-
-			ParentClass::AIUpdate();
 		}
 
 	private:
@@ -123,7 +120,7 @@ class ArchavonAI : public MoonScriptBossAI
 class EmalonAI : public MoonScriptBossAI
 {
 	public:
-		MOONSCRIPT_FACTORY_FUNCTION(EmalonAI, MoonScriptBossAI);
+		ADD_CREATURE_FACTORY_FUNCTION(EmalonAI)
 		EmalonAI(Creature *pCreature) : MoonScriptBossAI(pCreature)
 		{
 			mInstance = GetInstanceScript();
@@ -148,7 +145,6 @@ class EmalonAI : public MoonScriptBossAI
 			if(mInstance)
 				mInstance->SetInstanceData(Data_EncounterState, 1, State_InProgress);
 			//mSpellOverchargeTimer = AddTimer(45*SEC_IN_MS);
-			ParentClass::OnCombatStart(mAttacker);
 		}
 
 		void OnCombatStop(Unit* pUnit)
@@ -156,14 +152,12 @@ class EmalonAI : public MoonScriptBossAI
 			if(mInstance)
 				mInstance->SetInstanceData(Data_EncounterState, 1, State_Performed);
 			SummonMinions();
-			ParentClass::OnCombatStop(pUnit);
 		}
 
 		void OnDied(Unit* mKiller)
 		{
 			if(mInstance)
 				mInstance->SetInstanceData(Data_EncounterState, 1, State_Finished);
-			ParentClass::OnDied(mKiller);
 		}
 
 		void AIUpdate()
@@ -178,7 +172,6 @@ class EmalonAI : public MoonScriptBossAI
 				}
 				ResetTimer(mSpellOverchargeTimer, 45*SEC_IN_MS);
 			}*/
-			ParentClass::AIUpdate();
 		}
 
 	private:
@@ -193,7 +186,7 @@ class EmalonAI : public MoonScriptBossAI
 class EmalonMinionAI : public MoonScriptBossAI
 {
 	public:
-		MOONSCRIPT_FACTORY_FUNCTION(EmalonMinionAI, MoonScriptBossAI);
+		ADD_CREATURE_FACTORY_FUNCTION(EmalonMinionAI)
 		EmalonMinionAI(Creature *pCreature) : MoonScriptBossAI(pCreature)
 		{
 			AddSpell(SPELL_SHOCK, Target_Self, 99, 0, 20);
@@ -208,7 +201,6 @@ class EmalonMinionAI : public MoonScriptBossAI
 				if(pSummon != NULL)
 					pSummon->GetAIInterface()->AttackReaction(mKiller, 100);
 			}
-			ParentClass::OnDied(mKiller);
 		}
 
 		void AIUpdate()
@@ -220,7 +212,6 @@ class EmalonMinionAI : public MoonScriptBossAI
 				_unit->CastSpell(_unit, SPELL_OVERCHARGED_BLAST, false);
 				Despawn();
 			}
-			ParentClass::AIUpdate();
 		}
 
 	private:
@@ -237,7 +228,7 @@ class EmalonMinionAI : public MoonScriptBossAI
 class KoralonAI : public MoonScriptBossAI
 {
 	public:
-		MOONSCRIPT_FACTORY_FUNCTION(KoralonAI, MoonScriptBossAI);
+		ADD_CREATURE_FACTORY_FUNCTION(KoralonAI)
 		KoralonAI(Creature *pCreature) : MoonScriptBossAI(pCreature)
 		{
 			AddSpell(SPELL_METEOR_FISTS, Target_Self, 35, 1.5f, 45);
@@ -249,7 +240,6 @@ class KoralonAI : public MoonScriptBossAI
 		{
 			mBreathTimer = AddTimer(15*SEC_IN_MS);
 			mBurningFuryTimer = AddTimer(20*SEC_IN_MS);
-			ParentClass::OnCombatStart(pUnit);
 		}
 
 		void AIUpdate()
@@ -265,8 +255,6 @@ class KoralonAI : public MoonScriptBossAI
 				_unit->CastSpell(_unit, SPELL_BURNING_FURY, true);
 				ResetTimer(mBurningFuryTimer, 20*SEC_IN_MS);
 			}
-
-			ParentClass::AIUpdate();
 		}
 
 	private:
@@ -295,7 +283,7 @@ class KoralonAI : public MoonScriptBossAI
 class ToravonAI : public MoonScriptBossAI
 {
 	public:
-		MOONSCRIPT_FACTORY_FUNCTION(ToravonAI, MoonScriptBossAI);
+		ADD_CREATURE_FACTORY_FUNCTION(ToravonAI)
 		ToravonAI(Creature *pCreature) : MoonScriptBossAI(pCreature)
 		{
 			AddSpell(SPELL_FREEZING_GROUND, Target_RandomPlayer, 30, 0, 20);
@@ -306,7 +294,6 @@ class ToravonAI : public MoonScriptBossAI
 		{
 			_unit->CastSpell(_unit, SPELL_FROZEN_MALLET, true);
 			mFrozenOrbTimer = AddTimer(11*SEC_IN_MS);
-			ParentClass::OnCombatStart(pUnit);
 		}
 
 		void AIUpdate()
@@ -317,7 +304,6 @@ class ToravonAI : public MoonScriptBossAI
 				_unit->CastSpell(_unit, SPELL_WHITEOUT, false);
 				ResetTimer(mFrozenOrbTimer, 38*SEC_IN_MS);
 			}
-			ParentClass::AIUpdate();
 		}
 
 	private:

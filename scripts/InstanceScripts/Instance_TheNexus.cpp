@@ -56,7 +56,7 @@ enum NexusEncounterList
 class AnomalusAI : public MoonScriptCreatureAI
 {
 	public:
-		MOONSCRIPT_FACTORY_FUNCTION(AnomalusAI, MoonScriptCreatureAI);
+		ADD_CREATURE_FACTORY_FUNCTION(AnomalusAI)
 		AnomalusAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			AddEmote(Event_OnDied, "Of course.", Text_Yell, 13187);
@@ -76,8 +76,6 @@ class AnomalusAI : public MoonScriptCreatureAI
 
 			if(mInstance)
 				mInstance->SetInstanceData(Data_EncounterState, NEXUS_ANOMALUS, State_InProgress);
-
-			ParentClass::OnCombatStart(mTarget);
 		}
 
 		void AIUpdate()
@@ -99,8 +97,6 @@ class AnomalusAI : public MoonScriptCreatureAI
 				RemoveAura(47748);
 				mRift = false;
 			}
-
-			ParentClass::AIUpdate();
 		}
 
 		void SummonRift(bool bToCharge)
@@ -135,16 +131,12 @@ class AnomalusAI : public MoonScriptCreatureAI
 		{
 			if(mInstance)
 				mInstance->SetInstanceData(Data_EncounterState, NEXUS_ANOMALUS, State_Finished);
-
-			ParentClass::OnDied(pKiller);
 		}
 
 		void OnCombatStop(Unit* pTarget)
 		{
 			if(mInstance)
 				mInstance->SetInstanceData(Data_EncounterState, NEXUS_ANOMALUS, State_Performed);
-
-			ParentClass::OnCombatStop(pTarget);
 		}
 
 	private:
@@ -157,7 +149,7 @@ class AnomalusAI : public MoonScriptCreatureAI
 class ChaoticRiftAI : public MoonScriptCreatureAI
 {
 	public:
-		MOONSCRIPT_FACTORY_FUNCTION(ChaoticRiftAI, MoonScriptCreatureAI);
+		ADD_CREATURE_FACTORY_FUNCTION(ChaoticRiftAI)
 		ChaoticRiftAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			SetCanEnterCombat(false);
@@ -169,38 +161,33 @@ class ChaoticRiftAI : public MoonScriptCreatureAI
 		{
 			ApplyAura(CHAOTIC_RIFT_AURA);
 			Despawn(40000, 0);
-			ParentClass::OnLoad();
 		}
 
 		void OnDied(Unit*  mKiller)
 		{
 			Despawn(2000, 0);
-			ParentClass::OnDied(mKiller);
 		}
 
 		void OnCombatStop(Unit* pTarget)
 		{
 			Despawn(2000, 0);
-			ParentClass::OnCombatStop(pTarget);
 		}
 };
 
 class CraziedManaWrathAI : public MoonScriptCreatureAI
 {
 	public:
-		MOONSCRIPT_FACTORY_FUNCTION(CraziedManaWrathAI, MoonScriptCreatureAI);
+		ADD_CREATURE_FACTORY_FUNCTION(CraziedManaWrathAI)
 		CraziedManaWrathAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature) {};
 
 		void OnCombatStop(Unit* pTarget)
 		{
 			Despawn(2000, 0);
-			ParentClass::OnCombatStop(pTarget);
 		}
 
 		void OnDied(Unit*  mKiller)
 		{
 			Despawn(2000, 0);
-			ParentClass::OnDied(mKiller);
 		}
 };
 
@@ -241,7 +228,7 @@ static Location FormSpawns[] =
 class TelestraBossAI : public MoonScriptBossAI
 {
 	public:
-		MOONSCRIPT_FACTORY_FUNCTION(TelestraBossAI, MoonScriptBossAI);
+		ADD_CREATURE_FACTORY_FUNCTION(TelestraBossAI)
 		TelestraBossAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
 		{
 			mInstance = GetInstanceScript();
@@ -302,16 +289,12 @@ class TelestraBossAI : public MoonScriptBossAI
 				SetCanMove(true);
 				SetPhase(HeroicInt(1, 3));   //3 disables p2
 			}
-
-			ParentClass::AIUpdate();
 		}
 
 		void OnCombatStart(Unit* pTarget)
 		{
 			if(mInstance)
 				mInstance->SetInstanceData(Data_EncounterState, NEXUS_TELESTRA, State_InProgress);
-
-			ParentClass::OnCombatStart(pTarget);
 		}
 
 		void OnCombatStop(Unit* pTarget)
@@ -327,8 +310,6 @@ class TelestraBossAI : public MoonScriptBossAI
 
 			if(mInstance)
 				mInstance->SetInstanceData(Data_EncounterState, NEXUS_TELESTRA, State_Performed);
-
-			ParentClass::OnCombatStop(pTarget);
 		}
 
 		void OnDied(Unit* pKiller)
@@ -344,8 +325,6 @@ class TelestraBossAI : public MoonScriptBossAI
 
 			if(mInstance)
 				mInstance->SetInstanceData(Data_EncounterState, NEXUS_TELESTRA, State_Finished);
-
-			ParentClass::OnDied(pKiller);
 		}
 
 	private:
@@ -358,7 +337,7 @@ class TelestraBossAI : public MoonScriptBossAI
 class TelestraFireAI : public MoonScriptCreatureAI
 {
 	public:
-		MOONSCRIPT_FACTORY_FUNCTION(TelestraFireAI, MoonScriptCreatureAI);
+		ADD_CREATURE_FACTORY_FUNCTION(TelestraFireAI)
 		TelestraFireAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			AddSpell(FIRE_BLAST, Target_RandomPlayer, 30.0f, 0, 14);
@@ -368,14 +347,13 @@ class TelestraFireAI : public MoonScriptCreatureAI
 		void OnLoad()
 		{
 			AggroNearestUnit();
-			ParentClass::OnLoad();
 		}
 };
 
 class TelestraFrostAI : public MoonScriptCreatureAI
 {
 	public:
-		MOONSCRIPT_FACTORY_FUNCTION(TelestraFrostAI, MoonScriptCreatureAI);
+		ADD_CREATURE_FACTORY_FUNCTION(TelestraFrostAI)
 		TelestraFrostAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			AddSpell(BLIZZARD, Target_RandomPlayerDestination, 20.0f, 0, 20);
@@ -385,14 +363,13 @@ class TelestraFrostAI : public MoonScriptCreatureAI
 		void OnLoad()
 		{
 			AggroNearestUnit();
-			ParentClass::OnLoad();
 		}
 };
 
 class TelestraArcaneAI : public MoonScriptCreatureAI
 {
 	public:
-		MOONSCRIPT_FACTORY_FUNCTION(TelestraArcaneAI, MoonScriptCreatureAI);
+		ADD_CREATURE_FACTORY_FUNCTION(TelestraArcaneAI)
 		TelestraArcaneAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			AddSpell(TIME_STOP, Target_Self, 30.0f, 1.5, 30);
@@ -402,7 +379,6 @@ class TelestraArcaneAI : public MoonScriptCreatureAI
 		void OnLoad()
 		{
 			AggroNearestUnit();
-			ParentClass::OnLoad();
 		}
 };
 
@@ -428,7 +404,7 @@ class TelestraArcaneAI : public MoonScriptCreatureAI
 class OrmorokAI : public MoonScriptCreatureAI
 {
 	public:
-		MOONSCRIPT_FACTORY_FUNCTION(OrmorokAI, MoonScriptCreatureAI);
+		ADD_CREATURE_FACTORY_FUNCTION(OrmorokAI)
 		OrmorokAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			AddEmote(Event_OnCombatStart, "Noo!", Text_Yell, 13328);
@@ -445,7 +421,6 @@ class OrmorokAI : public MoonScriptCreatureAI
 		void OnCombatStart(Unit* pTarget)
 		{
 			mEnraged = false;
-			ParentClass::OnCombatStart(pTarget);
 		}
 
 		void AIUpdate()
@@ -456,16 +431,12 @@ class OrmorokAI : public MoonScriptCreatureAI
 				Announce("Ormorok the Tree-Shaper goes into a frenzy!");
 				mEnraged = true;
 			}
-
-			ParentClass::AIUpdate();
 		}
 
 		void OnDied(Unit* pKiller)
 		{
 			if(mInstance)
 				mInstance->SetInstanceData(Data_EncounterState, NEXUS_ORMOROK, State_Finished);
-
-			ParentClass::OnDied(pKiller);
 		}
 
 	private:
@@ -477,7 +448,7 @@ class OrmorokAI : public MoonScriptCreatureAI
 class CrystalSpikeAI : public MoonScriptBossAI
 {
 	public:
-		MOONSCRIPT_FACTORY_FUNCTION(CrystalSpikeAI, MoonScriptBossAI);
+		ADD_CREATURE_FACTORY_FUNCTION(CrystalSpikeAI)
 		CrystalSpikeAI(Creature* pCreature) : MoonScriptBossAI(pCreature) {};
 
 		void OnLoad()
@@ -489,8 +460,6 @@ class CrystalSpikeAI : public MoonScriptBossAI
 			Despawn(4500, 0);
 			RegisterAIUpdateEvent(500);
 			m_part = 0;
-
-			ParentClass::OnLoad();
 		}
 
 			void AIUpdate()
@@ -523,7 +492,7 @@ class CrystalSpikeAI : public MoonScriptBossAI
 class KeristraszaAI : public MoonScriptCreatureAI
 {
 	public:
-		MOONSCRIPT_FACTORY_FUNCTION(KeristraszaAI, MoonScriptCreatureAI);
+		ADD_CREATURE_FACTORY_FUNCTION(KeristraszaAI)
 		KeristraszaAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			AddEmote(Event_OnCombatStart, "Preserve? Why? There's no truth in it. No no no... only in the taking! I see that now!", Text_Yell, 13450);
@@ -543,7 +512,6 @@ class KeristraszaAI : public MoonScriptCreatureAI
 		void OnLoad()
 		{
 			ApplyAura(47543);   // frozen prison
-			ParentClass::OnLoad();
 		}
 
 		void AIUpdate()

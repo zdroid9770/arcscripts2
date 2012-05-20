@@ -160,7 +160,7 @@ class AcherusSoulPrison : GameObjectAIScript
 class UnworthyInitiate : public MoonScriptCreatureAI
 {
 	public:
-		MOONSCRIPT_FACTORY_FUNCTION(UnworthyInitiate, MoonScriptCreatureAI);
+		ADD_CREATURE_FACTORY_FUNCTION(UnworthyInitiate)
 		UnworthyInitiate(Creature * c) : MoonScriptCreatureAI(c)
 		{
 			AddSpell(SPELL_BLOOD_STRIKE, Target_Current, 85.0f, 0.0f, 4000);
@@ -178,7 +178,6 @@ class UnworthyInitiate : public MoonScriptCreatureAI
 			SetDisplayWeapon(false, false);
 			state = -1;
 			anchorGuid = 0;
-			ParentClass::OnLoad();
 		}
 
 		void CheckForAnchor()
@@ -305,8 +304,6 @@ class UnworthyInitiate : public MoonScriptCreatureAI
 				state = -1;
 				//_unit->SetUInt32Value( UNIT_FIELD_FLAGS, 0 );
 			}
-
-			ParentClass::AIUpdate();
 		}
 
 		void OnDied(Unit * mKiller)
@@ -327,8 +324,6 @@ class UnworthyInitiate : public MoonScriptCreatureAI
 			qle->SendUpdateAddKill(0);
 			qle->UpdatePlayerFields();
 			qle->SendQuestComplete();
-
-			ParentClass::OnDied(mKiller);
 		}
 
 		void OnCombatStop(Unit * pTarget)

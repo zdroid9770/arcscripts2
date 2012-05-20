@@ -58,7 +58,7 @@ class ProspectorAnvilwardGossip : public Arcemu::Gossip::Script
 class ProspectorAnvilwardAI : public MoonScriptCreatureAI
 {
 	public:
-		MOONSCRIPT_FACTORY_FUNCTION(ProspectorAnvilwardAI, MoonScriptCreatureAI)
+		ADD_CREATURE_FACTORY_FUNCTION(ProspectorAnvilwardAI, MoonScriptCreatureAI)
 		ProspectorAnvilwardAI(Creature * pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			for(uint8 i = 0; i<8; i++)
@@ -80,13 +80,11 @@ class ProspectorAnvilwardAI : public MoonScriptCreatureAI
 		void OnDied(Unit* mKiller)
 		{
 			_unit->SetFaction(35);
-			ParentClass::OnDied(mKiller);
 		}
 
 		void OnCombatStop(Unit* pTarget)
 		{
 			_unit->SetFaction(35);
-			ParentClass::OnCombatStop(pTarget);
 		}
 };
 

@@ -24,7 +24,7 @@
 class Glutton : public MoonScriptCreatureAI
 {
 	public:
-		MOONSCRIPT_FACTORY_FUNCTION(Glutton, MoonScriptCreatureAI);
+		ADD_CREATURE_FACTORY_FUNCTION(Glutton)
 		Glutton(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			//spells
@@ -36,8 +36,6 @@ class Glutton : public MoonScriptCreatureAI
 		void OnCombatStart(Unit* pTarget)
 		{
 			CastSpellNowNoScheduling(mDiseaseCloud);
-
-			ParentClass::OnCombatStart(pTarget);
 		}
 
 	private:

@@ -21,13 +21,12 @@
 class PrimordialDrakeEggAI : public MoonScriptCreatureAI
 {
 	public:
-		MOONSCRIPT_FACTORY_FUNCTION(PrimordialDrakeEggAI, MoonScriptCreatureAI);
+		ADD_CREATURE_FACTORY_FUNCTION(PrimordialDrakeEggAI)
 		PrimordialDrakeEggAI(Creature* c) : MoonScriptCreatureAI(c) {}
 
 		void OnDied(Unit *mKiller)
 		{
 			_unit->CastSpell(_unit, 51595, true);	//Summon Primordial Hatchling
-			ParentClass::OnDied(mKiller);
 		}
 };
 

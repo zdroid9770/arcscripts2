@@ -30,7 +30,7 @@ enum GatewatcherGyroKill{
 class GatewatcherGyroKillAI : public MoonScriptCreatureAI
 {
 	public:
-		MOONSCRIPT_FACTORY_FUNCTION(GatewatcherGyroKillAI, MoonScriptCreatureAI);
+		ADD_CREATURE_FACTORY_FUNCTION(GatewatcherGyroKillAI)
 		GatewatcherGyroKillAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			SpellDesc * sSawBlade = AddSpell(SAW_BLADE, Target_Current, 13.0f, 0, -1);
@@ -59,7 +59,7 @@ enum Gatewatcher_IronHand{
 class GatewatcherIronHandAI : public MoonScriptCreatureAI
 {
 	public:
-		MOONSCRIPT_FACTORY_FUNCTION(GatewatcherIronHandAI, MoonScriptCreatureAI);
+		ADD_CREATURE_FACTORY_FUNCTION(GatewatcherIronHandAI)
 		GatewatcherIronHandAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			SpellDesc * sHammer = AddSpell(JACK_HAMMER, Target_Current, 7, 1.5f, -1);
@@ -88,7 +88,7 @@ enum MechanoLordCapacitus{
 class MechanoLordCapacitusAI : public MoonScriptCreatureAI
 {
 	public:
-		MOONSCRIPT_FACTORY_FUNCTION(MechanoLordCapacitusAI, MoonScriptCreatureAI);
+		ADD_CREATURE_FACTORY_FUNCTION(MechanoLordCapacitusAI)
 		MechanoLordCapacitusAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			AddSpell(HEAD_CRACK, Target_Current, 8, 0, -1);
@@ -115,7 +115,7 @@ class MechanoLordCapacitusAI : public MoonScriptCreatureAI
 class NethermancerSepethreaAI : public MoonScriptCreatureAI
 {
 	public:
-		MOONSCRIPT_FACTORY_FUNCTION(NethermancerSepethreaAI, MoonScriptCreatureAI);
+		ADD_CREATURE_FACTORY_FUNCTION(NethermancerSepethreaAI)
 		NethermancerSepethreaAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			AddSpell(FROST_ATTACK, Target_Current, 9, 0, -1);
@@ -133,7 +133,6 @@ class NethermancerSepethreaAI : public MoonScriptCreatureAI
 		{
 			_unit->CastSpell(_unit, SUMMON_RAGIN_FLAMES, true);
 			Emote("I am not alone!", Text_Yell, 11191);
-			ParentClass::OnCombatStart(mTarget);
 		}
 };
 
@@ -154,7 +153,7 @@ class NethermancerSepethreaAI : public MoonScriptCreatureAI
 class PathaleonTheCalculatorAI : public MoonScriptCreatureAI
 {
 	public:
-		MOONSCRIPT_FACTORY_FUNCTION(PathaleonTheCalculatorAI, MoonScriptCreatureAI);
+		ADD_CREATURE_FACTORY_FUNCTION(PathaleonTheCalculatorAI)
 		PathaleonTheCalculatorAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			SummonTimer = -1;
@@ -172,7 +171,6 @@ class PathaleonTheCalculatorAI : public MoonScriptCreatureAI
 		void OnCombatStart(Unit * pAttacker)
 		{
 			SummonTimer = AddTimer((rand()%16 + 30)*SEC_IN_MS);
-			ParentClass::OnCombatStart(pAttacker);
 		}
 
 		void AIUpdate()
@@ -186,7 +184,6 @@ class PathaleonTheCalculatorAI : public MoonScriptCreatureAI
 				Emote("Time to supplement my work force.", Text_Yell, 11196);
 				ResetTimer(SummonTimer, (rand()%16 + 30)*SEC_IN_MS);
 			}
-			ParentClass::AIUpdate();
 		}
 	private:
 		int32 SummonTimer;

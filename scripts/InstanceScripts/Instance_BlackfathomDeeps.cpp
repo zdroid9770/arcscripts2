@@ -22,7 +22,7 @@
 class LadySarevessAI : public MoonScriptCreatureAI
 {
 public:
-	MOONSCRIPT_FACTORY_FUNCTION(LadySarevessAI, MoonScriptCreatureAI);
+	ADD_CREATURE_FACTORY_FUNCTION(LadySarevessAI)
 	LadySarevessAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 	{
 		AddEmote(Event_OnCombatStart, "You should not be here! Slay them!", Text_Yell, 5799);
@@ -37,7 +37,7 @@ public:
 class BaronAquanisAI : public MoonScriptCreatureAI
 {
 public:
-	MOONSCRIPT_FACTORY_FUNCTION(BaronAquanisAI, MoonScriptCreatureAI);
+	ADD_CREATURE_FACTORY_FUNCTION(BaronAquanisAI)
 	BaronAquanisAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 	{
 		// Frostbolt
@@ -76,7 +76,7 @@ protected:
 class KelrisAI : public MoonScriptCreatureAI
 {
 public:
-	MOONSCRIPT_FACTORY_FUNCTION(KelrisAI, MoonScriptCreatureAI);
+	ADD_CREATURE_FACTORY_FUNCTION(KelrisAI)
 	KelrisAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 	{
 		AddEmote(Event_OnCombatStart, "Who dares disturb my meditation?!", Text_Yell, 5802);
@@ -91,7 +91,7 @@ public:
 class AkumaiAI : public MoonScriptCreatureAI
 {
 public:
-	MOONSCRIPT_FACTORY_FUNCTION(AkumaiAI, MoonScriptCreatureAI);
+	ADD_CREATURE_FACTORY_FUNCTION(AkumaiAI)
 	AkumaiAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 	{
 		AddEmote(Event_OnCombatStart, "Who dares disturb my meditation?!", Text_Yell); // Should this really be here?

@@ -122,8 +122,6 @@ class IcecrownCitadelInstanceScript : public MoonInstanceScript
 					if(GameObject * pGo = FindClosestGameObjectOnMap(GO_GAS_RELEASE_VALVE, 4280.84f, 3090.88f, 362.335f))
 						pGo->SetFlags(0);
 				}break;
-				default : 
-					break;
 			}
 		}
 
@@ -323,7 +321,7 @@ enum LM_Summons
 class LordMarrowgarAI : public MoonScriptBossAI
 {
 	public:
-		MOONSCRIPT_FACTORY_FUNCTION(LordMarrowgarAI, MoonScriptBossAI);
+		ADD_CREATURE_FACTORY_FUNCTION(LordMarrowgarAI)
 		LordMarrowgarAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
 		{
 			mInstance = GetInstanceScript();
@@ -366,8 +364,6 @@ class LordMarrowgarAI : public MoonScriptBossAI
 
 			if(mInstance)
 				mInstance->SetInstanceData(ICC_LORD_MARROWGAR, State_InProgress);
-
-			ParentClass::OnCombatStart(pUnit);
 		}
 
 		void OnCombatStop(Unit* mTarget)
@@ -376,8 +372,6 @@ class LordMarrowgarAI : public MoonScriptBossAI
 
 			if(mInstance)
 				mInstance->SetInstanceData(ICC_LORD_MARROWGAR, State_NotStarted);
-
-			ParentClass::OnCombatStop(mTarget);
 		}
 
 		void OnDied(Unit* mKiller)
@@ -386,7 +380,6 @@ class LordMarrowgarAI : public MoonScriptBossAI
 				mInstance->SetInstanceData(ICC_LORD_MARROWGAR, State_Finished);
 
 			_unit->CastSpell(_unit, SPELL_SOUL_FEAST, false);
-			ParentClass::OnDied(mKiller);
 		}
 
 		void AIUpdate()
@@ -430,7 +423,6 @@ class LordMarrowgarAI : public MoonScriptBossAI
 				Stage = -1;
 				SetPhase(1);
 			}
-			ParentClass::AIUpdate();
 		}
 
 	protected:
@@ -442,9 +434,8 @@ class LordMarrowgarAI : public MoonScriptBossAI
 
 class ColdFlameAI : public MoonScriptCreatureAI
 {
-	MoonInstanceScript* mInstance;
 	public:
-		MOONSCRIPT_FACTORY_FUNCTION(ColdFlameAI, MoonScriptCreatureAI);
+		ADD_CREATURE_FACTORY_FUNCTION(ColdFlameAI)
 		ColdFlameAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			StopMovement();
@@ -458,34 +449,30 @@ class ColdFlameAI : public MoonScriptCreatureAI
 		void AIUpdate()
 		{
 			_unit->CastSpell(_unit, 69147, false);
-			ParentClass::AIUpdate();
 		}
 };
 
 class BoneSpikeAI : public MoonScriptCreatureAI
 {
 	public:
-		MOONSCRIPT_FACTORY_FUNCTION(BoneSpikeAI, MoonScriptCreatureAI);
+		ADD_CREATURE_FACTORY_FUNCTION(BoneSpikeAI)
 		BoneSpikeAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature) {}
 
 		void OnLoad()
 		{
 			_unit->CastSpell(GetNearestPlayer(), 46598, true);	//Ride vehicle
 			_unit->CastSpell(_unit, 69065, false);	//impaled
-			ParentClass::OnLoad();
 		}
 
 		void OnDied(Unit * mKiller)
 		{
 			mKiller->RemoveAura(69065);	//impaled
 			_unit->Despawn(0, 0);
-			ParentClass::OnDied(mKiller);
 		}
 
 		void OnTargetDied(Unit * pUnit)
 		{
 			_unit->Despawn(0, 0);
-			ParentClass::OnTargetDied(pUnit);
 		}
 };
 
@@ -540,7 +527,7 @@ static LocationExtra LD_SummonPositions[] ={
 class LadyDeathwhisperAI : public MoonScriptBossAI
 {
 	public:
-		MOONSCRIPT_FACTORY_FUNCTION(LadyDeathwhisperAI, MoonScriptBossAI);
+		ADD_CREATURE_FACTORY_FUNCTION(LadyDeathwhisperAI)
 		LadyDeathwhisperAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
 		{
 			DominateHandTimer = SummonCultistTimer = -1;
@@ -564,7 +551,6 @@ class LadyDeathwhisperAI : public MoonScriptBossAI
 			DominateHandTimer = AddTimer(27*SEC_IN_MS);
 			SummonCultistTimer = AddTimer((20+rand()%10)*SEC_IN_MS);
 			_unit->CastSpell(_unit, SPELL_MANA_BARRIER, true);
-			ParentClass::OnCombatStart(pAttacker);
 		}
 
 		void OnCombatStop(Unit* pUnit)
@@ -633,8 +619,6 @@ class LadyDeathwhisperAI : public MoonScriptBossAI
 				SetCanMove(false);
 				SetPhase(2);
 			}
-
-			ParentClass::AIUpdate();
 		}
 
 	private:

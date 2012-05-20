@@ -28,7 +28,7 @@
 class MaidenOfGriefAI : public MoonScriptCreatureAI
 {
 	public:
-		MOONSCRIPT_FACTORY_FUNCTION(MaidenOfGriefAI, MoonScriptCreatureAI);
+		ADD_CREATURE_FACTORY_FUNCTION(MaidenOfGriefAI)
 		MaidenOfGriefAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			AddSpell(MAIDEN_STORM_OF_GRIEF, Target_RandomPlayerDestination, 100, 0, 19);
@@ -48,7 +48,6 @@ class MaidenOfGriefAI : public MoonScriptCreatureAI
 		void OnCombatStart(Unit* pTarget)
 		{
 			mShock->TriggerCooldown();
-			ParentClass::OnCombatStart(pTarget);
 		}
 
 	protected:
@@ -69,7 +68,7 @@ class MaidenOfGriefAI : public MoonScriptCreatureAI
 class KrystallusAI : public MoonScriptCreatureAI
 {
 	public:
-		MOONSCRIPT_FACTORY_FUNCTION(KrystallusAI, MoonScriptCreatureAI);
+		ADD_CREATURE_FACTORY_FUNCTION(KrystallusAI)
 		KrystallusAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			AddSpell(KRYSTALLUS_BOULDER_TOSS, Target_ClosestPlayer, 35, 1, 4);
@@ -89,7 +88,6 @@ class KrystallusAI : public MoonScriptCreatureAI
 		void OnCombatStart(Unit* pTarget)
 		{
 			mStompTimer = AddTimer(STOMP_TIMER);
-			ParentClass::OnCombatStart(pTarget);
 		}
 
 		void AIUpdate()

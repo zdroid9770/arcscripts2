@@ -34,7 +34,7 @@
 class KrikthirAI : public MoonScriptCreatureAI
 {
 public:
-	MOONSCRIPT_FACTORY_FUNCTION(KrikthirAI, MoonScriptCreatureAI);
+	ADD_CREATURE_FACTORY_FUNCTION(KrikthirAI)
 	KrikthirAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 	{
 		AddEmote(Event_OnCombatStart, "This kingdom belongs to the Scourge! Only the dead may enter.", Text_Yell, 14075);
@@ -55,7 +55,6 @@ public:
 			ApplyAura(KRIKTHIR_ENRAGE);
 			mEnraged = true;
 		}
-		ParentClass::AIUpdate();
 	}
 
 	void OnDied(Unit* pKiller)
@@ -63,8 +62,6 @@ public:
 		GameObject* Doors = GetNearestGameObject(192395);
 		if(Doors != NULL)
 			Doors->SetState(GAMEOBJECT_STATE_OPEN);
-
-		ParentClass::OnDied(pKiller);
 	}
 
 protected:
@@ -81,7 +78,7 @@ protected:
 class HadronoxAI : public MoonScriptCreatureAI
 {
 public:
-	MOONSCRIPT_FACTORY_FUNCTION(HadronoxAI, MoonScriptCreatureAI);
+	ADD_CREATURE_FACTORY_FUNCTION(HadronoxAI)
 	HadronoxAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 	{
 		AddSpell(HADRONOX_WEBGRAB, Target_RandomPlayer, 22.0f, 0, 14);
@@ -94,8 +91,6 @@ public:
 	{
 		if(pTarget!=NULL && pTarget->HasAura(HADRONOX_LEECHPOISON) && IsAlive())
 			_unit->SetHealthPct(_unit->GetHealthPct()+10.0f);
-
-		ParentClass::OnTargetDied(pTarget);
 	}
 };
 

@@ -21,7 +21,7 @@
 class QuetzLunGate : public MoonScriptCreatureAI
 {
 	public:
-		MOONSCRIPT_FACTORY_FUNCTION(QuetzLunGate, MoonScriptCreatureAI);
+		ADD_CREATURE_FACTORY_FUNCTION(QuetzLunGate)
 		QuetzLunGate(Creature* pCreature) : MoonScriptCreatureAI(pCreature){};
 
 		void OnLoad()
@@ -58,7 +58,7 @@ class QuetzLunGate : public MoonScriptCreatureAI
 class QuetzLunWorshipper : public MoonScriptCreatureAI
 {
 	public:
-		MOONSCRIPT_FACTORY_FUNCTION(QuetzLunWorshipper, MoonScriptCreatureAI);
+		ADD_CREATURE_FACTORY_FUNCTION(QuetzLunWorshipper)
 		QuetzLunWorshipper(Creature* pCreature) : MoonScriptCreatureAI(pCreature){};
 
 		void OnDeath(Unit * killer)
@@ -80,14 +80,13 @@ class QuetzLunWorshipper : public MoonScriptCreatureAI
 					q->UpdatePlayerFields();
 				}
 			}
-			ParentClass::OnDied(killer);
 		}
 };
 
 class TheLeaders : public MoonScriptCreatureAI
 {
 	public:
-		MOONSCRIPT_FACTORY_FUNCTION(TheLeaders, MoonScriptCreatureAI);
+		ADD_CREATURE_FACTORY_FUNCTION(TheLeaders)
 		TheLeaders(Creature* pCreature) : MoonScriptCreatureAI(pCreature){};
 
 		void OnDied(Unit * killer)
@@ -134,14 +133,13 @@ class TheLeaders : public MoonScriptCreatureAI
 					case 193770: SpawnCreature(28494, 5552.57f, -3465.25f, 350.33f, 0.78f); break; // spawn Kutube'sa
 				}
 			}
-			ParentClass::OnDied(killer);
 		}
 };
 
 class LeadersSpawnChest : public MoonScriptCreatureAI
 {
 	public:
-		MOONSCRIPT_FACTORY_FUNCTION(LeadersSpawnChest, MoonScriptCreatureAI);
+		ADD_CREATURE_FACTORY_FUNCTION(LeadersSpawnChest)
 		LeadersSpawnChest(Creature* pCreature) : MoonScriptCreatureAI(pCreature){};
 
 		void OnDied(Unit * killer)
@@ -168,7 +166,6 @@ class LeadersSpawnChest : public MoonScriptCreatureAI
 				break;
 			}
 			*/
-			ParentClass::OnDied(killer);
 		}
 };
 
@@ -210,7 +207,7 @@ public:
 class BloodroseQuestAI : public MoonScriptCreatureAI
 {
 	public:
-		MOONSCRIPT_FACTORY_FUNCTION(BloodroseQuestAI, MoonScriptCreatureAI);
+		ADD_CREATURE_FACTORY_FUNCTION(BloodroseQuestAI)
 		BloodroseQuestAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			phase = 1;
@@ -294,7 +291,6 @@ class BloodroseQuestAI : public MoonScriptCreatureAI
 				phase = 1;
 				RemoveAIUpdateEvent();
 			}
-			ParentClass::AIUpdate();
 		}
 
 	private:
@@ -305,7 +301,7 @@ class BloodroseQuestAI : public MoonScriptCreatureAI
 class DecaingGhoulQuestAI : public MoonScriptCreatureAI
 {
 	public:
-		MOONSCRIPT_FACTORY_FUNCTION(DecaingGhoulQuestAI, MoonScriptCreatureAI);
+		ADD_CREATURE_FACTORY_FUNCTION(DecaingGhoulQuestAI)
 		DecaingGhoulQuestAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			running = false;
@@ -379,8 +375,6 @@ class DecaingGhoulQuestAI : public MoonScriptCreatureAI
 			SetCanEnterCombat(false);
 			// move to bowl destination
 			MoveTo(x,y,z);
-
-			ParentClass::AIUpdate();
 		}
 
 		void Return()
@@ -449,7 +443,7 @@ bool SummonStefan(uint32 i, Spell * pSpell)
 class StefanVaduQuestAI : public MoonScriptCreatureAI
 {
 	public:
-		MOONSCRIPT_FACTORY_FUNCTION(StefanVaduQuestAI, MoonScriptCreatureAI);
+		ADD_CREATURE_FACTORY_FUNCTION(StefanVaduQuestAI)
 		StefanVaduQuestAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature){};
 
 		void OnLoad()
@@ -478,8 +472,6 @@ class StefanVaduQuestAI : public MoonScriptCreatureAI
 				RemoveAIUpdateEvent();
 				return;
 			}
-
-			ParentClass::AIUpdate();
 		}
 
 	private:
@@ -505,7 +497,7 @@ class HebJinDrum : public GameObjectAIScript
 class HebJinAI : public MoonScriptCreatureAI
 {
 	public:
-		MOONSCRIPT_FACTORY_FUNCTION(HebJinAI, MoonScriptCreatureAI);
+		ADD_CREATURE_FACTORY_FUNCTION(HebJinAI)
 		HebJinAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			phase = 1;
@@ -525,15 +517,9 @@ class HebJinAI : public MoonScriptCreatureAI
 			Emote("Who's that beatin' on my drum?", Text_Yell, 0);
 		}
 
-		void OnCombatStart(Unit * pTarget)
-		{
-			ParentClass::OnCombatStart(pTarget);
-		}
-
 		void OnCombatStop(Unit * pTarget)
 		{
 			phase = 1;
-			ParentClass::OnCombatStop(pTarget);
 		}
 
 		void AIUpdate()
@@ -559,8 +545,6 @@ class HebJinAI : public MoonScriptCreatureAI
 					pSummon->Despawn(MINUTE*6*SEC_IN_MS);
 				AggroNearestPlayer();
 			}
-
-			ParentClass::AIUpdate();
 		}
 
 	private:

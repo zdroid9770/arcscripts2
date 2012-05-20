@@ -44,7 +44,7 @@
 class KelidanTheBreakerAI : public MoonScriptBossAI
 {
 	public:
-		MOONSCRIPT_FACTORY_FUNCTION(KelidanTheBreakerAI, MoonScriptBossAI);
+		ADD_CREATURE_FACTORY_FUNCTION(KelidanTheBreakerAI)
 		KelidanTheBreakerAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
 		{
 			//spells
@@ -76,7 +76,6 @@ class KelidanTheBreakerAI : public MoonScriptBossAI
 		void OnCombatStart(Unit* pTarget)
 		{
 			mBurningNovaTimer = AddTimer(15000);
-			ParentClass::OnCombatStart(pTarget);
 		}
 
 		void AIUpdate()
@@ -90,12 +89,8 @@ class KelidanTheBreakerAI : public MoonScriptBossAI
 					CastSpell(mBurningNova);
 
 					ResetTimer(mBurningNovaTimer, 30000);
-
-					ParentClass::AIUpdate();
-				};
-			};
-
-			ParentClass::AIUpdate();
+				}
+			}
 		}
 
 		SpellDesc*      mShadowBoltVolley;

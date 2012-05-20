@@ -42,9 +42,9 @@ class MoonScriptBossAI : public MoonScriptCreatureAI
 		void			SetEnrageInfo(SpellDesc* pSpell, int32 pTriggerMilliseconds);
 
 		//Reimplemented Events
-		virtual void	OnCombatStart(Unit* pTarget);
-		virtual void	OnCombatStop(Unit* pTarget);
-		virtual void	AIUpdate();
+		void	OnCombatStart(Unit* pTarget);
+		void	OnCombatStop(Unit* pTarget);
+		void	AIUpdate();
 
 	protected:
 		int32			mPhaseIndex;

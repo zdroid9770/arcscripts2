@@ -43,7 +43,7 @@
 class SunbladeProtectorAI : public MoonScriptCreatureAI
 {
 public:
-		MOONSCRIPT_FACTORY_FUNCTION(SunbladeProtectorAI, MoonScriptCreatureAI);
+		ADD_CREATURE_FACTORY_FUNCTION(SunbladeProtectorAI)
 		SunbladeProtectorAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			AddSpell(SUNBLADE_PROTECTOR_FEL_LIGHTNING, Target_RandomPlayer, 100, 0, 15, 0, 60);
@@ -60,7 +60,7 @@ public:
 
 class ShadowswordAssassinAI : public MoonScriptCreatureAI
 {
-		MOONSCRIPT_FACTORY_FUNCTION(ShadowswordAssassinAI, MoonScriptCreatureAI);
+		ADD_CREATURE_FACTORY_FUNCTION(ShadowswordAssassinAI)
 		ShadowswordAssassinAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			AddSpell(SHADOWSWORD_ASSASSIN_ASSASSINS_MARK, Target_RandomPlayer, 100, 0, 15, 0, 100);
@@ -78,7 +78,7 @@ class ShadowswordAssassinAI : public MoonScriptCreatureAI
 
 class ShadowswordCommanderAI : public MoonScriptCreatureAI
 {
-		MOONSCRIPT_FACTORY_FUNCTION(ShadowswordCommanderAI, MoonScriptCreatureAI);
+		ADD_CREATURE_FACTORY_FUNCTION(ShadowswordCommanderAI)
 		ShadowswordCommanderAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			AddSpell(SHADOWSWORD_COMMANDER_SHIELD_SLAM, Target_Current, 10, 0, 10);
@@ -97,7 +97,7 @@ void SpellFunc_Kalecgos_WildMagic(SpellDesc* pThis, MoonScriptCreatureAI* pCreat
 
 class KalecgosAI : public MoonScriptBossAI
 {
-    MOONSCRIPT_FACTORY_FUNCTION(KalecgosAI, MoonScriptBossAI);
+    ADD_CREATURE_FACTORY_FUNCTION(KalecgosAI)
 	KalecgosAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
 	{
 		AddSpell(KALECGOS_FROST_BREATH, Target_Current, 10, 1, 12, 0, 30);
@@ -137,7 +137,7 @@ void SpellFunc_Kalecgos_WildMagic(SpellDesc* pThis, MoonScriptCreatureAI* pCreat
 
 class SathrovarrTheCorruptorAI : public MoonScriptBossAI
 {
-    MOONSCRIPT_FACTORY_FUNCTION(SathrovarrTheCorruptorAI, MoonScriptBossAI);
+    ADD_CREATURE_FACTORY_FUNCTION(SathrovarrTheCorruptorAI)
 	SathrovarrTheCorruptorAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
 	{
 		AddSpell(SATHROVARR_THE_CORRUPTOR_CURSE_OF_BOUNDLESS_AGONY, Target_RandomPlayer, 20, 0, 12, 0, 40);
@@ -163,7 +163,7 @@ class SathrovarrTheCorruptorAI : public MoonScriptBossAI
 class BrutallusAI : public MoonScriptBossAI
 {
 	public:
-		MOONSCRIPT_FACTORY_FUNCTION(BrutallusAI, MoonScriptBossAI);
+		ADD_CREATURE_FACTORY_FUNCTION(BrutallusAI)
 		BrutallusAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
 		{
 			AddSpell(BRUTALLUS_METEOR_SLASH, Target_Self, 100, 1, 12);
@@ -200,7 +200,7 @@ class BrutallusAI : public MoonScriptBossAI
 class FelmystAI : public MoonScriptBossAI
 {
 	public:
-		MOONSCRIPT_FACTORY_FUNCTION(FelmystAI, MoonScriptBossAI);
+		ADD_CREATURE_FACTORY_FUNCTION(FelmystAI)
 		FelmystAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
 		{
 			//Phase 1 spells
@@ -230,7 +230,6 @@ class FelmystAI : public MoonScriptBossAI
 		void OnCombatStart(Unit* pTarget)
 		{
 			ApplyAura(FELMYST_NOXIOUS_FUME);
-			ParentClass::OnCombatStart(pTarget);
 		}
 };
 
@@ -247,7 +246,7 @@ class FelmystAI : public MoonScriptBossAI
 class LadySacrolashAI : public MoonScriptBossAI
 {
 	public:
-		MOONSCRIPT_FACTORY_FUNCTION(LadySacrolashAI, MoonScriptBossAI);
+		ADD_CREATURE_FACTORY_FUNCTION(LadySacrolashAI)
 		LadySacrolashAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
 		{
 			AddSpell(LADY_SACROLASH_DARK_TOUCHED, Target_RandomPlayerApplyAura, 50, 0, 10, 0, 50);
@@ -265,10 +264,7 @@ class LadySacrolashAI : public MoonScriptBossAI
 		{
 			MoonScriptCreatureAI* mGrandWarlockAlythess = GetNearestCreature(CN_GRAND_WARLOCK_ALYTHESS);
 			if(mGrandWarlockAlythess != NULL && mGrandWarlockAlythess->IsAlive())
-			{
 				mGrandWarlockAlythess->Emote("Sacrolash!", Text_Yell, 12492);
-			}
-			ParentClass::OnDied(pKiller);
 		}
 };
 
@@ -284,7 +280,7 @@ class LadySacrolashAI : public MoonScriptBossAI
 class GrandWarlockAlythessAI : public MoonScriptBossAI
 {
 	public:
-		MOONSCRIPT_FACTORY_FUNCTION(GrandWarlockAlythessAI, MoonScriptBossAI);
+		ADD_CREATURE_FACTORY_FUNCTION(GrandWarlockAlythessAI)
 		GrandWarlockAlythessAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
 		{
 			AddSpell(GRAND_WARLOCK_ALYTHESS_PYROGENICS, Target_Self, 100, 0, 10, 0, 50);
@@ -303,10 +299,7 @@ class GrandWarlockAlythessAI : public MoonScriptBossAI
 		{
 			MoonScriptCreatureAI* mLadySacrolash = GetNearestCreature(CN_LADY_SACROLASH);
 			if(mLadySacrolash != NULL && mLadySacrolash->IsAlive())
-			{
 				mLadySacrolash->Emote("Alythess! Your fire burns within me!", Text_Yell, 12488);
-			}
-			ParentClass::OnDied(pKiller);
 		}
 };
 
@@ -325,7 +318,7 @@ class GrandWarlockAlythessAI : public MoonScriptBossAI
 class MuruAI : public MoonScriptBossAI
 {
 	public:
-		MOONSCRIPT_FACTORY_FUNCTION(MuruAI, MoonScriptBossAI);
+		ADD_CREATURE_FACTORY_FUNCTION(MuruAI)
 		MuruAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
 		{
 			AddSpell(MURU_NEGATIVE_ENERGY, Target_Self, 25, 0, 0);
@@ -340,21 +333,21 @@ class MuruAI : public MoonScriptBossAI
 class ShadowswordBerserkerAI : public MoonScriptCreatureAI
 {
 	public:
-		MOONSCRIPT_FACTORY_FUNCTION(ShadowswordBerserkerAI, MoonScriptCreatureAI);
+		ADD_CREATURE_FACTORY_FUNCTION(ShadowswordBerserkerAI)
 		ShadowswordBerserkerAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature) {}
 };
 
 class ShadowswordFuryMageAI : public MoonScriptCreatureAI
 {
 	public:
-		MOONSCRIPT_FACTORY_FUNCTION(ShadowswordFuryMageAI, MoonScriptCreatureAI);
+		ADD_CREATURE_FACTORY_FUNCTION(ShadowswordFuryMageAI)
 		ShadowswordFuryMageAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature) {}
 };
 
 class VoidSentinelAI : public MoonScriptCreatureAI
 {
 	public:
-		MOONSCRIPT_FACTORY_FUNCTION(VoidSentinelAI, MoonScriptCreatureAI);
+		ADD_CREATURE_FACTORY_FUNCTION(VoidSentinelAI)
 		VoidSentinelAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature) {}
 };
 
@@ -365,7 +358,7 @@ class VoidSentinelAI : public MoonScriptCreatureAI
 class EntropiusAI : public MoonScriptBossAI
 {
 	public:
-		MOONSCRIPT_FACTORY_FUNCTION(EntropiusAI, MoonScriptBossAI);
+		ADD_CREATURE_FACTORY_FUNCTION(EntropiusAI)
 		EntropiusAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
 		{
 			//TODO

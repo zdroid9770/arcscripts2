@@ -133,7 +133,7 @@ class ArcatrazInstanceScript : public MoonInstanceScript
 class ZerekethAI : public MoonScriptBossAI
 {
 	public:
-		MOONSCRIPT_FACTORY_FUNCTION(ZerekethAI, MoonScriptBossAI);
+		ADD_CREATURE_FACTORY_FUNCTION(ZerekethAI)
 		ZerekethAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
 		{
 			AddEmote(Event_OnCombatStart, "Life energy to... consume.", Text_Yell, 11250);
@@ -149,7 +149,6 @@ class ZerekethAI : public MoonScriptBossAI
 		void OnCombatStart(Unit* mTarget)
 		{
 			SpeechTimer = AddTimer((rand()%10 + 40) * 1000);
-			ParentClass::OnCombatStart(mTarget);
 		}
 
 		void AIUpdate()
@@ -163,8 +162,6 @@ class ZerekethAI : public MoonScriptBossAI
 				}
 				ResetTimer(SpeechTimer, (rand()%10 + 40) * 1000);
 			}
-
-			ParentClass::AIUpdate();
 		}
 
 	protected:
@@ -174,7 +171,7 @@ class ZerekethAI : public MoonScriptBossAI
 class VoidZoneARC : public MoonScriptCreatureAI
 {
 public:
-	MOONSCRIPT_FACTORY_FUNCTION(VoidZoneARC, MoonScriptCreatureAI);
+	ADD_CREATURE_FACTORY_FUNCTION(VoidZoneARC)
 	VoidZoneARC(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 	{
 		StopMovement();
@@ -199,7 +196,7 @@ public:
 class DalliahTheDoomsayerAI : public MoonScriptBossAI
 {
 public:
-	MOONSCRIPT_FACTORY_FUNCTION(DalliahTheDoomsayerAI, MoonScriptBossAI);
+	ADD_CREATURE_FACTORY_FUNCTION(DalliahTheDoomsayerAI)
 	DalliahTheDoomsayerAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
 	{
 		AddSpell(GIFT_OF_THE_DOOMSAYER, Target_Current, 8.0f, 0.0f, -1);
@@ -232,7 +229,7 @@ public:
 class WrathScryerSoccothratesAI : public MoonScriptCreatureAI
 {
 public:
-	MOONSCRIPT_FACTORY_FUNCTION(WrathScryerSoccothratesAI, MoonScriptCreatureAI);
+	ADD_CREATURE_FACTORY_FUNCTION(WrathScryerSoccothratesAI)
 	WrathScryerSoccothratesAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 	{
 		AddEmote(Event_OnCombatStart, "At last, a target for my frustrations!", Text_Yell, 11238);
@@ -264,7 +261,7 @@ public:
 class HarbringerSkyrissAI : public MoonScriptCreatureAI
 {
 	public:
-		MOONSCRIPT_FACTORY_FUNCTION(HarbringerSkyrissAI, MoonScriptCreatureAI);
+		ADD_CREATURE_FACTORY_FUNCTION(HarbringerSkyrissAI)
 		HarbringerSkyrissAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			AddEmote(Event_OnCombatStart, "Bear witness to the agent of your demise!", Text_Yell, 11123);
@@ -297,7 +294,6 @@ class HarbringerSkyrissAI : public MoonScriptCreatureAI
 				_unit->PlaySoundToSet(11131);
 				IllusionCount++;
 			}
-			ParentClass::AIUpdate();
 		}
 };
 
@@ -344,7 +340,7 @@ static Location pSummonCoords[5]=
 class WardenMellicharAI : public MoonScriptBossAI
 {
 	public:
-		MOONSCRIPT_FACTORY_FUNCTION(WardenMellicharAI, MoonScriptBossAI);
+		ADD_CREATURE_FACTORY_FUNCTION(WardenMellicharAI)
 		WardenMellicharAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
 		{
 			SetCanMove(false);
@@ -365,7 +361,6 @@ class WardenMellicharAI : public MoonScriptBossAI
 			Text_Yell, 11222);
 			_unit->CastSpell(_unit, SPELL_BUBBLE_VISUAL, true);
 			mInstance->SetInstanceData(Data_UnspecifiedType, WARDEN_MELLICHAR, 1);
-			ParentClass::OnCombatStart(mTarget);
 		}
 
 
@@ -460,7 +455,6 @@ class WardenMellicharAI : public MoonScriptBossAI
 				if(pSummon!=NULL)
 					Emote("Yes, O great one, right away!", Text_Yell, 11228);
 			}
-		ParentClass::AIUpdate();
 	}
 
 	protected:

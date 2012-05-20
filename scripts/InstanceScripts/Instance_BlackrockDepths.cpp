@@ -21,7 +21,7 @@
 class AmbassadorFlamelash : public MoonScriptCreatureAI
 {
 	public:
-		MOONSCRIPT_FACTORY_FUNCTION(AmbassadorFlamelash, MoonScriptCreatureAI);
+		ADD_CREATURE_FACTORY_FUNCTION(AmbassadorFlamelash)
 		AmbassadorFlamelash(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			SummonTimer = INVALIDATE_TIMER;
@@ -30,7 +30,6 @@ class AmbassadorFlamelash : public MoonScriptCreatureAI
 		void OnCombatStart(Unit* mTarget)
 		{
 			SummonTimer = AddTimer(24000);
-			ParentClass::OnCombatStart(mTarget);
 		}
 
 		void AIUpdate()
@@ -50,7 +49,6 @@ class AmbassadorFlamelash : public MoonScriptCreatureAI
 				}
 				ResetTimer(SummonTimer, 30000);
 			}
-			ParentClass::AIUpdate();
 		}
 	
 	protected:

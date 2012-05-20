@@ -99,7 +99,7 @@ const WPWaitTimes DeathbringerJovaanWP[] =
 class DeathbringerJovaanAI : public MoonScriptCreatureAI
 {
 	public:
-		MOONSCRIPT_FACTORY_FUNCTION(DeathbringerJovaanAI, MoonScriptCreatureAI);
+		ADD_CREATURE_FACTORY_FUNCTION(DeathbringerJovaanAI)
 		DeathbringerJovaanAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			mJovaanTimer = INVALIDATE_TIMER;
@@ -174,7 +174,6 @@ class DeathbringerJovaanAI : public MoonScriptCreatureAI
 						break;
 				}
 			}
-			ParentClass::AIUpdate();
 		}
 
 		void OnReachWP(uint32 iWaypointId, bool bForwards)
@@ -208,7 +207,7 @@ class DeathbringerJovaanAI : public MoonScriptCreatureAI
 class WarbringerRazuunAI : public MoonScriptCreatureAI
 {
 	public:
-		MOONSCRIPT_FACTORY_FUNCTION(WarbringerRazuunAI, MoonScriptCreatureAI);
+		ADD_CREATURE_FACTORY_FUNCTION(WarbringerRazuunAI)
 		WarbringerRazuunAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			RegisterAIUpdateEvent(1000);
@@ -264,7 +263,6 @@ class WarbringerRazuunAI : public MoonScriptCreatureAI
 						break;
 				}
 			}
-			ParentClass::AIUpdate();
 		}
 
 		int32	mRazuunTimer;
@@ -343,7 +341,7 @@ class NeltharakusTale_Gossip : public GossipScript
 class EnslavedNetherwingDrakeAI : public MoonScriptCreatureAI
 {
 	public:
-		MOONSCRIPT_FACTORY_FUNCTION(EnslavedNetherwingDrakeAI, MoonScriptCreatureAI);
+		ADD_CREATURE_FACTORY_FUNCTION(EnslavedNetherwingDrakeAI)
 		EnslavedNetherwingDrakeAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			LocationExtra WayPoint = { _unit->GetPositionX(), _unit->GetPositionY() + 30, _unit->GetPositionZ() + 100, _unit->GetOrientation(), Flag_Fly };

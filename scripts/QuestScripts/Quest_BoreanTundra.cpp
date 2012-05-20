@@ -29,7 +29,7 @@ class BellRope : public GameObjectAIScript
 		{
 			if(sEAS.GetQuest(pPlayer, 11965))
 				sEAS.KillMobForQuest(pPlayer, 11965, 0);
-		};
+		}
 
 };
 
@@ -44,8 +44,7 @@ class ColdarraGeoMonitorNexus : public GameObjectAIScript
 		{
 			if(sEAS.GetQuest(pPlayer, 11900))
 				sEAS.KillMobForQuest(pPlayer, 11900, 0);
-		};
-
+		}
 };
 
 class ColdarraGeoMonitorSouth : public GameObjectAIScript
@@ -58,8 +57,7 @@ class ColdarraGeoMonitorSouth : public GameObjectAIScript
 		{
 			if(sEAS.GetQuest(pPlayer, 11900))
 				sEAS.KillMobForQuest(pPlayer, 11900, 1);
-		};
-
+		}
 };
 
 class ColdarraGeoMonitorNorth : public GameObjectAIScript
@@ -72,8 +70,7 @@ class ColdarraGeoMonitorNorth : public GameObjectAIScript
 		{
 			if(sEAS.GetQuest(pPlayer, 11900))
 				sEAS.KillMobForQuest(pPlayer, 11900, 2);
-		};
-
+		}
 };
 
 class ColdarraGeoMonitorWest : public GameObjectAIScript
@@ -86,8 +83,7 @@ class ColdarraGeoMonitorWest : public GameObjectAIScript
 		{
 			if(sEAS.GetQuest(pPlayer, 11900))
 				sEAS.KillMobForQuest(pPlayer, 11900, 3);
-		};
-
+		}
 };
 
 // Neutralizing the Cauldrons
@@ -96,14 +92,13 @@ class ColdarraGeoMonitorWest : public GameObjectAIScript
 class PurifyingTotemAI : public MoonScriptCreatureAI
 {
 	public:
-		MOONSCRIPT_FACTORY_FUNCTION(PurifyingTotemAI, MoonScriptCreatureAI);
+		ADD_CREATURE_FACTORY_FUNCTION(PurifyingTotemAI);
 		PurifyingTotemAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			SetCanEnterCombat(false);
 			SetCanMove(false);
 			Despawn(8000, 0);
 		}
-
 };
 
 
@@ -132,7 +127,7 @@ class NerubarEggSac : public GameObjectAIScript
 class SeaforiumDepthCharge : public MoonScriptCreatureAI
 {
 	public:
-		MOONSCRIPT_FACTORY_FUNCTION(SeaforiumDepthCharge, MoonScriptCreatureAI);
+		ADD_CREATURE_FACTORY_FUNCTION(SeaforiumDepthCharge)
 		SeaforiumDepthCharge(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			SetCanMove(false);

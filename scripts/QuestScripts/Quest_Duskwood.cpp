@@ -28,7 +28,7 @@
 class ElizaAI : public MoonScriptCreatureAI
 {
 	public:
-		MOONSCRIPT_FACTORY_FUNCTION(ElizaAI, MoonScriptCreatureAI);
+		ADD_CREATURE_FACTORY_FUNCTION(ElizaAI)
 		ElizaAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			mElizaCombatTimer = INVALIDATE_TIMER;
@@ -44,7 +44,6 @@ class ElizaAI : public MoonScriptCreatureAI
 		}
 		void AIUpdate()
 		{
-			ParentClass::AIUpdate();
 			if(IsTimerFinished(mElizaCombatTimer))
 			{
 				SetCanEnterCombat(true);

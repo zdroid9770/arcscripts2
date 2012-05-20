@@ -21,7 +21,7 @@
 class StormwindGuardAI : public MoonScriptCreatureAI
 {
 	public:
-		MOONSCRIPT_FACTORY_FUNCTION(StormwindGuardAI, MoonScriptCreatureAI)
+		ADD_CREATURE_FACTORY_FUNCTION(StormwindGuardAI)
 		StormwindGuardAI(Creature *pCreature) : MoonScriptCreatureAI(pCreature) 
 		{
 			//Getting default equiped item
@@ -56,7 +56,6 @@ class StormwindGuardAI : public MoonScriptCreatureAI
 				}
 				SetAIUpdateFreq(MINUTE*5*SEC_IN_MS);
 			}
-			ParentClass::AIUpdate();
 		}
 
 	private:

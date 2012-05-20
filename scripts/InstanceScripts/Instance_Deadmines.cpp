@@ -43,7 +43,6 @@ enum DeadMinesNPCIDs{
 
 #define MAP_DEADMINES 36
 
-
 static Location Doors[] =
 {
 	{-168.514f, -579.861f, 19.3159f, 0},	//Gilnid doors
@@ -86,32 +85,24 @@ public:
 	{
 		switch(pGameObject->GetEntry())
 		{
-		case GO_DEFIAS_CANNON: RegisterScriptUpdateEvent(); break;
-		case GO_FACTORY_DOOR_LEVER:
-			{
-				GameObject* pDoor5 = GetGameObjectByGuid(mFactoryDoor_GUID);
-				if(pDoor5 != NULL)
-					pDoor5->SetState(pDoor5->GetState()==GAMEOBJECT_STATE_CLOSED ? GAMEOBJECT_STATE_OPEN : GAMEOBJECT_STATE_CLOSED);
-			}break;
-		case GO_IRONCLAD_LEVER:
-			{
-				GameObject* pDoor6 = GetGameObjectByGuid(mFactoryDoor_GUID);
-				//Door can be opened by lever if state isn't 2
-				if(pDoor6 != NULL && pDoor6->GetState() != 2)
-					pDoor6->SetState(pDoor6->GetState() == GAMEOBJECT_STATE_CLOSED ? GAMEOBJECT_STATE_OPEN : GAMEOBJECT_STATE_CLOSED);
-			}break;
-		case GO_SNEED_DOOR_LEVER:
-			{
-				GameObject* pDoor7 = FindClosestGameObjectOnMap(GO_HEAVY_DOOR, Doors[1].x, Doors[1].y, Doors[1].z);
-				if(pDoor7 != NULL)
-					pDoor7->SetState(pDoor7->GetState() == GAMEOBJECT_STATE_CLOSED ? GAMEOBJECT_STATE_OPEN : GAMEOBJECT_STATE_CLOSED);
-			}break;
-		case GO_GILNID_DOOR_LEVER:
-			{
-				GameObject* pDoor8 = FindClosestGameObjectOnMap(GO_HEAVY_DOOR, Doors[0].x, Doors[0].y, Doors[0].z);
-				if(pDoor8 != NULL)
-					pDoor8->SetState(pDoor8->GetState() == GAMEOBJECT_STATE_CLOSED ? GAMEOBJECT_STATE_OPEN : GAMEOBJECT_STATE_CLOSED);
-			}break;
+			case GO_DEFIAS_CANNON: AddGameObjectStateByEntry(GO_IRONCLAD_DOOR, GAMEOBJECT_STATE_ALTERNATIVE_OPEN); break;
+			case GO_FACTORY_DOOR_LEVER: AddLeverDoorState(pGameObject, mFactoryDoor_GUID); break;
+			case GO_IRONCLAD_LEVER:
+				{
+					GameObject* pDoor = GetGameObjectByGuid(mFactoryDoor_GUID);
+					if(pDoor && pDoor->GetState() != GAMEOBJECT_STATE_ALTERNATIVE_OPEN)
+						AddLeverDoorState(pGameObject, pDoor);
+				}break;
+			case GO_SNEED_DOOR_LEVER:
+				{
+					if(GameObject* pDoor = FindClosestGameObjectOnMap(GO_HEAVY_DOOR, Doors[1].x, Doors[1].y, Doors[1].z))
+						AddLeverDoorState(pGameObject, pDoor);
+				}break;
+			case GO_GILNID_DOOR_LEVER:
+				{
+					if(GameObject* pDoor = FindClosestGameObjectOnMap(GO_HEAVY_DOOR, Doors[0].x, Doors[0].y, Doors[0].z))
+						AddLeverDoorState(pGameObject, pDoor);
+				}break;
 		}
 	}
 
@@ -119,75 +110,37 @@ public:
 	{
 		switch(pCreature->GetEntry())
 		{
-		case NPC_RHAHK_ZOR:
-			{
-				GameObject* pDoor1 = GetGameObjectByGuid(mFactoryDoor_GUID);
-				if(pDoor1!=NULL)
-					pDoor1->SetState(GAMEOBJECT_STATE_OPEN);
-			}break;
-		case NPC_SNEEDS_SHREDDER:
-			SpawnCreature(NPC_SNEED, pCreature->GetPositionX(), pCreature->GetPositionY(), pCreature->GetPositionZ(), pCreature->GetOrientation());
-			break;
-		case NPC_GILNID:
-			{
-				GameObject* pDoor2 = FindClosestGameObjectOnMap(GO_HEAVY_DOOR, Doors[0].x, Doors[0].y, Doors[0].z);
-				if(pDoor2!=NULL)
-					pDoor2->SetState(GAMEOBJECT_STATE_OPEN);
-			}break;
-		case NPC_SNEED:
-			{
-				GameObject* pDoor3 = FindClosestGameObjectOnMap(GO_HEAVY_DOOR, Doors[1].x, Doors[1].y, Doors[1].z);
-				if(pDoor3!=NULL)
-					pDoor3->SetState(GAMEOBJECT_STATE_OPEN);
-			}break;
-		}
-	}
-
-	void UpdateEvent()
-	{
-		Creature * pSmite = GetCreatureBySqlId(NPC_MR_SMITE);
-		if(pSmite != NULL)
-		{
-			pSmite->SendChatMessage(CHAT_MSG_MONSTER_YELL, LANG_UNIVERSAL, "You there! Check out that noise.");
-			pSmite->PlaySoundToSet(5775);
-		}
-
-		DoorExplodeTimer = AddTimer(3*SEC_IN_MS);
-		if(IsTimerFinished(DoorExplodeTimer))
-		{
-			GameObject* pGates = GetGameObjectByGuid(mIronCladDoor_GUID);
-			if(pGates != NULL && pGates->GetState() != 2)
-				pGates->SetState(2);
-
-			if(pSmite != NULL)
-			{
-				pSmite->SendChatMessage(CHAT_MSG_MONSTER_YELL, LANG_UNIVERSAL, "We're under attack!  A vast, ye swabs! Repel the invaders!");
-				pSmite->PlaySoundToSet(5777);
-			}
-
-			Creature * pGuard1 = FindClosestCreatureOnMap(NPC_GUARD1, Guards[0].x, Guards[0].y, Guards[0].z);
-			if(pGuard1 != NULL)
-				pGuard1->GetAIInterface()->MoveTo(0, -102.7f, -655.9f, pGuard1->GetPositionZ());
-
-			Creature * pGuard2 = FindClosestCreatureOnMap(NPC_GUARD1, Guards[1].x, Guards[1].y, Guards[1].z);
-			if(pGuard2 != NULL)
-				pGuard2->GetAIInterface()->MoveTo(0, -102.7f, -655.9f, pGuard2->GetPositionZ());
-
-			Creature * pParrot = FindClosestCreatureOnMap(NPC_GUARD1, Guards[2].x, Guards[2].y, Guards[2].z);
-			if(pParrot != NULL)
-				pParrot->GetAIInterface()->MoveTo(0, -102.7f, -655.9f, pParrot->GetPositionZ());
+			case NPC_RHAHK_ZOR:
+				{
+					if(GameObject* pDoor = GetGameObjectByGuid(mFactoryDoor_GUID))
+						pDoor->SetState(GAMEOBJECT_STATE_OPEN);
+				}break;
+			case NPC_SNEEDS_SHREDDER:
+				SpawnCreature(NPC_SNEED, pCreature->GetPositionX(), pCreature->GetPositionY(), pCreature->GetPositionZ(), pCreature->GetOrientation());
+				break;
+			case NPC_GILNID:
+				{
+					if(GameObject* pDoor = FindClosestGameObjectOnMap(GO_HEAVY_DOOR, Doors[0].x, Doors[0].y, Doors[0].z))
+						pDoor->SetState(GAMEOBJECT_STATE_OPEN);
+				}break;
+			case NPC_SNEED:
+				{
+					if(GameObject* pDoor = FindClosestGameObjectOnMap(GO_HEAVY_DOOR, Doors[1].x, Doors[1].y, Doors[1].z))
+						pDoor->SetState(GAMEOBJECT_STATE_OPEN);
+				}break;
 		}
 	}
 
 protected:
 	int32 DoorExplodeTimer;
+	uint32 mMrSmiteGUID;
 	uint32 mFactoryDoor_GUID, mDefiasCannon_GUID, mDoorLever_GUID, mMrSmiteChest_GUID, mIronCladDoor_GUID, InstanceEncounter;
 };
 
 class RhahkZorAI : public MoonScriptCreatureAI
 {
 public:
-	MOONSCRIPT_FACTORY_FUNCTION(RhahkZorAI, MoonScriptCreatureAI);
+	ADD_CREATURE_FACTORY_FUNCTION(RhahkZorAI)
 	RhahkZorAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 	{
 		// Rhahk'Zor Slam
@@ -206,7 +159,7 @@ enum MrSmiteSpells
 class MrSmiteAI : public MoonScriptBossAI
 {
 public:
-	static CreatureAIScript * Create(Creature * c) { return new MrSmiteAI(c); }
+	ADD_CREATURE_FACTORY_FUNCTION(MrSmiteAI)
 	MrSmiteAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
 	{
 		AddSpell(SMITE_SLAM, Target_Current, 25, 0.0f, 15, 0.0f, 8.0f, true);
@@ -324,7 +277,7 @@ protected:
 class VanCleefAI : public MoonScriptBossAI
 {
 public:
-	MOONSCRIPT_FACTORY_FUNCTION(VanCleefAI, MoonScriptBossAI);
+	ADD_CREATURE_FACTORY_FUNCTION(VanCleefAI)
 	VanCleefAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
 	{
 		AddEmote(Event_OnCombatStart, "None may challenge the brotherhood.", Text_Yell, 5780);
@@ -341,7 +294,6 @@ public:
 			sprintf(msg, "And stay down, %s.", TO_PET(pTarget)->GetName().c_str());
 
 		Emote(msg, Text_Yell, 5781);
-		ParentClass::OnTargetDied(pTarget);
 	}
 
 	void AIUpdate()
@@ -370,7 +322,6 @@ public:
 			Emote("The brotherhood shall remain.", Text_Yell, 5784);
 			SetPhase(4);
 		}
-		ParentClass::AIUpdate();
 	}
 };
 

@@ -2091,7 +2091,7 @@ void SpellFunc_Warbringer_BurningMaul(SpellDesc* pThis, MoonScriptCreatureAI* pC
 class WarbringerOmroggAI : public MoonScriptCreatureAI
 {
 	public:
-		MOONSCRIPT_FACTORY_FUNCTION(WarbringerOmroggAI, MoonScriptCreatureAI);
+		ADD_CREATURE_FACTORY_FUNCTION(WarbringerOmroggAI)
 		WarbringerOmroggAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			AddSpell(WARBRINGER_OMROGG_THUNDERCLAP, Target_Self, 25, 1, 12);
@@ -2104,7 +2104,6 @@ class WarbringerOmroggAI : public MoonScriptCreatureAI
 
 		void OnCombatStart(Unit* pTarget)
 		{
-			ParentClass::OnCombatStart(pTarget);
 			mAggroShiftTimer = AddTimer(20000 + RandomUInt(10) * 1000);
 			mBlastWaveTimer = mSpeechTimer = mSpeechId = INVALIDATE_TIMER;
 			mLeftHead = SpawnCreature(19523);
@@ -2143,7 +2142,6 @@ class WarbringerOmroggAI : public MoonScriptCreatureAI
 
 		void OnCombatStop(Unit* pTarget)
 		{
-			ParentClass::OnCombatStop(pTarget);
 			if(IsAlive())
 			{
 				if(mLeftHead != NULL)
@@ -2179,7 +2177,6 @@ class WarbringerOmroggAI : public MoonScriptCreatureAI
 
 		void OnDied(Unit* pKiller)
 		{
-			ParentClass::OnDied(pKiller);
 			if(mLeftHead == NULL || mRightHead == NULL)
 				return;
 
@@ -2193,8 +2190,6 @@ class WarbringerOmroggAI : public MoonScriptCreatureAI
 
 		void AIUpdate()
 		{
-			ParentClass::AIUpdate();
-
 			if(mSpeechTimer != INVALIDATE_TIMER && IsTimerFinished(mSpeechTimer))
 			{
 				bool ResetSpeech = true;
@@ -2321,7 +2316,7 @@ void SpellFunc_Warbringer_BurningMaul(SpellDesc* pThis, MoonScriptCreatureAI* pC
 class HeadAI : public MoonScriptCreatureAI
 {
 	public:
-		MOONSCRIPT_FACTORY_FUNCTION(HeadAI, MoonScriptCreatureAI);
+		ADD_CREATURE_FACTORY_FUNCTION(HeadAI)
 		HeadAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			SetScale(4.0f);

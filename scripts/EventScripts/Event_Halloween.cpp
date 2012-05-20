@@ -28,13 +28,12 @@ Team  : Sun++
 class BlackCat : public MoonScriptCreatureAI
 {
 	public:
-		MOONSCRIPT_FACTORY_FUNCTION(BlackCat, MoonScriptCreatureAI);
+		ADD_CREATURE_FACTORY_FUNCTION(BlackCat)
 		BlackCat(Creature* pCreature) : MoonScriptCreatureAI(pCreature) {}
 
 		void OnDied(Unit* pKiller)
 		{
 			pKiller->CastSpell(pKiller, 39477, true);
-			ParentClass::OnDied(pKiller);
 		}
 };
 
@@ -89,7 +88,7 @@ static LocationExtra WaypointGoldshire[] =
 class ShadeOfTheHorsemanAI : public MoonScriptCreatureAI
 {
 	public:
-		MOONSCRIPT_FACTORY_FUNCTION(ShadeOfTheHorsemanAI, MoonScriptCreatureAI);
+		ADD_CREATURE_FACTORY_FUNCTION(ShadeOfTheHorsemanAI)
 		ShadeOfTheHorsemanAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			SetCanEnterCombat(false);
@@ -124,7 +123,6 @@ class ShadeOfTheHorsemanAI : public MoonScriptCreatureAI
 				if(iWaypointId == 6)
 					ApplyAura(42118);
 			}
-			ParentClass::OnReachWP(iWaypointId, bForwards);
 		}
 
 		void OnDied(Unit* pKiller)
@@ -132,8 +130,6 @@ class ShadeOfTheHorsemanAI : public MoonScriptCreatureAI
 			GameObject* Pumpkin = sEAS.SpawnGameobject(TO_PLAYER(pKiller), 2883, _unit->GetPositionX() + RandomFloat(5.0f), _unit->GetPositionY() + RandomFloat(5.0f), _unit->GetPositionZ(), 0, 1, 0, 0, 0, 0);
 			if(Pumpkin != NULL)
 				_unit->CastSpell(Pumpkin->GetGUID(), 42277, true);
-
-			ParentClass::OnDied(pKiller);
 		}
 
 	protected:
@@ -146,7 +142,7 @@ class ShadeOfTheHorsemanAI : public MoonScriptCreatureAI
 class HeadlessHorsemanWispInvisAI : public MoonScriptCreatureAI
 {
 	public:
-		MOONSCRIPT_FACTORY_FUNCTION(HeadlessHorsemanWispInvisAI, MoonScriptCreatureAI);
+		ADD_CREATURE_FACTORY_FUNCTION(HeadlessHorsemanWispInvisAI)
 		HeadlessHorsemanWispInvisAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature) {}
 
 		void AIUpdate()
@@ -164,7 +160,6 @@ class HeadlessHorsemanWispInvisAI : public MoonScriptCreatureAI
 					SetAIUpdateFreq(4 * 60 * 1000);
 				}
 			}
-			ParentClass::AIUpdate();
 		}
 
 	protected:

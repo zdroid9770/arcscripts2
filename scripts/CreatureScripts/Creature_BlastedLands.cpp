@@ -21,13 +21,12 @@
 class KirithAI : public MoonScriptCreatureAI
 {
 	public:
-		MOONSCRIPT_FACTORY_FUNCTION(KirithAI, MoonScriptCreatureAI);
+		ADD_CREATURE_FACTORY_FUNCTION(KirithAI);
 		KirithAI(Creature* c) : MoonScriptCreatureAI(c) {}
 
 		void OnDied(Unit *mKiller)
 		{
 			_unit->CastSpell(_unit, 10853, true);
-			ParentClass::OnDied(mKiller);
 		}
 };
 

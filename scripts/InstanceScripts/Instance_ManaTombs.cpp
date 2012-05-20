@@ -28,7 +28,7 @@
 class PANDEMONIUSAI : public MoonScriptCreatureAI
 {
 	public:
-		MOONSCRIPT_FACTORY_FUNCTION(PANDEMONIUSAI, MoonScriptCreatureAI);
+		ADD_CREATURE_FACTORY_FUNCTION(PANDEMONIUSAI)
 		PANDEMONIUSAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			AddSpell(DARK_SHELL, Target_Self, 20, 1, 20);
@@ -45,7 +45,6 @@ class PANDEMONIUSAI : public MoonScriptCreatureAI
 		void OnCombatStart(Unit* pAttacker)
 		{
 			VoidTimer = AddTimer((8+rand()%15)*SEC_IN_MS);
-			ParentClass::OnCombatStart(pAttacker);
 		}
 
 		void AIUpdate()
@@ -83,7 +82,7 @@ class PANDEMONIUSAI : public MoonScriptCreatureAI
 class NEXUSPRINCESHAFFARAI : public MoonScriptCreatureAI
 {
 	public:
-		MOONSCRIPT_FACTORY_FUNCTION(NEXUSPRINCESHAFFARAI, MoonScriptCreatureAI);
+		ADD_CREATURE_FACTORY_FUNCTION(NEXUSPRINCESHAFFARAI)
 		NEXUSPRINCESHAFFARAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			AddSpell(FIREBALL, Target_RandomPlayer, 35, 1, 5);

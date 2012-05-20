@@ -70,7 +70,7 @@ class Berthold : public GossipScript
 class AttumenTheHuntsmanAI : public MoonScriptBossAI
 {
 	public:
-		MOONSCRIPT_FACTORY_FUNCTION(AttumenTheHuntsmanAI, MoonScriptBossAI);
+		ADD_CREATURE_FACTORY_FUNCTION(AttumenTheHuntsmanAI)
 		AttumenTheHuntsmanAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
 		{
 			//All phase spells
@@ -99,7 +99,6 @@ class AttumenTheHuntsmanAI : public MoonScriptBossAI
 		void OnCombatStop(Unit* pTarget)
 		{
 			Despawn(10000);
-			ParentClass::OnCombatStop(pTarget);
 		}
 
 		void AIUpdate()
@@ -118,14 +117,13 @@ class AttumenTheHuntsmanAI : public MoonScriptBossAI
 					midnight->SetAllowMelee(false);
 				}
 			}
-			ParentClass::AIUpdate();
 		}
 };
 
 class MidnightAI : public MoonScriptBossAI
 {
 	public:
-		MOONSCRIPT_FACTORY_FUNCTION(MidnightAI, MoonScriptBossAI);
+		ADD_CREATURE_FACTORY_FUNCTION(MidnightAI)
 		MidnightAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
 		{
 		}
@@ -134,16 +132,12 @@ class MidnightAI : public MoonScriptBossAI
 		{
 			SetAllowMelee(true);
 			SetAllowSpell(true);
-			ParentClass::OnCombatStop(pTarget);
 		}
 
 		void OnTargetDied(Unit* pTarget)
 		{
 			if(GetLinkedCreature() && GetLinkedCreature()->IsAlive())
-			{
 				TO< MoonScriptCreatureAI* >(GetLinkedCreature())->Emote("Well done Midnight!", Text_Yell, 9173);
-			}
-			ParentClass::OnTargetDied(pTarget);
 		}
 
 		void AIUpdate()
@@ -190,7 +184,6 @@ class MidnightAI : public MoonScriptBossAI
 					else MoveTo(attumen);
 				}
 			}
-			ParentClass::AIUpdate();
 		}
 };
 
@@ -206,7 +199,7 @@ class MidnightAI : public MoonScriptBossAI
 class MoroesAI : public MoonScriptBossAI
 {
 	public:
-		MOONSCRIPT_FACTORY_FUNCTION(MoroesAI, MoonScriptBossAI);
+		ADD_CREATURE_FACTORY_FUNCTION(MoroesAI)
 		MoroesAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
 		{
 			//Initialize timers
@@ -235,13 +228,11 @@ class MoroesAI : public MoonScriptBossAI
 		{
 			mEnrage->mEnabled = true;
 			mVanishTimer = AddTimer(35000);	//First vanish after 35sec
-			ParentClass::OnCombatStart(pTarget);
 		}
 
 		void OnDied(Unit* pKiller)
 		{
 			RemoveAuraOnPlayers(MOROES_GARROTE);
-			ParentClass::OnDied(pKiller);
 		}
 
 		void AIUpdate()
@@ -269,7 +260,6 @@ class MoroesAI : public MoonScriptBossAI
 					RemoveTimer(mGarroteTimer);
 				}
 			}
-			ParentClass::AIUpdate();
 		}
 
 		SpellDesc*	mVanish;
@@ -289,7 +279,7 @@ class MoroesAI : public MoonScriptBossAI
 class MaidenOfVirtueAI : public MoonScriptBossAI
 {
 	public:
-		MOONSCRIPT_FACTORY_FUNCTION(MaidenOfVirtueAI, MoonScriptBossAI);
+		ADD_CREATURE_FACTORY_FUNCTION(MaidenOfVirtueAI)
 		MaidenOfVirtueAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
 		{
 			//Spells
@@ -311,7 +301,6 @@ class MaidenOfVirtueAI : public MoonScriptBossAI
 		void OnCombatStart(Unit* pTarget)
 		{
 			mRepentance->TriggerCooldown();	//No repentance at the beginning of the fight
-			ParentClass::OnCombatStart(pTarget);
 		}
 
 		SpellDesc* mRepentance;
@@ -1342,7 +1331,7 @@ class CuratorAI : public CreatureAIScript
 class AstralFlareAI : public MoonScriptCreatureAI
 {
 	public:
-		MOONSCRIPT_FACTORY_FUNCTION(AstralFlareAI, MoonScriptCreatureAI);
+		ADD_CREATURE_FACTORY_FUNCTION(AstralFlareAI)
 		AstralFlareAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			AddSpell(ASTRAL_FLARE_PASSIVE, Target_Self, 100, 0, 3);
@@ -3221,7 +3210,7 @@ class MalchezaarAI : public MoonScriptCreatureAI
 class NetherInfernalAI : public MoonScriptBossAI
 {
 	public:
-		MOONSCRIPT_FACTORY_FUNCTION(NetherInfernalAI, MoonScriptBossAI);
+		ADD_CREATURE_FACTORY_FUNCTION(NetherInfernalAI)
 		NetherInfernalAI(Creature* pCreature) : MoonScriptBossAI(pCreature) {};
 
 		void OnLoad()
@@ -3233,15 +3222,12 @@ class NetherInfernalAI : public MoonScriptBossAI
 			RegisterAIUpdateEvent(6000);
 			Despawn(175000, 0);
 			_unit->CastSpell(_unit, dbcSpell.LookupEntry(HELLFIRE), true);
-			ParentClass::OnLoad();
-		};
+		}
 
 		void AIUpdate()
 		{
 			_unit->CastSpell(_unit, dbcSpell.LookupEntry(HELLFIRE), true);
-			ParentClass::AIUpdate();
-		};
-
+		}
 };
 
 class InfernalDummyAI : public CreatureAIScript

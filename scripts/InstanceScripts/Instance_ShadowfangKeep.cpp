@@ -30,9 +30,9 @@ class ShadowfangKeepInstanceScript : public MoonInstanceScript
 		{
 			switch(pGo->GetEntry())
 			{
-				case 18900: AddLeverStateByEntry(18934); break;	//adamant lever
-				case 18901: AddLeverStateByEntry(18936); break;	//?
-				case 101811: AddLeverStateByEntry(18935); break;//?
+				case 18900: AddLeverDoorState(pGo, 18934); break;	//adamant lever
+				case 18901: AddLeverDoorState(pGo, 18936); break;	//?
+				case 101811: AddLeverDoorState(pGo, 18935); break;//?
 			}
 		}
 
@@ -51,7 +51,7 @@ class ShadowfangKeepInstanceScript : public MoonInstanceScript
 class SpringvaleAI : public MoonScriptCreatureAI
 {
 	public:
-		MOONSCRIPT_FACTORY_FUNCTION(SpringvaleAI, MoonScriptCreatureAI);
+		ADD_CREATURE_FACTORY_FUNCTION(SpringvaleAI)
 		SpringvaleAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{	
 			AddSpell(1026, Target_Self, 10, 2.5f, 0);			// Holy Light	
@@ -64,8 +64,6 @@ class SpringvaleAI : public MoonScriptCreatureAI
 		{
 			if(!GetUnit()->HasAura(DevoAura->mInfo->Id))
 				CastSpellNowNoScheduling(DevoAura);
-
-			ParentClass::OnCombatStart(pTarget);
 		}
 
 		void AIUpdate()
@@ -75,7 +73,6 @@ class SpringvaleAI : public MoonScriptCreatureAI
 				CastSpellNowNoScheduling(DivineProt);
 				DivineProt->mEnabled = false;
 			}
-			ParentClass::AIUpdate();
 		}
 
 	protected:
@@ -88,7 +85,7 @@ class SpringvaleAI : public MoonScriptCreatureAI
 class BlindWatcherAI : public MoonScriptBossAI
 {
 	public:
-		MOONSCRIPT_FACTORY_FUNCTION(BlindWatcherAI, MoonScriptBossAI);
+		ADD_CREATURE_FACTORY_FUNCTION(BlindWatcherAI)
 		BlindWatcherAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
 		{
 			HowlingRage1 = AddSpell(7481, Target_Self, 0, 5, 0);
@@ -111,7 +108,6 @@ class BlindWatcherAI : public MoonScriptBossAI
 					RemoveAura(7483);
 				SetPhase(4, HowlingRage3);
 			}
-			ParentClass::AIUpdate();
 		}
 
 	protected:
@@ -130,7 +126,7 @@ static Location VWSpawns[] =
 class FenrusAI : public MoonScriptCreatureAI
 {
 	public:
-		MOONSCRIPT_FACTORY_FUNCTION(FenrusAI, MoonScriptCreatureAI);
+		ADD_CREATURE_FACTORY_FUNCTION(FenrusAI)
 		FenrusAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			AddSpell(7125, Target_Current, 12, 1.5f, 60);
@@ -152,7 +148,6 @@ class FenrusAI : public MoonScriptCreatureAI
 					voidwalker = NULL;
 				}
 			}
-			ParentClass::OnDied(pKiller);
 		}
 };
 
@@ -161,7 +156,7 @@ class FenrusAI : public MoonScriptCreatureAI
 class ArugalAI : public MoonScriptCreatureAI
 {
 	public:
-		MOONSCRIPT_FACTORY_FUNCTION(ArugalAI, MoonScriptCreatureAI);
+		ADD_CREATURE_FACTORY_FUNCTION(ArugalAI)
 		ArugalAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			AddEmote(Event_OnCombatStart, "You, too, shall serve!", Text_Yell, 5793);
@@ -182,14 +177,13 @@ class ArugalAI : public MoonScriptCreatureAI
 class RETHILGOREAI : public MoonScriptCreatureAI
 {
 	public:
-		MOONSCRIPT_FACTORY_FUNCTION(RETHILGOREAI, MoonScriptCreatureAI);
+		ADD_CREATURE_FACTORY_FUNCTION(RETHILGOREAI)
 		RETHILGOREAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature) {}
 
 		void OnDied(Unit*  pKiller)
 		{
 			_unit->SendChatMessageAlternateEntry(3849, CHAT_MSG_MONSTER_SAY, LANG_GUTTERSPEAK, "About time someone killed the wretch.");
 			_unit->SendChatMessageAlternateEntry(3850, CHAT_MSG_MONSTER_SAY, LANG_COMMON, "For once I agree with you... scum.");      // dont know the allys text yet
-			ParentClass::OnDied(pKiller);
 		}
 };
 

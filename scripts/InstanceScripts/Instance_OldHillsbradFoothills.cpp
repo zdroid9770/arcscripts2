@@ -270,7 +270,7 @@ class LieutenantDrakeAI : public MoonScriptCreatureAI
 		OldHilsbradInstance* pInstance;
 
 	public:
-		MOONSCRIPT_FACTORY_FUNCTION(LieutenantDrakeAI, MoonScriptCreatureAI);
+		ADD_CREATURE_FACTORY_FUNCTION(LieutenantDrakeAI)
 		LieutenantDrakeAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			pInstance = dynamic_cast<OldHilsbradInstance*>(GetInstanceScript());
@@ -280,23 +280,19 @@ class LieutenantDrakeAI : public MoonScriptCreatureAI
 		{
 			if(pInstance)
 				pInstance->SetData(OHF_PHASE_2, OHF_DATA_IN_PROGRESS);
-
-			ParentClass::OnCombatStart(pTarget);
 		}
 
 		void OnCombatStop(Unit* pTarget)
 		{
 			if(pInstance)
 				pInstance->SetData(OHF_PHASE_2, OHF_DATA_PERFORMED);
-
-			ParentClass::OnCombatStop(pTarget);
 		}
 };
 
 class ThrallAI : public MoonScriptCreatureAI // this will be replaced with escortAI
 {
 	public:
-		MOONSCRIPT_FACTORY_FUNCTION(ThrallAI, MoonScriptCreatureAI);
+		ADD_CREATURE_FACTORY_FUNCTION(ThrallAI)
 		ThrallAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			SetMoveType(Move_DontMoveWP);
@@ -316,7 +312,6 @@ class ThrallAI : public MoonScriptCreatureAI // this will be replaced with escor
 
 		void OnCombatStop(Unit* pTarget)
 		{
-			ParentClass::OnCombatStop(pTarget);
 			SetWaypointToMove(m_currentWp);
 		}
 

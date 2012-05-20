@@ -21,7 +21,7 @@
 class Aeranas : public MoonScriptCreatureAI
 {
 	public:
-		MOONSCRIPT_FACTORY_FUNCTION(Aeranas, MoonScriptCreatureAI)
+		ADD_CREATURE_FACTORY_FUNCTION(Aeranas)
 		Aeranas(Creature * pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			AddSpell(15535, Target_Current, 30.0f, 2.0f, 20);
@@ -30,7 +30,6 @@ class Aeranas : public MoonScriptCreatureAI
 
 		void OnCombatStop(Unit * mTarget)
 		{
-			ParentClass::OnCombatStop(mTarget);
 			GetUnit()->Despawn(0,0);
 		}
 
@@ -41,7 +40,6 @@ class Aeranas : public MoonScriptCreatureAI
 				WipeHateList();
 				GetUnit()->SetFaction(35);
 			}
-			ParentClass::AIUpdate();
 		}
 };
 

@@ -100,10 +100,9 @@ class MoonInstanceScript : public InstanceScript
 		GameObjectSet				FindGameObjectsOnMap(uint32 pEntry);
 		void						AddGameObjectStateByEntry(uint32 pEntry, GO_STATE pState, bool pUseQuery = false);
 		void						AddGameObjectStateById(uint32 pId, GO_STATE pState);
-
-		//function:: AddLeverStateByEntry
-		//pEntry is door entry, which should be opened
-		void						AddLeverStateByEntry(uint32 pEntry);
+		void						AddLeverDoorState(GameObject * pLever, uint32 pDoorEntry);
+		void						AddLeverDoorState(GameObject * pLever, GameObject * pDoor);
+		void						AddLeverDoorStateByGuid(GameObject * pLever, uint32 pDoorGuid);
 
 		// Distance calculation
 		float						GetRangeToObject(Object* pObjectA, Object* pObjectB);

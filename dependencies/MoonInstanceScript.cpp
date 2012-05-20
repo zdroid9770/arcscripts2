@@ -233,11 +233,31 @@ void MoonInstanceScript::AddGameObjectStateById(uint32 pId, GO_STATE pState)
 	}
 }
 
-void MoonInstanceScript::AddLeverStateByEntry(uint32 pEntry)
+void MoonInstanceScript::AddLeverDoorState(GameObject * pLever, uint32 pDoorEntry)
 {
-	GameObject* pGo = GetGameObjectBySqlId(pEntry);
-	if(pGo != NULL)
+	if(GameObject* pGo = GetGameObjectBySqlId(pDoorEntry))
+	{
 		pGo->SetState(pGo->GetState() == GAMEOBJECT_STATE_CLOSED ? GAMEOBJECT_STATE_OPEN : GAMEOBJECT_STATE_CLOSED);
+		pLever->SetState(pGo->GetState());
+	}
+}
+
+void MoonInstanceScript::AddLeverDoorState(GameObject * pLever, GameObject * pDoor)
+{
+	if(pDoor)
+	{
+		pDoor->SetState(pDoor->GetState() == GAMEOBJECT_STATE_CLOSED ? GAMEOBJECT_STATE_OPEN : GAMEOBJECT_STATE_CLOSED);
+		pLever->SetState(pDoor->GetState());
+	}
+}
+
+void MoonInstanceScript::AddLeverDoorStateByGuid(GameObject * pLever, uint32 pDoorGuid)
+{
+	if(GameObject* pGo = GetGameObjectByGuid(pDoorGuid))
+	{
+		pGo->SetState(pGo->GetState() == GAMEOBJECT_STATE_CLOSED ? GAMEOBJECT_STATE_OPEN : GAMEOBJECT_STATE_CLOSED);
+		pLever->SetState(pGo->GetState());
+	}
 }
 
 float MoonInstanceScript::GetRangeToObject(Object* pObjectA, Object* pObjectB)

@@ -25,9 +25,6 @@
 
 //////////////////Macros
 //used on creature ai scripts
-#define MOONSCRIPT_FACTORY_FUNCTION(ClassName, ParentClassName)\
-	ADD_CREATURE_FACTORY_FUNCTION(ClassName);\
-	typedef ParentClassName ParentClass;
 
 //used on instance scripts
 #define MOONSCRIPT_INSTANCE_FACTORY_FUNCTION( ClassName, ParentClassName ) \
