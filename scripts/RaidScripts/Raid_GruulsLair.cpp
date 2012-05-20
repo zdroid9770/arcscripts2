@@ -126,15 +126,13 @@ class HighKingMaulgarAI : public MoonScriptBossAI
 				Unit* pAdd = ForceCreatureFind(Adds[i]);
 				if(pAdd != NULL && pAdd->isAlive())
 				{
-					Unit* pTarget = GetBestPlayerTarget();
-					if(pTarget != NULL)
-					{
+					if(Unit* pTarget = GetBestPlayerTarget())
 						pAdd->GetAIInterface()->AttackReaction(pTarget, 200);
-					}
 
 					++mAliveAdds;
 				}
 			}
+
 			if(mAliveAdds > 1)
 			{
 				SetCanEnterCombat(false);
@@ -170,18 +168,11 @@ class HighKingMaulgarAI : public MoonScriptBossAI
 				--mAliveAdds;
 				if(mAliveAdds > 1)
 				{
-					uint32 RandomText = RandomUInt(1);
-					while((int)RandomText == mLastYell)
-					{
-						RandomText = RandomUInt(1);
-					}
-
-					switch(RandomText)
+					switch(rand()%2)
 					{
 						case 0: Emote("You not kill next one so easy!", Text_Yell, 11369); break;
 						case 1: Emote("Does not prove anything!", Text_Yell, 11370); break;
 					}
-
 					mLastYell = RandomText;
 				}
 				else if(mAliveAdds == 1)
@@ -248,8 +239,7 @@ class KigglerTheCrazedAI : public MoonScriptCreatureAI
 
 		void AIUpdate()
 		{
-			Unit* pTarget = _unit->GetAIInterface()->getNextTarget();
-			if(pTarget != NULL)
+			if(Unit* pTarget = _unit->GetAIInterface()->getNextTarget())
 			{
 				if(GetRangeToUnit(pTarget) <= 40.0f)
 				{
@@ -452,9 +442,8 @@ class GruulTheDragonkillerAI : public MoonScriptCreatureAI
 			mHurtfulTimer = AddTimer(8000);
 			mGrowthStacks = 0;
 
-			GameObject* pGate = _unit->GetMapMgr()->GetInterface()->GetGameObjectNearestCoords(166.897f, 368.226f, 16.9209f, 184662);
-			if(pGate != NULL)
-				pGate->SetState(1);
+			if(GameObject* pGate = _unit->GetMapMgr()->GetInterface()->GetGameObjectNearestCoords(166.897f, 368.226f, 16.9209f, 184662))
+				pGate->SetState(GAMEOBJECT_STATE_CLOSED);
 		}
 
 		void OnCombatStop(Unit* pTarget)
@@ -491,8 +480,7 @@ class GruulTheDragonkillerAI : public MoonScriptCreatureAI
 				}
 				else if(IsTimerFinished(mHurtfulTimer))
 				{
-					Unit* pCurrentTarget = _unit->GetAIInterface()->getNextTarget();
-					if(pCurrentTarget != NULL)
+					if(Unit* pCurrentTarget = _unit->GetAIInterface()->getNextTarget())
 					{
 						Unit* pTarget = pCurrentTarget;
 						for(set< Object* >::iterator itr = _unit->GetInRangePlayerSetBegin(); itr != _unit->GetInRangePlayerSetEnd(); ++itr)
