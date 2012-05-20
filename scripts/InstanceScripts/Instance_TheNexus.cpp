@@ -48,7 +48,7 @@ enum NexusEncounterList
 #define CN_CHAOTIC_RIFT			26918
 #define CN_CRAZED_MANA_WRAITH	26746
 
-#define SPARK					HeroicInt(57062, 47751)			
+#define SPARK					47751			
 #define CHAOTIC_ENERGY_BURST	47688
 #define CHAOTIC_RIFT_AURA		47687
 #define SUMMON_MANA_WRAITH		47692
@@ -210,20 +210,20 @@ static Location FormSpawns[] =
 #define GRAVITY_WELL 47756
 
 // Normal mode spells
-#define ICE_NOVA HeroicInt(56935, 47772)
-#define FIREBOMB HeroicInt(56934, 47773)
+#define ICE_NOVA 47772
+#define FIREBOMB 47773
 
 // Arcane spells
 #define CRITTER 47731
 #define TIME_STOP 47736
 
 // Fire
-#define FIRE_BLAST HeroicInt(56939, 47721)
-#define SCORCH HeroicInt(56938, 47723) 
+#define FIRE_BLAST 47721
+#define SCORCH 47723
 
 // Frost
-#define BLIZZARD HeroicInt(56936, 47727)
-#define ICE_BARB HeroicInt(56937, 47729)
+#define BLIZZARD 47727
+#define ICE_BARB 47729
 
 class TelestraBossAI : public MoonScriptBossAI
 {
@@ -394,12 +394,12 @@ class TelestraArcaneAI : public MoonScriptCreatureAI
 #define FRENZY						48017
 
 // normal mode spells
-#define TRAMPLE						HeroicInt(57066, 48016)
-#define CRYSTAL_SPIKES				HeroicInt(57082, 47958)		
+#define TRAMPLE						48016
+#define CRYSTAL_SPIKES				47958
 
 // Crystal Spike spells
 #define SPELL_CRYSTAL_SPIKE_VISUAL	50442
-#define SPELL_CRYSTAL_SPIKE			HeroicInt(57067, 47944)	
+#define SPELL_CRYSTAL_SPIKE			47944
 
 class OrmorokAI : public MoonScriptCreatureAI
 {
@@ -487,7 +487,7 @@ class CrystalSpikeAI : public MoonScriptBossAI
 #define ENRAGE						8599
 
 // normal mode
-#define CRYSTALFIRE_BREATH			HeroicInt(57091, 48096)
+#define CRYSTALFIRE_BREATH			48096
 
 class KeristraszaAI : public MoonScriptCreatureAI
 {
