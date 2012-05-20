@@ -79,17 +79,6 @@ struct ForgeMasterData
 class UtgardeKeepScript : public MoonInstanceScript
 {
 	public:
-		uint32		mKelesethGUID;
-		uint32		mSkarvaldGUID;
-		uint32		mDalronnGUID;
-		uint32		mIngvarGUID;
-
-		ForgeMasterData m_fmData[3];
-		uint32		mDalronnDoorsGUID;
-		uint32		mIngvarDoors[2];
-
-		uint8		mUtgardeData[UTGARDE_DATA_END];
-
 		MOONSCRIPT_INSTANCE_FACTORY_FUNCTION(UtgardeKeepScript, MoonInstanceScript);
 		UtgardeKeepScript(MapMgr* pMapMgr) : MoonInstanceScript(pMapMgr)
 		{
@@ -108,69 +97,37 @@ class UtgardeKeepScript : public MoonInstanceScript
 
 			for(int i = 0; i < UTGARDE_DATA_END; ++i)
 				mUtgardeData[i] = 0;
-		};
+		}
 
 		void OnCreaturePushToWorld(Creature* pCreature)
 		{
 			switch(pCreature->GetEntry())
 			{
-				case CN_PRINCE_KELESETH:
-					mKelesethGUID = pCreature->GetLowGUID();
-					break;
-				case CN_SKARVALD:
-					mSkarvaldGUID = pCreature->GetLowGUID();
-					break;
-				case CN_DALRONN:
-					mDalronnGUID = pCreature->GetLowGUID();
-					break;
-				case CN_INGVAR:
-					mIngvarGUID = pCreature->GetLowGUID();
-					break;
+				case CN_PRINCE_KELESETH: mKelesethGUID = pCreature->GetLowGUID(); break;
+				case CN_SKARVALD: mSkarvaldGUID = pCreature->GetLowGUID(); break;
+				case CN_DALRONN: mDalronnGUID = pCreature->GetLowGUID(); break;
+				case CN_INGVAR: mIngvarGUID = pCreature->GetLowGUID(); break;
 			}
-		};
+		}
 
 		void OnGameObjectPushToWorld(GameObject* pGameObject)
 		{
 			switch(pGameObject->GetEntry())
 			{
-				case BELLOW_1:
-					m_fmData[0].mBellow = pGameObject->GetLowGUID();
-					break;
-				case BELLOW_2:
-					m_fmData[1].mBellow = pGameObject->GetLowGUID();
-					break;
-				case BELLOW_3:
-					m_fmData[2].mBellow = pGameObject->GetLowGUID();
-					break;
-				case FORGEFIRE_1:
-					m_fmData[0].mFire = pGameObject->GetLowGUID();
-					break;
-				case FORGEFIRE_2:
-					m_fmData[1].mFire = pGameObject->GetLowGUID();
-					break;
-				case FORGEFIRE_3:
-					m_fmData[2].mFire = pGameObject->GetLowGUID();
-					break;
-				case GLOWING_ANVIL_1:
-					m_fmData[0].mAnvil = pGameObject->GetLowGUID();
-					break;
-				case GLOWING_ANVIL_2:
-					m_fmData[1].mAnvil = pGameObject->GetLowGUID();
-					break;
-				case GLOWING_ANVIL_3:
-					m_fmData[2].mAnvil = pGameObject->GetLowGUID();
-					break;
-				case DALRONN_DOORS:
-					mDalronnDoorsGUID = pGameObject->GetLowGUID();
-					break;
-				case INGVAR_DOORS_1:
-					mIngvarDoors[0] = pGameObject->GetLowGUID();
-					break;
-				case INGVAR_DOORS_2:
-					mIngvarDoors[1] = pGameObject->GetLowGUID();
-					break;
+				case BELLOW_1: m_fmData[0].mBellow = pGameObject->GetLowGUID(); break;
+				case BELLOW_2: m_fmData[1].mBellow = pGameObject->GetLowGUID(); break;
+				case BELLOW_3: m_fmData[2].mBellow = pGameObject->GetLowGUID(); break;
+				case FORGEFIRE_1: m_fmData[0].mFire = pGameObject->GetLowGUID(); break;
+				case FORGEFIRE_2: m_fmData[1].mFire = pGameObject->GetLowGUID(); break;
+				case FORGEFIRE_3: m_fmData[2].mFire = pGameObject->GetLowGUID(); break;
+				case GLOWING_ANVIL_1: m_fmData[0].mAnvil = pGameObject->GetLowGUID(); break;
+				case GLOWING_ANVIL_2: m_fmData[1].mAnvil = pGameObject->GetLowGUID(); break;
+				case GLOWING_ANVIL_3: m_fmData[2].mAnvil = pGameObject->GetLowGUID(); break;
+				case DALRONN_DOORS: mDalronnDoorsGUID = pGameObject->GetLowGUID(); break;
+				case INGVAR_DOORS_1: mIngvarDoors[0] = pGameObject->GetLowGUID(); break;
+				case INGVAR_DOORS_2: mIngvarDoors[1] = pGameObject->GetLowGUID(); break;
 			}
-		};
+		}
 
 		void SetInstanceData(uint32 pType, uint32 pIndex, uint32 pData)
 		{
@@ -180,8 +137,7 @@ class UtgardeKeepScript : public MoonInstanceScript
 					{
 						mUtgardeData[UTGARDE_FORGE_MASTER]++;
 						HandleForge();
-					};
-					break;
+					}break;
 				case UTGARDE_INGVAR:
 					{
 						mUtgardeData[UTGARDE_INGVAR] = pData;
@@ -194,30 +150,35 @@ class UtgardeKeepScript : public MoonInstanceScript
 								pGO = GetGameObjectByGuid(mIngvarDoors[i]);
 								if(pGO)
 									pGO->SetState(pGO->GetState() == 1 ? 0 : 1);
-							};
-						};
-					}
-					break;
+							}
+						}
+					}break;
 			}
-
-
-		};
+		}
 
 		void HandleForge()
 		{
-			GameObject* pGO = NULL;
-			pGO = GetGameObjectByGuid(m_fmData[ mUtgardeData[UTGARDE_FORGE_MASTER] - 1 ].mBellow);
-			if(pGO)
+			if(GameObject* pGO = GetGameObjectByGuid(m_fmData[ mUtgardeData[UTGARDE_FORGE_MASTER] - 1 ].mBellow))
 				pGO->SetState(pGO->GetState() == 1 ? 0 : 1);
 
-			pGO = GetGameObjectByGuid(m_fmData[ mUtgardeData[UTGARDE_FORGE_MASTER] - 1 ].mFire);
-			if(pGO)
+			if(GameObject* pGO = GetGameObjectByGuid(m_fmData[ mUtgardeData[UTGARDE_FORGE_MASTER] - 1 ].mFire))
 				pGO->SetState(pGO->GetState() == 1 ? 0 : 1);
 
-			pGO = GetGameObjectByGuid(m_fmData[ mUtgardeData[UTGARDE_FORGE_MASTER] - 1 ].mAnvil);
-			if(pGO)
+			if(GameObject* pGO = GetGameObjectByGuid(m_fmData[ mUtgardeData[UTGARDE_FORGE_MASTER] - 1 ].mAnvil))
 				pGO->SetState(pGO->GetState() == 1 ? 0 : 1);
-		};
+		}
+
+	private:
+		uint32		mKelesethGUID;
+		uint32		mSkarvaldGUID;
+		uint32		mDalronnGUID;
+		uint32		mIngvarGUID;
+
+		ForgeMasterData m_fmData[3];
+		uint32		mDalronnDoorsGUID;
+		uint32		mIngvarDoors[2];
+
+		uint8		mUtgardeData[UTGARDE_DATA_END];
 };
 
 //////////////////////////////////////////////////////////////////////////
@@ -454,7 +415,6 @@ class FrenziedGeistAI : public MoonScriptCreatureAI
 #define CN_DALRONN_GHOST 27389
 #define DEBILITATE 43650
 #define SHADOW_BOLT 43649
-#define SHADOW_BOLT_HC 59575
 #define SKELETON_ADD 28878
 
 class SkarvaldTheConstructorAI : public MoonScriptCreatureAI
@@ -541,18 +501,9 @@ class DalronnTheControllerAI : public MoonScriptCreatureAI
 		ADD_CREATURE_FACTORY_FUNCTION(DalronnTheControllerAI)
 		DalronnTheControllerAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
-			if(IsHeroic())
-			{
-				AddSpell(SHADOW_BOLT_HC, Target_RandomPlayer, 85, 2, 3);
-				AddSpell(DEBILITATE, Target_RandomPlayer, 25, 0, 12);
-				mSummonTimer = AddTimer(15000);
-			}
-			else
-			{
-				AddSpell(SHADOW_BOLT, Target_RandomPlayer, 35, 2, 8);
-				AddSpell(DEBILITATE, Target_RandomPlayer, 25, 0, 12);
-				mSummonTimer = AddTimer(15000);
-			}
+			AddSpell(SHADOW_BOLT, Target_RandomPlayer, 35, 2, 8);
+			AddSpell(DEBILITATE, Target_RandomPlayer, 25, 0, 12);
+			mSummonTimer = AddTimer(15000);
 			pSkarvald = NULL;
 			pSkarvaldGhost = NULL;
 		}
@@ -632,8 +583,7 @@ class SkarvaldTheConstructorGhostAI : public MoonScriptCreatureAI
 		{
 			_unit->SetUInt64Value(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_ATTACKABLE_9);
 
-			Player* pTarget = GetNearestPlayer();
-			if(pTarget != NULL)
+			if(Player* pTarget = GetNearestPlayer())
 				_unit->GetAIInterface()->AttackReaction(pTarget, 50, 0);
 		}
 };
@@ -644,24 +594,15 @@ class DalronnTheControllerGhostAI : public MoonScriptCreatureAI
 		ADD_CREATURE_FACTORY_FUNCTION(DalronnTheControllerGhostAI)
 		DalronnTheControllerGhostAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
-			if(IsHeroic())
-			{
-				AddSpell(SHADOW_BOLT_HC, Target_RandomPlayer, 85, 2, 3);
-				AddSpell(DEBILITATE, Target_RandomPlayer, 25, 0, 12);
-			}
-			else
-			{
-				AddSpell(SHADOW_BOLT, Target_RandomPlayer, 35, 2, 8);
-				AddSpell(DEBILITATE, Target_RandomPlayer, 25, 0, 12);
-			}
+			AddSpell(SHADOW_BOLT, Target_RandomPlayer, 35, 2, 8);
+			AddSpell(DEBILITATE, Target_RandomPlayer, 25, 0, 12);
 		}
 
 		void OnLoad()
 		{
 			_unit->SetUInt64Value(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_ATTACKABLE_9);
 
-			Player* pTarget = GetNearestPlayer();
-			if(pTarget != NULL)
+			if(Player* pTarget = GetNearestPlayer())
 				_unit->GetAIInterface()->AttackReaction(pTarget, 50, 0);
 		}
 
@@ -711,10 +652,7 @@ class PrinceKelesethAI : public MoonScriptCreatureAI
 			mFrostTomb = AddSpellFunc(&SpellFunc_KelesethFrostTomb, Target_RandomPlayer, 25, 0, 15, 0, 20);
 			mAddSummon = AddSpellFunc(&SpellFunc_KelesethAddSummon, Target_Self, 0, 0, 0);
 
-			if(IsHeroic())
-				mShadowBolt = AddSpell(KELESETH_SHADOW_BOLT_HC, Target_Current, 100, 2, 2);
-			else
-				mShadowBolt = AddSpell(KELESETH_SHADOW_BOLT, Target_Current, 100, 2, 2);
+			mShadowBolt = AddSpell(KELESETH_SHADOW_BOLT, Target_Current, 100, 2, 2);
 
 			AddEmote(Event_OnDied, "I join... the night.", Text_Yell, 13225);
 		}
@@ -769,16 +707,12 @@ class SkeletonAddAI : public MoonScriptCreatureAI
 		ADD_CREATURE_FACTORY_FUNCTION(SkeletonAddAI)
 		SkeletonAddAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
-			if(IsHeroic())
-				AddSpell(DECREPIFY_HC, Target_Current, 8, 0, 40);
-			else
-				AddSpell(DECREPIFY, Target_Current, 8, 0, 40);
+			AddSpell(DECREPIFY, Target_Current, 8, 0, 40);
 		}
 
 		void OnLoad()
 		{
-			Player* pTarget = GetNearestPlayer();
-			if(pTarget != NULL)
+			if(Player* pTarget = GetNearestPlayer())
 				_unit->GetAIInterface()->AttackReaction(pTarget, 50, 0);
 		}
 
@@ -791,7 +725,6 @@ class SkeletonAddAI : public MoonScriptCreatureAI
 		{
 			Despawn(1);
 		}
-
 };
 
 ////////////////////////////////////////////////////////////////////////////////////////////
@@ -842,19 +775,9 @@ class IngvarThePlundererAI : public MoonScriptCreatureAI
 		IngvarThePlundererAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			AddSpell(INGVAR_CLEAVE, Target_Current, 24, 0, 6);
-
-			if(IsHeroic())
-			{
-				AddSpell(INGVAR_ENRAGE_HC, Target_Self, 45, 0, 4);
-				AddSpell(INGVAR_SMASH_HC, Target_Self, 25, 3, 18);
-				AddSpell(INGVAR_ROAR_HC, Target_Self, 25, 2, 10);
-			}
-			else
-			{
-				AddSpell(INGVAR_ENRAGE, Target_Self, 45, 0, 4);
-				AddSpell(INGVAR_SMASH, Target_Self, 25, 3, 18);
-				AddSpell(INGVAR_ROAR, Target_Self, 25, 2, 10);
-			}
+			AddSpell(INGVAR_ENRAGE, Target_Self, 45, 0, 4);
+			AddSpell(INGVAR_SMASH, Target_Self, 25, 3, 18);
+			AddSpell(INGVAR_ROAR, Target_Self, 25, 2, 10);
 
 			AddEmote(Event_OnTargetDied, "Mjul orm agn gjor!", Text_Yell, 13212);
 			AddEmote(Event_OnCombatStart, "I'll paint my face with your blood!", Text_Yell, 13207);
@@ -889,12 +812,11 @@ class IngvarUndeadAI : public MoonScriptCreatureAI
 			}
 
 			AddEmote(Event_OnDied, "No! I can do... better! I can...", Text_Yell, 13211);
-		};
+		}
 
 		void OnLoad()
 		{
-			Player* pTarget = GetNearestPlayer();
-			if(pTarget != NULL)
+			if(Player* pTarget = GetNearestPlayer())
 				_unit->GetAIInterface()->AttackReaction(pTarget, 50, 0);
 		}
 
