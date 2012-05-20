@@ -69,26 +69,22 @@ class HallsOfLightningScript : public MoonInstanceScript
 					{
 						mGeneralGUID = pCreature->GetLowGUID();
 						mEncounters.insert(EncounterMap::value_type(CN_GENERAL_BJARNGRIM, BossData(0, mGeneralGUID)));
-					}
-					break;
+					}break;
 				case CN_VOLKHAN:
 					{
 						mVolkhanGUID = pCreature->GetLowGUID();
 						mEncounters.insert(EncounterMap::value_type(CN_VOLKHAN, BossData(0, mVolkhanGUID)));
-					}
-					break;
+					}break;
 				case CN_LOKEN:
 					{
 						mLokenGUID = pCreature->GetLowGUID();
 						mEncounters.insert(EncounterMap::value_type(CN_LOKEN, BossData(0, mLokenGUID)));
-					}
-					break;
+					}break;
 				case CN_IONAR:
 					{
 						mIonarGUID = pCreature->GetLowGUID();
 						mEncounters.insert(EncounterMap::value_type(CN_IONAR, BossData(0, mIonarGUID)));
-					}
-					break;
+					}break;
 			}
 		}
 
@@ -199,7 +195,7 @@ enum GENERAL_STANCES
 
 class GeneralBjarngrimAI : public MoonScriptBossAI
 {
-public:
+	public:
 		ADD_CREATURE_FACTORY_FUNCTION(GeneralBjarngrimAI)
 		GeneralBjarngrimAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
 		{
