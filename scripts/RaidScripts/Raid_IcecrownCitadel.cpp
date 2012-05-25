@@ -447,13 +447,13 @@ class ColdFlameAI : public MoonScriptCreatureAI
 		{
 			SetCanEnterCombat(false);
 			Despawn(15*SEC_IN_MS);
-			if(Unit * pTarget = FindTarget()
+			if((MoonScriptCreatureAI * pLord = GetNearestCreature(NPC_LORD_MARROWGAR)) && pLord->GetPhase() != 2)
 			{
-				if((MoonScriptCreatureAI * pLord = GetNearestCreature(NPC_LORD_MARROWGAR)) && pLord->GetPhase() != 2)
+				if(Unit * pTarget = FindTarget())
 					MoveTo(pTarget->GetPositionX(), pTarget->getPositionY(), pTarget->GetPositionZ());
-				else
-					MoveTo(_unit->GetPositionX()+75.0f, _unit->getPositionY(), _unit->GetPositionZ());
 			}
+			else
+				MoveTo(_unit->GetPositionX()+75.0f, _unit->getPositionY(), _unit->GetPositionZ());
 		}
 };
 
