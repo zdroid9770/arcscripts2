@@ -252,7 +252,7 @@ class ScourgeTeleporterAI : public GameObjectAIScript
 				return;
 
 			_gameobject->SetState(GAMEOBJECT_STATE_OPEN);
-			GossipMenu* menu = NULL;
+			GossipMenu* menu;
 			objmgr.CreateGossipMenuForPlayer(&menu, _gameobject->GetGUID(), 0, player);
 			menu->AddItem(Arcemu::Gossip::ICON_CHAT, "Teleport to Light's Hammer.", 0);
 
@@ -327,14 +327,13 @@ class LordMarrowgarAI : public MoonScriptBossAI
 			mInstance = GetInstanceScript();
 			Reset();
 
+			SetEnrageInfo(AddSpell(SPELL_LM_BERSERK, Target_Self, 0, 0, 0, 0, 0, false, "THE MASTER'S RAGE COURSES THROUGH ME!", Text_Yell, 16945), MINUTE*10*SEC_IN_MS);
+
 			//Bone Storm!
 			sBoneStorm = AddSpell(SPELL_BONE_STORM, Target_Self, 0, 3, -1, 0, 0, false, "BONE STORM!", Text_Yell, 16946, "Lord Marrowgar creates a whirling of bone!");
 
-			SetEnrageInfo(AddSpell(SPELL_LM_BERSERK, Target_Self, 0, 0, 0, 0, 0, false, "THE MASTER'S RAGE COURSES THROUGH ME!", Text_Yell, 16945), MINUTE*10*SEC_IN_MS);
-
 			//normal phase
 			AddPhaseSpell(1, AddSpell(SPELL_BONE_SLICE, Target_Current, 25.0f, 0, -1));
-			AddPhaseSpell(1, AddSpell(SPELL_COLDFLAME, Target_Self, 30, 0, -1));
 			if((GetInstanceMode() == MODE_HEROIC_10MEN) || (GetInstanceMode() == MODE_HEROIC_25MEN))
 			{
 				SpellDesc* sBoneSpike = AddPhaseSpell(1, AddSpell(SPELL_BONE_SPIKE, Target_RandomPlayer, 25.0f, 0, rand()%20+15));
@@ -352,7 +351,7 @@ class LordMarrowgarAI : public MoonScriptBossAI
 
 		void Reset()
 		{
-			BoneStormTimer = ChargeTimer = -1;
+			BoneStormTimer = ChargeTimer = ColdFlameTimer = -1;
 			Stage = -1;
 			SetBehavior(Behavior_Default);
 			_unit->SetSpeeds(RUN, 8.0f);
@@ -361,7 +360,7 @@ class LordMarrowgarAI : public MoonScriptBossAI
 		void OnCombatStart(Unit* pUnit)
 		{
 			BoneStormTimer = AddTimer(30*SEC_IN_MS);
-
+			ColdFLameTimer = AddTimer(5*SEC_IN_MS);
 			if(mInstance)
 				mInstance->SetInstanceData(ICC_LORD_MARROWGAR, State_InProgress);
 		}
@@ -407,7 +406,7 @@ class LordMarrowgarAI : public MoonScriptBossAI
 					if(Unit* pTarget = GetBestPlayerTarget(TargetFilter_ClosestNotCurrent, 0, 70.0f))
 					{
 						MoveTo(pTarget->GetPositionX(), pTarget->GetPositionY(), pTarget->GetPositionZ());
-						_unit->CastSpell(_unit, SPELL_COLDFLAME_BONESTORM, true);
+						_unit->CastSpellAoF(_unit->GetPositionX(), _unit->GetPositionY(), _unit->GetPositionZ(), SPELL_COLDFLAME_BONESTORM, true);
 					}
 					ResetTimer(ChargeTimer, 5*SEC_IN_MS);
 				}
@@ -423,12 +422,18 @@ class LordMarrowgarAI : public MoonScriptBossAI
 				Stage = -1;
 				SetPhase(1);
 			}
+
+			if(IsTimerFinished(ColdFlameTimer) && GetPhase() == 1)
+			{
+				_unit->CastSpellAoF(_unit->GetPositionX(), _unit->GetPositionY(), _unit->GetPositionZ(), SPELL_COLDFLAME, true);
+				ResetTimer(ColdFlameTimer, 5*SEC_IN_MS);
+			}
 		}
 
 	protected:
 		SpellDesc *sBoneStorm;
 		int8 Stage;
-		int32 BoneStormTimer, ChargeTimer;
+		int32 BoneStormTimer, ChargeTimer, ColdFlameTimer;
 		MoonInstanceScript* mInstance;
 };
 
