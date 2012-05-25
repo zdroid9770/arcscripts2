@@ -113,7 +113,7 @@ class IcecrownCitadelInstanceScript : public MoonInstanceScript
 			switch(c->GetEntry())
 			{
 				case NPC_LICH_KING: 
-				case NPC_LORD_MARROWGAR:
+				case NPC_LORD_MARROWGAR: SetInstanceData(ICC_LORD_MARROWGAR, State_Finished); break;
 				case NPC_LADY_DEATHWHISPER:
 					break;
 				case NPC_ROTFACE: 
@@ -386,9 +386,6 @@ class LordMarrowgarAI : public MoonScriptBossAI
 
 		void OnDied(Unit* mKiller)
 		{
-			if(mInstance)
-				mInstance->SetInstanceData(ICC_LORD_MARROWGAR, State_Finished);
-
 			_unit->CastSpell(_unit, SPELL_SOUL_FEAST, false);
 		}
 
