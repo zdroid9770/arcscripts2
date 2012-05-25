@@ -441,19 +441,19 @@ class ColdFlameAI : public MoonScriptCreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(ColdFlameAI)
-		ColdFlameAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
-		{
-			StopMovement();
-			SetCanMove(false);
-			SetCanEnterCombat(false);
-			_unit->SetUInt64Value(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
-			Despawn(15*SEC_IN_MS);
-			RegisterAIUpdateEvent(1000);
-		}
+		ColdFlameAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature){}
 
-		void AIUpdate()
+		void OnLoad()
 		{
-			_unit->CastSpell(_unit, 69147, false);
+			SetCanEnterCombat(false);
+			Despawn(15*SEC_IN_MS);
+			if(Unit * pTarget = FindTarget()
+			{
+				if((MoonScriptCreatureAI * pLord = GetNearestCreature(NPC_LORD_MARROWGAR)) && pLord->GetPhase() != 2)
+					MoveTo(pTarget->GetPositionX(), pTarget->getPositionY(), pTarget->GetPositionZ());
+				else
+					MoveTo(_unit->GetPositionX()+75.0f, _unit->getPositionY(), _unit->GetPositionZ());
+			}
 		}
 };
 
