@@ -19,12 +19,12 @@
 #include "setup.h"
 #include "Raid_IcecrownCitadel.h"
 
-//Thanks Mangos, MangosR2, TrinityCore and Scriptdev2 teams for some information
+//Thanks for HolyStone, Mangos, MangosR2, TrinityCore and Scriptdev2 teams for some information
 
 class IcecrownCitadelInstanceScript : public MoonInstanceScript
 {
 	public:
-		MOONSCRIPT_INSTANCE_FACTORY_FUNCTION(IcecrownCitadelInstanceScript, MoonInstanceScript);
+		ADD_INSTANCE_FACTORY_FUNCTION(IcecrownCitadelInstanceScript)
 		IcecrownCitadelInstanceScript(MapMgr* pMapMgr) : MoonInstanceScript(pMapMgr)
 		{
 			mInstance->GetInstanceID();
@@ -57,7 +57,7 @@ class IcecrownCitadelInstanceScript : public MoonInstanceScript
 		{
 			uint32 hp = 0;
 			int32 mp = 0;
-			switch(mInstance->iInstanceMode)
+			switch(GetInstanceMode())
 			{
 				case MODE_NORMAL_10MEN:
 				{
@@ -107,11 +107,15 @@ class IcecrownCitadelInstanceScript : public MoonInstanceScript
 				case NPC_PRINCE_VALANAR: SetCreatureStats(8, c); break;
 			}
 		}
-
-		void OnCreatureDeath(Creature* c, Unit* pUnit)
+		
+		void OnCreatureDeath(Creature* c, Unit* mKiller)
 		{
 			switch(c->GetEntry())
 			{
+				case NPC_LICH_KING: 
+				case NPC_LORD_MARROWGAR:
+				case NPC_LADY_DEATHWHISPER:
+					break;
 				case NPC_ROTFACE: 
 				{
 					if(GameObject * pGo = FindClosestGameObjectOnMap(GO_OOZE_RELEASE_VALVE, 4432.27f, 3090.88f, 362.253f))
@@ -122,6 +126,13 @@ class IcecrownCitadelInstanceScript : public MoonInstanceScript
 					if(GameObject * pGo = FindClosestGameObjectOnMap(GO_GAS_RELEASE_VALVE, 4280.84f, 3090.88f, 362.335f))
 						pGo->SetFlags(0);
 				}break;
+				case NPC_PROFESSOR_PUTRICIDE:
+				case NPC_VALITRA_DREAMWALKER:
+				case NPC_SINDRAGOSA:
+				case NPC_DEATHBRINGER_SAURFANG:
+				case NPC_BLOOD_QUEEN_LANATHEL:
+				case NPC_PRINCE_VALANAR:
+					break;
 			}
 		}
 
