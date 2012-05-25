@@ -251,6 +251,7 @@ void SetupZulDrak(ScriptMgr * mgr);
 void SetupIcecrown(ScriptMgr* mgr);
 void SetupWesternPlaguelandsQuests(ScriptMgr * mgr);
 void SetupWetlands(ScriptMgr *mgr);
+void SetupAshenvaleQuests(ScriptMgr * mgr);
 
 struct ScriptSpell
 {

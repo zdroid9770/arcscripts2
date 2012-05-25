@@ -239,6 +239,7 @@ extern "C" SCRIPT_DECL void _exp_script_register(ScriptMgr* mgr)	// Comment any 
 	SetupIcecrown(mgr);
 	SetupWesternPlaguelandsQuests(mgr);
 	SetupWetlands(mgr);
+	SetupAshenvaleQuests(mgr);
 }
 
 #ifdef WIN32
