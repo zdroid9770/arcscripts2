@@ -134,6 +134,7 @@ class MoonInstanceScript : public InstanceScript
 		//instance difficulty
 		bool						IsHeroic();
 		bool						Is25ManRaid();
+		uint8						GetInstanceMode();
 
 		// Player
 		virtual void				OnPlayerDeath(Player* pVictim, Unit* pKiller);

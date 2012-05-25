@@ -648,17 +648,15 @@ bool MoonInstanceScript::IsHeroic()
 	if(GetInstance()->GetMapInfo() == NULL)
 		return false;
 
-	if(GetInstance()->GetMapInfo()->type == INSTANCE_RAID)
-	{
-		if((GetInstance()->iInstanceMode == MODE_NORMAL_10MEN) || (GetInstance()->iInstanceMode == MODE_NORMAL_25MEN))
-			return false;
-	}else
-	{
-		if(GetInstance()->iInstanceMode != MODE_HEROIC)
-			return false;
-	}
+	if(!GetInstance()->GetMapInfo()->type == INSTANCE_RAID)
+		return false;
 
-	return true;
+	if((GetInstance()->iInstanceMode == MODE_NORMAL_10MEN) || (GetInstance()->iInstanceMode == MODE_NORMAL_25MEN))
+		return false;
+	else
+		return true
+
+	return false;
 }
 
 bool MoonInstanceScript::Is25ManRaid()
@@ -669,11 +667,18 @@ bool MoonInstanceScript::Is25ManRaid()
 	if(GetInstance()->GetMapInfo() == NULL)
 		return false;
 
-	if(GetInstance()->GetMapInfo()->type == INSTANCE_RAID)
-	{
-		if((GetInstance()->iInstanceMode != MODE_NORMAL_25MEN) || (GetInstance()->iInstanceMode != MODE_HEROIC_25MEN))
-			return false;
-	}else return false;
+	if(!GetInstance()->GetMapInfo()->type == INSTANCE_RAID)
+		return false;
 
-	return true;
+	if((GetInstance()->iInstanceMode != MODE_NORMAL_25MEN) || (GetInstance()->iInstanceMode != MODE_HEROIC_25MEN))
+		return false;
+	else
+		return true;
+
+	return false;
+}
+
+uint8 MoonInstanceScript::GetInstanceMode()
+{
+	return GetInstance()->iInstanceMode;
 }
