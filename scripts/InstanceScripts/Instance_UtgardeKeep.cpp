@@ -537,6 +537,7 @@ class SkeletonAddAI : public MoonScriptCreatureAI
 //////////////////////////////////////////////////////////////////////////////////////////
 #define CN_INGVAR_UNDEAD 23980
 #define CN_SHADOW_AXE 23996
+//#define NPC_ANNHYLDE_SPAWN 24068
 
 // Phase 1 spells (Human Form)
 #define INGVAR_CLEAVE 42724
@@ -598,7 +599,28 @@ class IngvarThePlundererAI : public MoonScriptCreatureAI
 			_unit->Despawn(1000, 0);
 		}
 };
+/*
+class AnnhyldeAI : public MoonScriptCreatureAI
+{
+public:
+	ADD_CREATURE_FACTORY_FUNCTION(AnnhlydeAI)
+		AnnhlydeAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
+		{
+			_unit->AddAura(50236);
+	}
 
+	void SpellFunc_SpawnIngvar(SpellDesc* pThis, MoonScriptCreatureAI* pCreatureAI, Unit* pTarget, TargetType pType)
+	{
+		SpawnCreature(CN_INGVAR_UNDEAD, true);
+	};
+
+	void OnLoad()
+	{
+		_unit->SetFaction(35); // Shes suppose to be hostile and untargetable & flying this is temp.
+		Emote("Ingvar! Your pathetic failure will serve as a warning to all... you are damned! Arise and carry out the master's will!", Text_Yell, 13754);
+		_unit->Despawn(20000, 0);
+	};
+*/
 class IngvarUndeadAI : public MoonScriptCreatureAI
 {
 	public:
@@ -616,6 +638,7 @@ class IngvarUndeadAI : public MoonScriptCreatureAI
 				AddSpell(INGVAR_WOE_STRIKE, Target_ClosestUnit, 18, 0, 16);
 			}
 
+			AddEmote(Event_OnCombatStart, "I return a second chance to carve your skulls!", Text_Yell, 13209);
 			AddEmote(Event_OnDied, "No! I can do... better! I can...", Text_Yell, 13211);
 		}
 
