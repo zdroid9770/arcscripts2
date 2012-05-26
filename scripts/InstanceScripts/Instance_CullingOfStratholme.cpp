@@ -17,7 +17,7 @@
  */
 
 #include "Setup.h"
-
+// ISSUES: Event does not work (spawning of the mobs and the courier saying where the undead forces are)
 #define MEATHOOK_ENTRY 26529
 class MEATHOOK_AI : public CreatureAIScript
 {
@@ -1304,10 +1304,6 @@ class ArthasGossip : public GossipScript
 
 void SetupCullingOfStratholme(ScriptMgr* mgr)
 {
-	//////////////////////////////////////////
-	// TRASH MOBS
-	//////////////////////////////////////////
-
 	//////////////////////////////////////////
 	// BOSSES
 	//////////////////////////////////////////
