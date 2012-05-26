@@ -18,16 +18,6 @@
 
 #include "Setup.h"
 
-/************************************************************************/
-/* Instance_BloodFurnace.cpp Script		                                */
-/************************************************************************/
-
-/*****************************/
-/*                           */
-/*         Boss AIs          */
-/*                           */
-/*****************************/
-
 // Keli'dan the BreakerAI
 
 #define CN_KELIDAN_THE_BREAKER			17377
@@ -48,16 +38,8 @@ class KelidanTheBreakerAI : public MoonScriptBossAI
 		KelidanTheBreakerAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
 		{
 			//spells
-			if(IsHeroic())
-			{
-				mShadowBoltVolley = AddSpell(KELIDAN_SHADOW_BOLT_VOLLEY_H, Target_Self, 25, 0, 6);
-				mFireNova = AddSpell(KELIDAN_FIRE_NOVA_H, Target_Current, 15, 0, 12);
-			}
-			else
-			{
-				mShadowBoltVolley = AddSpell(KELIDAN_SHADOW_BOLT_VOLLEY, Target_Self, 25, 0, 6);
-				mFireNova = AddSpell(KELIDAN_FIRE_NOVA, Target_Self, 15, 0, 12);
-			}
+			mShadowBoltVolley = AddSpell(KELIDAN_SHADOW_BOLT_VOLLEY, Target_Self, 25, 0, 6);
+			mFireNova = AddSpell(KELIDAN_FIRE_NOVA, Target_Self, 15, 0, 12);
 
 			mBurningNova = AddSpell(KELIDAN_BURNING_NOVA, Target_Self, 0, 0, 0);
 			mBurningNova->AddEmote("Closer! Come closer... and burn!", Text_Yell);
@@ -80,16 +62,14 @@ class KelidanTheBreakerAI : public MoonScriptBossAI
 
 		void AIUpdate()
 		{
-			if(!IsCasting())
+			if(IsTimerFinished(mBurningNovaTimer))
 			{
-				if(mBurningNovaTimer == INVALIDATE_TIMER || IsTimerFinished(mBurningNovaTimer))
-				{
-					if(IsHeroic())
-						CastSpell(mVortex);
-					CastSpell(mBurningNova);
+				if(IsHeroic())
+					CastSpell(mVortex);
 
-					ResetTimer(mBurningNovaTimer, 30000);
-				}
+				CastSpell(mBurningNova);
+
+				ResetTimer(mBurningNovaTimer, 30000);
 			}
 		}
 
@@ -124,8 +104,6 @@ class BroggokAI : public MoonScriptCreatureAI
 		{
 			if(GameObject* pDoor = _unit->GetMapMgr()->GetInterface()->GetGameObjectNearestCoords(456.157349f, 34.248005f, 9.559463f, 181819))
 				pDoor->SetState(GAMEOBJECT_STATE_OPEN);
-
-			MoonScriptCreatureAI::OnDied(pKiller);
 		}
 };
 
@@ -160,8 +138,6 @@ class TheMakerAI : public MoonScriptCreatureAI
 		{
 			if(GameObject* pDoor = _unit->GetMapMgr()->GetInterface()->GetGameObjectNearestCoords(327.155487f, 149.753418f, 9.559869f, 181812))
 				pDoor->SetState(GAMEOBJECT_STATE_OPEN);
-
-			MoonScriptCreatureAI::OnDied(pKiller);
 		}
 };
 
