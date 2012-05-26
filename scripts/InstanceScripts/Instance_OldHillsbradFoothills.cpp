@@ -330,7 +330,7 @@ class ThrallGossip : public GossipScript
 				return;
 
 			objmgr.CreateGossipMenuForPlayer(&Menu, pObject->GetGUID(), THRALL_ON_HELLO, Plr);
-			Menu->AddItem(0, "Lets get you out of here, Thrall.", 1); // Need to find right text changed it from [PH] Start Escort.
+			Menu->AddItem(0, "We are ready to get you out of here, Thrall. Let's go!", 1);
 
 			Menu->SendTo(Plr);
 		}
