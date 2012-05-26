@@ -145,7 +145,7 @@ class SoulFragmentAI : public MoonScriptBossAI
 		{
 			if(Unit * Boss = ForceCreatureFind(NPC_BRONJAHM))
 			{
-				if(GetRangeToUnit(Boss) <= 2.0)
+				if(GetRangeToUnit(Boss) <= 2.0f)
 				{
 					Boss->CastSpell(Boss, SPELL_CONSUME_SOUL, true);
 					Despawn();
