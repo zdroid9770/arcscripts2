@@ -22,47 +22,143 @@
 // In 3.3.5a blizz changed how emblems dropped it should give directly to the player.
 	 
 // Bronjahm
-#define NPC_BRONJAHM 36497
-#define MAGICBANE 68793
-#define CORRUPTSOUL	68839
-#define PHASE_1	36814
+enum BronjahmData{
+	NPC_BRONJAHM		= 36497,
+	SPELL_MAGICBANE		= 68793,
+	SPELL_CORRUPT_SOUL	= 68839,
+	SPELL_CONSUME_SOUL	= 68858,
+	SPELL_FEAR			= 68950,
+	SPELL_SHADOW_BOLT	= 70043,
+	SPELL_SOULSTORM		= 68872,
+	SPELL_TELEPORT		= 68988
+};
 
-class BRONJAHMAI : public MoonScriptBossAI
+class BronjahmAI : public MoonScriptBossAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(BRONJAHMAI)
-		BRONJAHMAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
+		ADD_CREATURE_FACTORY_FUNCTION(BronjahmAI)
+		BronjahmAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
 		{
-			AddSpell(MAGICBANE, Target_Current, 35, 0, 5);
-			AddSpell(CORRUPTSOUL, Target_RandomPlayer, 20, 0, 15, 5, 40, true, "I will sever your soul from your body!", Text_Yell, 16595);
-			AddPhaseSpell(2, AddSpell(68872, Target_Self, 100, 4, 0));
-			AddPhaseSpell(2, AddSpell(70043, Target_Current, 100, 1, 0));
+			AddSpell(SPELL_MAGICBANE, Target_Current, 35, 0, 5);
+			AddSpell(SPELL_SHADOW_BOLT, Target_Current, 30, 1, -1);
+			SoulStorm = AddSpell(SPELL_SOULSTORM, Target_Self, 0, 4, 0, 0, 0, true, "The vortex of the harvested calls to you!", Text_yell, 16599);
+			AddPhaseSpell(2, AddSpell(SPELL_FEAR, Target_RandomPlayer, 40, 0, -1));
+
 			AddEmote(Event_OnCombatStart, "Finally... a captive audience!", Text_Yell, 16595);
 			AddEmote(Event_OnTargetDied, "Fodder for the engine!", Text_Yell, 16596);
 			AddEmote(Event_OnTargetDied, "Another soul to strengthen the host!", Text_Yell, 16597);
+			AddEmote(Event_OnDied, "My soul for you, master.", Text_Yell, 16598);
+			BattleSoundTimer = CorruptedSoulTimer = -1;
 		}
 
-		void OnDied(Unit* mKiller)
+		void OnCombatStart(Unit * pAttacker)
 		{
-			_unit->PlaySoundToSet(16598);
+			CorruptedSoulTimer = AddTimer(25+rand()%11);
+			switch(rand()%3)
+			{
+				case 0:
+				{
+					_unit->PlaySoundToSet(6077);
+					BattleSoundTimer = AddTimer(48*SEC_IN_MS);
+				}break;
+				case 1:
+				{
+					_unit->PlaySoundToSet(6078);
+					BattleSoundTimer = AddTimer(27*SEC_IN_MS);
+				}break;
+				case 2:
+				{
+					_unit->PlaySoundToSet(6078);
+					BattleSoundTimer = AddTimer(36*SEC_IN_MS);
+				}break;
+			}
 		}
 
 		void AIUpdate()
 		{
-			if(GetPhase() == 1)
+			if(IsTimerFinished(CorruptedSoulTimer) && (Unit * pTarget = GetBestPlayerTarget(TargetFilter_Closest)))
 			{
-				if(_unit->GetHealthPct() <= 30 )
+				_unit->CastSpell(pTarget, SPELL_CORRUPT_SOUL, true);
+
+				//hack, this should be done by spell
+				SpawnTimer = AddTimer(4*SEC_IN_MS);
+				if(IsTimerFinished(SpawnTimer))
 				{
-					Emote("The vortex of the harvested calls to you!");
-					_unit->PlaySoundToSet(16599);
-					_unit->Root();
-					SetPhase(2);
+					Emote("I will sever your soul from your body!", Text_Yell, 16595);
+					SpawnCreature(36535, pTarget->GetPositionX(), pTarget->GetPositionY(), pTarget->GetPositionZ());
+					RemoveTimer(SpawnTimer);
 				}
+			}
+
+			if(GetHealthPercent() == 30 && GetPhase() == 1)
+			{
+				_unit->CastSpell(_unit, SPELL_TELEPORT, true);
+				SetPhase(2, SoulStorm);
+			}
+
+			if(IsTimerFinished(BattleSoundTimer))
+			{
+				switch(rand()%3)
+				{
+					case 0:
+					{
+						_unit->PlaySoundToSet(6077);
+						ResetTimer(BattleSoundTimer, 48*SEC_IN_MS);
+					}break;
+					case 1:
+					{
+						_unit->PlaySoundToSet(6078);
+						ResetTimer(BattleSoundTimer, 27*SEC_IN_MS);
+					}break;
+					case 2:
+					{
+						_unit->PlaySoundToSet(6078);
+						ResetTimer(BattleSoundTimer, 36*SEC_IN_MS);
+					}break;
+				}
+			}
+		}
+
+	private:
+		int32 BattleSoundTimer, CorruptedSoulTimer, SpawnTimer;
+		SpellDesc * SoulStorm;
+};
+
+
+class SoulFragmentAI : public MoonScriptBossAI
+{
+	public:
+		ADD_CREATURE_FACTORY_FUNCTION(SoulFragmentAI)
+		SoulFragmentAI(Creature* c) : MoonScriptBossAI(c){}
+
+		void OnLoad()
+		{
+			if(Unit * Boss = ForceCreatureFind(NPC_BRONJAHM))
+			{
+				_unit->GetAIInterface()->SetUnitToFollow(Boss);
+				SetAIUpdateFreq(1*SEC_IN_MS);
+			}
+			else
+				Despawn();
+		}
+
+		void AIUpdate()
+		{
+			if(Unit * Boss = ForceCreatureFind(NPC_BRONJAHM))
+			{
+				if(GetRangeToUnit(Boss) <= 2.0)
+				{
+					Boss->CastSpell(Boss, SPELL_CONSUME_SOUL, true);
+					Despawn();
+				}
+			}
+			SetAIUpdateFreq(1*SEC_IN_MS);
 		}
 };
 
 void SetupForgeOfSouls(ScriptMgr * mgr)
 {
-	mgr->register_creature_script(NPC_BRONJAHM, &BRONJAHMAI::Create);
+	mgr->register_creature_script(NPC_BRONJAHM, &BronjahmAI::Create);
+	mgr->register_creature_script(36535, &SoulFragmentAI::Create);
 }
  
