@@ -537,7 +537,7 @@ class SkeletonAddAI : public MoonScriptCreatureAI
 //////////////////////////////////////////////////////////////////////////////////////////
 #define CN_INGVAR_UNDEAD 23980
 #define CN_SHADOW_AXE 23996
-//#define NPC_ANNHYLDE_SPAWN 24068
+#define NPC_ANNHYLDE_SPAWN 24068
 
 // Phase 1 spells (Human Form)
 #define INGVAR_CLEAVE 42724
@@ -599,7 +599,7 @@ class IngvarThePlundererAI : public MoonScriptCreatureAI
 			_unit->Despawn(1000, 0);
 		}
 };
-/*
+/* MAY BE USEFUL LATER!
 class AnnhyldeAI : public MoonScriptCreatureAI
 {
 public:
