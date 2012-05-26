@@ -224,10 +224,10 @@ class TROLLGORE_AI : public CreatureAIScript
 #define RITUAL_CRYSTAL_ENTRY_1 189299
 #define RITUAL_CRYSTAL_ENTRY_2 189300
 #define RITUAL_CRYSTAL_ENTRY_3 189301
-#define RITUAL_CRYSTAL_ENTRY_4 189302//make sure that you doesn't have these on the map
-#define INVADE_INTERVAL 30000//4 mobs per 30s
+#define RITUAL_CRYSTAL_ENTRY_4 189302//make sure that you don't have these on the map
+#define INVADE_INTERVAL 15000//4 mobs per 15s
 #define INVADERS_COUNT 3
-#define HANDLER_INTERVAL 60000//one handler per 60s
+#define HANDLER_INTERVAL 25000//one handler per 25s
 #define ELITE_CHANCE 20//how much chance for elite we've got each invasion?
 
 // Novos the Summoner
@@ -285,6 +285,7 @@ class NOVOS_THE_SUMMONER_AI : public CreatureAIScript
 		{
 			//these texts shouldn't be like this
 			_unit->SendChatMessage(CHAT_MSG_MONSTER_YELL, LANG_UNIVERSAL, "The chill that you feel is the herald of your doom!");
+			_unit->PlaySoundToSet(13173);
 			_unit->CastSpell(_unit, 47346, false);
 			//spawn 4 Ritual Crystal
 			for(uint8 i = 0; i < 4; i++)
@@ -295,6 +296,7 @@ class NOVOS_THE_SUMMONER_AI : public CreatureAIScript
 			for(uint8 i = 0; i < 7; i++)
 				_unit->SchoolImmunityList[i] = 1;
 			_unit->SendChatMessage(CHAT_MSG_MONSTER_YELL, LANG_UNIVERSAL, "Surely you can see the futility of it all!");
+			_unit->PlaySoundToSet(13177);
 			_unit->SendChatMessage(CHAT_MSG_MONSTER_YELL, LANG_UNIVERSAL, "Just give up and die already! ");
 			RegisterAIUpdateEvent(_unit->GetBaseAttackTime(MELEE));
 		}
@@ -328,6 +330,7 @@ class NOVOS_THE_SUMMONER_AI : public CreatureAIScript
 		void OnDied(Unit*  mKiller)
 		{
 			_unit->SendChatMessage(CHAT_MSG_MONSTER_YELL, LANG_UNIVERSAL, "Your efforts... are in vain.");
+			_unit->PlaySoundToSet(13174);
 			RemoveAIUpdateEvent();
 		}
 
@@ -335,6 +338,7 @@ class NOVOS_THE_SUMMONER_AI : public CreatureAIScript
 		{
 			//BUAHAHAHAH
 			_unit->SendChatMessage(CHAT_MSG_MONSTER_YELL, LANG_UNIVERSAL, "Such is the fate of all who oppose the Lich King.");
+			_unit->PlaySoundToSet(13175);
 		}
 
 		void AIUpdate()
@@ -442,6 +446,7 @@ class NOVOS_THE_SUMMONER_AI : public CreatureAIScript
 		void SpawnInvader(uint32 type)
 		{
 			_unit->SendChatMessage(CHAT_MSG_MONSTER_YELL, LANG_UNIVERSAL, "Bolster my defenses! Hurry, curse you!");
+			_unit->PlaySoundToSet(13176);
 			//x				y				z
 			//-379.101227f	-824.835449f	60.0f
 			uint32 mob_entry = 0;
