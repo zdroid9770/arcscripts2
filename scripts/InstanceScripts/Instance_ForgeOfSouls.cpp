@@ -19,7 +19,6 @@
 #include "Setup.h"
 
 //TODO: Script Devourer of Souls
-// In 3.3.5a blizz changed how emblems dropped it should give directly to the player.
 	 
 // Bronjahm
 enum BronjahmData{
