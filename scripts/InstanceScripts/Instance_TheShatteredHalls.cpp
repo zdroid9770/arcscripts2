@@ -22,7 +22,7 @@
 /* Instance_TheShatteredHalls.cpp Script		                        */
 /************************************************************************/
 
-// Fel Orc ConvertAI
+/* Fel Orc ConvertAI
 
 #define CN_FEL_ORC_CONVERT 17083
 
@@ -581,7 +581,7 @@ class SHADOWMOONACOLYTEAI : public CreatureAIScript
 					spells[4].cooldown = 15;
 					spells[4].perctrigger = 0.0f;
 					spells[4].attackstoptimer = 1000;
-			*/
+			// should be a * / here
 		}
 
 		void OnCombatStart(Unit* mTarget)
@@ -1541,7 +1541,8 @@ class SHATTEREDHANDBRAWLERAI : public CreatureAIScript
 
 		int nrspells;
 };
-
+//TRASH ENDS HERE
+*/ 
 /*****************************/
 /*                           */
 /*         Boss AIs          */
