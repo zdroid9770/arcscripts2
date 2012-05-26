@@ -47,7 +47,7 @@ class BronjahmAI : public MoonScriptBossAI
 			AddEmote(Event_OnTargetDied, "Fodder for the engine!", Text_Yell, 16596);
 			AddEmote(Event_OnTargetDied, "Another soul to strengthen the host!", Text_Yell, 16597);
 			AddEmote(Event_OnDied, "My soul for you, master.", Text_Yell, 16598);
-			BattleSoundTimer = CorruptedSoulTimer = -1;
+			BattleSoundTimer = CorruptedSoulTimer = SpawnTimer = -1;
 		}
 
 		void OnCombatStart(Unit * pAttacker)
