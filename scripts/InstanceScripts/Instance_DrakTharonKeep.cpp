@@ -882,7 +882,7 @@ class KING_DRED_AI : public CreatureAIScript
 
 //The Prophet Tharon'ja
 #define THE_PROPHET_THARONJA_ENTRY 26632
-#define WINDSERPENT_PHASE_INTERVAL 60000//change phase each 60s
+#define WINDSERPENT_PHASE_INTERVAL 50000//change phase each 50s
 #define WINDSERPENT_PHASE_LENGTH 30000//30s
 #define PHASES_COUNT 2
 
@@ -1103,10 +1103,6 @@ class THE_PROPHET_THARONJA : public CreatureAIScript
 
 void SetupDrakTharonKeep(ScriptMgr* mgr)
 {
-	//////////////////////////////////////////
-	// TRASH MOBS
-	//////////////////////////////////////////
-
 	//////////////////////////////////////////
 	// BOSSES
 	//////////////////////////////////////////
