@@ -18,82 +18,27 @@
 
 #include "Setup.h"
 
-/************************************************************************/
-/* Instance_ZulFarrak.cpp Script										*/
-/************************************************************************/
-
-//Theka the Martyr
-
-// casts the spell Theka Transform 11089 at %30  hp
-// casts the spell fevered plague around each 17 second
-/*
-Fevered Plague 8600 = Inflicts 250 Nature damage to an enemy, then an additional 11 damage every 5 sec. for 3 min.
-Fevered Plague 16186 =  Inflicts 72 to 78 Nature damage to an enemy, then an additional 10 damage every 3 sec. for 30 sec. */
-
-#define theka_transform 11089
-#define fevered_plague 16186
-//#define fevered_plague 8600  i dont know wich one it is he casts
-
-class thekaAI : public CreatureAIScript
+class thekaAI : public MoonScriptCreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(thekaAI);
-
-		thekaAI(Creature* pCreature) : CreatureAIScript(pCreature)
+		thekaAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
-
-			morph = dbcSpell.LookupEntry(theka_transform);
-
-			plague = dbcSpell.LookupEntry(fevered_plague);
-		}
-
-		void OnCombatStart(Unit* mTarget)
-		{
-			morphcheck = true;
-			plaguecount = 0;
-			RegisterAIUpdateEvent(1000);
-		}
-
-		void OnCombatStop(Unit* mTarget)
-		{
-			_unit->GetAIInterface()->setCurrentAgent(AGENT_NULL);
-			_unit->GetAIInterface()->SetAIState(STATE_IDLE);
-			morphcheck = false;
-			plaguecount = 0;
-			RemoveAIUpdateEvent();
-		}
-
-		void OnDied(Unit* mKiller)
-		{
-			morphcheck = false;
-			plaguecount = 0;
-			RemoveAIUpdateEvent();
+			AddSpell(8600, Target_Current, 20, 4.5f, -1);	//Fevered Plague
+			morph = false;
 		}
 
 		void AIUpdate()
 		{
-			plaguecount++;
-			randomplague = 16 + RandomUInt(3);
-			if(plaguecount >= randomplague && _unit->GetAIInterface()->getNextTarget())
+			if(GetHealthPercent() <= 30 && !morph)
 			{
-				plaguecount = 0;
-				Unit* target = NULL;
-				target = _unit->GetAIInterface()->getNextTarget();
-				_unit->CastSpell(target, plague, true);
-			}
-			else if(_unit->GetHealthPct() <= 30 && morphcheck)
-			{
-				morphcheck = false;
-
-				_unit->CastSpell(_unit, morph, false);
+				morphcheck = true;
+				_unit->CastSpell(_unit, 11089, true);	//Theka Transform
 			}
 		}
 
 	protected:
-		int plaguecount, randomplague;
-		bool morphcheck;
-		SpellEntry* morph;
-		SpellEntry* plague;
+		bool morph;
 };
 
 
