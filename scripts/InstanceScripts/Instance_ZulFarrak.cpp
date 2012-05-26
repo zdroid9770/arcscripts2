@@ -47,11 +47,11 @@ class thekaAI : public MoonScriptCreatureAI
 #define healingward 11889
 #define earthgrabward 8376
 #define HEALING_WAVE_OF_ANTUSUL	11895
-class antusulAI : public CreatureAIScript
+class antusulAI : public MoonScriptCreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(antusulAI);
-		antusulAI(Creature* pCreature) : CreatureAIScript(pCreature)
+		antusulAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			AddEmote(Event_OnCombatStart, "Lunch has arrived, my beutiful childern. Tear them to pieces!", Text_Yell, 0);
 			AddSpell(healingward, Target_Self, 15, 2, -1);
