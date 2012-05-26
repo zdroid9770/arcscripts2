@@ -2458,19 +2458,19 @@ class WarchiefKargathBladefistAI : public CreatureAIScript
 
 void SetupTheShatteredHalls(ScriptMgr* mgr)
 {
-	mgr->register_creature_script(CN_FEL_ORC_CONVERT, &FELORCCONVERTAI::Create);
-	mgr->register_creature_script(CN_SHATTERED_HAND_HEATHEN, &SHATTEREDHANDHEATHENAI::Create);
-	mgr->register_creature_script(CN_SHATTERED_HAND_LEGIONNAIRE, &SHATTEREDHANDLEGIONNAIREAI::Create);
-	mgr->register_creature_script(CN_SHATTERED_HAND_SAVAGE, &SHATTEREDHANDSAVAGEAI::Create);
-	mgr->register_creature_script(CN_SHADOWMOON_ACOLYTE, &SHADOWMOONACOLYTEAI::Create);
-	mgr->register_creature_script(CN_SHATTERED_HAND_ASSASSIN, &SHATTEREDHANDASSASSINAI::Create);
-	mgr->register_creature_script(CN_SHATTERED_HAND_GLADIATOR, &SHATTEREDHANDGLADIATORAI::Create);
-	mgr->register_creature_script(CN_SHATTERED_HAND_HOUNDMASTER, &SHATTEREDHANDHOUNDMASTERAI::Create);
-	mgr->register_creature_script(CN_SHATTERED_HAND_REAVER, &SHATTEREDHANDREAVERAI::Create);
-	mgr->register_creature_script(CN_SHATTERED_HAND_SENTRY, &SHATTEREDHANDSENTRYAI::Create);
-	mgr->register_creature_script(CN_SHATTERED_HAND_SHARPSHOOTER, &SHATTEREDHANDSHARPSHOOTERAI::Create);
-	mgr->register_creature_script(CN_SHATTERED_HAND_BRAWLER, &SHATTEREDHANDBRAWLERAI::Create);
-	mgr->register_creature_script(CN_SHADOWMOON_DARKCASTER, &ShadowmoonDarkcasterAI::Create);
+	//mgr->register_creature_script(CN_FEL_ORC_CONVERT, &FELORCCONVERTAI::Create);
+	//mgr->register_creature_script(CN_SHATTERED_HAND_HEATHEN, &SHATTEREDHANDHEATHENAI::Create);
+	//mgr->register_creature_script(CN_SHATTERED_HAND_LEGIONNAIRE, &SHATTEREDHANDLEGIONNAIREAI::Create);
+	//mgr->register_creature_script(CN_SHATTERED_HAND_SAVAGE, &SHATTEREDHANDSAVAGEAI::Create);
+	//mgr->register_creature_script(CN_SHADOWMOON_ACOLYTE, &SHADOWMOONACOLYTEAI::Create);
+	//mgr->register_creature_script(CN_SHATTERED_HAND_ASSASSIN, &SHATTEREDHANDASSASSINAI::Create);
+	//mgr->register_creature_script(CN_SHATTERED_HAND_GLADIATOR, &SHATTEREDHANDGLADIATORAI::Create);
+	//mgr->register_creature_script(CN_SHATTERED_HAND_HOUNDMASTER, &SHATTEREDHANDHOUNDMASTERAI::Create);
+	//mgr->register_creature_script(CN_SHATTERED_HAND_REAVER, &SHATTEREDHANDREAVERAI::Create);
+	//mgr->register_creature_script(CN_SHATTERED_HAND_SENTRY, &SHATTEREDHANDSENTRYAI::Create);
+	//mgr->register_creature_script(CN_SHATTERED_HAND_SHARPSHOOTER, &SHATTEREDHANDSHARPSHOOTERAI::Create);
+	//mgr->register_creature_script(CN_SHATTERED_HAND_BRAWLER, &SHATTEREDHANDBRAWLERAI::Create);
+	//mgr->register_creature_script(CN_SHADOWMOON_DARKCASTER, &ShadowmoonDarkcasterAI::Create);
 	mgr->register_creature_script(CN_GRAND_WARLOCK_NETHEKURSE, &GrandWarlockNethekurseAI::Create);
 	mgr->register_creature_script(CN_BLOOD_GUARD_PORUNG, &BloodGuardPorungAI::Create);
 	mgr->register_creature_script(CN_WARBRINGER_OMROGG, &WarbringerOmroggAI::Create);
