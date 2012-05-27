@@ -87,20 +87,17 @@ class BronjahmAI : public MoonScriptBossAI
 
 		void AIUpdate()
 		{
-			if(IsTimerFinished(CorruptedSoulTimer))
+			if(IsTimerFinished(CorruptedSoulTimer) && (Unit * pTarget = GetBestPlayerTarget(TargetFilter_Closest)))
 			{
-				if(Unit * pTarget = GetBestPlayerTarget(TargetFilter_Closest))
-				{
-					_unit->CastSpell(pTarget, SPELL_CORRUPT_SOUL, true);
+				_unit->CastSpell(pTarget, SPELL_CORRUPT_SOUL, true);
 
-					//hack, this should be done by spell
-					SpawnTimer = AddTimer(4*SEC_IN_MS);
-					if(IsTimerFinished(SpawnTimer))
-					{
-						Emote("I will sever your soul from your body!", Text_Yell, 16595);
-						SpawnCreature(36535, pTarget->GetPositionX(), pTarget->GetPositionY(), pTarget->GetPositionZ());
-						RemoveTimer(SpawnTimer);
-					}
+				//hack, this should be done by spell
+				SpawnTimer = AddTimer(4*SEC_IN_MS);
+				if(IsTimerFinished(SpawnTimer))
+				{
+					Emote("I will sever your soul from your body!", Text_Yell, 16595);
+					SpawnCreature(36535, pTarget->GetPositionX(), pTarget->GetPositionY(), pTarget->GetPositionZ());
+					RemoveTimer(SpawnTimer);
 				}
 			}
 
@@ -170,10 +167,53 @@ class SoulFragmentAI : public MoonScriptBossAI
 		}
 };
 
+// Devourer of Souls
+//ISSUES: Unleash souls & wailing souls shouldn't be done in phases but time-wise
+enum DevourerData{
+	NPC_DEVOURER		= 36497,
+	SPELL_MIRRORSOUL	= 69051,
+	SPELL_BLAST			= 68982,
+	SPELL_UNLEASHSOULS	= 68939,
+	SPELL_WAILSOULS		= 68899,
+	SPELL_WELLSOULS		= 68820,
+};
+
+class DevourerAI : public MoonScriptBossAI
+{
+	public:
+		ADD_CREATURE_FACTORY_FUNCTION(DevourerAI)
+		DevourerAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
+		{
+			AddSpell(SPELL_BLAST, Target_RandomPlayer, 45, 0, 3);
+			AddSpell(SPELL_WELLSOULS, Target_RandomPlayer, 50, 0, 8);
+			AddSpell(SPELL_MIRRORSOUL, Target_RandomPlayer, 30, 0, 15);
+			AddPhaseSpell(2, AddSpell(SPELL_UNLEASHSOULS, Target_Self, 70, 0, 30));
+			AddPhaseSpell(3, AddSpell(SPELL_WAILSOULS, Target_Self, 70, 0, 30));
+
+			AddEmote(Event_OnCombatStart, "You dare look upon the host of souls? I SHALL DEVOUR YOU WHOLE!", Text_Yell, 16884);
+			AddEmote(Event_OnTargetDied, "Doomed for eternity!", Text_Yell, 16897);
+			AddEmote(Event_OnDied, "The swell of souls will not be abated! You only delay the inevitable!", Text_Yell, 16887);
+		}
+
+		void AIUpdate()
+		{
+			if(GetHealthPercent() == 75 && GetPhase() == 1)
+			{
+				Emote("SUFFERING! ANGUISH! CHAOS! RISE AND FEED!", Text_Yell, 16888);
+				SetPhase(2);
+			}
+			if(GetHealthPercent() == 50 && GetPhase() == 2)
+			{
+				Emote("Stare into the abyss, and see your end!", Text_Yell, 16889);
+				SetPhase(3);
+			}
+		}
+};
+
 void SetupForgeOfSouls(ScriptMgr * mgr)
 {
 	mgr->register_instance_script(632, &ForgeOfSoulsScript::Create);
 	mgr->register_creature_script(NPC_BRONJAHM, &BronjahmAI::Create);
 	mgr->register_creature_script(36535, &SoulFragmentAI::Create);
+	mgr->register_creature_script(NPC_DEVOURER, &DevourerAI::Create);
 }
- 
