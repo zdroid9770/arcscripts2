@@ -40,7 +40,7 @@ class BronjahmAI : public MoonScriptBossAI
 		{
 			AddSpell(SPELL_MAGICBANE, Target_Current, 35, 0, 5);
 			AddSpell(SPELL_SHADOW_BOLT, Target_Current, 30, 1, -1);
-			SoulStorm = AddSpell(SPELL_SOULSTORM, Target_Self, 0, 4, 0, 0, 0, true, "The vortex of the harvested calls to you!", Text_yell, 16599);
+			SoulStorm = AddSpell(SPELL_SOULSTORM, Target_Self, 0, 4, 0, 0, 0, true, "The vortex of the harvested calls to you!", Text_Yell, 16599);
 			AddPhaseSpell(2, AddSpell(SPELL_FEAR, Target_RandomPlayer, 40, 0, -1));
 
 			AddEmote(Event_OnCombatStart, "Finally... a captive audience!", Text_Yell, 16595);
