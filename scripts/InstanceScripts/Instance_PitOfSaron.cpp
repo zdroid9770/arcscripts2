@@ -16,7 +16,19 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
  
- #include "Setup.h"
+#include "Setup.h"
+
+class PitOfSaronScript : public MoonInstanceScript
+{
+	public:
+		ADD_INSTANCE_FACTORY_FUNCTION(PitOfSaronScript)
+		PitOfSaronScript(MapMgr* pMapMgr) : MoonInstanceScript(pMapMgr){}
+
+		void OnPlayerEnter(Player* pPlayer)
+		{
+			pPlayer->CastSpell(pPlayer, pPlayer->GetTeam() == TEAM_ALLIANCE ? 70057 : 70056, true);
+		}
+};
 
 // Forgemaster Garfrost
 // ISSUES: Does not throw the saronite boulder.
@@ -93,9 +105,10 @@ class TyrannusAI : public MoonScriptBossAI
 };
 
 
- void SetupPitOfSaron(ScriptMgr * mgr)
- {
+void SetupPitOfSaron(ScriptMgr * mgr)
+{
+	mgr->register_instance_script(658, &PitOfSaronScript::Create);
 	mgr->register_creature_script(NPC_GARFROST, &GarfrostAI::Create);
 	mgr->register_creature_script(NPC_TYRANNUS, &TyrannusAI::Create);
- }
+}
  

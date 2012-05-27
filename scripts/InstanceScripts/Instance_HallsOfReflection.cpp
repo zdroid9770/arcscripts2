@@ -16,9 +16,22 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
  
- #include "Setup.h"
+#include "Setup.h"
+
+class HallsOfReflectionScript : public MoonInstanceScript
+{
+	public:
+		ADD_INSTANCE_FACTORY_FUNCTION(HallsOfReflectionScript)
+		HallsOfReflectionScript(MapMgr* pMapMgr) : MoonInstanceScript(pMapMgr){}
+
+		void OnPlayerEnter(Player* pPlayer)
+		{
+			pPlayer->CastSpell(pPlayer, pPlayer->GetTeam() == TEAM_ALLIANCE ? 55774 : 55773, true);
+		}
+};
  
- void SetupHallsOfReflection(ScriptMgr * mgr)
- {
- }
+void SetupHallsOfReflection(ScriptMgr * mgr)
+{
+	mgr->register_instance_script(668, &HallsOfReflectionScript::Create);
+}
  

@@ -18,6 +18,18 @@
  
 #include "Setup.h"
 
+class ForgeOfSoulsScript : public MoonInstanceScript
+{
+	public:
+		ADD_INSTANCE_FACTORY_FUNCTION(ForgeOfSoulsScript)
+		ForgeOfSoulsScript(MapMgr* pMapMgr) : MoonInstanceScript(pMapMgr){}
+
+		void OnPlayerEnter(Player* pPlayer)
+		{
+			pPlayer->CastSpell(pPlayer, pPlayer->GetTeam() == TEAM_ALLIANCE ? 55773 : 55774, true);
+		}
+};
+
 //TODO: Script Devourer of Souls
 	 
 // Bronjahm
@@ -157,6 +169,7 @@ class SoulFragmentAI : public MoonScriptBossAI
 
 void SetupForgeOfSouls(ScriptMgr * mgr)
 {
+	mgr->register_instance_script(632, &ForgeOfSoulsScript::Create);
 	mgr->register_creature_script(NPC_BRONJAHM, &BronjahmAI::Create);
 	mgr->register_creature_script(36535, &SoulFragmentAI::Create);
 }
