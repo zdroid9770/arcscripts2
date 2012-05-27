@@ -53,9 +53,8 @@ class GarfrostAI : public MoonScriptBossAI
 			{
 				if(_unit->GetHealthPct() <= 70 )
 				SetPhase(2);
-				Emote("Axe too weak. Garfrost make better weapon and crush you!");
-				_unit->PlaySoundToSet(16916);
-				_unit->CastSpell(_unit->GetAIInterface()->getNextTarget(), SPELL_STOMP, false);
+				Emote("Axe too weak. Garfrost make better weapon and crush you!", Text_Yell, 16916);
+				_unit->CastSpell(_unit, SPELL_STOMP, false);
 				_unit->GetAIInterface()->MoveJump(639.075, -208.774, 528.931);
 				_unit->CastSpell(_unit, SPELL_FROZEBLADE, true);
 			}
@@ -63,9 +62,8 @@ class GarfrostAI : public MoonScriptBossAI
 			{
 				if(_unit->GetHealthPct() <= 50 )
 					SetPhase(3);
-				Emote("Garfrost tired of puny mortals, soon your bones will FREEZE!");
-				_unit->PlaySoundToSet(16917);
-				_unit->CastSpell(_unit->GetAIInterface()->getNextTarget(), SPELL_STOMP, false);
+				Emote("Garfrost tired of puny mortals, soon your bones will FREEZE!", Text_Yell, 16917);
+				_unit->CastSpell(_unit, SPELL_STOMP, false);
 				_unit->GetAIInterface()->MoveJump(639.075, -208.774, 528.931);
 				_unit->CastSpell(_unit, SPELL_FROZEMACE, true);
 			}
