@@ -17,8 +17,92 @@
  */
  
  #include "Setup.h"
- 
+
+// Forgemaster Garfrost
+// ISSUES: Does not throw the saronite boulder.
+enum GarfrostData{
+	NPC_GARFROST		= 36494,
+	SPELL_PERMAFROST	= 70326,
+	SPELL_FROZEBLADE	= 68774,
+	SPELL_FROZEMACE		= 68785,
+	SPELL_DEEPFREEZE	= 70381,
+	SPELL_STOMP			= 68771,
+};
+
+class GarfrostAI : public MoonScriptBossAI
+{
+	public:
+		ADD_CREATURE_FACTORY_FUNCTION(GarfrostAI)
+		GarfrostAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
+		{
+			AddPhaseSpell(3, AddSpell(SPELL_DEEPFREEZE, Target_RandomPlayer, 15, 2, -1));
+			AddEmote(Event_OnCombatStart, "Tiny creatures under feet, you bring Garfrost something good to eat!", Text_Yell, 16912);
+			AddEmote(Event_OnTargetDied, "That one maybe not so good to eat now, stupied Garfrost! BAD! BAD!", Text_Yell, 16913);
+			AddEmote(Event_OnTargetDied, "Will save.. for snack for.. for later!", Text_Yell, 16914);
+			AddEmote(Event_OnDied, "Garfrost hope giant underpants clean. Save boss great shame. For later.", Text_Yell, 16915);
+		};
+
+		void OnCombatStart(Unit * pAttacker)
+		{
+			 _unit->CastSpell(_unit, SPELL_PERMAFROST, true);
+		};
+
+		void AIUpdate()
+		{
+			if(GetPhase() == 1)
+			{
+				if(_unit->GetHealthPct() <= 70 )
+				SetPhase(2);
+				Emote("Axe too weak. Garfrost make better weapon and crush you!");
+				_unit->PlaySoundToSet(16916);
+				_unit->CastSpell(_unit->GetAIInterface()->getNextTarget(), SPELL_STOMP, false);
+				_unit->GetAIInterface()->MoveJump(639.075, -208.774, 528.931);
+				_unit->CastSpell(_unit, SPELL_FROZEBLADE, true);
+			}
+			if(GetPhase() == 2)
+			{
+				if(_unit->GetHealthPct() <= 50 )
+					SetPhase(3);
+				Emote("Garfrost tired of puny mortals, soon your bones will FREEZE!");
+				_unit->PlaySoundToSet(16917);
+				_unit->CastSpell(_unit->GetAIInterface()->getNextTarget(), SPELL_STOMP, false);
+				_unit->GetAIInterface()->MoveJump(639.075, -208.774, 528.931);
+				_unit->CastSpell(_unit, SPELL_FROZEMACE, true);
+			}
+		}
+		};
+
+// Ick & Krick
+//ISSUES:
+
+//Scourgelord Tyrannus
+//ISSUES: Need to Implement rimefangs abilities / need to add the beginning speech before he jumps off rimefang.
+enum TyrannusData{
+	NPC_TYRANNUS		= 36658,
+	SPELL_FORCESMASH	= 69155,
+	SPELL_BRAND			= 69172,
+	SPELL_UNHOLYPOWER	= 69167,
+};
+
+class TyrannusAI : public MoonScriptBossAI
+{
+	public:
+		ADD_CREATURE_FACTORY_FUNCTION(TyrannusAI)
+		TyrannusAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
+		{
+			AddSpell(SPELL_FORCESMASH, Target_Current, 55, 0, 13);
+			AddSpell(SPELL_BRAND, Target_RandomPlayerNotCurrent, 45, 0, 15);
+			AddSpell(SPELL_UNHOLYPOWER, Target_Self, 80, 0, 20);
+
+			AddEmote(Event_OnCombatStart, "I shall not fail The Lich King! Come and meet your end!", Text_Yell, 16760);
+			AddEmote(Event_OnDied, "Rimefang.. warn..", Text_Yell, 16763);
+		}
+};
+
+
  void SetupPitOfSaron(ScriptMgr * mgr)
  {
+	mgr->register_creature_script(NPC_GARFROST, &GarfrostAI::Create);
+	mgr->register_creature_script(NPC_TYRANNUS, &GarfrostAI::Create);
  }
  
