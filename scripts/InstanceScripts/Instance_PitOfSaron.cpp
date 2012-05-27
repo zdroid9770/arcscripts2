@@ -103,6 +103,6 @@ class TyrannusAI : public MoonScriptBossAI
  void SetupPitOfSaron(ScriptMgr * mgr)
  {
 	mgr->register_creature_script(NPC_GARFROST, &GarfrostAI::Create);
-	mgr->register_creature_script(NPC_TYRANNUS, &GarfrostAI::Create);
+	mgr->register_creature_script(NPC_TYRANNUS, &TyrannusAI::Create);
  }
  
