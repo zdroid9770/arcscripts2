@@ -63,14 +63,14 @@ class antusulAI : public MoonScriptCreatureAI
 			if(_unit->GetHealthPct() <= 75 && SpawnCount == 0)
 			{
 				Emote("Rise and defend your master!", Text_Yell, 0);
-				_unit->CastSpell(_unit, servant, true);
+				_unit->CastSpell(_unit, servants, true);
 				SpawnCount++;
 			}
 
 			if(_unit->GetHealthPct() <= 25 && SpawnCount == 1)
 			{
 				Emote("The children of sul will protect their master. Rise once more Sul'lithuz!", Text_Yell, 0);
-				_unit->CastSpell(_unit, servant, true);
+				_unit->CastSpell(_unit, servants, true);
 				SpawnCount++;
 			}
 		}

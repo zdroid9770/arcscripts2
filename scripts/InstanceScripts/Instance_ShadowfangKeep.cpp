@@ -46,6 +46,132 @@ class ShadowfangKeepInstanceScript : public MoonInstanceScript
 		}
 };
 
+#define NPC_ADAMANT 3849
+#define NPC_SORCERER 3850
+#define MAX_PRISONER_WP 13
+static Location DeathstalkerAdamantWP[]=
+{
+	{},
+	(-250.923, 2116.26, 81.179, 0),
+	(-255.049, 2119.39, 81.179, 0),
+	(-254.129, 2123.45, 81.179, 0),
+	(-253.898, 2130.87, 81.179, 0),
+	(-249.889, 2142.31, 86.972, 0),
+	(-248.205, 2144.02, 87.013, 0),
+	(-240.553, 2140.55, 87.012, 0),
+	(-237.514, 2142.07, 87.012, 0),
+	(-235.638, 2149.23, 90.587, 0),
+	(-237.188, 2151.95, 90.624, 0),
+	(-241.162, 2153.65, 90.624, 0),
+	(-241.13, 2154.56, 90.624, 0),
+};
+
+static Location SorcererAshcrombeWP[]=
+{
+	{},
+	{-241.817f, 2122.9f, 81.179f, 0},
+	{-247.139f, 2124.89f, 81.179f, 0},
+	{-253.179f, 2127.41f, 81.179f, 0},
+	{-253.898f, 2130.87f, 81.179f, 0},
+	{-249.889f, 2142.31f, 86.972f, 0},
+	{-248.205f, 2144.02f, 87.013f, 0},
+	{-240.553f, 2140.55f, 87.012f, 0},
+	{-237.514f, 2142.07f, 87.012f, 0},
+	{-235.638f, 2149.23f, 90.587f, 0},
+	{-237.188f, 2151.95f, 90.624f, 0},
+	{-241.162f, 2153.65f, 90.624f, 0},
+	{-241.13f, 2154.56f, 90.624f, 0}
+};
+
+class ShadowfangPrisonerGossip : public Arcemu::Gossip::Script
+{
+	public:
+		void OnHello(Object* pObject, Player* Plr)
+		{
+			Arcemu::Gossip::Menu::SendQuickMenu(pObject->GetGUID(), objmgr.GetGossipTextForNpc(pObject->GetEntry()), Plr, 1, Arcemu::Gossip::ICON_CHAT, "Please unlock the courtyard door.");
+		}
+
+		void OnSelectOption(Object* pObject, Player* Plr, uint32 Id, const char * Code)
+		{
+			MoonScriptCreatureAI* pUnit = dynamic_cast<MoonScriptCreatureAI *>(TO_CREATURE(pObject)->GetScript());
+			TO_CREATURE(pObject)->SetUInt32Value(UNIT_NPC_FLAGS, 0);
+			pUnit->ForceWaypointMove(1);
+		}
+};
+
+class ShadowfangPrisonerAI : public MoonScriptCreatureAI
+{
+	public:
+		ADD_CREATURE_FACTORY_FUNCTION(ShadowfangPrisonerAI)
+		ShadowfangPrisonerAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
+		{
+			StopWaypointMovement();
+			SetCanEnterCombat(false);
+			pEntry = _unit->GetEntry();
+
+			if(pEntry == NPC_ADAMANT)
+			{
+				for(uint8 i = 1; i<=MAX_PRISONER_WP; i++)
+					AddWaypoint(CreateWaypoint(i, 0, Flag_Walk, DeathstalkerAdamantWP[i]));
+			}
+			else
+			{
+				for(uint8 i = 1; i<=MAX_PRISONER_WP; i++)
+					AddWaypoint(CreateWaypoint(i, 0, Flag_Walk, SorcererAshcrombeWP[i]));
+			}
+		}
+
+		void OnReachWP(uint32 iWaypointId, bool bForwards)
+		{
+			switch(iWaypointId)
+			{
+				case 1:
+					if(pEntry == NPC_SORCERER)
+						Emote("Follow me and I\'ll open the courtyard door for you.", Text_Say, 0);
+					else
+						Emote("Free from this wretched cell at last! Let me show you to the courtyard....", Text_Say, 0);
+					_unit->GetAIInterface()->setWaypointToMove(iWaypointId + 1);
+					break;
+				case 11:
+					if(pEntry == NPC_SORCERER)
+						Emote("I have just the spell to get this door open. Too bad the cell doors weren\'t locked so haphazardly.", Text_Say, 0);
+					else
+						Emote("You are indeed courageous for wanting to brave the horrors that lie beyond this door.", Text_Say, 0);
+					_unit->GetAIInterface()->setWaypointToMove(iWaypointId + 1);
+					break;
+				case 12:
+					SetMoveType(Move_DontMoveWP);
+					GameObject * pDoor = GetNearestGameObject(18895);
+					if(pEntry == NPC_SORCERER)
+					{
+						_unit->CastSpell(_unit, 6421, true);	//Ashcrombe's Unlock
+						Emote("There it is! Wide open. Good luck to you conquering what lies beyond. I must report back to the Kirin Tor at once!", Text_Say, 0, EMOTE_ONESHOT_NONE, 4*SEC_IN_MS);
+						if(pDoor)
+							pDoor->SetState(GAMEOBJECT_STATE_OPEN);
+						_unit->CastSpell(_unit, 6422, true);	//Ashcrombe's Teleport
+						Emote("%s vanishes.", Text_Say, 0, EMOTE_ONESHOT_NONE, 6*SEC_IN_MS);
+						Despawn();
+					}else
+					{
+						_unit->Emote(EMOTE_ONESHOT_USESTANDING);
+						if(pDoor)
+							pDoor->SetState(GAMEOBJECT_STATE_OPEN);
+						Emote("There we go!", Text_Say, 0);
+						Emote("Good luck with Arugal. I must hurry back to Hadrec now.", Text_Say, 0, EMOTE_ONESHOT_NONE, 2*SEC_IN_MS);
+						Emote("%s vanishes.", Text_Say, 0, EMOTE_ONESHOT_NONE, 3*SEC_IN_MS);
+						Despawn();
+					}
+					break;
+			}
+
+			if(iWaypointId < MAX_PRISONER_WP)
+				_unit->GetAIInterface()->setWaypointToMove(iWaypointId + 1);
+		}
+
+	private:
+		uint32 pEntry;
+};
+
 // Commander Springvale AI
 #define CN_SPRINGVALE 4278
 class SpringvaleAI : public MoonScriptCreatureAI
@@ -190,6 +316,12 @@ class RETHILGOREAI : public MoonScriptCreatureAI
 void SetupShadowfangKeep(ScriptMgr* mgr)
 {
 	mgr->register_instance_script(33, &ShadowfangKeepInstanceScript::Create);
+
+	//prisoners
+	mgr->register_creature_gossip(NPC_ADAMANT, new ShadowfangPrisonerGossip);
+	mgr->register_creature_gossip(NPC_SORCERER, new ShadowfangPrisonerGossip);
+	mgr->register_creature_script(NPC_ADAMANT, &ShadowfangPrisonerAI::Create);
+	mgr->register_creature_script(NPC_SORCERER, &ShadowfangPrisonerAI::Create);
 
 	//creature scripts
 	mgr->register_creature_script(CN_SPRINGVALE, &SpringvaleAI::Create);

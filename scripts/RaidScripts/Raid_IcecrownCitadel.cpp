@@ -371,7 +371,7 @@ class LordMarrowgarAI : public MoonScriptBossAI
 		void OnCombatStart(Unit* pUnit)
 		{
 			BoneStormTimer = AddTimer(30*SEC_IN_MS);
-			ColdFLameTimer = AddTimer(5*SEC_IN_MS);
+			ColdFlameTimer = AddTimer(5*SEC_IN_MS);
 			if(mInstance)
 				mInstance->SetInstanceData(ICC_LORD_MARROWGAR, State_InProgress);
 		}
@@ -414,7 +414,7 @@ class LordMarrowgarAI : public MoonScriptBossAI
 					if(Unit* pTarget = GetBestPlayerTarget(TargetFilter_ClosestNotCurrent, 0, 70.0f))
 					{
 						MoveTo(pTarget->GetPositionX(), pTarget->GetPositionY(), pTarget->GetPositionZ());
-						_unit->CastSpellAoF(_unit->GetPositionX(), _unit->GetPositionY(), _unit->GetPositionZ(), SPELL_COLDFLAME_BONESTORM, true);
+						_unit->CastSpellAoF(_unit->GetPositionX(), _unit->GetPositionY(), _unit->GetPositionZ(), dbcSpell.LookupEntry(SPELL_COLDFLAME_BONESTORM), true);
 					}
 					ResetTimer(ChargeTimer, 5*SEC_IN_MS);
 				}
@@ -433,7 +433,7 @@ class LordMarrowgarAI : public MoonScriptBossAI
 
 			if(IsTimerFinished(ColdFlameTimer) && GetPhase() == 1)
 			{
-				_unit->CastSpellAoF(_unit->GetPositionX(), _unit->GetPositionY(), _unit->GetPositionZ(), SPELL_COLDFLAME, true);
+				_unit->CastSpellAoF(_unit->GetPositionX(), _unit->GetPositionY(), _unit->GetPositionZ(), dbcSpell.LookupEntry(SPELL_COLDFLAME), true);
 				ResetTimer(ColdFlameTimer, 5*SEC_IN_MS);
 			}
 		}
@@ -455,13 +455,16 @@ class ColdFlameAI : public MoonScriptCreatureAI
 		{
 			SetCanEnterCombat(false);
 			Despawn(15*SEC_IN_MS);
-			if((MoonScriptCreatureAI * pLord = GetNearestCreature(NPC_LORD_MARROWGAR)) && pLord->GetPhase() != 2)
+			if(MoonScriptBossAI * pLord = dynamic_cast<MoonScriptBossAI*>(GetNearestCreature(NPC_LORD_MARROWGAR)))
 			{
-				if(Unit * pTarget = FindTarget())
-					MoveTo(pTarget->GetPositionX(), pTarget->getPositionY(), pTarget->GetPositionZ());
+				if(pLord->GetPhase() == 2)
+					MoveTo(_unit->GetPositionX()+75.0f, _unit->GetPositionY(), _unit->GetPositionZ());
+				else
+				{
+					if(Unit * pTarget = _unit->GetAIInterface()->getNextTarget())
+						MoveTo(pTarget->GetPositionX(), pTarget->GetPositionY(), pTarget->GetPositionZ());
+				} 
 			}
-			else
-				MoveTo(_unit->GetPositionX()+75.0f, _unit->getPositionY(), _unit->GetPositionZ());
 		}
 };
 

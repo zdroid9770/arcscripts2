@@ -87,17 +87,20 @@ class BronjahmAI : public MoonScriptBossAI
 
 		void AIUpdate()
 		{
-			if(IsTimerFinished(CorruptedSoulTimer) && (Unit * pTarget = GetBestPlayerTarget(TargetFilter_Closest)))
+			if(IsTimerFinished(CorruptedSoulTimer))
 			{
-				_unit->CastSpell(pTarget, SPELL_CORRUPT_SOUL, true);
-
-				//hack, this should be done by spell
-				SpawnTimer = AddTimer(4*SEC_IN_MS);
-				if(IsTimerFinished(SpawnTimer))
+				if(Unit * pTarget = GetBestPlayerTarget(TargetFilter_Closest))
 				{
-					Emote("I will sever your soul from your body!", Text_Yell, 16595);
-					SpawnCreature(36535, pTarget->GetPositionX(), pTarget->GetPositionY(), pTarget->GetPositionZ());
-					RemoveTimer(SpawnTimer);
+					_unit->CastSpell(pTarget, SPELL_CORRUPT_SOUL, true);
+
+					//hack, this should be done by spell
+					SpawnTimer = AddTimer(4*SEC_IN_MS);
+					if(IsTimerFinished(SpawnTimer))
+					{
+						Emote("I will sever your soul from your body!", Text_Yell, 16595);
+						SpawnCreature(36535, pTarget->GetPositionX(), pTarget->GetPositionY(), pTarget->GetPositionZ());
+						RemoveTimer(SpawnTimer);
+					}
 				}
 			}
 

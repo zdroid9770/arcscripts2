@@ -654,7 +654,7 @@ bool MoonInstanceScript::IsHeroic()
 	if((GetInstance()->iInstanceMode == MODE_NORMAL_10MEN) || (GetInstance()->iInstanceMode == MODE_NORMAL_25MEN))
 		return false;
 	else
-		return true
+		return true;
 
 	return false;
 }
