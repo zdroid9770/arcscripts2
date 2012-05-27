@@ -403,6 +403,7 @@ class SCRIPT_DECL MoonScriptCreatureAI : public CreatureAIScript
 		void					ForceWaypointMove(uint32 pWaypointId);
 		void					SetWaypointToMove(uint32 pWaypointId);
 		void					StopWaypointMovement();
+		void					StartWaypointMovement();
 		void					SetMoveType(MoveType pMoveType);
 		MoveType				GetMoveType();
 		uint32					GetCurrentWaypoint();

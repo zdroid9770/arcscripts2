@@ -978,7 +978,13 @@ void MoonScriptCreatureAI::StopWaypointMovement()
 	SetBehavior(Behavior_Default);
 	_unit->GetAIInterface()->SetAIState(STATE_SCRIPTIDLE);
 	SetMoveType(Move_DontMoveWP);
-	SetWaypointToMove(0);
+}
+
+void MoonScriptCreatureAI::StartWaypointMovement()
+{
+	SetBehavior(Behavior_Default);
+	_unit->GetAIInterface()->SetAIState(STATE_SCRIPTMOVE);
+	SetMoveType(Move_ForwardThenStop);
 }
 
 void MoonScriptCreatureAI::SetMoveType(MoveType pMoveType)
