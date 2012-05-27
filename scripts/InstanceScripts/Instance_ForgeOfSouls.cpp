@@ -67,7 +67,7 @@ class BronjahmAI : public MoonScriptBossAI
 				}break;
 				case 2:
 				{
-					_unit->PlaySoundToSet(6078);
+					_unit->PlaySoundToSet(6079);
 					BattleSoundTimer = AddTimer(36*SEC_IN_MS);
 				}break;
 			}

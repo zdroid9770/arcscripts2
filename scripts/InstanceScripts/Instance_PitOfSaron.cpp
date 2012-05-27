@@ -42,33 +42,28 @@ class GarfrostAI : public MoonScriptBossAI
 			AddEmote(Event_OnDied, "Garfrost hope giant underpants clean. Save boss great shame. For later.", Text_Yell, 16915);
 		}
 
-		void OnCombatStart(Unit * pAttacker)
-		{
-			 _unit->CastSpell(_unit, SPELL_PERMAFROST, true);
-		}
-
 		void AIUpdate()
 		{
-			if(GetPhase() == 1)
+			if(GetPhase() == 1 && GetHealthPercent() <= 70)
 			{
-				if(_unit->GetHealthPct() <= 70 )
-				SetPhase(2);
 				Emote("Axe too weak. Garfrost make better weapon and crush you!", Text_Yell, 16916);
 				_unit->CastSpell(_unit, SPELL_STOMP, false);
 				_unit->GetAIInterface()->MoveJump(639.075, -208.774, 528.931);
 				_unit->CastSpell(_unit, SPELL_FROZEBLADE, true);
+				SetPhase(2);
 			}
-			if(GetPhase() == 2)
+
+			if(GetPhase() == 2 && GetHealthPercent() <= 50)
 			{
-				if(_unit->GetHealthPct() <= 50 )
-					SetPhase(3);
 				Emote("Garfrost tired of puny mortals, soon your bones will FREEZE!", Text_Yell, 16917);
 				_unit->CastSpell(_unit, SPELL_STOMP, false);
 				_unit->GetAIInterface()->MoveJump(639.075, -208.774, 528.931);
 				_unit->CastSpell(_unit, SPELL_FROZEMACE, true);
+				SetPhase(3);
 			}
+			_unit->CastSpell(_unit, SPELL_PERMAFROST, true);
 		}
-		};
+};
 
 // Ick & Krick
 //ISSUES:
