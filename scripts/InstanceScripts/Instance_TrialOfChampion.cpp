@@ -18,6 +18,9 @@
  
  #include "Setup.h"
  
+/* Trial Of Champions
+Information: http://www.wowhead.com/zone=4723
+*/
  void SetupTrialOfChampionHold(ScriptMgr * mgr)
  {
  }
