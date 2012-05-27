@@ -40,12 +40,12 @@ class GarfrostAI : public MoonScriptBossAI
 			AddEmote(Event_OnTargetDied, "That one maybe not so good to eat now, stupied Garfrost! BAD! BAD!", Text_Yell, 16913);
 			AddEmote(Event_OnTargetDied, "Will save.. for snack for.. for later!", Text_Yell, 16914);
 			AddEmote(Event_OnDied, "Garfrost hope giant underpants clean. Save boss great shame. For later.", Text_Yell, 16915);
-		};
+		}
 
 		void OnCombatStart(Unit * pAttacker)
 		{
 			 _unit->CastSpell(_unit, SPELL_PERMAFROST, true);
-		};
+		}
 
 		void AIUpdate()
 		{
