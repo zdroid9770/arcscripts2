@@ -88,9 +88,9 @@ class OmorTheUnscarredAI : public MoonScriptCreatureAI
 		OmorTheUnscarredAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			AddEmote(Event_OnCombatStart, "I will not be defeated!", Text_Yell, 10279);
-			AddEmote(Event_OnCombatStart, "You dare stand against me?", Text_Yell, 10280);	// corrections
+			AddEmote(Event_OnCombatStart, "You dare challenge me?!", Text_Yell, 10280);	// corrections
 			AddEmote(Event_OnCombatStart, "Your incidents will be your death!", Text_Yell, 10281);
-			AddEmote(Event_OnTargetDied, "Die weakling!", Text_Yell, 10282);
+			AddEmote(Event_OnTargetDied, "Die, weakling!", Text_Yell, 10282);
 			AddEmote(Event_OnDied, "It is... not over.", Text_Yell, 10284);
 
 			pShield = AddSpell(OMOR_THE_UNSCARRED_DEMONIC_SHIELD, Target_Self, 30.0f, 0, 25);
