@@ -1592,19 +1592,19 @@ class ShadowmoonDarkcasterAI : public CreatureAIScript
 				switch(RandomSpeach)		// must be verified + emotes?
 				{
 					case 0:
-						GrandWarlock->SendChatMessage(CHAT_MSG_MONSTER_YELL, LANG_UNIVERSAL, "You can have that one. I no longer need him.");
+						GrandWarlock->SendChatMessage(CHAT_MSG_MONSTER_YELL, LANG_UNIVERSAL, "You can have that one, I no longer need him!"); // http://www.wowwiki.com/Grand_Warlock_Nethekurse
 						GrandWarlock->PlaySoundToSet(10263);
 						break;
 					case 1:
-						GrandWarlock->SendChatMessage(CHAT_MSG_MONSTER_YELL, LANG_UNIVERSAL, "Yes! Beat him mercilessly!");	// to add
+						GrandWarlock->SendChatMessage(CHAT_MSG_MONSTER_YELL, LANG_UNIVERSAL, "Yes! Beat him mercilessly! His skull is as thick as an ogre's!");	// http://www.wowwiki.com/Grand_Warlock_Nethekurse
 						GrandWarlock->PlaySoundToSet(10264);
 						break;
 					case 2:
-						GrandWarlock->SendChatMessage(CHAT_MSG_MONSTER_YELL, LANG_UNIVERSAL, "Don't waste your time on that one. He's weak.");
+						GrandWarlock->SendChatMessage(CHAT_MSG_MONSTER_YELL, LANG_UNIVERSAL, "Don't waste your time on that one, he's weak!"); // http://www.wowwiki.com/Grand_Warlock_Nethekurse
 						GrandWarlock->PlaySoundToSet(10265);
 						break;
 					case 3:
-						GrandWarlock->SendChatMessage(CHAT_MSG_MONSTER_YELL, LANG_UNIVERSAL, "You want him? Farewell, take him.");
+						GrandWarlock->SendChatMessage(CHAT_MSG_MONSTER_YELL, LANG_UNIVERSAL, "You want him? Very well, take him!"); // http://www.wowwiki.com/Grand_Warlock_Nethekurse
 						GrandWarlock->PlaySoundToSet(10266);
 						break;
 				}
@@ -1644,15 +1644,15 @@ class ShadowmoonDarkcasterAI : public CreatureAIScript
 				switch(RandomSpeach)	// those need to be verified too
 				{
 					case 0:
-						GrandWarlock->SendChatMessage(CHAT_MSG_MONSTER_YELL, LANG_UNIVERSAL, "One pitiful wretch down. Go on, take another one.");
+						GrandWarlock->SendChatMessage(CHAT_MSG_MONSTER_YELL, LANG_UNIVERSAL, "One pitiful wretch down. Go on, take another one!");
 						GrandWarlock->PlaySoundToSet(10267);
 						break;
 					case 1:
-						GrandWarlock->SendChatMessage(CHAT_MSG_MONSTER_YELL, LANG_UNIVERSAL, "Ah, what a waste. Next!");
+						GrandWarlock->SendChatMessage(CHAT_MSG_MONSTER_YELL, LANG_UNIVERSAL, "Ah, what a waste... next!");
 						GrandWarlock->PlaySoundToSet(10268);
 						break;
 					case 2:
-						GrandWarlock->SendChatMessage(CHAT_MSG_MONSTER_YELL, LANG_UNIVERSAL, "I was going to kill him anyway.");
+						GrandWarlock->SendChatMessage(CHAT_MSG_MONSTER_YELL, LANG_UNIVERSAL, "I was going to kill him anyway!");
 						GrandWarlock->PlaySoundToSet(10269);
 						break;
 				}
@@ -1753,7 +1753,7 @@ class GrandWarlockNethekurseAI : public CreatureAIScript
 				switch(RandomSpeach)
 				{
 					case 0:
-						_unit->SendChatMessage(CHAT_MSG_MONSTER_YELL, LANG_UNIVERSAL, "You loose!");
+						_unit->SendChatMessage(CHAT_MSG_MONSTER_YELL, LANG_UNIVERSAL, "You lose.");
 						_unit->PlaySoundToSet(10274);
 						break;
 					case 1:
@@ -1775,7 +1775,7 @@ class GrandWarlockNethekurseAI : public CreatureAIScript
 
 		void OnDied(Unit* mKiller)
 		{
-			_unit->SendChatMessage(CHAT_MSG_MONSTER_YELL, LANG_UNIVERSAL, "What a... shame.");
+			_unit->SendChatMessage(CHAT_MSG_MONSTER_YELL, LANG_UNIVERSAL, "What... a shame.");
 			_unit->PlaySoundToSet(10276);
 
 			RemoveAIUpdateEvent();
@@ -2209,7 +2209,7 @@ class WarbringerOmroggAI : public MoonScriptCreatureAI
 							mRightHead->Emote("You always hungry. That why we so fat!", Text_Yell, 10319);
 							break;
 						case 3:
-							mRightHead->Emote("Why don't you let me do the talking!", Text_Yell, 10317);
+							mRightHead->Emote("Why don't you let me do the talking?", Text_Yell, 10317);
 							break;
 						case 4:
 							mRightHead->Emote("I'm not done yet, idiot!", Text_Yell, 10313);
@@ -2353,8 +2353,7 @@ class HeadAI : public MoonScriptCreatureAI
 #define CN_WARCHIEF_KARGATH_BLADEFIST 16808
 
 #define BLADE_DANCE 30739	// should be each 30 sec, but Idk correct attktime
-// Should call for support?
-// does he use only one ability?
+// According to WoWWiki he does infact summon adds, this needs to be added: http://www.wowwiki.com/Kargath_Bladefist_(tactics)
 
 class WarchiefKargathBladefistAI : public CreatureAIScript
 {
@@ -2385,15 +2384,15 @@ class WarchiefKargathBladefistAI : public CreatureAIScript
 			switch(RandomSpeach)
 			{
 				case 0:
-					_unit->SendChatMessage(CHAT_MSG_MONSTER_YELL, LANG_UNIVERSAL, "Ours is the true horde! The only horde!");
+					_unit->SendChatMessage(CHAT_MSG_MONSTER_YELL, LANG_UNIVERSAL, "Ours is the TRUE horde! The only Horde!");
 					_unit->PlaySoundToSet(10323);
 					break;
 				case 1:
-					_unit->SendChatMessage(CHAT_MSG_MONSTER_YELL, LANG_UNIVERSAL, "I'll carve the meat from your bones!");
+					_unit->SendChatMessage(CHAT_MSG_MONSTER_YELL, LANG_UNIVERSAL, "I'll grind the meat from your bones!");
 					_unit->PlaySoundToSet(10324);
 					break;
 				case 2:
-					_unit->SendChatMessage(CHAT_MSG_MONSTER_YELL, LANG_UNIVERSAL, "I am called Bladefists for a reason... as you will see!");
+					_unit->SendChatMessage(CHAT_MSG_MONSTER_YELL, LANG_UNIVERSAL, "I am called Bladefist for a reason. As you will see.");
 					_unit->PlaySoundToSet(10325);
 					break;
 			}
@@ -2413,11 +2412,11 @@ class WarchiefKargathBladefistAI : public CreatureAIScript
 				switch(RandomSpeach)
 				{
 					case 0:
-						_unit->SendChatMessage(CHAT_MSG_MONSTER_YELL, LANG_UNIVERSAL, "For the real horde!");
+						_unit->SendChatMessage(CHAT_MSG_MONSTER_YELL, LANG_UNIVERSAL, "For the real Horde!");
 						_unit->PlaySoundToSet(10326);
 						break;
 					case 1:
-						_unit->SendChatMessage(CHAT_MSG_MONSTER_YELL, LANG_UNIVERSAL, "I am the only warchief!");
+						_unit->SendChatMessage(CHAT_MSG_MONSTER_YELL, LANG_UNIVERSAL, "I am the ONLY warchief!");
 						_unit->PlaySoundToSet(10327);
 						break;
 				}
@@ -2433,7 +2432,7 @@ class WarchiefKargathBladefistAI : public CreatureAIScript
 
 		void OnDied(Unit* mKiller)
 		{
-			_unit->SendChatMessage(CHAT_MSG_MONSTER_YELL, LANG_UNIVERSAL, "The true horde... will... prevail!");
+			_unit->SendChatMessage(CHAT_MSG_MONSTER_YELL, LANG_UNIVERSAL, "The true Horde... will prevail.");
 			_unit->PlaySoundToSet(10328);
 			RemoveAIUpdateEvent();
 		}
