@@ -95,7 +95,7 @@ class ShadowfangPrisonerGossip : public Arcemu::Gossip::Script
 		{
 			MoonScriptCreatureAI* pUnit = dynamic_cast<MoonScriptCreatureAI *>(TO_CREATURE(pObject)->GetScript());
 			TO_CREATURE(pObject)->SetUInt32Value(UNIT_NPC_FLAGS, 0);
-			pUnit->ForceWaypointMove(1);
+			pUnit->StartWaypointMovement();
 		}
 };
 
@@ -130,7 +130,6 @@ class ShadowfangPrisonerAI : public MoonScriptCreatureAI
 						Emote("Follow me and I\'ll open the courtyard door for you.", Text_Say, 0);
 					else
 						Emote("Free from this wretched cell at last! Let me show you to the courtyard....", Text_Say, 0);
-					_unit->GetAIInterface()->setWaypointToMove(iWaypointId + 1);
 					break;
 				case 11:
 					if(pEntry == NPC_SORCERER)
@@ -164,7 +163,6 @@ class ShadowfangPrisonerAI : public MoonScriptCreatureAI
 					break;
 			}
 
-			if(iWaypointId < MAX_PRISONER_WP)
 				_unit->GetAIInterface()->setWaypointToMove(iWaypointId + 1);
 		}
 

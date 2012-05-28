@@ -993,7 +993,7 @@ void MoonScriptCreatureAI::StartWaypointMovement()
 {
 	SetBehavior(Behavior_Default);
 	_unit->GetAIInterface()->SetAIState(STATE_SCRIPTMOVE);
-	SetMoveType(Move_ForwardThenStop);
+	SetMoveType(Move_WantedWP);
 	SetWaypointToMove(1);
 }
 
