@@ -70,7 +70,7 @@ class GarfrostAI : public MoonScriptBossAI
 				Emote("Garfrost tired of puny mortals, soon your bones will FREEZE!", Text_Yell, 16917);
 				_unit->CastSpell(_unit, SPELL_STOMP, false);
 				_unit->GetAIInterface()->MoveJump(725.325f, -236.978f, 528.848f);
-				_unit->RemoveAura(SPELL_FROZEBLADE)
+				_unit->RemoveAura(SPELL_FROZEBLADE);
 				_unit->CastSpell(_unit, SPELL_FROZEMACE, true);
 				SetPhase(3);
 			}
