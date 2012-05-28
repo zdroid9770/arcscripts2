@@ -32,12 +32,12 @@ class PANDEMONIUSAI : public MoonScriptCreatureAI
 		PANDEMONIUSAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			AddSpell(DARK_SHELL, Target_Self, 20, 1, 20);
-			AddEmote(Event_OnCombatStart, "All will feed all your soul!", Text_Yell, 10561);
-			AddEmote(Event_OnCombatStart, "You fool life!", Text_Yell, 10562);
-			AddEmote(Event_OnCombatStart, "Do not resist!", Text_Yell, 10563);
-			AddEmote(Event_OnTargetDied, "Yes, I am powered!", Text_Yell, 10564);
-			AddEmote(Event_OnTargetDied, "More, I must have more!", Text_Yell, 10565);
-			AddEmote(Event_OnDied, "Do the void... once... more.", Text_Yell, 10566);
+			AddEmote(Event_OnCombatStart, "I will feed on your soul!", Text_Yell, 10561);
+			AddEmote(Event_OnCombatStart, "So... full of life!", Text_Yell, 10562);
+			AddEmote(Event_OnCombatStart, "Do not... resist!", Text_Yell, 10563);
+			AddEmote(Event_OnTargetDied, "Yes! I am... empowered!", Text_Yell, 10564);
+			AddEmote(Event_OnTargetDied, "More... I must have more!", Text_Yell, 10565);
+			AddEmote(Event_OnDied, "To the void... once... more.", Text_Yell, 10566);
 			Counter = 0;
 			VoidTimer = 0;
 		}
@@ -90,12 +90,12 @@ class NEXUSPRINCESHAFFARAI : public MoonScriptCreatureAI
 			AddSpell(FROST_NOVA, Target_Self, 15, 0, 15);
 			AddSpell(BLINK, Target_Self, 5, 0, 20);
 			AddSpell(SUMMON_ETEREAL_BECON, Target_Self, 10, 0, 10);
-			AddEmote(Event_OnCombatStart, "Ah, we have not been properly introduced!", Text_Yell, 10541);
-			AddEmote(Event_OnCombatStart, "An epic battle! How exciting.", Text_Yell, 10542);
+			AddEmote(Event_OnCombatStart, "We have not yet been properly introduced.", Text_Yell, 10541);
+			AddEmote(Event_OnCombatStart, "An epic battle, How exciting!", Text_Yell, 10542);
 			AddEmote(Event_OnCombatStart, "I have longed for a good adventure!", Text_Yell, 10543);
 			AddEmote(Event_OnTargetDied, "And now, we part company.", Text_Yell, 10544);
 			AddEmote(Event_OnTargetDied, "It has been... entertaining.", Text_Yell, 10545);
-			AddEmote(Event_OnDied, "I must bid you... Farewell.", Text_Yell, 10545);
+			AddEmote(Event_OnDied, "I must bid you... farewell.", Text_Yell, 10545);
 		}
 };
 
