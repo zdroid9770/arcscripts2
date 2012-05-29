@@ -20,6 +20,43 @@
  
 /* Trial Of Champions
 Information: http://www.wowhead.com/zone=4723
+ISSUES: Need to have a check if alliance or horde player than spawn the correct people.
+*/
+
+/*
+enum PALETREESData{
+	NPC_PALETREES		= 34928,
+	SPELL_HOLYSMITE		= 66536,
+	SPELL_HOLYNOVA		= 66546,
+	SPELL_REFLECTSHIELD	= 66515,
+	SPELL_RENEW			= 66537,
+	SPELL_MEMORY		= 66543,
+	SPELL_CONFESS		= 66680
+};
+
+class PaletreesAI : public MoonScriptBossAI
+{
+public:
+	Add_CREATURE_FACTORY_FUNCTION(PaletreesAI)
+	PaletreesAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
+	{
+	AddSpell(SPELL_HOLYSMITE, Target_RandomPlayer, 60, 0, 0);
+	AddSpell(SPELL_HOLYNOVA, Target_Self, 40, 0, 10);
+	AddSpell(SPELL_RENEW, Target_Self, 10, 0, 15);
+
+	AddEmote(Event_OnCombatStart, "Well then, let us begin.", Text_Yell, 0); // Need sound ID
+	AddEmote(Event_OnTargetDied, "Take your rest.", Text_Yell, 0); // Need sound ID
+	AddEmote(Event_OnTargetDied, "Be at ease.", Text_Yell, 0); // Need sound ID
+	}
+
+	void AIUpdate()
+	{
+		if(GetPhase() == 1 && GetHealthPercent() <= 50)
+		{
+			_unit->CastSpell(_unit, SPELL_REFLECTSHIELD, true);
+			Emote("Take this time to consider your past deeds.", Text_Yell, 0); // Need sound ID
+			_unit->CastSpell(_unit, SPELL_CONFESS, false);
+			SetPhase(2);
 */
  void SetupTrialOfChampionHold(ScriptMgr * mgr)
  {
