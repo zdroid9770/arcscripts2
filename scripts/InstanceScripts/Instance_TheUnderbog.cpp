@@ -2792,11 +2792,11 @@ class SwamplordMuselekAI : public CreatureAIScript
 					_unit->PlaySoundToSet(10384);
 					break;
 				case 1:
-					_unit->SendChatMessage(CHAT_MSG_MONSTER_YELL, LANG_UNIVERSAL, "I will end this quickly!");
+					_unit->SendChatMessage(CHAT_MSG_MONSTER_YELL, LANG_UNIVERSAL, "I will end this quickly...");//http://www.wowwiki.com/Swamplord_Musel%27ek
 					_unit->PlaySoundToSet(10385);
 					break;
 				case 2:
-					//_unit->SendChatMessage(CHAT_MSG_MONSTER_YELL, LANG_UNIVERSAL, "<missing_text>!");
+					_unit->SendChatMessage(CHAT_MSG_MONSTER_YELL, LANG_UNIVERSAL, "Acalah pek ecta!");//http://www.wowwiki.com/Swamplord_Musel%27ek
 					_unit->PlaySoundToSet(10386);
 					break;
 			}
@@ -2823,7 +2823,7 @@ class SwamplordMuselekAI : public CreatureAIScript
 						_unit->PlaySoundToSet(10387);
 						break;
 					case 1:
-						_unit->SendChatMessage(CHAT_MSG_MONSTER_YELL, LANG_UNIVERSAL, "It is finished!");
+						_unit->SendChatMessage(CHAT_MSG_MONSTER_YELL, LANG_UNIVERSAL, "It is finished.");//http://www.wowwiki.com/Swamplord_Musel%27ek
 						_unit->PlaySoundToSet(10388);
 						break;
 				}
@@ -2840,7 +2840,7 @@ class SwamplordMuselekAI : public CreatureAIScript
 
 		void OnDied(Unit* mKiller)
 		{
-			_unit->SendChatMessage(CHAT_MSG_MONSTER_YELL, LANG_UNIVERSAL, "Well... done..."); // not sure
+			_unit->SendChatMessage(CHAT_MSG_MONSTER_YELL, LANG_UNIVERSAL, "Well... done...");
 			_unit->PlaySoundToSet(10389);
 
 			RemoveAIUpdateEvent();
