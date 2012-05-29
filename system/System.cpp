@@ -27,12 +27,6 @@ ArcScripts2::~ArcScripts2()
 {
 }
 
-bool ArcScripts2::run()
-{
-	LoadScriptTexts();
-	return true;
-}
-
 void ArcScripts2::LoadScriptTexts()
 {
     QueryResult* pResult = WorldDatabase.Query("SELECT entry, id, text, type, sound, emote FROM script_texts");

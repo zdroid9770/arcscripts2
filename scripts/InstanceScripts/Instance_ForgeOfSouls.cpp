@@ -59,39 +59,24 @@ class BronjahmAI : public MoonScriptBossAI
 			AddEmote(Event_OnTargetDied, "Fodder for the engine!", Text_Yell, 16596);
 			AddEmote(Event_OnTargetDied, "Another soul to strengthen the host!", Text_Yell, 16597);
 			AddEmote(Event_OnDied, "My soul for you, master.", Text_Yell, 16598);
-			BattleSoundTimer = CorruptedSoulTimer = SpawnTimer = -1;
+			CorruptedSoulTimer = SpawnTimer = -1;
 		}
 
 		void OnCombatStart(Unit * pAttacker)
 		{
 			CorruptedSoulTimer = AddTimer(25+rand()%11);
-			switch(rand()%3)
-			{
-				case 0:
-				{
-					_unit->PlaySoundToSet(6077);
-					BattleSoundTimer = AddTimer(48*SEC_IN_MS);
-				}break;
-				case 1:
-				{
-					_unit->PlaySoundToSet(6078);
-					BattleSoundTimer = AddTimer(27*SEC_IN_MS);
-				}break;
-				case 2:
-				{
-					_unit->PlaySoundToSet(6079);
-					BattleSoundTimer = AddTimer(36*SEC_IN_MS);
-				}break;
-			}
 		}
 
 		void AIUpdate()
 		{
-			if(IsTimerFinished(CorruptedSoulTimer) && (Unit * pTarget = GetBestPlayerTarget(TargetFilter_Closest)))
+			if(IsTimerFinished(CorruptedSoulTimer))
 			{
+				Unit * pTarget = GetBestPlayerTarget(TargetFilter_Closest);
+				if(!pTarget)
+					return;
+
 				_unit->CastSpell(pTarget, SPELL_CORRUPT_SOUL, true);
 
-				//hack, this should be done by spell
 				SpawnTimer = AddTimer(4*SEC_IN_MS);
 				if(IsTimerFinished(SpawnTimer))
 				{
@@ -106,35 +91,12 @@ class BronjahmAI : public MoonScriptBossAI
 				_unit->CastSpell(_unit, SPELL_TELEPORT, true);
 				SetPhase(2, SoulStorm);
 			}
-
-			if(IsTimerFinished(BattleSoundTimer))
-			{
-				switch(rand()%3)
-				{
-					case 0:
-					{
-						_unit->PlaySoundToSet(6077);
-						ResetTimer(BattleSoundTimer, 48*SEC_IN_MS);
-					}break;
-					case 1:
-					{
-						_unit->PlaySoundToSet(6078);
-						ResetTimer(BattleSoundTimer, 27*SEC_IN_MS);
-					}break;
-					case 2:
-					{
-						_unit->PlaySoundToSet(6078);
-						ResetTimer(BattleSoundTimer, 36*SEC_IN_MS);
-					}break;
-				}
-			}
 		}
 
 	private:
-		int32 BattleSoundTimer, CorruptedSoulTimer, SpawnTimer;
+		int32 CorruptedSoulTimer, SpawnTimer;
 		SpellDesc * SoulStorm;
 };
-
 
 class SoulFragmentAI : public MoonScriptBossAI
 {
@@ -163,7 +125,6 @@ class SoulFragmentAI : public MoonScriptBossAI
 					Despawn();
 				}
 			}
-			SetAIUpdateFreq(1*SEC_IN_MS);
 		}
 };
 

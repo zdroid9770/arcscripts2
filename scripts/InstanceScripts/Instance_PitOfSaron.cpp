@@ -31,7 +31,6 @@ class PitOfSaronScript : public MoonInstanceScript
 };
 
 // Forgemaster Garfrost
-// ISSUES: Does not throw the saronite boulder.
 enum GarfrostData{
 	NPC_GARFROST		= 36494,
 	SPELL_PERMAFROST	= 70326,
@@ -39,6 +38,14 @@ enum GarfrostData{
 	SPELL_FROZEMACE		= 68785,
 	SPELL_DEEPFREEZE	= 70381,
 	SPELL_STOMP			= 68771,
+    SPELL_CHILLINGWAVE	= 68778,
+    SPELL_THROWSARONITE	= 68788
+};
+
+static Location JumpCords[]=
+{
+	{639.075f, -208.774f, 528.931f},
+	{725.325f, -236.978f, 528.848f},
 };
 
 class GarfrostAI : public MoonScriptBossAI
@@ -47,7 +54,9 @@ class GarfrostAI : public MoonScriptBossAI
 		ADD_CREATURE_FACTORY_FUNCTION(GarfrostAI)
 		GarfrostAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
 		{
-			AddPhaseSpell(3, AddSpell(SPELL_DEEPFREEZE, Target_RandomPlayer, 15, 2, -1));
+			AddSpell(SPELL_THROWSARONITE, Target_RandomPlayerDestination, 20, 2, 15);
+			AddPhaseSpell(2, AddSpell(SPELL_CHILLINGWAVE, Target_Current, 25, 0, 14));
+			AddPhaseSpell(3, AddSpell(SPELL_DEEPFREEZE, Target_RandomPlayer, 15, 2, 20));
 			AddEmote(Event_OnCombatStart, "Tiny creatures under feet, you bring Garfrost something good to eat!", Text_Yell, 16912);
 			AddEmote(Event_OnTargetDied, "That one maybe not so good to eat now, stupied Garfrost! BAD! BAD!", Text_Yell, 16914);
 			AddEmote(Event_OnTargetDied, "Will save.. for snack for.. for later!", Text_Yell, 16913);
@@ -56,23 +65,22 @@ class GarfrostAI : public MoonScriptBossAI
 
 		void AIUpdate()
 		{
-			if(GetPhase() == 1 && GetHealthPercent() <= 70)
+			if((GetPhase() == 1 && GetHealthPercent() <= 66) || (GetPhase() == 2 && GetHealthPercent() <= 33))
 			{
-				Emote("Axe too weak. Garfrost make better weapon and crush you!", Text_Yell, 16916);
-				_unit->CastSpell(_unit, SPELL_STOMP, false);
-				_unit->GetAIInterface()->MoveJump(639.075f, -208.774f, 528.931f);
-				_unit->CastSpell(_unit, SPELL_FROZEBLADE, true);
-				SetPhase(2);
-			}
+				if(GetPhase() == 1)
+					Emote("Axe too weak. Garfrost make better weapon and crush you!", Text_Yell, 16916);
+				else
+					Emote("Garfrost tired of puny mortals, soon your bones will FREEZE!", Text_Yell, 16917);
 
-			if(GetPhase() == 2 && GetHealthPercent() <= 50)
-			{
-				Emote("Garfrost tired of puny mortals, soon your bones will FREEZE!", Text_Yell, 16917);
 				_unit->CastSpell(_unit, SPELL_STOMP, false);
-				_unit->GetAIInterface()->MoveJump(725.325f, -236.978f, 528.848f);
-				_unit->RemoveAura(SPELL_FROZEBLADE);
-				_unit->CastSpell(_unit, SPELL_FROZEMACE, true);
-				SetPhase(3);
+				_unit->GetAIInterface()->WipeHateList();
+				_unit->GetAIInterface()->MoveJump(JumpCords[GetPhase()-1].x, JumpCords[GetPhase()-1].y, JumpCords[GetPhase()-1].z);
+
+				if(GameObject * pObject = GetNearestGameObject(401006))	//forgemaster's anvil (TEMP)
+					_unit->SetFacing(_unit->calcRadAngle(_unit->GetPositionX(), _unit->GetPositionY(), pObject->GetPositionX(), pObject->GetPositionY()));
+
+				_unit->CastSpell(_unit, GetPhase() == 1 ? SPELL_FROZEBLADE : SPELL_FROZEMACE, true);
+				SetPhase(GetPhase()+1);
 			}
 			_unit->CastSpell(_unit, SPELL_PERMAFROST, true);
 		}

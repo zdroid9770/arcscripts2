@@ -106,7 +106,7 @@ MoonScriptCreatureAI::~MoonScriptCreatureAI()
 bool MoonScriptCreatureAI::GetCanMove()
 {
 	return _unit->GetAIInterface()->m_canMove;
-};
+}
 
 void MoonScriptCreatureAI::SetCanMove(bool pCanMove)
 {

@@ -43,7 +43,6 @@ class ArcScripts2
 
 		typedef std::map<uint32, std::vector<StringTextData>> TextDataMap;
 
-		bool run();
         void LoadScriptTexts();
 
         //Retrive text data from storage
