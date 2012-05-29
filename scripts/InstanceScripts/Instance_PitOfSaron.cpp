@@ -49,8 +49,8 @@ class GarfrostAI : public MoonScriptBossAI
 		{
 			AddPhaseSpell(3, AddSpell(SPELL_DEEPFREEZE, Target_RandomPlayer, 15, 2, -1));
 			AddEmote(Event_OnCombatStart, "Tiny creatures under feet, you bring Garfrost something good to eat!", Text_Yell, 16912);
-			AddEmote(Event_OnTargetDied, "That one maybe not so good to eat now, stupied Garfrost! BAD! BAD!", Text_Yell, 16913);
-			AddEmote(Event_OnTargetDied, "Will save.. for snack for.. for later!", Text_Yell, 16914);
+			AddEmote(Event_OnTargetDied, "That one maybe not so good to eat now, stupied Garfrost! BAD! BAD!", Text_Yell, 16914);
+			AddEmote(Event_OnTargetDied, "Will save.. for snack for.. for later!", Text_Yell, 16913);
 			AddEmote(Event_OnDied, "Garfrost hope giant underpants clean. Save boss great shame. For later.", Text_Yell, 16915);
 		}
 
