@@ -19,33 +19,71 @@
 #ifndef SC_SYSTEM_H
 #define SC_SYSTEM_H
 
-#define TEXT_SOURCE_RANGE -1000000                          //the amount of entries each text source has available
-#define TEXT_SOURCE_TEXT_START      TEXT_SOURCE_RANGE
-#define TEXT_SOURCE_TEXT_END        TEXT_SOURCE_RANGE*2 + 1
-
 struct StringTextData
 {
-	const char *uiText;
-    uint8  uiType;
-    uint32 uiSoundId;
-    uint32 uiEmote;
+    uint32 Id;
+	const char *Text;
+    uint8  Type;
+    uint32 SoundId;
+    uint32 Emote;
 };
 
-class ArcScripts2 : public ThreadBase
+struct WaypointsData
+{
+	uint32 entry;
+	WayPoint * wpData;
+};
+
+class ArcScripts2
 {
 	public:
 		ArcScripts2();
 		~ArcScripts2();
+		static ArcScripts2& Instance();
 
-		typedef std::map<uint32, StringTextData> TextDataMap;
+		typedef std::map<uint32, std::vector<StringTextData>> TextDataMap;
 
 		bool run();
         void LoadScriptTexts();
 
-        //Retrive from storage
-        StringTextData const* GetTextData(int32 uiTextId) const;
+        //Retrive text data from storage
+        std::vector<StringTextData> const &GetTextData(uint32 Entry) const
+        {
+            static std::vector<StringTextData> vEmpty;
 
-        TextDataMap	m_mTextDataMap;                     //additional data for text strings
+            TextDataMap::const_iterator itr = mTextData.find(Entry);
+
+            if (itr == mTextData.end())
+                return vEmpty;
+
+            return itr->second;
+        }
+
+		//Retrive specific text id data from storage
+		StringTextData const * GetTextDataById(std::vector<StringTextData> Data, uint32 Id)
+		{
+			if(Data.empty())
+				return NULL;
+
+			for (std::vector<StringTextData>::const_iterator itr = Data.begin(); itr != Data.end(); ++itr)
+			{
+				if(itr->Id == Id)
+				{
+					StringTextData * TextData = NULL;
+					TextData->Id = itr->Id;
+					TextData->Text = itr->Text;
+					TextData->Type = itr->Type;
+					TextData->SoundId = itr->SoundId;
+					TextData->Emote = itr->Emote;
+					return TextData;
+				}
+			}
+			return NULL;
+		}
+
+        TextDataMap	mTextData;                     //additional data for text strings
 };
 
 #endif
+
+#define mScriptData ArcScripts2::Instance()

@@ -19,27 +19,26 @@
 #include "Setup.h"
 #include "System.h"
 
-ArcScripts2::ArcScripts2(){
+ArcScripts2::ArcScripts2()
+{
 }
 
-ArcScripts2::~ArcScripts2(){
+ArcScripts2::~ArcScripts2()
+{
 }
 
 bool ArcScripts2::run()
 {
-	Log.Success("ArcScripts2", "================ArcScripts2===================");
-	Log.Success("ArcScripts2", "Starting to load scripts data...");
 	LoadScriptTexts();
-	Log.Success("ArcScripts2", "==============================================");
 	return true;
 }
 
 void ArcScripts2::LoadScriptTexts()
 {
-    QueryResult* pResult = WorldDatabase.Query("SELECT entry, text, type, sound, emote FROM script_texts WHERE entry BETWEEN %i AND %i", TEXT_SOURCE_TEXT_END, TEXT_SOURCE_TEXT_START);
+    QueryResult* pResult = WorldDatabase.Query("SELECT entry, id, text, type, sound, emote FROM script_texts");
 	if(!pResult)
 	{
-		LOG_ERROR("ArcScripts2: Loaded 0 additional Script Texts data. DB table `script_texts` is empty");
+		LOG_ERROR("ArcScripts2: Loaded 0 additional Script Texts data. DB table `script_texts` is empty. Scripts can work not correctly");
 		return;
 	}
 
@@ -49,38 +48,34 @@ void ArcScripts2::LoadScriptTexts()
     {
 		Field* pFields = pResult->Fetch();
 		StringTextData pTemp;
-		int32 iId           = pFields[0].GetInt32();
-		pTemp.uiText        = pFields[1].GetString();
-		pTemp.uiType        = pFields[2].GetUInt32();
-		pTemp.uiSoundId     = pFields[3].GetUInt32();
-		pTemp.uiEmote       = pFields[4].GetUInt32();
+		uint32 Entry	= pFields[0].GetUInt32();	//npc entry
+		pTemp.Id		= pFields[1].GetUInt32();	//Text id
+		pTemp.Text		= pFields[2].GetString();	//Text
+		pTemp.Type		= pFields[3].GetUInt32();	//Text type
+		pTemp.SoundId	= pFields[4].GetUInt32();	//Sound id
+		pTemp.Emote		= pFields[5].GetUInt32();	//Emote
 
-		if(pTemp.uiText == NULL)
+		if(!CreatureNameStorage.LookupEntry(Entry))
 		{
-			LOG_ERROR("ArcScripts2: Entry %i in table `script_texts` has no text data", iId);
+			LOG_ERROR("ArcScripts2: script text data exists in `script_texts` for non existing creature %i", Entry);
 			continue;
 		}
 
-		if(iId >= 0)
+		if(pTemp.Text == "" && pTemp.Emote == 0)
 		{
-			LOG_ERROR("ArcScripts2: Entry %i in table `script_texts` is not a negative value.", iId);
+			LOG_ERROR("ArcScripts2: Entry %i, id %i in table `script_texts` has no text data", Entry, pTemp.Id);
 			continue;
 		}
 
-        m_mTextDataMap[iId] = pTemp;
-		count++;
+		if(pTemp.Type >= Max_Emote_type)
+		{
+			LOG_ERROR("ArcScripts2: Entry %i id %i in table `script_texts` has wrong text type", Entry, pTemp.Id);
+			continue;
+		}
+
+		mTextData[Entry].push_back(pTemp);
     } while (pResult->NextRow());
 
     delete pResult;
     Log.Success("ArcScripts2:", "Loaded %u additional Script Texts data.", count);
-}
-
-StringTextData const* ArcScripts2::GetTextData(int32 uiTextId) const
-{
-	TextDataMap::const_iterator itr = m_mTextDataMap.find(uiTextId);
-
-	if (itr == m_mTextDataMap.end())
-		return NULL;
-
-	return &itr->second;
 }
