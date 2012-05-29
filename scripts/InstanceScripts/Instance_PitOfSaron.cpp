@@ -52,6 +52,22 @@ class GarfrostAI : public MoonScriptBossAI
 			AddEmote(Event_OnTargetDied, "That one maybe not so good to eat now, stupied Garfrost! BAD! BAD!", Text_Yell, 16913);
 			AddEmote(Event_OnTargetDied, "Will save.. for snack for.. for later!", Text_Yell, 16914);
 			AddEmote(Event_OnDied, "Garfrost hope giant underpants clean. Save boss great shame. For later.", Text_Yell, 16915);
+			RootTimer = -1;
+		}
+
+		void OnCombatStart(Unit * pAttacker)
+			switch(rand()%2)
+		{
+			case 0:
+				{
+					RootTimer = AddTimer(3500);
+				}
+				break;
+			case 1:
+				{
+					RootTimer = AddTimer(3500);
+				}
+				break;
 		}
 
 		void AIUpdate()
@@ -61,6 +77,8 @@ class GarfrostAI : public MoonScriptBossAI
 				Emote("Axe too weak. Garfrost make better weapon and crush you!", Text_Yell, 16916);
 				_unit->CastSpell(_unit, SPELL_STOMP, false);
 				_unit->GetAIInterface()->MoveJump(639.075f, -208.774f, 528.931f);
+				_unit->Root();
+				RootTimer = AddTimer(3500);
 				_unit->CastSpell(_unit, SPELL_FROZEBLADE, true);
 				SetPhase(2);
 			}
@@ -70,9 +88,16 @@ class GarfrostAI : public MoonScriptBossAI
 				Emote("Garfrost tired of puny mortals, soon your bones will FREEZE!", Text_Yell, 16917);
 				_unit->CastSpell(_unit, SPELL_STOMP, false);
 				_unit->GetAIInterface()->MoveJump(725.325f, -236.978f, 528.848f);
+				_unit->Root();
+				RootTimer = AddTimer(3500);
 				_unit->RemoveAura(SPELL_FROZEBLADE);
 				_unit->CastSpell(_unit, SPELL_FROZEMACE, true);
 				SetPhase(3);
+			}
+
+			if(IsTimerFinished(RootTimer)
+			{
+				_unit->Unroot();
 			}
 			_unit->CastSpell(_unit, SPELL_PERMAFROST, true);
 		}
