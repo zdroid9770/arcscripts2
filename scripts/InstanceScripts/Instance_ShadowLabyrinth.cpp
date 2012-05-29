@@ -34,12 +34,12 @@ class AMBASSADORHELLMAWAI : public MoonScriptCreatureAI
 		{
 			AddSpell(CORROSIVE_ACID, Target_Self, 10, 2, 15);
 			AddSpell(AOE_FEAR, Target_Self, 15, 0, 25);
-			AddEmote(Event_OnCombatStart, "Pathetic mortals, you will pay dearly!", Text_Yell, 10475);
-			AddEmote(Event_OnCombatStart, "I will break you", Text_Yell, 10476);
-			AddEmote(Event_OnCombatStart, "Finally, something to relieve the tedium!", Text_Yell, 10477);
-			AddEmote(Event_OnTargetDied, "Do you fear death? Hahaha!", Text_Yell, 10478);
-			AddEmote(Event_OnTargetDied, "This is the part I enjoy most!", Text_Yell, 10479);
-			AddEmote(Event_OnDied, "Do not... grow... overconfident... mortal!", Text_Yell, 10480);
+			AddEmote(Event_OnCombatStart, "Pathetic mortals! you will pay dearly!", Text_Yell, 10475); // http://www.wowwiki.com/Ambassador_Hellmaw
+			AddEmote(Event_OnCombatStart, "I will break you!", Text_Yell, 10476); // http://www.wowwiki.com/Ambassador_Hellmaw 
+			AddEmote(Event_OnCombatStart, "Finally, something to relieve the tedium.", Text_Yell, 10477); // http://www.wowwiki.com/Ambassador_Hellmaw
+			AddEmote(Event_OnTargetDied, "Do you fear death?", Text_Yell, 10478); // http://www.wowwiki.com/Ambassador_Hellmaw
+			AddEmote(Event_OnTargetDied, "This is the part I enjoy most...", Text_Yell, 10479); // http://www.wowwiki.com/Ambassador_Hellmaw
+			AddEmote(Event_OnDied, "Do not... grow... overconfident, mortal.", Text_Yell, 10480); // http://www.wowwiki.com/Ambassador_Hellmaw
 		}
 };
 
@@ -65,11 +65,11 @@ class BLACKHEARTTHEINCITERAI : public MoonScriptCreatureAI
 			AddSpell(WAR_STOMP, Target_Self, 10, 0, 20);
 			//AddSpell(INCITE_CHAOS, Target_Self, 15, 0, 20);
 			AddEmote(Event_OnCombatStart, "You'll be sorry!", Text_Yell, 10486);
-			AddEmote(Event_OnCombatStart, "I see dead people.", Text_Yell, 10488);
+			AddEmote(Event_OnCombatStart, "I see dead people!", Text_Yell, 10488); //http://www.wowwiki.com/Blackheart_the_Inciter
 			AddEmote(Event_OnCombatStart, "Time for fun!", Text_Yell, 10487);
-			AddEmote(Event_OnTargetDied, "No comming back for you!", Text_Yell, 10489);
+			AddEmote(Event_OnTargetDied, "No coming back for you!", Text_Yell, 10489); //http://www.wowwiki.com/Blackheart_the_Inciter
 			AddEmote(Event_OnTargetDied, "Nice try!", Text_Yell, 10490);
-			AddEmote(Event_OnDied, "This...no..good", Text_Yell, 10491);
+			AddEmote(Event_OnDied, "This...no...good...", Text_Yell, 10491);//http://www.wowwiki.com/Blackheart_the_Inciter
 		}
 };
 
@@ -98,12 +98,12 @@ class GRANDMASTERVORPILAI : public MoonScriptCreatureAI
 			AddSpell(DRAW_SHADOWS, Target_Self, 8, 0, 25);
 			AddSpell(RAIN_OF_FIRE, Target_Destination, 8, 7, 25);
 
-			AddEmote(Event_OnCombatStart, "I'll make an offering of your blood!", Text_Yell, 10524);
-			AddEmote(Event_OnCombatStart, "You'll be a fine example, for the others.", Text_Yell, 10525);
-			AddEmote(Event_OnCombatStart, "Good, a worthy sacrifice.", Text_Yell, 10526);
-			AddEmote(Event_OnTargetDied, "I serve with pride.", Text_Yell, 10527);
+			AddEmote(Event_OnCombatStart, "I'll make an offering of your blood.", Text_Yell, 10524);//http://www.wowwiki.com/Grandmaster_Vorpil
+			AddEmote(Event_OnCombatStart, "You'll be a fine examplemfor the others.", Text_Yell, 10525);//http://www.wowwiki.com/Grandmaster_Vorpil
+			AddEmote(Event_OnCombatStart, "Good! a worthy sacrifice.", Text_Yell, 10526);//http://www.wowwiki.com/Grandmaster_Vorpil
+			AddEmote(Event_OnTargetDied, "I serve with pride!", Text_Yell, 10527);//http://www.wowwiki.com/Grandmaster_Vorpil
 			AddEmote(Event_OnTargetDied, "Your death is for the greater cause!", Text_Yell, 10528);
-			AddEmote(Event_OnDied, "I give my life... Gladly.", Text_Yell, 10529);
+			AddEmote(Event_OnDied, "I give my life... gladly...", Text_Yell, 10529);//http://www.wowwiki.com/Grandmaster_Vorpil
 		}
 };
 
@@ -132,7 +132,7 @@ class MURMURAI : public MoonScriptCreatureAI
 		MURMURAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			_unit->SetHealthPct(40);
-			AddSpell(SONIC_BOOM1, Target_Self, 10, 7, 25, 0, 0, false, NULL, Text_Yell, 0, "Murmur draws energy from the air...");
+			AddSpell(SONIC_BOOM1, Target_Self, 10, 7, 25, 0, 0, false, NULL, Text_Emote, 0, "Murmur draws energy from the air...");
 			AddSpell(SHOCKWAVE, Target_Self, 6, 0, 15);
 			AddSpell(MURMURS_TOUCH, Target_Self, 10, 1, 20);
 			//AddSpell(RESONANCE, Target_Self, 0, 0, 5);

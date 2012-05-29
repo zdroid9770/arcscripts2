@@ -170,7 +170,7 @@ class SoulFragmentAI : public MoonScriptBossAI
 // Devourer of Souls
 //ISSUES: Unleash souls & wailing souls shouldn't be done in phases but time-wise
 enum DevourerData{
-	NPC_DEVOURER		= 36497,
+	NPC_DEVOURER		= 36502,
 	SPELL_MIRRORSOUL	= 69051,
 	SPELL_BLAST			= 68982,
 	SPELL_UNLEASHSOULS	= 68939,

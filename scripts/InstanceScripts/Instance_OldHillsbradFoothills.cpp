@@ -226,6 +226,7 @@ class ErozionGossip : public GossipScript
 			{
 				if(Item* pBombs = objmgr.CreateItem(25853, Plr))
 					Plr->GetItemInterface()->AddItemToFreeSlot(pBombs);
+					Plr->Gossip_Complete();
 			}
 		}
 };

@@ -745,7 +745,7 @@ class HighBotanistFreywinnAI : public CreatureAIScript
 			PlantTimer = 10;
 			CastTime();
 			RegisterAIUpdateEvent(_unit->GetBaseAttackTime(MELEE));
-			_unit->SendChatMessage(CHAT_MSG_MONSTER_YELL, LANG_UNIVERSAL, "What are you doin'? These <missing_word> are very delicate!");	// needs checks!
+			_unit->SendChatMessage(CHAT_MSG_MONSTER_YELL, LANG_UNIVERSAL, "What are you doing? These specimens are very delicate!");	// http://www.wowwiki.com/High_Botanist_Freywinn
 			_unit->PlaySoundToSet(11144);
 		}
 
@@ -774,7 +774,7 @@ class HighBotanistFreywinnAI : public CreatureAIScript
 				switch(RandomSpeach)
 				{
 					case 0:
-						_unit->SendChatMessage(CHAT_MSG_MONSTER_YELL, LANG_UNIVERSAL, "Your life circle is now concluded!");
+						_unit->SendChatMessage(CHAT_MSG_MONSTER_YELL, LANG_UNIVERSAL, "Your life circle is now complete!");
 						_unit->PlaySoundToSet(11145);
 						break;
 					case 1:
@@ -790,7 +790,7 @@ class HighBotanistFreywinnAI : public CreatureAIScript
 			PlantTimer = 10;
 			CastTime();
 			RemoveAIUpdateEvent();
-			_unit->SendChatMessage(CHAT_MSG_MONSTER_YELL, LANG_UNIVERSAL, "Those <missing_word> must be preserved!");	// ??
+			_unit->SendChatMessage(CHAT_MSG_MONSTER_YELL, LANG_UNIVERSAL, "The specimens... must be preserved.");	// http://www.wowwiki.com/High_Botanist_Freywinn
 			_unit->PlaySoundToSet(11149);
 		}
 
@@ -844,13 +844,13 @@ class HighBotanistFreywinnAI : public CreatureAIScript
 			{
 				case 0:
 					{
-						_unit->SendChatMessage(CHAT_MSG_MONSTER_YELL, LANG_UNIVERSAL, "<missing_text>");
+						_unit->SendChatMessage(CHAT_MSG_MONSTER_YELL, LANG_UNIVERSAL, "Endorel aluminor!"); // http://www.wowwiki.com/High_Botanist_Freywinn
 						_unit->PlaySoundToSet(11147);
 					}
 					break;
 				case 1:
 					{
-						_unit->SendChatMessage(CHAT_MSG_MONSTER_YELL, LANG_UNIVERSAL, "Nature bends to my will!");
+						_unit->SendChatMessage(CHAT_MSG_MONSTER_YELL, LANG_UNIVERSAL, "Nature bends to my will!"); // http://www.wowwiki.com/High_Botanist_Freywinn
 						_unit->PlaySoundToSet(11148);
 					}
 					break;

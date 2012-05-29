@@ -1884,7 +1884,7 @@ class HydromancerThespiaAI : public CreatureAIScript
 						_unit->PlaySoundToSet(10364);
 						break;
 					case 1:
-						_unit->SendChatMessage(CHAT_MSG_MONSTER_YELL, LANG_UNIVERSAL, "For my Lady and Master.");
+						_unit->SendChatMessage(CHAT_MSG_MONSTER_YELL, LANG_UNIVERSAL, "For my Lady and Master!");//http://www.wowwiki.com/Hydromancer_Thespia
 						_unit->PlaySoundToSet(10365);
 						break;
 				}
@@ -2158,11 +2158,11 @@ class MekgineerSteamriggerAI : public CreatureAIScript
 			switch(RandomSpeach)
 			{
 				case 0:
-					_unit->SendChatMessage(CHAT_MSG_MONSTER_YELL, LANG_UNIVERSAL, "Your in for a World-O-Hurt!");
+					_unit->SendChatMessage(CHAT_MSG_MONSTER_YELL, LANG_UNIVERSAL, "You're in for a world of hurt!");//http://www.wowwiki.com/Mekgineer_Steamrigger
 					_unit->PlaySoundToSet(10368);
 					break;
 				case 1:
-					_unit->SendChatMessage(CHAT_MSG_MONSTER_YELL, LANG_UNIVERSAL, "Eat hot metal! Scumbag!");
+					_unit->SendChatMessage(CHAT_MSG_MONSTER_YELL, LANG_UNIVERSAL, "Eat hot metal, scumbag!");//http://www.wowwiki.com/Mekgineer_Steamrigger
 					_unit->PlaySoundToSet(10369);
 					break;
 				case 2:
@@ -2186,7 +2186,7 @@ class MekgineerSteamriggerAI : public CreatureAIScript
 				switch(RandomSpeach)
 				{
 					case 0:
-						_unit->SendChatMessage(CHAT_MSG_MONSTER_YELL, LANG_UNIVERSAL, "You just got served, Punk!");
+						_unit->SendChatMessage(CHAT_MSG_MONSTER_YELL, LANG_UNIVERSAL, "You just got served, punk!");//http://www.wowwiki.com/Mekgineer_Steamrigger
 						_unit->PlaySoundToSet(10372);
 						break;
 					case 1:
@@ -2222,7 +2222,7 @@ class MekgineerSteamriggerAI : public CreatureAIScript
 
 		void OnDied(Unit* mKiller)
 		{
-			_unit->SendChatMessage(CHAT_MSG_MONSTER_YELL, LANG_UNIVERSAL, "Mommy");
+			_unit->SendChatMessage(CHAT_MSG_MONSTER_YELL, LANG_UNIVERSAL, "Mommy!");//http://www.wowwiki.com/Mekgineer_Steamrigger
 			_unit->PlaySoundToSet(10375);
 
 			RemoveAIUpdateEvent();
@@ -2515,7 +2515,7 @@ class WarlordKalitreshAI : public CreatureAIScript
 			spells[3].perctrigger = 0.0f;
 			spells[3].attackstoptimer = 1000;
 			spells[3].soundid = 10391;
-			spells[3].speech = "This is not nearly over!";
+			spells[3].speech = "This is not nearly over...";//http://www.wowwiki.com/Warlord_Kalithresh
 
 			DistillerNumber = 0;
 			RagePhaseTimer = 0;
@@ -2550,7 +2550,7 @@ class WarlordKalitreshAI : public CreatureAIScript
 					_unit->PlaySoundToSet(10393);
 					break;
 				case 2:
-					_unit->SendChatMessage(CHAT_MSG_MONSTER_YELL, LANG_UNIVERSAL, "Ba'anthalso'dorei!");
+					_unit->SendChatMessage(CHAT_MSG_MONSTER_YELL, LANG_UNIVERSAL, "Ba'anthalso-dorei!");//http://www.wowwiki.com/Warlord_Kalithresh
 					_unit->PlaySoundToSet(10394);
 					break;
 			}
@@ -2566,7 +2566,7 @@ class WarlordKalitreshAI : public CreatureAIScript
 				switch(RandomSpeach)
 				{
 					case 0:
-						_unit->SendChatMessage(CHAT_MSG_MONSTER_YELL, LANG_UNIVERSAL, "Scram, surface filth!");
+						_unit->SendChatMessage(CHAT_MSG_MONSTER_YELL, LANG_UNIVERSAL, "Squirm, surface filth!");//http://www.wowwiki.com/Warlord_Kalithresh
 						_unit->PlaySoundToSet(10395);
 						break;
 					case 1:

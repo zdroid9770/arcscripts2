@@ -17,7 +17,39 @@
  */
  
  #include "Setup.h"
- 
+
+/*/ The Violet Hold
+// ISSUES: There is 18 waves but we need world states so the portal #'s can show. Prison gate thing does not work.
+class LieutenantSinclariGossip : public GossipScript
+{
+	public:
+		void GossipHello(Object* pObject, Player* Plr)
+		{
+			GossipMenu* Menu;
+			objmgr.CreateGossipMenuForPlayer(&Menu, pObject->GetGUID(), 1, Plr);
+
+			Menu->AddItem(0, "Activate the crystals when we're in trouble, right?", 1); // Not sure if this is the right text.
+
+			Menu->SendTo(Plr);
+		}
+
+		void GossipSelectOption(Object* pObject, Player*  Plr, uint32 Id, uint32 IntId, const char* Code)
+		{
+			switch(IntId)
+			{
+				case 0:
+					{
+						GossipHello(pObject, Plr);
+					}
+					break;
+				case 1:
+					{
+						_unit->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, "Im locking the door, thanks again for doing this.", 1000);
+						_unit->GetAIInterface()->setCurrentAgent(AGENT_NULL);
+						_unit->GetAIInterface()->SetAIState(STATE_SCRIPTIDLE);
+					*/
+
+
  void SetupVioletHold(ScriptMgr * mgr)
  {
  }

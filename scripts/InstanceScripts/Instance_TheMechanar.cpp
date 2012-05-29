@@ -35,14 +35,14 @@ class GatewatcherGyroKillAI : public MoonScriptCreatureAI
 		{
 			SpellDesc * sSawBlade = AddSpell(SAW_BLADE, Target_Current, 13.0f, 0, -1);
 			sSawBlade->AddEmote("Measure twice; cut once.", Text_Yell, 11104);
-			sSawBlade->AddEmote("If my division is correct, you should be quiet dead!", Text_Yell, 11105);
+			sSawBlade->AddEmote("If my division is correct, you should be quite dead!", Text_Yell, 11105);
 
 			AddSpell(SHADOW_POWER_GKILL, Target_Self, 7, 2, -1);
 			AddSpell(STEAM_OF_MACHINE_FLUID_GKILL, Target_Self, 9, 0, -1);
 
 			AddEmote(Event_OnCombatStart, "I predict a painful death.", Text_Yell, 11101);
-			AddEmote(Event_OnTargetDied, "Your strategy was flat!", Text_Yell, 11102);
-			AddEmote(Event_OnTargetDied, "Yes, the only logical outcome!", Text_Yell, 11103);
+			//AddEmote(Event_OnTargetDied, "Your strategy was flat!", Text_Yell, 11102); <- Don't see this on wowwiki.
+			AddEmote(Event_OnTargetDied, "Yes, the only logical outcome.", Text_Yell, 11103); //http://www.wowwiki.com/Gatewatcher_Gyro-Kill
 			AddEmote(Event_OnDied, "An unforseen... contingency.", Text_Yell, 11106);
 		}
 };
@@ -69,10 +69,10 @@ class GatewatcherIronHandAI : public MoonScriptCreatureAI
 			AddSpell(HAMMER_PUNCH, Target_Current, 9, 0, -1); 
 			AddSpell(STREAM_OF_MACHINE_FLUID_IHAND, Target_RandomPlayer, 7, 0, -1); 
 			AddSpell(SHADOW_POWER_IHAND, Target_Self, 7, 2, -1);
-			AddEmote(Event_OnCombatStart, "You have approximately five seconds to live!", Text_Yell, 11109);
-			AddEmote(Event_OnTargetDied, "A foregone conclusion!", Text_Yell, 11110);
-			AddEmote(Event_OnTargetDied, "The processing will continue as scheduled!", Text_Yell, 11111);
-			AddEmote(Event_OnDied, "My calculations... did not...", Text_Yell, 11114);
+			AddEmote(Event_OnCombatStart, "You have approximately five seconds to live.", Text_Yell, 11109); // http://www.wowwiki.com/Gatewatcher_Iron-Hand
+			AddEmote(Event_OnTargetDied, "A foregone conclusion.", Text_Yell, 11110);//http://www.wowwiki.com/Gatewatcher_Iron-Hand
+			//AddEmote(Event_OnTargetDied, "The processing will continue as scheduled!", Text_Yell, 11111); <- Don't see this on wowwiki
+			AddEmote(Event_OnDied, "My calculations did not...", Text_Yell, 11114);//http://www.wowwiki.com/Gatewatcher_Iron-Hand
 		}
 };
 
@@ -96,7 +96,7 @@ class MechanoLordCapacitusAI : public MoonScriptCreatureAI
 			AddSpell(REFLECTIVE_MAGIC_SHIELD, Target_Self, 7, 0, -1, 0, 0, false, "Go ahead, gimme your best shot. I can take it!", Text_Yell, 11166);
 			AddSpell(SEED_OF_CORRUPTION, Target_Self, 5, 0, -1);
 			AddEmote(Event_OnCombatStart, "You should split while you can.", Text_Yell, 11162);
-			AddEmote(Event_OnTargetDied, "Can't say I didn't warn you!", Text_Yell, 11163);
+			//AddEmote(Event_OnTargetDied, "Can't say I didn't warn you!", Text_Yell, 11163); <- Didn't see this on wowwiki
 			AddEmote(Event_OnTargetDied, "Damn, I'm good!", Text_Yell, 11164);
 			AddEmote(Event_OnDied, "Bully!", Text_Yell, 11167);
 		}
@@ -132,7 +132,7 @@ class NethermancerSepethreaAI : public MoonScriptCreatureAI
 		void OnCombatStart(Unit* mTarget)
 		{
 			_unit->CastSpell(_unit, SUMMON_RAGIN_FLAMES, true);
-			Emote("I am not alone!", Text_Yell, 11191);
+			//Emote("I am not alone!", Text_Yell, 11191); <- Don't see this on wowwiki
 		}
 };
 
@@ -181,7 +181,7 @@ class PathaleonTheCalculatorAI : public MoonScriptCreatureAI
 				_unit->CastSpell(_unit, SUMMON_NETHER_WRAITH2, true);
 				_unit->CastSpell(_unit, SUMMON_NETHER_WRAITH3, true);
 				_unit->CastSpell(_unit, SUMMON_NETHER_WRAITH4, true);
-				Emote("Time to supplement my work force.", Text_Yell, 11196);
+				Emote("Time to supplement my workforce.", Text_Yell, 11196);//http://www.wowwiki.com/Pathaleon_the_Calculator
 				ResetTimer(SummonTimer, (rand()%16 + 30)*SEC_IN_MS);
 			}
 		}

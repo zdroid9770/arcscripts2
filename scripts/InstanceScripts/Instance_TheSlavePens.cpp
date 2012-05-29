@@ -1066,11 +1066,11 @@ class MennuTheBetrayerAI : public CreatureAIScript
 			switch(RandomSpeach)
 			{
 				case 0:
-					_unit->SendChatMessage(CHAT_MSG_MONSTER_YELL, LANG_UNIVERSAL, "The work must continue!");
+					_unit->SendChatMessage(CHAT_MSG_MONSTER_YELL, LANG_UNIVERSAL, "The work must continue.");//http://www.wowwiki.com/Mennu_the_Betrayer
 					_unit->PlaySoundToSet(10376);
 					break;
 				case 1:
-					_unit->SendChatMessage(CHAT_MSG_MONSTER_YELL, LANG_UNIVERSAL, "You brought this on yourselves!");
+					_unit->SendChatMessage(CHAT_MSG_MONSTER_YELL, LANG_UNIVERSAL, "You brought this on yourselves.");//http://www.wowwiki.com/Mennu_the_Betrayer
 					_unit->PlaySoundToSet(10378);
 					break;
 				case 2:
@@ -1090,11 +1090,11 @@ class MennuTheBetrayerAI : public CreatureAIScript
 				switch(RandomSpeach)
 				{
 					case 0:
-						_unit->SendChatMessage(CHAT_MSG_MONSTER_YELL, LANG_UNIVERSAL, "It had to be done!");
+						_unit->SendChatMessage(CHAT_MSG_MONSTER_YELL, LANG_UNIVERSAL, "It had to be done.");//http://www.wowwiki.com/Mennu_the_Betrayer
 						_unit->PlaySoundToSet(10380);
 						break;
 					case 1:
-						_unit->SendChatMessage(CHAT_MSG_MONSTER_YELL, LANG_UNIVERSAL, "You should not have come!");
+						_unit->SendChatMessage(CHAT_MSG_MONSTER_YELL, LANG_UNIVERSAL, "You should not have come.");//http://www.wowwiki.com/Mennu_the_Betrayer
 						_unit->PlaySoundToSet(10381);
 						break;
 				}
@@ -1111,7 +1111,7 @@ class MennuTheBetrayerAI : public CreatureAIScript
 
 		void OnDied(Unit* mKiller)
 		{
-			_unit->SendChatMessage(CHAT_MSG_MONSTER_YELL, LANG_UNIVERSAL, "I... Deserve this...");
+			_unit->SendChatMessage(CHAT_MSG_MONSTER_YELL, LANG_UNIVERSAL, "I... Deserve this.");//http://www.wowwiki.com/Mennu_the_Betrayer
 			_unit->PlaySoundToSet(10382);
 
 			RemoveAIUpdateEvent();
