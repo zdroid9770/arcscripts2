@@ -245,13 +245,17 @@ void SetupBarrens(ScriptMgr* mgr);
 void SetupBoreanTundra(ScriptMgr* mgr);
 void SetupSholazarBasin(ScriptMgr* mgr);
 void SetupQuestGossip(ScriptMgr* mgr);
-void SetupQuestHooks(ScriptMgr* mgr);
-void SetupUnsorted(ScriptMgr* mgr);
+void SetupGeneralQuests(ScriptMgr* mgr);
 void SetupZulDrak(ScriptMgr * mgr);
 void SetupIcecrown(ScriptMgr* mgr);
 void SetupWesternPlaguelandsQuests(ScriptMgr * mgr);
 void SetupWetlands(ScriptMgr *mgr);
 void SetupAshenvaleQuests(ScriptMgr * mgr);
+
+//HOOKS
+void SetupOnAreaHooks(ScriptMgr* mgr);
+void SetupOnEmoteHooks(ScriptMgr* mgr);
+void SetupQuestHooks(ScriptMgr* mgr);
 
 struct ScriptSpell
 {
