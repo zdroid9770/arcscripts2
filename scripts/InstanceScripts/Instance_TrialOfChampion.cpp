@@ -75,13 +75,13 @@ enum PALETRESSData{
 class PaletressAI : public MoonScriptBossAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(PaletreesAI)
-		PaletreesAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
+		ADD_CREATURE_FACTORY_FUNCTION(PaletressAI)
+		PaletressAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
 		{
 			AddSpell(SPELL_HOLYSMITE, Target_RandomPlayer, 60, 2, 0);
 			AddSpell(SPELL_HOLYNOVA, Target_Self, 40, 0, 10);
 			AddSpell(SPELL_RENEW, Target_Self, 10, 1, 15);
-			Confess = AddSpell(SPELL_CONFESS, Target_Self, 0, 5, 0);
+			Confess = AddSpell(SPELL_CONFESS, Target_Current, 0, 5, 0);
 
 			AddEmote(Event_OnCombatStart, "Well then, let us begin.", Text_Yell, 16247);
 			AddEmote(Event_OnTargetDied, "Take your rest.", Text_Yell, 16250); // Need sound ID
@@ -90,7 +90,7 @@ class PaletressAI : public MoonScriptBossAI
 
 		void OnLoad()
 		{
-			SetDisplayWeaponIds(20257, 0);// need her staff ID this just brings up a white checkered cube for odd reason.
+			SetDisplayWeaponIds(812, 0);// Isn't the right staff but it will for now can't find her real staff
 		}
 
 		void AIUpdate()
@@ -143,7 +143,7 @@ class MemoryAI : public MoonScriptCreatureAI
 
  void SetupTrialOfChampionHold(ScriptMgr * mgr)
  {
-	 mgr->register_creature_script(NPC_PALETRESS, &PaletreesAI::Create);
+	 mgr->register_creature_script(NPC_PALETRESS, &PaletressAI::Create);
 	 mgr->register_creature_script(34942, &MemoryAI::Create);
 	 mgr->register_creature_gossip(35005, new BrightStarGossip);
 	 mgr->register_creature_script(35005, &BrightStarAI::Create);
