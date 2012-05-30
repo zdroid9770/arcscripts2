@@ -63,7 +63,7 @@ class BrightStarGossip : public Arcemu::Gossip::Script
 };
 
 enum PALETRESSData{
-	NPC_PALETREES		= 34928,
+	NPC_PALETRESS		= 34928,
 	SPELL_HOLYSMITE		= 66536,
 	SPELL_HOLYNOVA		= 66546,
 	SPELL_REFLECTSHIELD	= 66515,
