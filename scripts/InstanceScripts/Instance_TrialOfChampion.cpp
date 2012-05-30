@@ -23,6 +23,44 @@ Information: http://www.wowhead.com/zone=4723
 ISSUES: Need to have a check if alliance or horde player than spawn the correct people.
 */
 
+class BrightStarAI : public MoonScriptCreatureAI
+{
+public:
+	ADD_CREATURE_FACTORY_FUNCTION(BrightStarAI)
+	BrightStarAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
+	{
+	}
+	// This needs work I skipped the horses part this is the 2nd boss.
+	void StartInstance(Unit* pTarget)
+	{
+			if(Creature * mBoss = _unit->GetMapMgr()->GetInterface()->GetCreatureNearestCoords(746.583f, 559.018f, 435.492f, 34996))
+			{
+				MoonScriptBossAI * pBoss = dynamic_cast<MoonScriptBossAI*>(mBoss->GetScript());
+				pBoss->Emote("Welcome champions! You have heard the call of the Argent Crusade and you boldly answered! It is here, in the Crusaders' Coliseum, that you will face your greatest challenges. Those of you who survive the rigors of the coliseum will join the Argent Crusade on its march to Icecrown Citadel.", Text_Yell, 16036);
+				pBoss->SpawnCreature(34928);
+			}
+	}
+};
+
+class BrightStarGossip : public Arcemu::Gossip::Script
+{
+	public:
+		void OnHello(Object* pObject, Player* Plr)
+		{
+			Arcemu::Gossip::Menu::SendQuickMenu(pObject->GetGUID(), objmgr.GetGossipTextForNpc(pObject->GetEntry()), Plr, 1, Arcemu::Gossip::ICON_CHAT, "I would like to start the Trial of the Champion");
+		}
+
+		void OnSelectOption(Object* pObject, Player*  Plr, uint32 Id, const char* Code)
+		{
+			if(Id == 1)
+			{
+				if(BrightStarAI* pBrightStar = TO< BrightStarAI* >(TO_CREATURE(pObject)->GetScript()))
+					pBrightStar->StartInstance((Unit*)pBrightStar);
+					Plr->Gossip_Complete();
+					//Unit*pBrightStar->GetAIInterface()->MoveJump(732.578f, 670.763f, 412.374f);
+			}
+		}
+};
 
 enum PALETREESData{
 	NPC_PALETREES		= 34928,
@@ -48,6 +86,11 @@ class PaletreesAI : public MoonScriptBossAI
 			AddEmote(Event_OnCombatStart, "Well then, let us begin.", Text_Yell, 16247);
 			AddEmote(Event_OnTargetDied, "Take your rest.", Text_Yell, 16250); // Need sound ID
 			AddEmote(Event_OnTargetDied, "Be at ease.", Text_Yell, 16251); // Need sound ID
+		}
+
+		void OnLoad()
+		{
+			SetDisplayWeaponIds(20257, 0);
 		}
 
 		void AIUpdate()
@@ -78,11 +121,11 @@ class PaletreesAI : public MoonScriptBossAI
 		SpellDesc * Confess;
 };
 
-class MemoryAI : public MoonScriptBossAI
+class MemoryAI : public MoonScriptCreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(MemoryAI)
-		MemoryAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
+		MemoryAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 		}
 
@@ -102,5 +145,7 @@ class MemoryAI : public MoonScriptBossAI
  {
 	 mgr->register_creature_script(NPC_PALETREES, &PaletreesAI::Create);
 	 mgr->register_creature_script(34942, &MemoryAI::Create);
+	 mgr->register_creature_gossip(35005, new BrightStarGossip);
+	 mgr->register_creature_script(35005, &BrightStarAI::Create);
  }
  
