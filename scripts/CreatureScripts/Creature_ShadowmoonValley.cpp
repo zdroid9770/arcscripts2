@@ -18,15 +18,15 @@
 
 #include "Setup.h"
 
-class EclipsionSpawn : public CreatureAIScript
+class EclipsionSpawn : public ScriptedCreature
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(EclipsionSpawn)
-		EclipsionSpawn(Creature *pCreature) : CreatureAIScript(pCreature) {}
+		EclipsionSpawn(Creature *pCreature) : ScriptedCreature(pCreature) {}
 
 		void OnDied(Unit *mKiller)
 		{
-			GetUnit()->CastSpell(GetUnit(), 38311, true); // Cast spell: "Summon Eclipsion Hawkstrider"
+			_unit->CastSpell(_unit, 38311, true); // Cast spell: "Summon Eclipsion Hawkstrider"
 		}
 };
 

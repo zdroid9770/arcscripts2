@@ -18,11 +18,11 @@
 
 #include "Setup.h"
 
-class PrimordialDrakeEggAI : public MoonScriptCreatureAI
+class PrimordialDrakeEggAI : public ScriptedCreature
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(PrimordialDrakeEggAI)
-		PrimordialDrakeEggAI(Creature* c) : MoonScriptCreatureAI(c) {}
+		PrimordialDrakeEggAI(Creature* c) : ScriptedCreature(c) {}
 
 		void OnDied(Unit *mKiller)
 		{

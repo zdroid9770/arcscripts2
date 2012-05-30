@@ -18,29 +18,45 @@
 
 #include "Setup.h"
 
-class Aeranas : public MoonScriptCreatureAI
+class Aeranas : public ScriptedCreature
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(Aeranas)
-		Aeranas(Creature * pCreature) : MoonScriptCreatureAI(pCreature)
+		Aeranas(Creature * pCreature) : ScriptedCreature(pCreature)
 		{
-			AddSpell(15535, Target_Current, 30.0f, 2.0f, 20);
-			AddSpell(12553, Target_Current, 50.0f, 0, 10);
+			//AddSpell(15535, Target_Current, 30.0f, 2.0f, 20);
+			//AddSpell(12553, Target_Current, 50.0f, 0, 10);
+			EnvelopingWindsTimer = (12+rand()%5)*1000;
+		}
+
+		void OnLoad()
+		{
+			Emote("Avruu's magic... it still controls me. You must fight me, mortal. It's the only way to break the spell!", Text_Yell, 0);
 		}
 
 		void OnCombatStop(Unit * mTarget)
 		{
-			GetUnit()->Despawn(0,0);
+			_unit->Despawn(180000, 0);	//3 min
 		}
 
 		void AIUpdate()
 		{
-			if(GetUnit()->GetHealthPct() <= 30)
+			if(EnvelopingWindsTimer <= mAIUpdateFrequency)
 			{
-				WipeHateList();
-				GetUnit()->SetFaction(35);
+				_unit->CastSpell(GetTarget(TARGET_ATTACKING), 12745, true);
+				EnvelopingWindsTimer = (12+rand()%5)*1000;
+			}else EnvelopingWindsTimer -= mAIUpdateFrequency;
+
+			if(_unit->GetHealthPct() <= 30)
+			{
+				Emote("Avruu's magic is broken! I'm free once again!", Text_Say, 0);
+				_unit->WipeHateList();
+				_unit->SetFaction(35);
 			}
 		}
+
+	private:
+		uint32 EnvelopingWindsTimer;
 };
 
 void SetupHellfireCreatures(ScriptMgr * mgr)

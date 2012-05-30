@@ -18,66 +18,88 @@
 
 #include "Setup.h"
 
-class MobsGhoulFlayer : public MoonScriptCreatureAI
+class MobsGhoulFlayer : public ScriptedCreature
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(MobsGhoulFlayer);
-		MobsGhoulFlayer(Creature* pCreature) : MoonScriptCreatureAI(pCreature){}
+		MobsGhoulFlayer(Creature* c) : ScriptedCreature(c){}
 
 		void OnDied(Unit *mKiller)
 		{
 			if(!mKiller->IsPlayer())
 				return;
 
-			if(MoonScriptCreatureAI * c = SpawnCreature(11064, _unit->GetPositionX(), _unit->GetPositionY(), _unit->GetPositionZ(), _unit->GetOrientation()))
-				c->Despawn(60*SEC_IN_MS);
+			SummonCreature(11064, _unit->GetPositionX(), _unit->GetPositionY(), _unit->GetPositionZ(), _unit->GetOrientation(), 60000);
 		}
 };
 
-class ArajTheSummoner : public MoonScriptCreatureAI
+class ArajTheSummoner : public ScriptedCreature
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(ArajTheSummoner);
-		ArajTheSummoner(Creature* pCreature) : MoonScriptCreatureAI(pCreature){}
+		ArajTheSummoner(Creature* c) : ScriptedCreature(c){}
 
 		void OnDied(Unit* mKiller)
 		{
 			if(!mKiller->IsPlayer())
 				return;
 
-			if(GameObject* go = sEAS.SpawnGameobject(TO_PLAYER(mKiller), 177241, _unit->GetPositionX(), _unit->GetPositionY(), _unit->GetPositionZ(), _unit->GetOrientation(), 1, 0, 0, 0, 0))
-				sEAS.GameobjectDelete(go, 60000);
+			SummonGameobject(177241, _unit->GetPositionX(), _unit->GetPositionY(), _unit->GetPositionZ(), _unit->GetOrientation(), 60000);
 		}
 };
 
-class CursedMageAI : public MoonScriptCreatureAI
+class CursedMageAI : public ScriptedCreature
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(CursedMageAI);
-		CursedMageAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
+		CursedMageAI(Creature* pCreature) : ScriptedCreature(pCreature)
 		{
-			AddSpell(20829, Target_Current, 30, 1, 5);	//Arcane Bolt
+			ArcaneBoltTimer = (4+rand()%2)*1000;
 		}
 
 		void OnDied(Unit* mKiller)
 		{
 			_unit->CastSpell(mKiller, 16567, true);	//Tainted Mind
 		}
+
+		void AIUpdate()
+		{
+			if(ArcaneBoltTimer <= mAIUpdateFrequency)
+			{
+				_unit->CastSpell(GetTarget(TARGET_ATTACKING), 20829, true);
+				ArcaneBoltTimer = (4+rand()%2)*1000;
+			}else ArcaneBoltTimer -= mAIUpdateFrequency;
+		}
+
+	private:
+		uint32 ArcaneBoltTimer;
 };
 
-class CarrionDevourerAI : public MoonScriptCreatureAI
+class CarrionDevourerAI : public ScriptedCreature
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(CarrionDevourerAI);
-		CarrionDevourerAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
+		CarrionDevourerAI(Creature* pCreature) : ScriptedCreature(pCreature)
 		{
-			AddSpell(16449, Target_Current, 30, 0, 8);	//Maggot Slime
+			MaggotGooTimer = (4+rand()%4)*1000;
 		}
 
 		void OnDied(Unit* mKiller)
 		{
 			_unit->CastSpell(mKiller, 17197, true);	//Maggot Goo
 		}
+
+		void AIUpdate()
+		{
+			if(MaggotGooTimer <= mAIUpdateFrequency)
+			{
+				_unit->CastSpell(GetTarget(TARGET_ATTACKING), 16449, true);
+				MaggotGooTimer = (8+rand()%5)*1000;
+			}else MaggotGooTimer -= mAIUpdateFrequency;
+		}
+
+	private:
+		uint32 MaggotGooTimer;
 };
 
 void SetupEasternPlaguelandsCreatures(ScriptMgr * mgr)

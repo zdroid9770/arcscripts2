@@ -18,11 +18,11 @@
 
 #include "Setup.h"
 
-class RottedOneAI : public MoonScriptCreatureAI
+class RottedOneAI : public ScriptedCreature
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(RottedOneAI);
-		RottedOneAI(Creature* c) : MoonScriptCreatureAI(c){}
+		RottedOneAI(Creature* c) : ScriptedCreature(c){}
 
 		void OnDied(Unit *mKiller)
 		{

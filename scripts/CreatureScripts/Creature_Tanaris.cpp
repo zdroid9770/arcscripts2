@@ -18,19 +18,19 @@
 
 #include "Setup.h"
 
-class PirateTreasureTrigger : public CreatureAIScript
+class PirateTreasureTrigger : public ScriptedCreature
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(PirateTreasureTrigger)
-		PirateTreasureTrigger(Creature *pCreature) : CreatureAIScript(pCreature) {}
+		PirateTreasureTrigger(Creature *pCreature) : ScriptedCreature(pCreature) {}
 
 		void OnLoad()
 		{
-			GetUnit()->CastSpell(GetUnit(), 11485, true ); // Cast spell: "Summon Treasure Hunting Bucanneer".
-			GetUnit()->CastSpell(GetUnit(), 11487, true ); // Cast spell: "Summon Treasure Hunting Swashbuckler".
-			GetUnit()->CastSpell(GetUnit(), 11487, true ); // Cast spell: "Summon Treasure Hunting Swashbuckler".
-			GetUnit()->CastSpell(GetUnit(), 11463, true ); // Cast spell: "Summon Treasure Hunting Pirate".
-			GetUnit()->CastSpell(GetUnit(), 11463, true ); // Cast spell: "Summon Treasure Hunting Pirate".
+			_unit->CastSpell(_unit, 11485, true); // Cast spell: "Summon Treasure Hunting Bucanneer".
+			_unit->CastSpell(_unit, 11487, true); // Cast spell: "Summon Treasure Hunting Swashbuckler".
+			_unit->CastSpell(_unit, 11487, true); // Cast spell: "Summon Treasure Hunting Swashbuckler".
+			_unit->CastSpell(_unit, 11463, true); // Cast spell: "Summon Treasure Hunting Pirate".
+			_unit->CastSpell(_unit, 11463, true); // Cast spell: "Summon Treasure Hunting Pirate".
 		}
 };
 
@@ -38,3 +38,4 @@ void SetupTanarisCreature(ScriptMgr * mgr)
 {
 	mgr->register_creature_script(7898, &PirateTreasureTrigger::Create);	// Pirate treasure trigger mob
 }
+

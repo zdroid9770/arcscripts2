@@ -18,16 +18,15 @@
 
 #include "Setup.h"
 
-class CorruptMinorManifestationWater : public CreatureAIScript
+class CorruptMinorManifestationWater : public ScriptedCreature
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(CorruptMinorManifestationWater)
-		CorruptMinorManifestationWater(Creature *pCreature) : CreatureAIScript(pCreature) {}
+		CorruptMinorManifestationWater(Creature *pCreature) : ScriptedCreature(pCreature) {}
 
 		void OnDied(Unit *mKiller)
 		{
-			LocationVector vect(GetUnit()->GetPositionX()+2, GetUnit()->GetPositionY()+2, GetUnit()->GetPositionZ(), GetUnit()->GetOrientation());
-			sEAS.SpawnCreature(TO_PLAYER(mKiller), 5895, vect.x, vect.y, vect.z, vect.o, DEFAULT_DESPAWN_TIMER);
+			SummonCreature(5895, _unit->GetPositionX()+2, _unit->GetPositionY()+2, _unit->GetPositionZ(), _unit->GetOrientation(), 180000);
 		}
 };
 
