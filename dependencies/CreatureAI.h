@@ -17,14 +17,29 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef MOON_SCRIPT_CREATURE_AI
-#define MOON_SCRIPT_CREATURE_AI
+#ifndef CREATURE_AI
+#define CREATURE_AI
+
+#define DEFAULT_UPDATE_FREQUENCY 1000
+
+enum TargetType
+{
+    TARGET_SELF,
+    TARGET_VARIOUS,
+    TARGET_ATTACKING,
+    TARGET_DESTINATION,
+    TARGET_SOURCE,
+    TARGET_RANDOM_FRIEND,	// doesn't work yet
+    TARGET_RANDOM_SINGLE,
+    TARGET_RANDOM_DESTINATION
+};
 
 enum TextType
 {
     Text_Say,
     Text_Yell,
     Text_Emote,
+	Text_Announce,
 	Max_Emote_type
 };
 
@@ -43,31 +58,17 @@ struct Location
 	float	o;
 };
 
-struct LocationExtra
-{
-	float	x;
-	float	y;
-	float	z;
-	float	o;
-	uint32	addition;
-};
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//Class MoonScriptCreatureAI
-class SCRIPT_DECL MoonScriptCreatureAI : public CreatureAIScript
+class SCRIPT_DECL CreatureAI : public CreatureAIScript
 {
 	public:
-		explicit MoonScriptCreatureAI(Creature* pCreature);
-		~MoonScriptCreatureAI()
-		{
-		}
+		explicit CreatureAI(Creature* pCreature);
+		~CreatureAI(){}
 
-		void					SetFacingToObject(Object * pObject);
+		void					Emote(Unit* pUnit, const char* pText, TextType pType, uint32 pSoundId, EmoteType pEmote = EMOTE_ONESHOT_NONE);
 
-		//Waypoints
-		WayPoint*				CreateWaypoint(int pId, uint32 pWaittime, uint32 pMoveFlag, Location pCoords);
-		WayPoint*				CreateWaypoint(int pId, uint32 pWaittime, uint32 pMoveFlag, LocationExtra pCoords);
-		void					AddWaypoint(WayPoint* pWayPoint);
+		Creature*				SummonCreature(Unit* pUnit, uint32 pEntry, float x, float y, float z, float o, uint32 DespawnTimr, uint8 Phase = 1);
+		GameObject*				SummonGameobject(Unit* pUnit, uint32 pEntry, float x, float y, float z, float o, uint32 DespawnTimer, uint8 Phase = 1);
+		Unit*					GetTarget(TargetType Type);
 
 		void					OnCombatStart(Unit* pTarget) override;
 		void					OnCombatStop(Unit* pTarget) override;
@@ -79,4 +80,4 @@ class SCRIPT_DECL MoonScriptCreatureAI : public CreatureAIScript
 		uint32					mAIUpdateFrequency;
 };
 
-#endif MOON_SCRIPT_CREATURE_AI
+#endif CREATURE_AI

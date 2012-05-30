@@ -24,36 +24,83 @@ CreatureAI::CreatureAI(Creature* pCreature) : CreatureAIScript(pCreature)
 	mAIUpdateFrequency = DEFAULT_UPDATE_FREQUENCY;
 }
 
-CreatureAI::~CreatureAI()
-{
-}
-
-void CreatureAI::Emote(Unit* pUnit, const char* pText, TextType pType, uint32 pSoundId, EmoteType pEmote, uint32 Time)
+void CreatureAI::Emote(Unit* pUnit, const char* pText, TextType pType, uint32 pSoundId, EmoteType pEmote)
 {
 	if(pText && strlen(pText) > 0)
 	{
 		switch(pType)
 		{
-			case Text_Say: pUnit->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, pText, Time); break;
-			case Text_Yell: pUnit->SendChatMessage(CHAT_MSG_MONSTER_YELL, LANG_UNIVERSAL, pText, Time); break;
-			case Text_Emote: pUnit->SendChatMessage(CHAT_MSG_MONSTER_EMOTE, LANG_UNIVERSAL, pText, Time); break;
-			case Text_Announce: pUnit->SendChatMessage(CHAT_MSG_RAID_BOSS_EMOTE, LANG_UNIVERSAL, pText); break;
+			case Text_Say: pUnit->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, pText, 0); break;
+			case Text_Yell: pUnit->SendChatMessage(CHAT_MSG_MONSTER_YELL, LANG_UNIVERSAL, pText, 0); break;
+			case Text_Emote: pUnit->SendChatMessage(CHAT_MSG_MONSTER_EMOTE, LANG_UNIVERSAL, pText, 0); break;
+			case Text_Announce: pUnit->SendChatMessage(CHAT_MSG_RAID_BOSS_EMOTE, LANG_UNIVERSAL, 0); break;
 			default: sLog.outDebug("CreatureAI::Emote() : Invalid text type!"); break;
 		}
 	}
 
 	if(pSoundId > 0)
-	{
-		if(Time > 0)
-			sEventMgr.AddEvent(TO_OBJECT(pUnit), &Object::PlaySoundToSet, (uint32)pSoundId, EVENT_UNK, Time, 1, EVENT_FLAG_DO_NOT_EXECUTE_IN_WORLD_CONTEXT);
-		else
 			pUnit->PlaySoundToSet(pSoundId);
-	}
 
 	if(pEmote != EMOTE_ONESHOT_NONE)
 		pUnit->Emote(pEmote);
 }
 
+Creature* CreatureAI::SummonCreature(Unit* pUnit, uint32 pEntry, float x, float y, float z, float o, uint32 DespawnTimr, uint8 Phase)
+{
+	if(Creature * pCreature = pUnit->GetMapMgr()->GetInterface()->SpawnCreature(pEntry, x, y, z, o, false, true, 0, 0, Phase))
+	{
+		pCreature->Despawn(DespawnTimr, 0);
+		return pCreature;
+	}
+	return NULL;
+}
+
+GameObject * CreatureAI::SummonGameobject(Unit* pUnit, uint32 pEntry, float x, float y, float z, float o, uint32 DespawnTimer, uint8 Phase)
+{
+	if(GameObject* pGameObject = pUnit->GetMapMgr()->GetInterface()->SpawnGameObject(pEntry, x, y, z, o, true, 0, Phase))
+	{
+		pGameObject->Despawn(DespawnTimer, 0);
+		return pGameObject;
+	}
+	return NULL;
+}
+
+
+Unit* CreatureAI::GetTarget(TargetType Type)
+{
+	switch(Type)
+	{
+		case TARGET_SELF:
+		case TARGET_VARIOUS:
+			return _unit;
+		case TARGET_ATTACKING:
+		case TARGET_DESTINATION:
+			return _unit->GetAIInterface()->getNextTarget();
+		case TARGET_RANDOM_SINGLE:
+			{
+				std::vector<Player* > TargetTable;
+				for(set< Object* >::iterator itr = _unit->GetInRangePlayerSetBegin(); itr != _unit->GetInRangePlayerSetEnd(); ++itr)
+				{
+					Player* RandomTarget = TO< Player* >(*itr);
+					if(RandomTarget && RandomTarget->isAlive())
+						TargetTable.push_back(RandomTarget);
+					RandomTarget = NULL;
+				}
+
+				if(!TargetTable.size())
+					return NULL;
+
+				size_t RandTarget = rand()%TargetTable.size();
+				Unit* RandomTarget = TargetTable[RandTarget];
+
+				if(!RandomTarget)
+					return NULL;
+				else
+					return RandomTarget;
+			}
+	}
+	return NULL;
+}
 
 void CreatureAI::OnCombatStart(Unit* pTarget)
 {
@@ -76,6 +123,6 @@ void CreatureAI::OnDied(Unit* pKiller)
 
 void CreatureAI::AIUpdate()
 {
-	if(!IsInCombat())
+	if(!_unit->CombatStatus.IsInCombat())
 		return;
 }
