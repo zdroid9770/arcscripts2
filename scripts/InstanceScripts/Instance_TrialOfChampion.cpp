@@ -62,7 +62,7 @@ class BrightStarGossip : public Arcemu::Gossip::Script
 		}
 };
 
-enum PALETREESData{
+enum PALETRESSData{
 	NPC_PALETREES		= 34928,
 	SPELL_HOLYSMITE		= 66536,
 	SPELL_HOLYNOVA		= 66546,
@@ -72,7 +72,7 @@ enum PALETREESData{
 	SPELL_CONFESS		= 66680
 };
 
-class PaletreesAI : public MoonScriptBossAI
+class PaletressAI : public MoonScriptBossAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(PaletreesAI)
@@ -90,7 +90,7 @@ class PaletreesAI : public MoonScriptBossAI
 
 		void OnLoad()
 		{
-			SetDisplayWeaponIds(20257, 0);
+			SetDisplayWeaponIds(20257, 0);// need her staff ID this just brings up a white checkered cube for odd reason.
 		}
 
 		void AIUpdate()
@@ -131,7 +131,7 @@ class MemoryAI : public MoonScriptCreatureAI
 
 		void OnDied(Unit * mKiller)
 		{
-			if(Creature * mBoss = _unit->GetMapMgr()->GetInterface()->GetCreatureNearestCoords(_unit->GetPositionX(), _unit->GetPositionY(), _unit->GetPositionZ(), NPC_PALETREES))
+			if(Creature * mBoss = _unit->GetMapMgr()->GetInterface()->GetCreatureNearestCoords(_unit->GetPositionX(), _unit->GetPositionY(), _unit->GetPositionZ(), NPC_PALETRESS))
 			{
 				MoonScriptBossAI * pBoss = dynamic_cast<MoonScriptBossAI*>(mBoss->GetScript());
 				pBoss->RemoveAura(SPELL_REFLECTSHIELD);
@@ -143,7 +143,7 @@ class MemoryAI : public MoonScriptCreatureAI
 
  void SetupTrialOfChampionHold(ScriptMgr * mgr)
  {
-	 mgr->register_creature_script(NPC_PALETREES, &PaletreesAI::Create);
+	 mgr->register_creature_script(NPC_PALETRESS, &PaletreesAI::Create);
 	 mgr->register_creature_script(34942, &MemoryAI::Create);
 	 mgr->register_creature_gossip(35005, new BrightStarGossip);
 	 mgr->register_creature_script(35005, &BrightStarAI::Create);
