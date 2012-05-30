@@ -209,7 +209,7 @@ class PaletressAI : public MoonScriptBossAI
 			AddSpell(SPELL_HOLYSMITE, Target_RandomPlayer, 60, 2, 0);
 			AddSpell(SPELL_HOLYNOVA, Target_Self, 40, 0, 10);
 			AddSpell(SPELL_RENEW, Target_Self, 10, 1, 15);
-			Confess = AddSpell(SPELL_CONFESS, Target_Current, 0, 5, 0);
+			Confess = AddSpell(SPELL_CONFESS, Target_Self, 0, 5, 0);
 
 			AddEmote(Event_OnCombatStart, "Well then, let us begin.", Text_Yell, 16247);
 			AddEmote(Event_OnTargetDied, "Take your rest.", Text_Yell, 16250);
