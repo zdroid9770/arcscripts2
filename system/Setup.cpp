@@ -27,7 +27,8 @@ extern "C" SCRIPT_DECL uint32 _exp_get_script_type()
 
 extern "C" SCRIPT_DECL void _exp_script_register(ScriptMgr* mgr)	// Comment any script to disable it
 {
-	pSystem.LoadScriptTexts();
+	//temporally disabled, because for a while we're not using this feature
+	//pSystem.LoadScriptTexts();
 
 	//CREATURE
 	SetupArathiHighlandsCreature(mgr);
@@ -233,13 +234,17 @@ extern "C" SCRIPT_DECL void _exp_script_register(ScriptMgr* mgr)	// Comment any 
 	SetupBoreanTundra(mgr);
 	SetupSholazarBasin(mgr);
 	SetupQuestGossip(mgr);
-	SetupQuestHooks(mgr);
-	SetupUnsorted(mgr);
+	SetupGeneralQuests(mgr);
 	SetupZulDrak(mgr);
 	SetupIcecrown(mgr);
 	SetupWesternPlaguelandsQuests(mgr);
 	SetupWetlands(mgr);
 	SetupAshenvaleQuests(mgr);
+
+	//HOOKS
+	SetupOnAreaHooks(mgr);
+	SetupOnEmoteHooks(mgr);
+	SetupQuestHooks(mgr);
 }
 
 #ifdef WIN32

@@ -146,9 +146,9 @@ class MoonInstanceScript : public InstanceScript
 
 		// Data get / set - idea taken from ScriptDev2
 		void				SetInstanceData(uint32 pType, uint32 pIndex, uint32 pData) override;
-		void				SetInstanceData(uint32 pIndex, uint32 pData) override;
 		uint32				GetInstanceData(uint32 pType, uint32 pIndex) override;
-		uint32				GetInstanceData(uint32 pIndex) override;
+		virtual void		SetInstanceData(uint32 pIndex, uint32 pData);
+		virtual uint32		GetInstanceData(uint32 pIndex);
 
 		// Creature / GameObject
 		void				OnCreatureDeath(Creature* pVictim, Unit* pKiller) override;

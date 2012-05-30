@@ -9,6 +9,7 @@ file(GLOB_RECURSE extra_scripts ${SCRIPTS_PATH}/scripts/ExtraScripts/*.cpp ${SCR
 file(GLOB_RECURSE quest_scripts ${SCRIPTS_PATH}/scripts/QuestScripts/*.cpp ${SCRIPTS_PATH}/scripts/QuestScripts/*.h)
 file(GLOB_RECURSE creature_scripts ${SCRIPTS_PATH}/scripts/CreatureScripts/*.cpp ${SCRIPTS_PATH}/scripts/CreatureScripts/*.h)
 file(GLOB_RECURSE gameobject_scripts ${SCRIPTS_PATH}/scripts/GameObjectScripts/*.cpp ${SCRIPTS_PATH}/scripts/GameObjectScripts/*.h)
+file(GLOB_RECURSE hook_scripts ${SCRIPTS_PATH}/scripts/HookScripts/*.cpp ${SCRIPTS_PATH}/scripts/HookScripts/*.h)
 
 set(source
 ${source}
@@ -22,6 +23,7 @@ ${extra_scripts}
 ${quest_scripts}
 ${creature_scripts}
 ${gameobject_scripts}
+${hook_scripts}
 )
 
 include_directories(

@@ -59,7 +59,7 @@ class Quest_Zuluhed_the_Whacked : public QuestScript
 
 };
 
-void SetupUnsorted(ScriptMgr* mgr)
+void SetupGeneralQuests(ScriptMgr* mgr)
 {
 	mgr->register_quest_script(10998, new Quest_Grimoire_Business());
 	mgr->register_quest_script(10996, new Quest_Maggocs_Treasure_Chest());
