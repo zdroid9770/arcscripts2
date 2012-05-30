@@ -25,11 +25,11 @@
 #define ELIZA_FROSTBOLT			20819
 #define ELIZA_SUMMON_GUARD		3107
 
-class ElizaAI : public MoonScriptCreatureAI
+class ElizaAI : public CreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(ElizaAI)
-		ElizaAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
+		ElizaAI(Creature* pCreature) : CreatureAI(pCreature)
 		{
 			mElizaCombatTimer = INVALIDATE_TIMER;
 			SetCanEnterCombat(false);

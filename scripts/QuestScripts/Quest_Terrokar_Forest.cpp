@@ -59,11 +59,11 @@ class ThreatFromAboveQAI : public CreatureAIScript
 };
 
 //The Infested Protectors
-class TheInfestedProtectorsQAI : public MoonScriptCreatureAI
+class TheInfestedProtectorsQAI : public CreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(TheInfestedProtectorsQAI)
-		TheInfestedProtectorsQAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
+		TheInfestedProtectorsQAI(Creature* pCreature) : CreatureAI(pCreature)
 		{
 		}
 

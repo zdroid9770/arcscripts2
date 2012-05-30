@@ -26,11 +26,11 @@
 #define BARK_SAYGE_3	"Come speak with me, and what once was cloudy shall become crystal clear."
 #define BARK_SAYGE_4	"Come to me true believers, and see what the future holds for you!"
 
-class Sayge : public ScriptedCreature
+class Sayge : public CreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(Sayge)
-		Sayge(Creature *pCreature) : ScriptedCreature(pCreature)
+		Sayge(Creature *pCreature) : CreatureAI(pCreature)
 		{
 			RegisterAIUpdateEvent(135000); // Start initial update after: 2.25mins
 		}
@@ -56,11 +56,11 @@ class Sayge : public ScriptedCreature
 #define BARK_SILAS_DARKMOON_5	"Everyone enjoying themselves so far? That's great! Welcome to the Darkmoon Faire, the greatest show in all of Azeroth! Make sure you speak with Yebb and his friends here while you're taking in Neblegear's Darkmoon Zoo Bizarre."
 #define BARK_SILAS_DARKMOON_6	"Greetings friends, and welcome to the greatest show on Azeroth!$B$BPlease, step right up and take in all we have to offer. Ride the rides and see the sights! Amaze at the wonders that the Darkmoon Faire has uncovered in this vast and mysterious world! We have spared no expense in bringing you excitement that children of all ages will delight in!"
 
-class SilasDarkmoon : public ScriptedCreature
+class SilasDarkmoon : public CreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(SilasDarkmoon)
-		SilasDarkmoon(Creature *pCreature) : ScriptedCreature(pCreature)
+		SilasDarkmoon(Creature *pCreature) : CreatureAI(pCreature)
 		{
 			RegisterAIUpdateEvent(180000); // Start initial update after: 3mins
 		}
@@ -86,11 +86,11 @@ class SilasDarkmoon : public ScriptedCreature
 #define BARK_GEVAS_GRIMEGATE_3	"All it takes is five or more and you're on your way to the most wondrous prizes on all of Azeroth. Everybody is a winner!"
 #define BARK_GEVAS_GRIMEGATE_4	"Mysterious prizes await the adventurous. Step right up, step right up!"
 
-class GevasGrimegate : public ScriptedCreature
+class GevasGrimegate : public CreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(GevasGrimegate)
-		GevasGrimegate(Creature *pCreature) : ScriptedCreature(pCreature)
+		GevasGrimegate(Creature *pCreature) : CreatureAI(pCreature)
 		{
 			RegisterAIUpdateEvent(60000); // Start initial update after: 1mins
 		}
@@ -114,11 +114,11 @@ class GevasGrimegate : public ScriptedCreature
 #define BARK_SYLANNIA_3	"You there! Yes you! You look thirsty. Get over here, I have just what you need!"
 #define BARK_SYLANNIA_4	"Cheap beer! Get your Cheap Beer right here!"
 
-class Sylannia : public ScriptedCreature
+class Sylannia : public CreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(Sylannia)
-		Sylannia(Creature *pCreature) : ScriptedCreature(pCreature)
+		Sylannia(Creature *pCreature) : CreatureAI(pCreature)
 		{
 			RegisterAIUpdateEvent(120000); // Start initial update after: 2mins
 		}
@@ -143,11 +143,11 @@ class Sylannia : public ScriptedCreature
 #define BARK_STAMP_THUNDERHORN_4	"For a limited time only, Crunchy Frog available exclusively here at the Darkmoon Faire."
 #define BARK_STAMP_THUNDERHORN_5	"You've got money and we've got food. What are you waiting for?!"
 
-class StampThunderhorn : public ScriptedCreature
+class StampThunderhorn : public CreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(StampThunderhorn)
-		StampThunderhorn(Creature *pCreature) : ScriptedCreature(pCreature)
+		StampThunderhorn(Creature *pCreature) : CreatureAI(pCreature)
 		{
 			RegisterAIUpdateEvent(180000); // Start initial update after: 3mins
 		}
@@ -172,11 +172,11 @@ class StampThunderhorn : public ScriptedCreature
 #define BARK_LHARA_3	"Every item that I have for sale I acquired myself. You have my personal guarantee of authenticity."
 #define BARK_LHARA_4	"Have you any idea what I go through to bring these incomparable valuables to sell? Come see them all for yourself!"
 
-class Lhara : public ScriptedCreature
+class Lhara : public CreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(Lhara)
-		Lhara(Creature *pCreature) : ScriptedCreature(pCreature)
+		Lhara(Creature *pCreature) : CreatureAI(pCreature)
 		{
 			RegisterAIUpdateEvent( 90000 ); // Start initial update after: 1.5mins
 		}
@@ -200,11 +200,11 @@ class Lhara : public ScriptedCreature
 #define BARK_PROFESSOR_THADDEUS_PALEO_3	"Welcome one and all to the greatest show on all of Azeroth... the Darkmoon Faire! Adventure and exitement await, don't be shy! Mysteries and prizes for both the young and the old are here for the taking. And be sure to speak with the professor about any Darkmoon Cards that you have come across during your travels!"
 #define BARK_PROFESSOR_THADDEUS_PALEO_4	"Come speak with me if you are a purveyor of the unusual, or if you have any Darkmoon Faire cards."
 
-class ProfessorThaddeusPaleo : public ScriptedCreature
+class ProfessorThaddeusPaleo : public CreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(ProfessorThaddeusPaleo)
-		ProfessorThaddeusPaleo(Creature *pCreature) : ScriptedCreature(pCreature)
+		ProfessorThaddeusPaleo(Creature *pCreature) : CreatureAI(pCreature)
 		{
 			RegisterAIUpdateEvent(210000); // Start initial update after: 3.5mins
 		}
@@ -234,11 +234,11 @@ class ProfessorThaddeusPaleo : public ScriptedCreature
 	#define BARK_CARNIES_3	"Don't forget to buy refreshments and souvenirs!"
 	#define BARK_CARNIES_4	"The Darkmoon Faire is the greatest show on all of Azeroth!"
 #endif
-class Carnies : public ScriptedCreature
+class Carnies : public CreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(Carnies)
-		Carnies(Creature *pCreature) : ScriptedCreature(pCreature)
+		Carnies(Creature *pCreature) : CreatureAI(pCreature)
 		{
 			RegisterAIUpdateEvent(120000); // Start initial update after: 2mins
 		}
@@ -262,11 +262,11 @@ class Carnies : public ScriptedCreature
 #define BARK_FLIK_3	"Hey, someone help me catch this thing!"
 #define BARK_FLIK_4	"Frogs and leather balls for sale!"
 
-class Flik : public ScriptedCreature
+class Flik : public CreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(Flik)
-		Flik(Creature *pCreature) : ScriptedCreature(pCreature)
+		Flik(Creature *pCreature) : CreatureAI(pCreature)
 		{
 			RegisterAIUpdateEvent( 180000 ); // Start initial update after: 3mins
 		}
@@ -287,11 +287,11 @@ class Flik : public ScriptedCreature
 // Morja
 #define BARK_MORJA_1	"Jubjub? Where are you, Jubjub? Oh no! Where did you go this time!"
 
-class Morja : public ScriptedCreature
+class Morja : public CreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(Morja)
-		Morja(Creature *pCreature) : ScriptedCreature(pCreature)
+		Morja(Creature *pCreature) : CreatureAI(pCreature)
 		{
 			RegisterAIUpdateEvent(240000); // Start initial update after: 4mins
 		}

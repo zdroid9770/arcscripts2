@@ -44,11 +44,11 @@ enum BronjahmData{
 	SPELL_TELEPORT		= 68988
 };
 
-class BronjahmAI : public MoonScriptBossAI
+class BronjahmAI : public CreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(BronjahmAI)
-		BronjahmAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
+		BronjahmAI(Creature* pCreature) : CreatureAI(pCreature)
 		{
 			AddSpell(SPELL_MAGICBANE, Target_Current, 35, 0, 5);
 			AddSpell(SPELL_SHADOW_BOLT, Target_Current, 30, 1, -1);
@@ -98,11 +98,11 @@ class BronjahmAI : public MoonScriptBossAI
 		SpellDesc * SoulStorm;
 };
 
-class SoulFragmentAI : public MoonScriptBossAI
+class SoulFragmentAI : public CreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(SoulFragmentAI)
-		SoulFragmentAI(Creature* c) : MoonScriptBossAI(c){}
+		SoulFragmentAI(Creature* c) : CreatureAI(c){}
 
 		void OnLoad()
 		{
@@ -139,11 +139,11 @@ enum DevourerData{
 	SPELL_WELLSOULS		= 68820,
 };
 
-class DevourerAI : public MoonScriptBossAI
+class DevourerAI : public CreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(DevourerAI)
-		DevourerAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
+		DevourerAI(Creature* pCreature) : CreatureAI(pCreature)
 		{
 			AddSpell(SPELL_BLAST, Target_RandomPlayer, 45, 0, 3);
 			AddSpell(SPELL_WELLSOULS, Target_RandomPlayer, 50, 0, 8);

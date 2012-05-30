@@ -19,11 +19,11 @@
 #include "Setup.h"
 
 #define CN_LadySarevess 4831
-class LadySarevessAI : public MoonScriptCreatureAI
+class LadySarevessAI : public CreatureAI
 {
 public:
 	ADD_CREATURE_FACTORY_FUNCTION(LadySarevessAI)
-	LadySarevessAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
+	LadySarevessAI(Creature* pCreature) : CreatureAI(pCreature)
 	{
 		AddEmote(Event_OnCombatStart, "You should not be here! Slay them!", Text_Yell, 5799);
 
@@ -34,11 +34,11 @@ public:
 };
 
 #define CN_BaronAquanis 12876
-class BaronAquanisAI : public MoonScriptCreatureAI
+class BaronAquanisAI : public CreatureAI
 {
 public:
 	ADD_CREATURE_FACTORY_FUNCTION(BaronAquanisAI)
-	BaronAquanisAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
+	BaronAquanisAI(Creature* pCreature) : CreatureAI(pCreature)
 	{
 		// Frostbolt
 		AddSpell(15043, Target_Current, 20, 3, 0);
@@ -73,11 +73,11 @@ protected:
 };
 
 #define CN_TwilightLordKelris 4832
-class KelrisAI : public MoonScriptCreatureAI
+class KelrisAI : public CreatureAI
 {
 public:
 	ADD_CREATURE_FACTORY_FUNCTION(KelrisAI)
-	KelrisAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
+	KelrisAI(Creature* pCreature) : CreatureAI(pCreature)
 	{
 		AddEmote(Event_OnCombatStart, "Who dares disturb my meditation?!", Text_Yell, 5802);
 		AddEmote(Event_OnTargetDied, "Dust to dust.", Text_Yell, 5803);
@@ -88,11 +88,11 @@ public:
 };
 
 #define CN_Akumai 4829
-class AkumaiAI : public MoonScriptCreatureAI
+class AkumaiAI : public CreatureAI
 {
 public:
 	ADD_CREATURE_FACTORY_FUNCTION(AkumaiAI)
-	AkumaiAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
+	AkumaiAI(Creature* pCreature) : CreatureAI(pCreature)
 	{
 		AddEmote(Event_OnCombatStart, "Who dares disturb my meditation?!", Text_Yell); // Should this really be here?
 		AddEmote(Event_OnTargetDied, "Dust to dust.", Text_Yell); // Should this really be here?

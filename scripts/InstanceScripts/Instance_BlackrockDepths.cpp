@@ -18,11 +18,11 @@
 
 #include "Setup.h"
 
-class AmbassadorFlamelash : public MoonScriptCreatureAI
+class AmbassadorFlamelash : public CreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(AmbassadorFlamelash)
-		AmbassadorFlamelash(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
+		AmbassadorFlamelash(Creature* pCreature) : CreatureAI(pCreature)
 		{
 			SummonTimer = INVALIDATE_TIMER;
 		}
@@ -38,7 +38,7 @@ class AmbassadorFlamelash : public MoonScriptCreatureAI
 			{
 				for(uint8 i = 0; i<4; i++)
 				{
-					MoonScriptCreatureAI* pSummon = SpawnCreature(9178, _unit->GetPositionX()-rand()%10, _unit->GetPositionY()-rand()%10, _unit->GetPositionZ(), 0);
+					CreatureAI* pSummon = SpawnCreature(9178, _unit->GetPositionX()-rand()%10, _unit->GetPositionY()-rand()%10, _unit->GetPositionZ(), 0);
 					if(pSummon != NULL)
 					{
 						pSummon->MoveTo(_unit);

@@ -74,11 +74,11 @@ class SunkenTreasure : public QuestScript
 		}
 };
 
-class Professor_Phizzlethorpe : public MoonScriptCreatureAI
+class Professor_Phizzlethorpe : public CreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(Professor_Phizzlethorpe)
-		Professor_Phizzlethorpe(Creature * pCreature) : MoonScriptCreatureAI(pCreature)
+		Professor_Phizzlethorpe(Creature * pCreature) : CreatureAI(pCreature)
 		{
 			AddEmote(Event_OnCombatStart, "Help!!! Get these things off me so I can get my work done!", Text_Yell, 0);
 		}
@@ -92,11 +92,11 @@ class Professor_Phizzlethorpe : public MoonScriptCreatureAI
 				case 8: Emote("%s begins tinkering with the goggles before the stone.", Text_Yell, 0); break;
 				case 9:
 				{
-					MoonScriptCreatureAI * pCreature1 = SpawnCreature(2776, -2056.41f, -2144.01f, 20.59f, 5.70f);
+					CreatureAI * pCreature1 = SpawnCreature(2776, -2056.41f, -2144.01f, 20.59f, 5.70f);
 					if(pCreature1 != NULL)
 						pCreature1->SetDespawnWhenInactive(true);
 
-					MoonScriptCreatureAI * pCreature2 = SpawnCreature(2776, -2050.17f, -2140.02f, 19.54f, 5.17f);
+					CreatureAI * pCreature2 = SpawnCreature(2776, -2050.17f, -2140.02f, 19.54f, 5.17f);
 					if(pCreature2 != NULL)
 						pCreature2->SetDespawnWhenInactive(true);
 				}break;

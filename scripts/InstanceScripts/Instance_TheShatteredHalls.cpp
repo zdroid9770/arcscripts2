@@ -2087,13 +2087,13 @@ class BloodGuardPorungAI : public CreatureAIScript
 #define CN_LEFT_HEAD					19523
 #define CN_RIGHT_HEAD					19524
 
-void SpellFunc_Warbringer_BurningMaul(SpellDesc* pThis, MoonScriptCreatureAI* pCreatureAI, Unit* pTarget, TargetType pType);
+void SpellFunc_Warbringer_BurningMaul(SpellDesc* pThis, CreatureAI* pCreatureAI, Unit* pTarget, TargetType pType);
 
-class WarbringerOmroggAI : public MoonScriptCreatureAI
+class WarbringerOmroggAI : public CreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(WarbringerOmroggAI)
-		WarbringerOmroggAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
+		WarbringerOmroggAI(Creature* pCreature) : CreatureAI(pCreature)
 		{
 			AddSpell(WARBRINGER_OMROGG_THUNDERCLAP, Target_Self, 25, 1, 12);
 			AddSpell(WARBRINGER_OMROGG_FEAR, Target_Self, 7, 0, 20);
@@ -2295,8 +2295,8 @@ class WarbringerOmroggAI : public MoonScriptCreatureAI
 			}
 		}
 
-		MoonScriptCreatureAI*	mLeftHead;
-		MoonScriptCreatureAI*	mRightHead;
+		CreatureAI*	mLeftHead;
+		CreatureAI*	mRightHead;
 		int32					mAggroShiftTimer;
 		int32					mBlastWaveTimer;
 		int32					mSpeechTimer;
@@ -2304,7 +2304,7 @@ class WarbringerOmroggAI : public MoonScriptCreatureAI
 		SpellDesc*				mBlastWave;
 };
 
-void SpellFunc_Warbringer_BurningMaul(SpellDesc* pThis, MoonScriptCreatureAI* pCreatureAI, Unit* pTarget, TargetType pType)
+void SpellFunc_Warbringer_BurningMaul(SpellDesc* pThis, CreatureAI* pCreatureAI, Unit* pTarget, TargetType pType)
 {
 	WarbringerOmroggAI* Warbringer = (pCreatureAI) ? TO< WarbringerOmroggAI* >(pCreatureAI) : NULL;
 	if(Warbringer != NULL)
@@ -2314,11 +2314,11 @@ void SpellFunc_Warbringer_BurningMaul(SpellDesc* pThis, MoonScriptCreatureAI* pC
 	}
 }
 
-class HeadAI : public MoonScriptCreatureAI
+class HeadAI : public CreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(HeadAI)
-		HeadAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
+		HeadAI(Creature* pCreature) : CreatureAI(pCreature)
 		{
 			SetScale(4.0f);
 			_unit->SetUInt32Value(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
@@ -2340,9 +2340,9 @@ class HeadAI : public MoonScriptCreatureAI
 			if(pUnit != NULL && TO_CREATURE(pUnit)->GetScript() != NULL)
 			{
 				WarbringerOmroggAI* pAI = TO< WarbringerOmroggAI* >(TO_CREATURE(pUnit)->GetScript());
-				if(pAI->mLeftHead == (MoonScriptCreatureAI*)(this))
+				if(pAI->mLeftHead == (CreatureAI*)(this))
 					pAI->mLeftHead = NULL;
-				if(pAI->mRightHead == (MoonScriptCreatureAI*)(this))
+				if(pAI->mRightHead == (CreatureAI*)(this))
 					pAI->mRightHead = NULL;
 			}
 		}

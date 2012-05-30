@@ -25,11 +25,11 @@
 #define MAIDEN_SHOCK_OF_SORROW 50760
 #define MAIDEN_STORM_OF_GRIEF 50752
 
-class MaidenOfGriefAI : public MoonScriptCreatureAI
+class MaidenOfGriefAI : public CreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(MaidenOfGriefAI)
-		MaidenOfGriefAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
+		MaidenOfGriefAI(Creature* pCreature) : CreatureAI(pCreature)
 		{
 			AddSpell(MAIDEN_STORM_OF_GRIEF, Target_RandomPlayerDestination, 100, 0, 19);
 			AddSpell(MAIDEN_PILLAR_OF_WOE, Target_RandomPlayerNotCurrent, 30, 0, 8);
@@ -65,11 +65,11 @@ class MaidenOfGriefAI : public MoonScriptCreatureAI
 #define STOMP_TIMER	    35000
 #define SHATTER_TIMER	4500
 
-class KrystallusAI : public MoonScriptCreatureAI
+class KrystallusAI : public CreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(KrystallusAI)
-		KrystallusAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
+		KrystallusAI(Creature* pCreature) : CreatureAI(pCreature)
 		{
 			AddSpell(KRYSTALLUS_BOULDER_TOSS, Target_ClosestPlayer, 35, 1, 4);
 			mShatter = AddSpell(KRYSTALLUS_SHATTER, Target_Self, 0, 0, 0);

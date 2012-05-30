@@ -89,11 +89,11 @@ class ColdarraGeoMonitorWest : public GameObjectAIScript
 // Neutralizing the Cauldrons
 #define CN_PURIFYING_TOTEM	25494
 
-class PurifyingTotemAI : public MoonScriptCreatureAI
+class PurifyingTotemAI : public CreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(PurifyingTotemAI);
-		PurifyingTotemAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
+		PurifyingTotemAI(Creature* pCreature) : CreatureAI(pCreature)
 		{
 			SetCanEnterCombat(false);
 			SetCanMove(false);
@@ -124,11 +124,11 @@ class NerubarEggSac : public GameObjectAIScript
 
 
 // Bury Those Cockroaches!
-class SeaforiumDepthCharge : public MoonScriptCreatureAI
+class SeaforiumDepthCharge : public CreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(SeaforiumDepthCharge)
-		SeaforiumDepthCharge(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
+		SeaforiumDepthCharge(Creature* pCreature) : CreatureAI(pCreature)
 		{
 			SetCanMove(false);
 			SetCanEnterCombat(false);

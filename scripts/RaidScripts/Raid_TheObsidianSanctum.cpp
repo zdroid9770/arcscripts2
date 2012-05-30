@@ -164,7 +164,7 @@ class ObsidianSanctumScript : public MoonInstanceScript
 		};
 };
 
-void SpellFunc_FlameTsunami(SpellDesc* pThis, MoonScriptCreatureAI* pCreatureAI, Unit* pTarget, TargetType pType)
+void SpellFunc_FlameTsunami(SpellDesc* pThis, CreatureAI* pCreatureAI, Unit* pTarget, TargetType pType)
 {
 	if(pCreatureAI != NULL)
 	{
@@ -212,7 +212,7 @@ void SpellFunc_FlameTsunami(SpellDesc* pThis, MoonScriptCreatureAI* pCreatureAI,
 	};
 };
 
-void SpellFunc_LavaSpawn(SpellDesc* pThis, MoonScriptCreatureAI* pCreatureAI, Unit* pTarget, TargetType pType)
+void SpellFunc_LavaSpawn(SpellDesc* pThis, CreatureAI* pCreatureAI, Unit* pTarget, TargetType pType)
 {
 	if(pCreatureAI == NULL)
 		return;
@@ -224,11 +224,11 @@ void SpellFunc_LavaSpawn(SpellDesc* pThis, MoonScriptCreatureAI* pCreatureAI, Un
 	};
 };
 
-class SartharionAI : public MoonScriptBossAI
+class SartharionAI : public CreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(SartharionAI)
-		SartharionAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
+		SartharionAI(Creature* pCreature) : CreatureAI(pCreature)
 		{
 			mInstance = dynamic_cast<ObsidianSanctumScript*>(GetInstanceScript());
 
@@ -366,11 +366,11 @@ class SartharionAI : public MoonScriptBossAI
 		SpellDesc* mFlameTsunami, *mSummonLava;
 };
 
-class TsunamiAI : public MoonScriptBossAI
+class TsunamiAI : public CreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(TsunamiAI)
-		TsunamiAI(Creature* pCreature) : MoonScriptBossAI(pCreature) {};
+		TsunamiAI(Creature* pCreature) : CreatureAI(pCreature) {};
 
 		void OnLoad()
 		{
@@ -389,11 +389,11 @@ class TsunamiAI : public MoonScriptBossAI
 		}
 };
 
-class CyclonAI : public MoonScriptBossAI
+class CyclonAI : public CreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(CyclonAI)
-		CyclonAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
+		CyclonAI(Creature* pCreature) : CreatureAI(pCreature)
 		{};
 
 		void OnLoad()
@@ -406,11 +406,11 @@ class CyclonAI : public MoonScriptBossAI
 		}
 };
 
-class LavaBlazeAI : public MoonScriptBossAI
+class LavaBlazeAI : public CreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(LavaBlazeAI)
-		LavaBlazeAI(Creature* pCreature) : MoonScriptBossAI(pCreature) {}
+		LavaBlazeAI(Creature* pCreature) : CreatureAI(pCreature) {}
 
 		void OnLoad()
 		{

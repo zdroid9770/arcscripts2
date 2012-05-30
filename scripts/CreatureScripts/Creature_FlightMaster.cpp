@@ -18,63 +18,63 @@
 
 #include "Setup.h"
 
-class GryponMasters : public ScriptedCreature
+class GryponMasters : public CreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(GryponMasters)
-		GryponMasters(Creature *pCreature) : ScriptedCreature(pCreature) {}
+		GryponMasters(Creature *pCreature) : CreatureAI(pCreature) {}
 
 		void OnCombatStart(Unit *mTarget)
 		{
 			for(int i = 0; i < 2; ++i)
-				SummonCreature(9526, _unit->GetPositionX()+RandomFloat(2.0f), _unit->GetPositionY()+RandomFloat(2.0f), _unit->GetPositionZ(), _unit->GetOrientation(), 180000);
+				SummonCreature(_unit, 9526, _unit->GetPositionX()+RandomFloat(2.0f), _unit->GetPositionY()+RandomFloat(2.0f), _unit->GetPositionZ(), _unit->GetOrientation(), 180000);
 		}
 };
 
-class HippogryphMasters : public ScriptedCreature
+class HippogryphMasters : public CreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(HippogryphMasters)
-		HippogryphMasters(Creature *pCreature) : ScriptedCreature(pCreature) {}
+		HippogryphMasters(Creature *pCreature) : CreatureAI(pCreature) {}
 
 		void OnCombatStart(Unit *mTarget)
 		{
 			for(int i = 0; i < 2; ++i)
-				SummonCreature(9527, _unit->GetPositionX()+RandomFloat(2.0f), _unit->GetPositionY()+RandomFloat(2.0f), _unit->GetPositionZ(), _unit->GetOrientation(), 180000);
+				SummonCreature(_unit, 9527, _unit->GetPositionX()+RandomFloat(2.0f), _unit->GetPositionY()+RandomFloat(2.0f), _unit->GetPositionZ(), _unit->GetOrientation(), 180000);
 		}
 };
 
-class WyvernMasters : public ScriptedCreature
+class WyvernMasters : public CreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(WyvernMasters)
-		WyvernMasters(Creature *pCreature) : ScriptedCreature(pCreature) {}
+		WyvernMasters(Creature *pCreature) : CreatureAI(pCreature) {}
 
 		void OnCombatStart(Unit *mTarget)
 		{
 			for(int i = 0; i < 2; ++i)
-				SummonCreature(9527, _unit->GetPositionX()+RandomFloat(2.0f), _unit->GetPositionY()+RandomFloat(2.0f), _unit->GetPositionZ(), _unit->GetOrientation(), 180000);
+				SummonCreature(_unit, 9527, _unit->GetPositionX()+RandomFloat(2.0f), _unit->GetPositionY()+RandomFloat(2.0f), _unit->GetPositionZ(), _unit->GetOrientation(), 180000);
 		}
 };
 
-class BatMasters : public ScriptedCreature
+class BatMasters : public CreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(BatMasters)
-		BatMasters(Creature *pCreature) : ScriptedCreature(pCreature) {}
+		BatMasters(Creature *pCreature) : CreatureAI(pCreature) {}
 
 		void OnCombatStart(Unit *mTarget)
 		{
 			for(int i = 0; i < 2; ++i)
-				SummonCreature(9521, _unit->GetPositionX()+RandomFloat(2.0f), _unit->GetPositionY()+RandomFloat(2.0f), _unit->GetPositionZ(), _unit->GetOrientation(), 180000);
+				SummonCreature(_unit, 9521, _unit->GetPositionX()+RandomFloat(2.0f), _unit->GetPositionY()+RandomFloat(2.0f), _unit->GetPositionZ(), _unit->GetOrientation(), 180000);
 		}
 };
 
-class DragonhawkMasters : public ScriptedCreature
+class DragonhawkMasters : public CreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(DragonhawkMasters)
-		DragonhawkMasters(Creature *pCreature) : ScriptedCreature(pCreature) {}
+		DragonhawkMasters(Creature *pCreature) : CreatureAI(pCreature) {}
 
 		void OnCombatStart(Unit *mTarget)
 		{
@@ -83,16 +83,16 @@ class DragonhawkMasters : public ScriptedCreature
 		}
 };
 
-class NeutralMasters : public ScriptedCreature
+class NeutralMasters : public CreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(NeutralMasters)
-		NeutralMasters(Creature *pCreature) : ScriptedCreature(pCreature) {}
+		NeutralMasters(Creature *pCreature) : CreatureAI(pCreature) {}
 
 		void OnCombatStart(Unit *mTarget)
 		{
 			for(int i = 0; i < 2; ++i)
-				SummonCreature(9526+i, _unit->GetPositionX()+RandomFloat(2.0f), _unit->GetPositionY()+RandomFloat(2.0f), _unit->GetPositionZ(), _unit->GetOrientation(), 180000);
+				SummonCreature(_unit, 9526+i, _unit->GetPositionX()+RandomFloat(2.0f), _unit->GetPositionY()+RandomFloat(2.0f), _unit->GetPositionZ(), _unit->GetOrientation(), 180000);
 		}
 };
 

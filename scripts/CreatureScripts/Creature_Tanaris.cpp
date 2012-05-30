@@ -18,11 +18,11 @@
 
 #include "Setup.h"
 
-class PirateTreasureTrigger : public ScriptedCreature
+class PirateTreasureTrigger : public CreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(PirateTreasureTrigger)
-		PirateTreasureTrigger(Creature *pCreature) : ScriptedCreature(pCreature) {}
+		PirateTreasureTrigger(Creature *pCreature) : CreatureAI(pCreature) {}
 
 		void OnLoad()
 		{

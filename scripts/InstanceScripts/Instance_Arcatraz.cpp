@@ -287,11 +287,11 @@ class DalliahTheDoomsayerAI : public CreatureAI
 #define KNOCK_AWAY 20686
 #define CHARGE 35754
 
-class WrathScryerSoccothratesAI : public MoonScriptCreatureAI
+class WrathScryerSoccothratesAI : public CreatureAI
 {
 public:
 	ADD_CREATURE_FACTORY_FUNCTION(WrathScryerSoccothratesAI)
-	WrathScryerSoccothratesAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
+	WrathScryerSoccothratesAI(Creature* pCreature) : CreatureAI(pCreature)
 	{
 		AddEmote(Event_OnCombatStart, "At last, a target for my frustrations!", Text_Yell, 11238);
 		AddEmote(Event_OnTargetDied, "Yes, that was quiet... satisfying.", Text_Yell, 11239);
@@ -319,11 +319,11 @@ public:
 // SIMPLE_TELEPORT 12980 ?
 // Add sounds related to his dialog with mind controlled guy
 
-class HarbringerSkyrissAI : public MoonScriptCreatureAI
+class HarbringerSkyrissAI : public CreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(HarbringerSkyrissAI)
-		HarbringerSkyrissAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
+		HarbringerSkyrissAI(Creature* pCreature) : CreatureAI(pCreature)
 		{
 			AddEmote(Event_OnCombatStart, "Bear witness to the agent of your demise!", Text_Yell, 11123);
 			AddEmote(Event_OnTargetDied, "Your fate is written!", Text_Yell, 11124);
@@ -398,11 +398,11 @@ static Location pSummonCoords[5]=
     {445.763f, -191.639f, 44.64f, 1.60f}                    // Skyriss
 };
 
-class WardenMellicharAI : public MoonScriptBossAI
+class WardenMellicharAI : public CreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(WardenMellicharAI)
-		WardenMellicharAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
+		WardenMellicharAI(Creature* pCreature) : CreatureAI(pCreature)
 		{
 			SetCanMove(false);
 			mInstance = GetInstanceScript();
@@ -523,7 +523,7 @@ class WardenMellicharAI : public MoonScriptBossAI
 		uint32 Phasepart, NPC_ID_Spawn, Spawncounter;
 		int32 Phase_Timer;
 		MoonInstanceScript* mInstance;
-		MoonScriptCreatureAI* pSummon;
+		CreatureAI* pSummon;
 		Creature* Millhouse;
 };
 

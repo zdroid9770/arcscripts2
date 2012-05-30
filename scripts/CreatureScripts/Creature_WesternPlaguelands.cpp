@@ -18,37 +18,37 @@
 
 #include "Setup.h"
 
-class RottingCadaver : public ScriptedCreature
+class RottingCadaver : public CreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(RottingCadaver)
-		RottingCadaver(Creature *pCreature) : ScriptedCreature(pCreature) {}
+		RottingCadaver(Creature *pCreature) : CreatureAI(pCreature) {}
 
 		void OnDied(Unit *mKiller)
 		{
-			_unit->CastSpell(_unit, 17064, true); // Cast spell: "Summon Rotting Worms".
+			_unit->CastSpell(_unit, dbcSpell.LookupEntry(17064), true); // Cast spell: "Summon Rotting Worms".
 		}
 };
 
-class SummonOozeling : public ScriptedCreature
+class SummonOozeling : public CreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(SummonOozeling)
-		SummonOozeling(Creature *pCreature) : ScriptedCreature(pCreature)
+		SummonOozeling(Creature *pCreature) : CreatureAI(pCreature)
 		{
 			CrimsonFuryTimer = (5+rand()%9)*1000;
 		}
 
 		void OnDied(Unit *mKiller)
 		{
-			_unit->CastSpell(_unit, 12018, true); // Cast spell: "Summon Oozeling".
+			_unit->CastSpell(_unit, dbcSpell.LookupEntry(12018), true); // Cast spell: "Summon Oozeling".
 		}
 
 		void AIUpdate()
 		{
 			if(CrimsonFuryTimer <= mAIUpdateFrequency)
 			{
-				_unit->CastSpell(GetTarget(TARGET_ATTACKING), 12745, true);
+				_unit->CastSpell(GetTarget(TARGET_ATTACKING), dbcSpell.LookupEntry(12745), true);
 				CrimsonFuryTimer = (8+rand()%7)*1000;
 			}else CrimsonFuryTimer -= mAIUpdateFrequency;
 		}

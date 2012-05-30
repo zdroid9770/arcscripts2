@@ -19,11 +19,11 @@
 #include "Setup.h"
 
 
-class ArmyofDeadGhoul : public ScriptedCreature
+class ArmyofDeadGhoul : public CreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(ArmyofDeadGhoul)
-		ArmyofDeadGhoul(Creature * pCreature) : ScriptedCreature(pCreature)
+		ArmyofDeadGhoul(Creature * pCreature) : CreatureAI(pCreature)
 		{
 			GetUnit()->GetAIInterface()->m_canMove = false;
 		}

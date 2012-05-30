@@ -76,11 +76,11 @@ class VaulOfArchavon : public MoonInstanceScript
 #define	SPELL_CHOCKING_CLOUD	58965
 #define	SPELL_ARCHAVON_BERSERK	47008
 
-class ArchavonAI : public MoonScriptBossAI
+class ArchavonAI : public CreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(ArchavonAI)
-		ArchavonAI(Creature *pCreature) : MoonScriptBossAI(pCreature)
+		ArchavonAI(Creature *pCreature) : CreatureAI(pCreature)
 		{
 			mStompTimer = INVALIDATE_TIMER;
 			SetEnrageInfo(AddSpell(SPELL_ARCHAVON_BERSERK, Target_Self, 0, 0, 0), MINUTE*5*SEC_IN_MS);
@@ -117,11 +117,11 @@ class ArchavonAI : public MoonScriptBossAI
 #define SPELL_EMALON_BERSERK	26662
 #define SPELL_OVERCHARGE		64218
 
-class EmalonAI : public MoonScriptBossAI
+class EmalonAI : public CreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(EmalonAI)
-		EmalonAI(Creature *pCreature) : MoonScriptBossAI(pCreature)
+		EmalonAI(Creature *pCreature) : CreatureAI(pCreature)
 		{
 			mInstance = GetInstanceScript();
 			SetEnrageInfo(AddSpell(SPELL_EMALON_BERSERK, Target_Self, 0, 0, 0), MINUTE*6*SEC_IN_MS);
@@ -183,11 +183,11 @@ class EmalonAI : public MoonScriptBossAI
 #define	SPELL_OVERCHARGED			64217
 #define	SPELL_OVERCHARGED_BLAST		64219    // Cast when Overcharged reaches 10 stacks. Mob dies after that
 
-class EmalonMinionAI : public MoonScriptBossAI
+class EmalonMinionAI : public CreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(EmalonMinionAI)
-		EmalonMinionAI(Creature *pCreature) : MoonScriptBossAI(pCreature)
+		EmalonMinionAI(Creature *pCreature) : CreatureAI(pCreature)
 		{
 			AddSpell(SPELL_SHOCK, Target_Self, 99, 0, 20);
 		}
@@ -225,11 +225,11 @@ class EmalonMinionAI : public MoonScriptBossAI
 #define	SPELL_FLAME_CINDER		66684
 #define	SPELL_METEOR_FISTS		66725
 
-class KoralonAI : public MoonScriptBossAI
+class KoralonAI : public CreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(KoralonAI)
-		KoralonAI(Creature *pCreature) : MoonScriptBossAI(pCreature)
+		KoralonAI(Creature *pCreature) : CreatureAI(pCreature)
 		{
 			AddSpell(SPELL_METEOR_FISTS, Target_Self, 35, 1.5f, 45);
 			AddSpell(SPELL_FLAME_CINDER, Target_Self, 30, 0, 30);
@@ -280,11 +280,11 @@ class KoralonAI : public MoonScriptBossAI
 #define	SPELL_FROZEN_ORB_SUMMON 72093    // summon orb
 
 
-class ToravonAI : public MoonScriptBossAI
+class ToravonAI : public CreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(ToravonAI)
-		ToravonAI(Creature *pCreature) : MoonScriptBossAI(pCreature)
+		ToravonAI(Creature *pCreature) : CreatureAI(pCreature)
 		{
 			AddSpell(SPELL_FREEZING_GROUND, Target_RandomPlayer, 30, 0, 20);
 			mFrozenOrbTimer = -1;

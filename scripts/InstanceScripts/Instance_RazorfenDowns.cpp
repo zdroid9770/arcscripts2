@@ -21,11 +21,11 @@
 #define DISEASE_CLOUD	12627
 #define FRENZY			12795
 
-class Glutton : public MoonScriptCreatureAI
+class Glutton : public CreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(Glutton)
-		Glutton(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
+		Glutton(Creature* pCreature) : CreatureAI(pCreature)
 		{
 			//spells
 			mDiseaseCloud = AddSpell(DISEASE_CLOUD, Target_Self, 0, 0, 0, 0, 0);

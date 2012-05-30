@@ -18,11 +18,11 @@
 
 #include "Setup.h"
 
-class Aeranas : public ScriptedCreature
+class Aeranas : public CreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(Aeranas)
-		Aeranas(Creature * pCreature) : ScriptedCreature(pCreature)
+		Aeranas(Creature * pCreature) : CreatureAI(pCreature)
 		{
 			//AddSpell(15535, Target_Current, 30.0f, 2.0f, 20);
 			//AddSpell(12553, Target_Current, 50.0f, 0, 10);
@@ -31,7 +31,7 @@ class Aeranas : public ScriptedCreature
 
 		void OnLoad()
 		{
-			Emote("Avruu's magic... it still controls me. You must fight me, mortal. It's the only way to break the spell!", Text_Yell, 0);
+			Emote(_unit, "Avruu's magic... it still controls me. You must fight me, mortal. It's the only way to break the spell!", Text_Yell, 0);
 		}
 
 		void OnCombatStop(Unit * mTarget)
@@ -49,7 +49,7 @@ class Aeranas : public ScriptedCreature
 
 			if(_unit->GetHealthPct() <= 30)
 			{
-				Emote("Avruu's magic is broken! I'm free once again!", Text_Say, 0);
+				Emote(_unit, "Avruu's magic is broken! I'm free once again!", Text_Say, 0);
 				_unit->WipeHateList();
 				_unit->SetFaction(35);
 			}

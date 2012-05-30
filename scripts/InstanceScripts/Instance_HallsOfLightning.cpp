@@ -193,11 +193,11 @@ enum GENERAL_STANCES
     STANCE_DEFENSIVE	= 3,
 };
 
-class GeneralBjarngrimAI : public MoonScriptBossAI
+class GeneralBjarngrimAI : public CreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(GeneralBjarngrimAI)
-		GeneralBjarngrimAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
+		GeneralBjarngrimAI(Creature* pCreature) : CreatureAI(pCreature)
 		{
 			mInstance = GetInstanceScript();
 			// Battle Stance
@@ -310,11 +310,11 @@ class GeneralBjarngrimAI : public MoonScriptBossAI
 // 24 seconds + up to 6
 #define TIMER_STOMP					24000
 
-class Volkhan : public MoonScriptCreatureAI
+class Volkhan : public CreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(Volkhan)
-		Volkhan(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
+		Volkhan(Creature* pCreature) : CreatureAI(pCreature)
 		{
 			mInstance = GetInstanceScript();
 
@@ -393,7 +393,7 @@ class Volkhan : public MoonScriptCreatureAI
 					case 1: Emote("Nothing is wasted in the process. You will see....",	Text_Yell, 13962); break;
 				}
 
-				MoonScriptCreatureAI* pAnvil = GetNearestCreature(CN_VOLKHANS_ANVIL);
+				CreatureAI* pAnvil = GetNearestCreature(CN_VOLKHANS_ANVIL);
 				_unit->CastSpell(pAnvil ? pAnvil->GetUnit() : GetUnit() , SPELL_TEMPER, true);
 
 				SetCanEnterCombat(true);
@@ -425,11 +425,11 @@ class Volkhan : public MoonScriptCreatureAI
 		MoonInstanceScript* mInstance;
 };
 
-class MoltenGolem : public MoonScriptCreatureAI
+class MoltenGolem : public CreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(MoltenGolem)
-		MoltenGolem(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
+		MoltenGolem(Creature* pCreature) : CreatureAI(pCreature)
 		{
 			AddSpell(SPELL_BLAST_WAVE, Target_Self, 25, 0, 20);
 			AddSpell(SPELL_IMMOLATION_STRIKE, Target_Current, 15, 0, 15);
@@ -442,22 +442,22 @@ class MoltenGolem : public MoonScriptCreatureAI
 		}
 };
 
-class BrittleGolem : public MoonScriptCreatureAI
+class BrittleGolem : public CreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(BrittleGolem)
-		BrittleGolem(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
+		BrittleGolem(Creature* pCreature) : CreatureAI(pCreature)
 		{
 			SetCanEnterCombat(false);
 			SetCanMove(false);
 		}
 };
 
-class VolkhansAnvil : public MoonScriptCreatureAI
+class VolkhansAnvil : public CreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(VolkhansAnvil)
-		VolkhansAnvil(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
+		VolkhansAnvil(Creature* pCreature) : CreatureAI(pCreature)
 		{
 			_unit->GetAIInterface()->SetAllowedToEnterCombat(false);
 			_unit->SetUInt64Value(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
@@ -480,11 +480,11 @@ class VolkhansAnvil : public MoonScriptCreatureAI
 
 #define ARCING_BURN				HeroicInt( 52671, 59834 )
 
-class IonarAI : public MoonScriptBossAI
+class IonarAI : public CreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(IonarAI)
-		IonarAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
+		IonarAI(Creature* pCreature) : CreatureAI(pCreature)
 		{
 			mInstance = GetInstanceScript();
 
@@ -523,11 +523,11 @@ class IonarAI : public MoonScriptBossAI
 #define TIMER_NOVA				14000
 #define TIMER_RESPOND			18000
 
-class LokenAI : public MoonScriptCreatureAI
+class LokenAI : public CreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(LokenAI)
-		LokenAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
+		LokenAI(Creature* pCreature) : CreatureAI(pCreature)
 		{
 			mInstance = GetInstanceScript();
 			mNova = AddSpell(LIGHTNING_NOVA, Target_Self, 0, 4.0f, 0);

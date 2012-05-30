@@ -55,11 +55,11 @@ class ProspectorAnvilwardGossip : public Arcemu::Gossip::Script
 		}
 };
 
-class ProspectorAnvilwardAI : public MoonScriptCreatureAI
+class ProspectorAnvilwardAI : public CreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(ProspectorAnvilwardAI)
-		ProspectorAnvilwardAI(Creature * pCreature) : MoonScriptCreatureAI(pCreature)
+		ProspectorAnvilwardAI(Creature * pCreature) : CreatureAI(pCreature)
 		{
 			for(uint8 i = 0; i<8; i++)
 				AddWaypoint(CreateWaypoint(i, ProspectorAnvilwardWaypoints[i].addition, Flag_Walk, ProspectorAnvilwardWaypoints[i]));

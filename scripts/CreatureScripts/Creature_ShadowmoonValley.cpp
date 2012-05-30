@@ -18,11 +18,11 @@
 
 #include "Setup.h"
 
-class EclipsionSpawn : public ScriptedCreature
+class EclipsionSpawn : public CreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(EclipsionSpawn)
-		EclipsionSpawn(Creature *pCreature) : ScriptedCreature(pCreature) {}
+		EclipsionSpawn(Creature *pCreature) : CreatureAI(pCreature) {}
 
 		void OnDied(Unit *mKiller)
 		{

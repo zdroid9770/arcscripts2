@@ -137,11 +137,11 @@ protected:
 	uint32 mFactoryDoor_GUID, mDefiasCannon_GUID, mDoorLever_GUID, mMrSmiteChest_GUID, mIronCladDoor_GUID, InstanceEncounter;
 };
 
-class RhahkZorAI : public MoonScriptCreatureAI
+class RhahkZorAI : public CreatureAI
 {
 public:
 	ADD_CREATURE_FACTORY_FUNCTION(RhahkZorAI)
-	RhahkZorAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
+	RhahkZorAI(Creature* pCreature) : CreatureAI(pCreature)
 	{
 		// Rhahk'Zor Slam
 		AddSpell(6304, Target_Current, 8, 0, 3);
@@ -156,11 +156,11 @@ enum MrSmiteSpells
 	SMITE_SLAM			= 6435
 };
 
-class MrSmiteAI : public MoonScriptBossAI
+class MrSmiteAI : public CreatureAI
 {
 public:
 	ADD_CREATURE_FACTORY_FUNCTION(MrSmiteAI)
-	MrSmiteAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
+	MrSmiteAI(Creature* pCreature) : CreatureAI(pCreature)
 	{
 		AddSpell(SMITE_SLAM, Target_Current, 25, 0.0f, 15, 0.0f, 8.0f, true);
 		mStomp = AddSpell(SMITE_STOMP, Target_Self, 0, 0, 0);
@@ -274,11 +274,11 @@ protected:
 };
 
 // VanCleef
-class VanCleefAI : public MoonScriptBossAI
+class VanCleefAI : public CreatureAI
 {
 public:
 	ADD_CREATURE_FACTORY_FUNCTION(VanCleefAI)
-	VanCleefAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
+	VanCleefAI(Creature* pCreature) : CreatureAI(pCreature)
 	{
 		AddEmote(Event_OnCombatStart, "None may challenge the brotherhood.", Text_Yell, 5780);
 		AddEmote(Event_OnDied, "The Brotherhood will prevail!", Text_Yell, 5784);
@@ -308,7 +308,7 @@ public:
 			// Defias Blackguard x 2
 			for(int x = 0; x < 2; x++)
 			{
-				MoonScriptCreatureAI* Guard = SpawnCreature(636);
+				CreatureAI* Guard = SpawnCreature(636);
 				if( Guard != NULL ){
 					Guard->SetDespawnWhenInactive(true);
 					Guard->GetUnit()->m_noRespawn = true;
