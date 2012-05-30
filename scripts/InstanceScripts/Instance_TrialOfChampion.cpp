@@ -138,6 +138,7 @@ class BlackKnightAI : public MoonScriptBossAI
 				_unit->SetHealthPct(100);
 				SetDisplayWeaponIds(0, 0);
 				Emote("I have no need for bones to best you!", Text_Yell, 0);// need sound
+				SetPhase(3);
 			}
 		}
 private:
