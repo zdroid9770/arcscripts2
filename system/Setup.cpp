@@ -27,7 +27,7 @@ extern "C" SCRIPT_DECL uint32 _exp_get_script_type()
 
 extern "C" SCRIPT_DECL void _exp_script_register(ScriptMgr* mgr)	// Comment any script to disable it
 {
-	ThreadPool.ExecuteTask(new ArcScripts2());
+	pSystem.LoadScriptTexts();
 
 	//CREATURE
 	SetupArathiHighlandsCreature(mgr);

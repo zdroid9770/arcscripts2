@@ -25,6 +25,7 @@ enum TextType
     Text_Say,
     Text_Yell,
     Text_Emote,
+	Max_Emote_type
 };
 
 enum EventType
@@ -376,8 +377,6 @@ class SCRIPT_DECL MoonScriptCreatureAI : public CreatureAIScript
 		void					Emote(EmoteDesc* pEmote);
 		void					Emote(const char* pText, TextType pType = Text_Yell, uint32 pSoundId = 0, EmoteType pEmote = EMOTE_ONESHOT_NONE, uint32 Time = 0);
 		void					Announce(const char* pText);
-		void					AddTextEmote(int32 pEntry, EventType pEventType);
-		void					TextEmote(int32 pEntry);
 
 		//Timers and Events
 		int32					AddTimer(int32 pDurationMillisec);
@@ -431,8 +430,6 @@ class SCRIPT_DECL MoonScriptCreatureAI : public CreatureAIScript
 		void					Destroy() override;
 
 	protected:
-		ArcScripts2*			pSystem;
-
 		bool					IsSpellScheduled(SpellDesc* pSpell);
 		bool					CastSpellInternal(SpellDesc* pSpell, uint32 pCurrentTime = 0);
 		void					CastSpellOnTarget(Unit* pTarget, TargetType pType, SpellEntry* pEntry, bool pInstant);

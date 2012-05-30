@@ -34,12 +34,19 @@ struct WaypointsData
 	WayPoint * wpData;
 };
 
+#define pSystem ArcScripts2::Instance()
+
 class ArcScripts2
 {
 	public:
-		ArcScripts2();
-		~ArcScripts2();
-		static ArcScripts2& Instance();
+		ArcScripts2(){}
+		~ArcScripts2(){}
+
+		static ArcScripts2& Instance()
+		{
+			static ArcScripts2 System;
+			return System;
+		}
 
 		typedef std::map<uint32, std::vector<StringTextData>> TextDataMap;
 
@@ -84,5 +91,3 @@ class ArcScripts2
 };
 
 #endif
-
-#define mScriptData ArcScripts2::Instance()

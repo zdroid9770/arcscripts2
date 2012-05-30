@@ -19,14 +19,6 @@
 #include "Setup.h"
 #include "System.h"
 
-ArcScripts2::ArcScripts2()
-{
-}
-
-ArcScripts2::~ArcScripts2()
-{
-}
-
 void ArcScripts2::LoadScriptTexts()
 {
     QueryResult* pResult = WorldDatabase.Query("SELECT entry, id, text, type, sound, emote FROM script_texts");

@@ -17,8 +17,23 @@
  */
 
 #include "Setup.h"
+class VioletHoldLever : public GameObjectAIScript
+{
+	public:
+		ADD_GAMEOBJECT_FACTORY_FUNCTION(VioletHoldLever)
+		VioletHoldLever(GameObject *goinstance) : GameObjectAIScript(goinstance) {}
 
+		void OnActivate(Player *pPlayer)
+		{
+			if(GameObject * pDoor = _gameobject->GetMapMgr()->GetInterface()->GetGameObjectNearestCoords(_gameobject->GetPositionX(), _gameobject->GetPositionY(), _gameobject->GetPositionZ(), 193019))
+			{
+				pDoor->SetState(pDoor->GetState() == GAMEOBJECT_STATE_CLOSED ? GAMEOBJECT_STATE_OPEN : GAMEOBJECT_STATE_CLOSED);
+				_gameobject->SetState(pDoor->GetState());
+			}
+		}
+};
 
 void SetupCrystalsongForestGameobjects(ScriptMgr * mgr)
 {
+	mgr->register_gameobject_script(193020, &VioletHoldLever::Create);
 }
