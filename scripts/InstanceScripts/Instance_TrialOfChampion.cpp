@@ -67,9 +67,10 @@ class PaletreesAI : public MoonScriptBossAI
 				_unit->SetFaction(35);
 				Emote("Excellent work!", Text_Yell, 16252);
 				// Not suppose to "jump" despawn, she is suppose to walk off the floor then despawn.
-				_unit->Despawn(10000, 0);
 				_unit->GetAIInterface()->MoveJump(747.365f, 692.113f, 412.351f);
-				_unit->GetMapMgr()->GetInterface()->SpawnGameObject(195324, 748.76f, 618.309f, 411.089f, 1.58, true, 0, 0, 1); 
+				_unit->GetMapMgr()->GetInterface()->SpawnGameObject(195323, 748.76f, 618.309f, 411.089f, 1.58f, true, 0, 0, 1);
+				_unit->Despawn(10000, 0);
+				SetPhase(4);
 			}
 		}
 
