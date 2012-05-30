@@ -274,6 +274,11 @@ class LieutenantDrakeAI : public MoonScriptCreatureAI
 			pInstance = dynamic_cast<OldHilsbradInstance*>(GetInstanceScript());
 		}
 
+		void OnLoad()
+		{
+			Emote("I know what your doing and I won't let that happen!") // Need right text ID
+		}
+
 		void OnCombatStart(Unit* pTarget)
 		{
 			if(pInstance)
