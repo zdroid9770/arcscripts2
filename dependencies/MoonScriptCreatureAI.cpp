@@ -730,8 +730,8 @@ void MoonScriptCreatureAI::Announce(const char* pText)
 
 int32 MoonScriptCreatureAI::AddTimer(int32 pDurationMillisec)
 {
-	int32 Index = mTimerIdCounter++;
-	mTimers.push_back(std::make_pair(Index, pDurationMillisec));
+	mTimerIdCounter++;
+	mTimers[mTimerIdCounter].push_back(pDurationMillisec);
 	++mTimerCount;
 	return Index;
 }
