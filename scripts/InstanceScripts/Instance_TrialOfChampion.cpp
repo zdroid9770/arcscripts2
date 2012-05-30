@@ -69,7 +69,7 @@ class BrightStarGossip : public Arcemu::Gossip::Script
 	public:
 		void OnHello(Object* pObject, Player* Plr)
 		{
-			Arcemu::Gossip::Menu::SendQuickMenu(pObject->GetGUID(), 0, Plr, 1, Arcemu::Gossip::ICON_CHAT, "I would like to start the Trial of the Champion");
+			Arcemu::Gossip::Menu::SendQuickMenu(pObject->GetGUID(), 1, Plr, 1, Arcemu::Gossip::ICON_CHAT, "I would like to start the Trial of the Champion");
 		}
 
 		void OnSelectOption(Object* pObject, Player*  Plr, uint32 Id, const char* Code)
