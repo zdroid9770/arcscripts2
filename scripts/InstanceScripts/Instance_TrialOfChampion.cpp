@@ -113,7 +113,7 @@ class BlackKnightAI : public MoonScriptBossAI
 			AddEmote(Event_OnCombatStart, "This farce ends here!", Text_Yell, 0); // need sound ID
 			AddEmote(Event_OnTargetDied, "A waste of flesh.", Text_Yell, 0); // need sound
 			AddEmote(Event_OnTargetDied, "Pathetic.", Text_Yell, 0); // need sound
-			AddEmote(Event_OnDied, "No! I must not fail... again...", Text_Yell, 16135);
+			AddEmote(Event_OnDied, "No! I must not fail... again...", Text_Yell, 0);
 		}
 
 		void OnLoad()
