@@ -69,7 +69,7 @@ class BrightStarGossip : public Arcemu::Gossip::Script
 	public:
 		void OnHello(Object* pObject, Player* Plr)
 		{
-			Arcemu::Gossip::Menu::SendQuickMenu(pObject->GetGUID(), objmgr.GetGossipTextForNpc(pObject->GetEntry()), Plr, 1, Arcemu::Gossip::ICON_CHAT, "I would like to start the Trial of the Champion");
+			Arcemu::Gossip::Menu::SendQuickMenu(pObject->GetGUID(), 0, Plr, 1, Arcemu::Gossip::ICON_CHAT, "I would like to start the Trial of the Champion");
 		}
 
 		void OnSelectOption(Object* pObject, Player*  Plr, uint32 Id, const char* Code)
@@ -269,13 +269,13 @@ class MemoryAI : public MoonScriptCreatureAI
 		}
 };
 
- void SetupTrialOfChampionHold(ScriptMgr * mgr)
- {
+void SetupTrialOfChampionHold(ScriptMgr * mgr)
+{
 	 mgr->register_creature_script(NPC_PALETRESS, &PaletressAI::Create);
 	 mgr->register_creature_script(34942, &MemoryAI::Create);
 	 mgr->register_creature_gossip(35005, new BrightStarGossip);
 	 mgr->register_creature_script(35005, &BrightStarAI::Create);
 	 mgr->register_creature_script(NPC_PURE, &PureAI::Create);
 	 mgr->register_creature_script(NPC_BLACK, &BlackKnightAI::Create);
- }
+}
  
