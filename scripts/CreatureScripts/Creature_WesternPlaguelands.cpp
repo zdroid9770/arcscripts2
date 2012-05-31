@@ -18,28 +18,43 @@
 
 #include "Setup.h"
 
-class RottingCadaver : public CreatureAIScript
+class RottingCadaver : public CreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(RottingCadaver)
-		RottingCadaver(Creature *pCreature) : CreatureAIScript(pCreature) {}
+		RottingCadaver(Creature *pCreature) : CreatureAI(pCreature) {}
 
 		void OnDied(Unit *mKiller)
 		{
-			GetUnit()->CastSpell(GetUnit(), 17064, true); // Cast spell: "Summon Rotting Worms".
+			_unit->CastSpell(_unit, dbcSpell.LookupEntry(17064), true); // Cast spell: "Summon Rotting Worms".
 		}
 };
 
-class SummonOozeling : public CreatureAIScript
+class SummonOozeling : public CreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(SummonOozeling)
-		SummonOozeling(Creature *pCreature) : CreatureAIScript(pCreature) {}
+		SummonOozeling(Creature *pCreature) : CreatureAI(pCreature)
+		{
+			CrimsonFuryTimer = (5+rand()%9)*1000;
+		}
 
 		void OnDied(Unit *mKiller)
 		{
-			GetUnit()->CastSpell(GetUnit(), 12018, true); // Cast spell: "Summon Oozeling".
+			_unit->CastSpell(_unit, dbcSpell.LookupEntry(12018), true); // Cast spell: "Summon Oozeling".
 		}
+
+		void AIUpdate()
+		{
+			if(CrimsonFuryTimer <= mAIUpdateFrequency)
+			{
+				_unit->CastSpell(GetTarget(TARGET_ATTACKING), dbcSpell.LookupEntry(12745), true);
+				CrimsonFuryTimer = (8+rand()%7)*1000;
+			}else CrimsonFuryTimer -= mAIUpdateFrequency;
+		}
+
+	private:
+		uint32 CrimsonFuryTimer;
 };
 
 void SetupWesternPlaguelandsCreature(ScriptMgr * mgr)
@@ -48,3 +63,4 @@ void SetupWesternPlaguelandsCreature(ScriptMgr * mgr)
 	mgr->register_creature_script(1806,  &SummonOozeling::Create);	// Vile Slime
 	mgr->register_creature_script(1808,  &SummonOozeling::Create);	// Devouring Ooze
 }
+

@@ -86,11 +86,11 @@ class NaxxramasScript : public MoonInstanceScript
 #define NAXXRAMAS_ACOLYTE_SHADOW_BOLT_VOLLEY_NORMAL		56064
 
 // Invisiblity should be removed OnCombatStart ?
-class VigilantShadeAI : public MoonScriptCreatureAI
+class VigilantShadeAI : public CreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(VigilantShadeAI);
-		VigilantShadeAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
+		VigilantShadeAI(Creature* pCreature) : CreatureAI(pCreature)
 		{
 			// Does it really work ?
 			AddSpell(NAXXRAMAS_ACOLYTE_SHADOW_BOLT_VOLLEY_NORMAL, Target_RandomPlayerDestination, 10, 0, 15, 0, 30);
@@ -114,11 +114,11 @@ class VigilantShadeAI : public MoonScriptCreatureAI
 #define MAEXXNA_SPIDERLING_NECROTIC_POISON_NORMAL	54121
 #define MAEXXNA_SPIDERLING_NECROTIC_POISON_HEROIC	28776
 
-class MaexxnaSpiderlingAI : public MoonScriptCreatureAI
+class MaexxnaSpiderlingAI : public CreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(MaexxnaSpiderlingAI)
-		MaexxnaSpiderlingAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
+		MaexxnaSpiderlingAI(Creature* pCreature) : CreatureAI(pCreature)
 		{
 			AddSpell(MAEXXNA_SPIDERLING_NECROTIC_POISON_NORMAL, Target_Current, 10, 0, 20, 0, 8);
 		}
@@ -129,11 +129,11 @@ class MaexxnaSpiderlingAI : public MoonScriptCreatureAI
 #define CN_WEB_WRAP								16486
 #define MAEXXNA_WEB_WRAP						28622
 
-class WebWrapAI : public MoonScriptCreatureAI
+class WebWrapAI : public CreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(WebWrapAI);
-		WebWrapAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
+		WebWrapAI(Creature* pCreature) : CreatureAI(pCreature)
 		{
 			mPlayerGuid = 0;
 		}
@@ -226,13 +226,13 @@ static Location WebWrapPos[] =
 	{ 3523.486572f, -3946.144287f, 309.651611f, 1.973552f }
 };
 
-void SpellFunc_MaexxnaWebWrap(SpellDesc* pThis, MoonScriptCreatureAI* pCreatureAI, Unit* pTarget, TargetType pType);
+void SpellFunc_MaexxnaWebWrap(SpellDesc* pThis, CreatureAI* pCreatureAI, Unit* pTarget, TargetType pType);
 
-class MaexxnaAI : public MoonScriptBossAI
+class MaexxnaAI : public CreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(MaexxnaAI)
-		MaexxnaAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
+		MaexxnaAI(Creature* pCreature) : CreatureAI(pCreature)
 		{
 			AddSpell(MAEXXNA_POISON_SHOCK_NORMAL, Target_Self, 100, 0, 10);		// Target_Current with range ?
 			AddSpell(MAEXXNA_NECROTIC_POISON_NORMAL, Target_Current, 10, 0, 15, 0, 8);
@@ -262,7 +262,7 @@ class MaexxnaAI : public MoonScriptBossAI
 		{
 			if(IsTimerFinished(mAddsSummonTimer))
 			{
-				MoonScriptCreatureAI* Spiderling = NULL;
+				CreatureAI* Spiderling = NULL;
 				for(int32 i = 0; i < 8; ++i)
 				{
 					Spiderling = SpawnCreature(CN_MAEXXNA_SPIDERLING);
@@ -316,7 +316,7 @@ class MaexxnaAI : public MoonScriptBossAI
 		int32				mWebWrapTimer;
 };
 
-void SpellFunc_MaexxnaWebWrap(SpellDesc* pThis, MoonScriptCreatureAI* pCreatureAI, Unit* pTarget, TargetType pType)
+void SpellFunc_MaexxnaWebWrap(SpellDesc* pThis, CreatureAI* pCreatureAI, Unit* pTarget, TargetType pType)
 {
 	MaexxnaAI* Maexxna = (pCreatureAI != NULL) ? TO< MaexxnaAI* >(pCreatureAI) : NULL;
 	if(Maexxna != NULL)
@@ -354,11 +354,11 @@ void SpellFunc_MaexxnaWebWrap(SpellDesc* pThis, MoonScriptCreatureAI* pCreatureA
 #define NAXXRAMAS_WORSHIPPER_WIDOW_EMBRACE				28732
 #define NAXXRAMAS_WORSHIPPER_MIND_EXHAUSTION			28727
 
-class NaxxramasWorshipperAI : public MoonScriptCreatureAI
+class NaxxramasWorshipperAI : public CreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(NaxxramasWorshipperAI)
-		NaxxramasWorshipperAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
+		NaxxramasWorshipperAI(Creature* pCreature) : CreatureAI(pCreature)
 		{
 			if(IsHeroic())
 				AddSpell(NAXXRAMAS_WORSHIPPER_FIREBALL_HEROIC, Target_Current, 10, 2.5, 0, 0, 45);
@@ -458,13 +458,13 @@ class NaxxramasWorshipperAI : public MoonScriptCreatureAI
 #define NAXXRAMAS_FOLLOWER_BERSERKER_CHARGE_HEROIC		56107
 #define NAXXRAMAS_FOLLOWER_SILENCE_HEROIC				54093
 
-void SpellFunc_NaxxramasFollowerCharge(SpellDesc* pThis, MoonScriptCreatureAI* pCreatureAI, Unit* pTarget, TargetType pType);
+void SpellFunc_NaxxramasFollowerCharge(SpellDesc* pThis, CreatureAI* pCreatureAI, Unit* pTarget, TargetType pType);
 
-class NaxxramasFollowerAI : public MoonScriptCreatureAI
+class NaxxramasFollowerAI : public CreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(NaxxramasFollowerAI)
-		NaxxramasFollowerAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
+		NaxxramasFollowerAI(Creature* pCreature) : CreatureAI(pCreature)
 		{
 			mCharge = AddSpell(NAXXRAMAS_FOLLOWER_BERSERKER_CHARGE_HEROIC, Target_Current, 0, 0, 0);
 			AddSpellFunc(&SpellFunc_NaxxramasFollowerCharge, Target_RandomPlayer, 8, 0, 20, 0, 40);
@@ -474,7 +474,7 @@ class NaxxramasFollowerAI : public MoonScriptCreatureAI
 		SpellDesc*				mCharge;
 };
 
-void SpellFunc_NaxxramasFollowerCharge(SpellDesc* pThis, MoonScriptCreatureAI* pCreatureAI, Unit* pTarget, TargetType pType)
+void SpellFunc_NaxxramasFollowerCharge(SpellDesc* pThis, CreatureAI* pCreatureAI, Unit* pTarget, TargetType pType)
 {
 	NaxxramasFollowerAI* NaxxramasFollower = (pCreatureAI != NULL) ? TO< NaxxramasFollowerAI* >(pCreatureAI) : NULL;
 	if(NaxxramasFollower != NULL)
@@ -514,11 +514,11 @@ static Location Followers[ 2 ] =
 	{ 6.0f, 0, 0, 0 }
 };
 
-class GrandWidowFaerlinaAI : public MoonScriptBossAI
+class GrandWidowFaerlinaAI : public CreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(GrandWidowFaerlinaAI)
-		GrandWidowFaerlinaAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
+		GrandWidowFaerlinaAI(Creature* pCreature) : CreatureAI(pCreature)
 		{
 			mPoisonVolleyBolt = AddSpell(GRAND_WIDOW_FAERLINA_POISON_VOLLEY_BOLT_NORMAL, Target_Self, 0, 0, 0);
 			mFrenzy = AddSpell(GRAND_WIDOW_FAERLINA_FRENZY_NORMAL, Target_Self, 0, 0, 0);
@@ -558,7 +558,7 @@ class GrandWidowFaerlinaAI : public MoonScriptBossAI
 				{
 					for(uint32 i = 0; i < 2; ++i)
 					{
-						MoonScriptCreatureAI * AddAI = SpawnCreature(CN_NAXXRAMAS_FOLLOWER, 3353.364502f + Followers[ i ].x, -3620.322998f, 260.996857f, 4.725017f);
+						CreatureAI * AddAI = SpawnCreature(CN_NAXXRAMAS_FOLLOWER, 3353.364502f + Followers[ i ].x, -3620.322998f, 260.996857f, 4.725017f);
 						if(AddAI != NULL)
 							AddAI->GetUnit()->m_noRespawn = true;
 					}
@@ -599,11 +599,11 @@ class GrandWidowFaerlinaAI : public MoonScriptBossAI
 #define CRYPT_GUARD_CLEAVE					40504
 #define CRYPT_GUARD_FRENZY					8269
 
-class CryptGuardAI : public MoonScriptCreatureAI
+class CryptGuardAI : public CreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(CryptGuardAI)
-		CryptGuardAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
+		CryptGuardAI(Creature* pCreature) : CreatureAI(pCreature)
 		{
 			AddSpell(CRYPT_GUARD_ACID_SPLIT_NORMAL, Target_RandomPlayer, 8, 0, 15, 0, 40);
 
@@ -647,14 +647,14 @@ static Location CryptGuards[] =
 	{ 3332.591797f, -3476.102539f, 287.073425f, 0.015707f }
 };
 
-void SpellFunc_AnubRekhanCorpseScarabsPlayer(SpellDesc* pThis, MoonScriptCreatureAI* pCreatureAI, Unit* pTarget, TargetType pType);
-void SpellFunc_AnubRekhanCorpseScarabsCryptGuard(SpellDesc* pThis, MoonScriptCreatureAI* pCreatureAI, Unit* pTarget, TargetType pType);
+void SpellFunc_AnubRekhanCorpseScarabsPlayer(SpellDesc* pThis, CreatureAI* pCreatureAI, Unit* pTarget, TargetType pType);
+void SpellFunc_AnubRekhanCorpseScarabsCryptGuard(SpellDesc* pThis, CreatureAI* pCreatureAI, Unit* pTarget, TargetType pType);
 
-class AnubRekhanAI : public MoonScriptBossAI
+class AnubRekhanAI : public CreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(AnubRekhanAI)
-		AnubRekhanAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
+		AnubRekhanAI(Creature* pCreature) : CreatureAI(pCreature)
 		{
 			AddSpell(ANUBREKHAN_IMPALE_NORMAL, Target_RandomPlayerDestination, 7, 0, 10, 0, 45);
 			mLocustSwarm = AddSpell(ANUBREKHAN_LOCUST_SWARM_NORMAL, Target_Self, 0, 3, 0);
@@ -715,7 +715,7 @@ class AnubRekhanAI : public MoonScriptBossAI
 		int32					mCryptSpawnTimer;
 };
 
-void SpellFunc_AnubRekhanCorpseScarabsPlayer(SpellDesc* pThis, MoonScriptCreatureAI* pCreatureAI, Unit* pTarget, TargetType pType)
+void SpellFunc_AnubRekhanCorpseScarabsPlayer(SpellDesc* pThis, CreatureAI* pCreatureAI, Unit* pTarget, TargetType pType)
 {
 	AnubRekhanAI* AnubRekhan = (pCreatureAI != NULL) ? TO< AnubRekhanAI* >(pCreatureAI) : NULL;
 	if(AnubRekhan != NULL)
@@ -765,7 +765,7 @@ void SpellFunc_AnubRekhanCorpseScarabsPlayer(SpellDesc* pThis, MoonScriptCreatur
 	}
 };
 
-void SpellFunc_AnubRekhanCorpseScarabsCryptGuard(SpellDesc* pThis, MoonScriptCreatureAI* pCreatureAI, Unit* pTarget, TargetType pType)
+void SpellFunc_AnubRekhanCorpseScarabsCryptGuard(SpellDesc* pThis, CreatureAI* pCreatureAI, Unit* pTarget, TargetType pType)
 {
 	AnubRekhanAI* AnubRekhan = (pCreatureAI != NULL) ? TO< AnubRekhanAI* >(pCreatureAI) : NULL;
 	if(AnubRekhan != NULL)
@@ -801,11 +801,11 @@ void SpellFunc_AnubRekhanCorpseScarabsCryptGuard(SpellDesc* pThis, MoonScriptCre
 #define INFECTIOUS_GHOUL_FRENZY_NORMAL			54701
 #define INFECTIOUS_GHOUL_FRENZY_HEROIC			24318
 
-class InfectiousGhoulAI : public MoonScriptCreatureAI
+class InfectiousGhoulAI : public CreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(InfectiousGhoulAI)
-		InfectiousGhoulAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
+		InfectiousGhoulAI(Creature* pCreature) : CreatureAI(pCreature)
 		{
 			AddSpell(INFECTIOUS_GHOUL_FLESH_ROT, Target_Current, 10, 0, 15, 0, 8);
 			AddSpell(INFECTIOUS_GHOUL_REND_NORMAL, Target_Current, 7, 0, 15, 0, 8);
@@ -838,11 +838,11 @@ class InfectiousGhoulAI : public MoonScriptCreatureAI
 #define STONESKIN_GARGOYLE_STONESKIN_NORMAL		28995
 #define STONESKIN_GARGOYLE_STONESKIN_HEROIC		54722
 
-class StoneskinGargoyleAI : public MoonScriptCreatureAI
+class StoneskinGargoyleAI : public CreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(StoneskinGargoyleAI)
-		StoneskinGargoyleAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
+		StoneskinGargoyleAI(Creature* pCreature) : CreatureAI(pCreature)
 		{
 			AddSpell(STONESKIN_GARGOYLE_ACID_VOLLEY_NORMAL, Target_Self, 10, 0, 5);
 			mStoneskin = AddSpell(STONESKIN_GARGOYLE_STONESKIN_NORMAL, Target_Self, 0, 7, 0);
@@ -876,11 +876,11 @@ class StoneskinGargoyleAI : public MoonScriptCreatureAI
 #define EYE_STALKER_MIND_FLAY_NORMAL		29407
 #define EYE_STALKER_MIND_FLAY_HEROIC		54805
 
-class EyeStalkerAI : public MoonScriptCreatureAI
+class EyeStalkerAI : public CreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(EyeStalkerAI)
-		EyeStalkerAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
+		EyeStalkerAI(Creature* pCreature) : CreatureAI(pCreature)
 		{
 			AddSpell(EYE_STALKER_MIND_FLAY_NORMAL, Target_Current, 100, 6, 8, 0, 45);
 		}
@@ -947,16 +947,16 @@ static Location SkelPosPhase2[] =
 	{ 2717.878906f, -3518.062988f, 261.905945f, 3.177050f }
 };
 
-void SpellFunc_NothToBalconyPhaseSwitch(SpellDesc* pThis, MoonScriptCreatureAI* pCreatureAI, Unit* pTarget, TargetType pType);
-void SpellFunc_NothFromBalconyPhaseSwitch(SpellDesc* pThis, MoonScriptCreatureAI* pCreatureAI, Unit* pTarget, TargetType pType);
-void SpellFunc_NothCriple(SpellDesc* pThis, MoonScriptCreatureAI* pCreatureAI, Unit* pTarget, TargetType pType);
-void SpellFunc_NothBlink(SpellDesc* pThis, MoonScriptCreatureAI* pCreatureAI, Unit* pTarget, TargetType pType);
+void SpellFunc_NothToBalconyPhaseSwitch(SpellDesc* pThis, CreatureAI* pCreatureAI, Unit* pTarget, TargetType pType);
+void SpellFunc_NothFromBalconyPhaseSwitch(SpellDesc* pThis, CreatureAI* pCreatureAI, Unit* pTarget, TargetType pType);
+void SpellFunc_NothCriple(SpellDesc* pThis, CreatureAI* pCreatureAI, Unit* pTarget, TargetType pType);
+void SpellFunc_NothBlink(SpellDesc* pThis, CreatureAI* pCreatureAI, Unit* pTarget, TargetType pType);
 
-class NothThePlaguebringerAI : public MoonScriptBossAI
+class NothThePlaguebringerAI : public CreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(NothThePlaguebringerAI)
-		NothThePlaguebringerAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
+		NothThePlaguebringerAI(Creature* pCreature) : CreatureAI(pCreature)
 		{
 			if(Is25ManRaid())
 			{
@@ -1169,7 +1169,7 @@ class NothThePlaguebringerAI : public MoonScriptBossAI
 		uint32						mPhaseCounter;
 };
 
-void SpellFunc_NothToBalconyPhaseSwitch(SpellDesc* pThis, MoonScriptCreatureAI* pCreatureAI, Unit* pTarget, TargetType pType)
+void SpellFunc_NothToBalconyPhaseSwitch(SpellDesc* pThis, CreatureAI* pCreatureAI, Unit* pTarget, TargetType pType)
 {
 	NothThePlaguebringerAI* Noth = (pCreatureAI != NULL) ? TO< NothThePlaguebringerAI* >(pCreatureAI) : NULL;
 	if(Noth != NULL)
@@ -1183,7 +1183,7 @@ void SpellFunc_NothToBalconyPhaseSwitch(SpellDesc* pThis, MoonScriptCreatureAI* 
 	}
 };
 
-void SpellFunc_NothFromBalconyPhaseSwitch(SpellDesc* pThis, MoonScriptCreatureAI* pCreatureAI, Unit* pTarget, TargetType pType)
+void SpellFunc_NothFromBalconyPhaseSwitch(SpellDesc* pThis, CreatureAI* pCreatureAI, Unit* pTarget, TargetType pType)
 {
 	NothThePlaguebringerAI* Noth = (pCreatureAI != NULL) ? TO< NothThePlaguebringerAI* >(pCreatureAI) : NULL;
 	if(Noth != NULL)
@@ -1200,7 +1200,7 @@ void SpellFunc_NothFromBalconyPhaseSwitch(SpellDesc* pThis, MoonScriptCreatureAI
 	}
 };
 
-void SpellFunc_NothCriple(SpellDesc* pThis, MoonScriptCreatureAI* pCreatureAI, Unit* pTarget, TargetType pType)
+void SpellFunc_NothCriple(SpellDesc* pThis, CreatureAI* pCreatureAI, Unit* pTarget, TargetType pType)
 {
 	NothThePlaguebringerAI* Noth = (pCreatureAI != NULL) ? TO< NothThePlaguebringerAI* >(pCreatureAI) : NULL;
 	if(Noth != NULL)
@@ -1211,7 +1211,7 @@ void SpellFunc_NothCriple(SpellDesc* pThis, MoonScriptCreatureAI* pCreatureAI, U
 	}
 };
 
-void SpellFunc_NothBlink(SpellDesc* pThis, MoonScriptCreatureAI* pCreatureAI, Unit* pTarget, TargetType pType)
+void SpellFunc_NothBlink(SpellDesc* pThis, CreatureAI* pCreatureAI, Unit* pTarget, TargetType pType)
 {
 	NothThePlaguebringerAI* Noth = (pCreatureAI != NULL) ? TO< NothThePlaguebringerAI* >(pCreatureAI) : NULL;
 	if(Noth != NULL)
@@ -1234,11 +1234,11 @@ void SpellFunc_NothBlink(SpellDesc* pThis, MoonScriptCreatureAI* pCreatureAI, Un
 #define PLAGUED_WARRIOR_STRIKE					12057
 #define PLAGUED_WARRIOR_CLEAVE					15496
 
-class PlaguedWarriorAI : public MoonScriptCreatureAI
+class PlaguedWarriorAI : public CreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(PlaguedWarriorAI)
-		PlaguedWarriorAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
+		PlaguedWarriorAI(Creature* pCreature) : CreatureAI(pCreature)
 		{
 			AddSpell(PLAGUED_WARRIOR_STRIKE, Target_Current, 10, 0, 5, 0, 8);
 			AddSpell(PLAGUED_WARRIOR_CLEAVE, Target_Current, 10, 0, 10, 0, 8);
@@ -1271,11 +1271,11 @@ const float HeiganEruptionSlope[3] =
 	(-3637 - HeiganPos[1]) / (2771 - HeiganPos[0]),
 };
 
-class HeiganTheUncleanAI : public MoonScriptBossAI
+class HeiganTheUncleanAI : public CreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(HeiganTheUncleanAI)
-		HeiganTheUncleanAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
+		HeiganTheUncleanAI(Creature* pCreature) : CreatureAI(pCreature)
 		{
 			AddPhaseSpell(1, AddSpell(HEIGAN_THE_UNCLEAN_SPELL_DISRUPTION, Target_Self, 100, 0, 5));
 			AddPhaseSpell(1, AddSpell(HEIGAN_THE_UNCLEAN_DECREPIT_FEVER_NORMAL, Target_Self, 100, 0, 20));
@@ -1481,11 +1481,11 @@ static Location Spores[] =
 	{ 2879.754883f, -3968.288574f, 273.633698f, 5.525566f }
 };
 
-class LoathebAI : public MoonScriptBossAI
+class LoathebAI : public CreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(LoathebAI)
-		LoathebAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
+		LoathebAI(Creature* pCreature) : CreatureAI(pCreature)
 		{
 			AddSpell(LOATHEB_NECROTIC_AURA, Target_Self, 100, 0, 20);
 			if(IsHeroic())
@@ -1607,11 +1607,11 @@ class LoathebAI : public MoonScriptBossAI
 ////// Spore
 #define SPORE_FUNGAL_CREEP				29232
 
-class SporeAI : public MoonScriptCreatureAI
+class SporeAI : public CreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(SporeAI)
-		SporeAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
+		SporeAI(Creature* pCreature) : CreatureAI(pCreature)
 		{
 			Despawn(90000);
 		}
@@ -1633,11 +1633,11 @@ class SporeAI : public MoonScriptCreatureAI
 #define SHADE_OF_NAXXRAMAS_SHADOW_BOLT_VOLLEY_HEROIC	55323
 #define CN_GHOST_OF_NAXXRAMAS							16419
 
-class ShadeOfNaxxramasAI : public MoonScriptCreatureAI
+class ShadeOfNaxxramasAI : public CreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(ShadeOfNaxxramasAI)
-		ShadeOfNaxxramasAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
+		ShadeOfNaxxramasAI(Creature* pCreature) : CreatureAI(pCreature)
 		{
 			AddSpell(SHADE_OF_NAXXRAMAS_SHADOW_BOLT_VOLLEY_NORMAL, Target_Self, 10, 0, 10);
 			AddSpell(SHADE_OF_NAXXRAMAS_PORTAL_OF_SHADOWS, Target_Self, 8, 0, 60);
@@ -1645,7 +1645,7 @@ class ShadeOfNaxxramasAI : public MoonScriptCreatureAI
 
 		void OnDied(Unit* pKiller)
 		{
-			if(MoonScriptCreatureAI* Ghost = SpawnCreature(CN_GHOST_OF_NAXXRAMAS, true))
+			if(CreatureAI* Ghost = SpawnCreature(CN_GHOST_OF_NAXXRAMAS, true))
 			{
 				Ghost->GetUnit()->SetUInt64Value(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_ATTACKABLE_2);
 				Ghost->SetDespawnWhenInactive(true);
@@ -1658,11 +1658,11 @@ class ShadeOfNaxxramasAI : public MoonScriptCreatureAI
 ////// Portal of Shadows
 #define CN_PORTAL_OF_SHADOWS							16420
 
-class PortalOfShadowsAI : public MoonScriptCreatureAI
+class PortalOfShadowsAI : public CreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(PortalOfShadowsAI)
-		PortalOfShadowsAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
+		PortalOfShadowsAI(Creature* pCreature) : CreatureAI(pCreature)
 		{
 			RegisterAIUpdateEvent(1000);
 			mSpawnTimer = AddTimer(15000);
@@ -1690,7 +1690,7 @@ class PortalOfShadowsAI : public MoonScriptCreatureAI
 			{
 				if(IsTimerFinished(mSpawnTimer))
 				{
-					if(MoonScriptCreatureAI* Ghost = SpawnCreature(CN_GHOST_OF_NAXXRAMAS, true))
+					if(CreatureAI* Ghost = SpawnCreature(CN_GHOST_OF_NAXXRAMAS, true))
 					{
 						Ghost->GetUnit()->SetUInt64Value(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_ATTACKABLE_2);
 						Ghost->SetDespawnWhenInactive(true);
@@ -1725,13 +1725,13 @@ class PortalOfShadowsAI : public MoonScriptCreatureAI
 #define NECRO_KNIGHT_FLAMESTRIKE				30091
 #define NECRO_KNIGHT_FROST_NOVA					30094
 
-void SpellFunc_NecroKnightBlink(SpellDesc* pThis, MoonScriptCreatureAI* pCreatureAI, Unit* pTarget, TargetType pType);
+void SpellFunc_NecroKnightBlink(SpellDesc* pThis, CreatureAI* pCreatureAI, Unit* pTarget, TargetType pType);
 
-class NecroKnightAI : public MoonScriptCreatureAI
+class NecroKnightAI : public CreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(NecroKnightAI)
-		NecroKnightAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
+		NecroKnightAI(Creature* pCreature) : CreatureAI(pCreature)
 		{
 			AddSpell(NECRO_KNIGHT_ARCANE_EXPLOSION, Target_Self, 8, 1.5, 5);
 			AddSpell(NECRO_KNIGHT_BLAST_WAVE, Target_Self, 7, 0, 5);
@@ -1742,7 +1742,7 @@ class NecroKnightAI : public MoonScriptCreatureAI
 		}
 };
 
-void SpellFunc_NecroKnightBlink(SpellDesc* pThis, MoonScriptCreatureAI* pCreatureAI, Unit* pTarget, TargetType pType)
+void SpellFunc_NecroKnightBlink(SpellDesc* pThis, CreatureAI* pCreatureAI, Unit* pTarget, TargetType pType)
 {
 	NecroKnightAI* NecroKnight = (pCreatureAI != NULL) ? TO< NecroKnightAI* >(pCreatureAI) : NULL;
 	if(NecroKnight != NULL && pTarget != NULL)
@@ -1768,11 +1768,11 @@ void SpellFunc_NecroKnightBlink(SpellDesc* pThis, MoonScriptCreatureAI* pCreatur
 #define DEATH_KNIGHT_CAVALIER_CLEAVE				15284
 #define DEATH_KNIGHT_CAVALIER_DEATH_COIL			28412
 
-class DeathKnightCavalierAI : public MoonScriptCreatureAI
+class DeathKnightCavalierAI : public CreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(DeathKnightCavalierAI)
-		DeathKnightCavalierAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
+		DeathKnightCavalierAI(Creature* pCreature) : CreatureAI(pCreature)
 		{
 			AddSpell(DEATH_KNIGHT_CAVALIER_BONE_ARMOR_NORMAL, Target_Self, 7, 0, 30);
 			AddSpell(DEATH_KNIGHT_CAVALIER_ICY_TOUCH_NORMAL, Target_RandomPlayer, 10, 0, 15, 0, 20);	// Target_Current ?
@@ -1808,13 +1808,13 @@ class DeathKnightCavalierAI : public MoonScriptCreatureAI
 #define CN_DEATHCHARGER_STEED					29818
 #define DEATHCHARGER_STEED_CHARGE				55317
 
-void SpellFunc_DeathchargerSteedCharge(SpellDesc* pThis, MoonScriptCreatureAI* pCreatureAI, Unit* pTarget, TargetType pType);
+void SpellFunc_DeathchargerSteedCharge(SpellDesc* pThis, CreatureAI* pCreatureAI, Unit* pTarget, TargetType pType);
 
-class DeathchargerSteedAI : public MoonScriptCreatureAI
+class DeathchargerSteedAI : public CreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(DeathchargerSteedAI)
-		DeathchargerSteedAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
+		DeathchargerSteedAI(Creature* pCreature) : CreatureAI(pCreature)
 		{
 			mDeathKnightAI = NULL;
 			mCharge = AddSpell(DEATHCHARGER_STEED_CHARGE, Target_Current, 0, 0, 0, 5, 45);
@@ -1859,7 +1859,7 @@ class DeathchargerSteedAI : public MoonScriptCreatureAI
 		SpellDesc*				mCharge;
 };
 
-void SpellFunc_DeathchargerSteedCharge(SpellDesc* pThis, MoonScriptCreatureAI* pCreatureAI, Unit* pTarget, TargetType pType)
+void SpellFunc_DeathchargerSteedCharge(SpellDesc* pThis, CreatureAI* pCreatureAI, Unit* pTarget, TargetType pType)
 {
 	DeathchargerSteedAI* Deathcharger = (pCreatureAI != NULL) ? TO< DeathchargerSteedAI* >(pCreatureAI) : NULL;
 	if(Deathcharger != NULL)
@@ -1882,11 +1882,11 @@ void SpellFunc_DeathchargerSteedCharge(SpellDesc* pThis, MoonScriptCreatureAI* p
 #define DARK_TOUCHED_WARRIOR_WHIRLWIND			55267
 //#define DARK_TOUCHED_WARRIOR_WHIRLWIND			55266	// This one disables mob's melee
 
-class DarkTouchedWarriorAI : public MoonScriptCreatureAI
+class DarkTouchedWarriorAI : public CreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(DarkTouchedWarriorAI)
-		DarkTouchedWarriorAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
+		DarkTouchedWarriorAI(Creature* pCreature) : CreatureAI(pCreature)
 		{
 			mResetHateTimer = -1;
 		}
@@ -1917,11 +1917,11 @@ class DarkTouchedWarriorAI : public MoonScriptCreatureAI
 #define INSTRUCTOR_RAZUVIOUS_UNBALANCING_STRIKE			55470
 #define INSTRUCTOR_RAZUVIOUS_HOPELESS					29125
 
-class InstructorRazuviousAI : public MoonScriptBossAI
+class InstructorRazuviousAI : public CreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(InstructorRazuviousAI)
-		InstructorRazuviousAI(Creature* pCreature) : MoonScriptBossAI(pCreature){}
+		InstructorRazuviousAI(Creature* pCreature) : CreatureAI(pCreature){}
 	
 		friend class DeathKnightUnderstudyAI;
 
@@ -1940,11 +1940,11 @@ class InstructorRazuviousAI : public MoonScriptBossAI
 #define DEATH_KNIGHT_UNDERSTUDY_BONE_BARRIER		29061
 #define DEATH_KNIGHT_UNDERSTUDY_TAUNT				29060
 
-class DeathKnightUnderstudyAI : public MoonScriptCreatureAI
+class DeathKnightUnderstudyAI : public CreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(DeathKnightUnderstudyAI)
-		DeathKnightUnderstudyAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
+		DeathKnightUnderstudyAI(Creature* pCreature) : CreatureAI(pCreature)
 		{
 			AddSpell(DEATH_KNIGHT_UNDERSTUDY_BLOOD_STRIKE, Target_Current, 10, 0, 4, 0, 8);
 			AddSpell(DEATH_KNIGHT_UNDERSTUDY_BONE_BARRIER, Target_Self, 8, 0, 30);
@@ -2042,11 +2042,11 @@ class DeathKnightUnderstudyAI : public MoonScriptCreatureAI
 #define PATCHWORK_GOLEM_WAR_STOMP_NORMAL		27758
 #define PATCHWORK_GOLEM_WAR_STOMP_HEROIC		56427
 
-class PatchworkGolemAI : public MoonScriptCreatureAI
+class PatchworkGolemAI : public CreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(PatchworkGolemAI)
-		PatchworkGolemAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
+		PatchworkGolemAI(Creature* pCreature) : CreatureAI(pCreature)
 		{
 			AddSpell(PATCHWORK_GOLEM_CLEAVE, Target_Current, 10, 0, 10, 0, 8);
 			AddSpell(PATCHWORK_GOLEM_EXECUTE_NORMAL, Target_Current, 8, 0, 10, 0, 8);
@@ -2071,11 +2071,11 @@ class PatchworkGolemAI : public MoonScriptCreatureAI
 #define LIGHTNING_TOTEM_SHOCK_NORMAL				28297
 #define LIGHTNING_TOTEM_SHOCK_HEROIC				54333
 
-class LightningTotemAI : public MoonScriptCreatureAI
+class LightningTotemAI : public CreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(LightningTotemAI)
-		LightningTotemAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
+		LightningTotemAI(Creature* pCreature) : CreatureAI(pCreature)
 		{
 			AddSpell(LIGHTNING_TOTEM_SHOCK_NORMAL, Target_Self, 100, 0.5, 2);
 
@@ -2106,11 +2106,11 @@ class LightningTotemAI : public MoonScriptCreatureAI
 #define STITCHED_COLOSSUS_MASSIVE_STOMP_HEROIC	55826
 #define STITCHED_COLOSSUS_UNSTOPPABLE_ENRAGE	54356
 
-class StitchedColossusAI : public MoonScriptCreatureAI
+class StitchedColossusAI : public CreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(StitchedColossusAI)
-		StitchedColossusAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
+		StitchedColossusAI(Creature* pCreature) : CreatureAI(pCreature)
 		{
 			AddSpell(STITCHED_COLOSSUS_MASSIVE_STOMP_NORMAL, Target_Self, 8, 0, 15);
 		}
@@ -2135,18 +2135,18 @@ class StitchedColossusAI : public MoonScriptCreatureAI
 /////////////////////////////////////////////////////////////////////////////////
 ////// Patchwerk
 
-void SpellFunc_PatchwerkHatefulStrike(SpellDesc* pThis, MoonScriptCreatureAI* pCreatureAI, Unit* pTarget, TargetType pType);
+void SpellFunc_PatchwerkHatefulStrike(SpellDesc* pThis, CreatureAI* pCreatureAI, Unit* pTarget, TargetType pType);
 
 #define PATCHWERK_FRENZY 28131
 #define PATCHWERK_BERSERK 26662
 #define PATCHWERK_HATEFUL_STRIKE_10 41926
 #define PATCHWERK_HATEFUL_STRIKE_25 59192
 
-class PatchwerkAI : public MoonScriptBossAI
+class PatchwerkAI : public CreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(PatchwerkAI)
-		PatchwerkAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
+		PatchwerkAI(Creature* pCreature) : CreatureAI(pCreature)
 		{
 			AddSpellFunc(&SpellFunc_PatchwerkHatefulStrike, Target_Self, 50, 0, 3);
 			SetEnrageInfo(AddSpell(PATCHWERK_BERSERK, Target_Self, 0, 0, 0), 360000);
@@ -2171,7 +2171,7 @@ class PatchwerkAI : public MoonScriptBossAI
 		bool	mEnraged;
 };
 
-void SpellFunc_PatchwerkHatefulStrike(SpellDesc* pThis, MoonScriptCreatureAI* pCreatureAI, Unit* pTarget, TargetType pType)
+void SpellFunc_PatchwerkHatefulStrike(SpellDesc* pThis, CreatureAI* pCreatureAI, Unit* pTarget, TargetType pType)
 {
 	if(!pThis || !pCreatureAI)
 		return;

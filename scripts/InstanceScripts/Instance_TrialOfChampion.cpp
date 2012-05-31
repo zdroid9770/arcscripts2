@@ -23,11 +23,11 @@ Information: http://www.wowhead.com/zone=4723
 ISSUES: Need to have a check if alliance or horde player than spawn the correct people.
 */
 
-class BrightStarAI : public MoonScriptCreatureAI
+class BrightStarAI : public CreatureAI
 {
 public:
 	ADD_CREATURE_FACTORY_FUNCTION(BrightStarAI)
-	BrightStarAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
+	BrightStarAI(Creature* pCreature) : CreatureAI(pCreature)
 	{
 	}
 	// This needs work I skipped the horses part this is the 2nd boss.
@@ -35,7 +35,7 @@ public:
 	{
 			if(Creature * mBoss = _unit->GetMapMgr()->GetInterface()->GetCreatureNearestCoords(746.583f, 559.018f, 435.492f, 34996))
 			{
-				MoonScriptBossAI * Tirion = dynamic_cast<MoonScriptBossAI*>(mBoss->GetScript());
+				CreatureAI * Tirion = dynamic_cast<CreatureAI*>(mBoss->GetScript());
 				Tirion->Emote("Welcome champions! You have heard the call of the Argent Crusade and you boldly answered! It is here, in the Crusaders' Coliseum, that you will face your greatest challenges. Those of you who survive the rigors of the coliseum will join the Argent Crusade on its march to Icecrown Citadel.", Text_Yell, 16036);
 				BossSpawnTimer = AddTimer(13000);
 			}
@@ -43,7 +43,7 @@ public:
 			if(IsTimerFinished(BossSpawnTimer))
 			{
 				Creature * mBoss = _unit->GetMapMgr()->GetInterface()->GetCreatureNearestCoords(746.583f, 559.018f, 435.492f, 34996);
-				MoonScriptBossAI * Tirion = dynamic_cast<MoonScriptBossAI*>(mBoss->GetScript());
+				CreatureAI * Tirion = dynamic_cast<CreatureAI*>(mBoss->GetScript());
 				// 50% chance that its the Argent Confessor Paletress or the Eadric the Pure.
 				switch(rand()%2)
 				{
@@ -95,11 +95,11 @@ enum BlackKnightData{
 	SPELL_DEATHBITE		= 67808 // PHASE 3 SPELL
 };
 
-class BlackKnightAI : public MoonScriptBossAI
+class BlackKnightAI : public CreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(BlackKnightAI)
-		BlackKnightAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
+		BlackKnightAI(Creature* pCreature) : CreatureAI(pCreature)
 		{
 			AddPhaseSpell(1, AddSpell(SPELL_ICYTOUCH, Target_Current, 30, 0, 0));
 			AddPhaseSpell(1, AddSpell(SPELL_OBLIT, Target_Current, 45, 0, 4));
@@ -152,11 +152,11 @@ enum PUREData{
 	SPELL_RADIANCE		= 66935
 };
 
-class PureAI : public MoonScriptBossAI
+class PureAI : public CreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(PureAI)
-		PureAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
+		PureAI(Creature* pCreature) : CreatureAI(pCreature)
 		{
 			AddPhaseSpell(1, AddSpell(SPELL_HOJ, Target_Current, 30, 0, 8));
 			AddPhaseSpell(1, AddSpell(SPELL_HOTR, Target_RandomPlayer, 26, 2.5, 10, 0, 0, false, "Hammer of the Righteous!", Text_Yell, 16136));
@@ -200,11 +200,11 @@ enum PALETRESSData{
 	SPELL_CONFESS		= 66680
 };
 
-class PaletressAI : public MoonScriptBossAI
+class PaletressAI : public CreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(PaletressAI)
-		PaletressAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
+		PaletressAI(Creature* pCreature) : CreatureAI(pCreature)
 		{
 			AddSpell(SPELL_HOLYSMITE, Target_RandomPlayer, 60, 2, 0);
 			AddSpell(SPELL_HOLYNOVA, Target_Self, 40, 0, 10);
@@ -249,11 +249,11 @@ class PaletressAI : public MoonScriptBossAI
 		SpellDesc * Confess;
 };
 
-class MemoryAI : public MoonScriptCreatureAI
+class MemoryAI : public CreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(MemoryAI)
-		MemoryAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
+		MemoryAI(Creature* pCreature) : CreatureAI(pCreature)
 		{
 		}
 
@@ -261,7 +261,7 @@ class MemoryAI : public MoonScriptCreatureAI
 		{
 			if(Creature * mBoss = _unit->GetMapMgr()->GetInterface()->GetCreatureNearestCoords(_unit->GetPositionX(), _unit->GetPositionY(), _unit->GetPositionZ(), NPC_PALETRESS))
 			{
-				MoonScriptBossAI * pBoss = dynamic_cast<MoonScriptBossAI*>(mBoss->GetScript());
+				CreatureAI * pBoss = dynamic_cast<CreatureAI*>(mBoss->GetScript());
 				pBoss->RemoveAura(SPELL_REFLECTSHIELD);
 				pBoss->Emote("Even the darkest memory fades when confronted.", Text_Yell, 16249);
 				pBoss->SetPhase(3);

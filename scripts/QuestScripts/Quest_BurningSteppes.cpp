@@ -87,11 +87,11 @@ class DreadmaulRock : public GameObjectAIScript
 		}
 };
 
-class BroodlingAI : public MoonScriptCreatureAI
+class BroodlingAI : public CreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(BroodlingAI)
-		BroodlingAI(Creature* c) : MoonScriptCreatureAI(c)
+		BroodlingAI(Creature* c) : CreatureAI(c)
 		{
 			GotSpell = false;
 		}

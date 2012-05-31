@@ -26,11 +26,11 @@
 #define ATTRACTION			38540
 
 //"You have outstayed your welcome, Timekeeper. Begone!" 10413 text, when he starts fight with timekeeper
-class ChronoLordDejaAI : public MoonScriptCreatureAI
+class ChronoLordDejaAI : public CreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(ChronoLordDejaAI)
-		ChronoLordDejaAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
+		ChronoLordDejaAI(Creature* pCreature) : CreatureAI(pCreature)
 		{
 			Emote("Why do you aid the Magus? Just think of how many lives could be saved if the portal is never opened, if the resulting wars could be erased ...", Text_Yell, 10412);
 			AddEmote(Event_OnCombatStart, "If you will not cease this foolish quest, then you will die!", Text_Yell, 10412);
@@ -55,11 +55,11 @@ class ChronoLordDejaAI : public MoonScriptCreatureAI
 #define TEMPORUS_REFLECT		38592
 
 //"Time... sands of time is run out for you." 10443 when attacks keeper
-class TemporusAI : public MoonScriptCreatureAI
+class TemporusAI : public CreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(TemporusAI)
-		TemporusAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
+		TemporusAI(Creature* pCreature) : CreatureAI(pCreature)
 		{
 			Emote("Why do you persist? Surely you can see the futility of it all. It is not too late! You may still leave with your lives ...", Text_Yell, 10442);
 			AddEmote(Event_OnCombatStart, "So be it ... you have been warned.", Text_Yell, 10444);
@@ -82,11 +82,11 @@ class TemporusAI : public MoonScriptCreatureAI
 #define AEONUS_TIME_STOP	31422
 #define AEONUS_ENRAGE		37605
 
-class AeonusAI : public MoonScriptCreatureAI
+class AeonusAI : public CreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(AeonusAI)
-		AeonusAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
+		AeonusAI(Creature* pCreature) : CreatureAI(pCreature)
 		{
 			Emote("The time has come to shatter this clockwork universe forever! Let us no longer be slaves of the hourglass! I warn you: those who do not embrace the greater path shall become victims of its passing!", Text_Yell, 10400);
 			AddEmote(Event_OnCombatStart, "Let us see what fate lays in store...", Text_Yell, 10402);

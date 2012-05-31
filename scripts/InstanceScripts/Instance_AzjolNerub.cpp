@@ -31,11 +31,11 @@
 #define KRIKTHIR_CURSEOFFATIGUE HeroicInt(59368, 52592)
 #define KRIKTHIR_ENRAGE 28747
 
-class KrikthirAI : public MoonScriptCreatureAI
+class KrikthirAI : public CreatureAI
 {
 public:
 	ADD_CREATURE_FACTORY_FUNCTION(KrikthirAI)
-	KrikthirAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
+	KrikthirAI(Creature* pCreature) : CreatureAI(pCreature)
 	{
 		AddEmote(Event_OnCombatStart, "This kingdom belongs to the Scourge! Only the dead may enter.", Text_Yell, 14075);
 		AddEmote(Event_OnTargetDied, "You were foolish to come.", Text_Yell, 14077);
@@ -75,11 +75,11 @@ protected:
 #define HADRONOX_LEECHPOISON HeroicInt(59419, 53030)
 #define HADRONOX_ACIDCLOUD 53400
 
-class HadronoxAI : public MoonScriptCreatureAI
+class HadronoxAI : public CreatureAI
 {
 public:
 	ADD_CREATURE_FACTORY_FUNCTION(HadronoxAI)
-	HadronoxAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
+	HadronoxAI(Creature* pCreature) : CreatureAI(pCreature)
 	{
 		AddSpell(HADRONOX_WEBGRAB, Target_RandomPlayer, 22.0f, 0, 14);
 		AddSpell(HADRONOX_LEECHPOISON, Target_Self, 14.0f, 0, 25, 0, 20);

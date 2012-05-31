@@ -255,21 +255,3 @@ BOOL APIENTRY DllMain(HANDLE hModule, DWORD  ul_reason_for_call, LPVOID lpReserv
 }
 
 #endif
-
-SP_AI_Spell::SP_AI_Spell()
-{
-	info					= NULL;
-	targettype				= 0;
-	instant					= false;
-	perctrigger				= 0.0f;
-	attackstoptimer			= 0;
-	soundid					= 0;
-	cooldown				= 0;
-	casttime				= 0;
-	reqlvl					= 0;
-	hpreqtocast				= 0.0f;
-	mindist2cast			= 0.0f;
-	maxdist2cast			= 0.0f;
-	minhp2cast				= 0;
-	maxhp2cast				= 0;
-}

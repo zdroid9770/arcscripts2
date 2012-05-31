@@ -18,111 +18,81 @@
 
 #include "Setup.h"
 
-class GryponMasters : public CreatureAIScript
+class GryponMasters : public CreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(GryponMasters)
-		GryponMasters(Creature *pCreature) : CreatureAIScript(pCreature) {}
+		GryponMasters(Creature *pCreature) : CreatureAI(pCreature) {}
 
 		void OnCombatStart(Unit *mTarget)
 		{
-			LocationVector vect(GetUnit()->GetPositionX(), GetUnit()->GetPositionY(), GetUnit()->GetPositionZ(), GetUnit()->GetOrientation());
 			for(int i = 0; i < 2; ++i)
-			{
-				vect.x += RandomFloat(2.0f);
-				vect.y += RandomFloat(2.0f);
-				sEAS.SpawnCreature(TO_PLAYER(mTarget), 9526, vect.x, vect.y, vect.z, vect.o, DEFAULT_DESPAWN_TIMER);
-			}
+				SummonCreature(_unit, 9526, _unit->GetPositionX()+RandomFloat(2.0f), _unit->GetPositionY()+RandomFloat(2.0f), _unit->GetPositionZ(), _unit->GetOrientation(), 180000);
 		}
 };
 
-class HippogryphMasters : public CreatureAIScript
+class HippogryphMasters : public CreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(HippogryphMasters)
-		HippogryphMasters(Creature *pCreature) : CreatureAIScript(pCreature) {}
+		HippogryphMasters(Creature *pCreature) : CreatureAI(pCreature) {}
 
 		void OnCombatStart(Unit *mTarget)
 		{
-			LocationVector vect(GetUnit()->GetPositionX(), GetUnit()->GetPositionY(), GetUnit()->GetPositionZ(), GetUnit()->GetOrientation());
 			for(int i = 0; i < 2; ++i)
-			{
-				vect.x += RandomFloat(2.0f);
-				vect.y += RandomFloat(2.0f);
-				sEAS.SpawnCreature(TO_PLAYER(mTarget), 9527, vect.x, vect.y, vect.z, vect.o, DEFAULT_DESPAWN_TIMER);
-			}
+				SummonCreature(_unit, 9527, _unit->GetPositionX()+RandomFloat(2.0f), _unit->GetPositionY()+RandomFloat(2.0f), _unit->GetPositionZ(), _unit->GetOrientation(), 180000);
 		}
 };
 
-class WyvernMasters : public CreatureAIScript
+class WyvernMasters : public CreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(WyvernMasters)
-		WyvernMasters(Creature *pCreature) : CreatureAIScript(pCreature) {}
+		WyvernMasters(Creature *pCreature) : CreatureAI(pCreature) {}
 
 		void OnCombatStart(Unit *mTarget)
 		{
-			LocationVector vect(GetUnit()->GetPositionX(), GetUnit()->GetPositionY(), GetUnit()->GetPositionZ(), GetUnit()->GetOrientation());
 			for(int i = 0; i < 2; ++i)
-			{
-				vect.x += RandomFloat(2.0f);
-				vect.y += RandomFloat(2.0f);
-				sEAS.SpawnCreature(TO_PLAYER(mTarget), 9297, vect.x, vect.y, vect.z, vect.o, DEFAULT_DESPAWN_TIMER);
-			}
+				SummonCreature(_unit, 9527, _unit->GetPositionX()+RandomFloat(2.0f), _unit->GetPositionY()+RandomFloat(2.0f), _unit->GetPositionZ(), _unit->GetOrientation(), 180000);
 		}
 };
 
-class BatMasters : public CreatureAIScript
+class BatMasters : public CreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(BatMasters)
-		BatMasters(Creature *pCreature) : CreatureAIScript(pCreature) {}
+		BatMasters(Creature *pCreature) : CreatureAI(pCreature) {}
 
 		void OnCombatStart(Unit *mTarget)
 		{
-			LocationVector vect(GetUnit()->GetPositionX(), GetUnit()->GetPositionY(), GetUnit()->GetPositionZ(), GetUnit()->GetOrientation());
 			for(int i = 0; i < 2; ++i)
-			{
-				vect.x += RandomFloat(2.0f);
-				vect.y += RandomFloat(2.0f);
-				sEAS.SpawnCreature(TO_PLAYER(mTarget), 9521, vect.x, vect.y, vect.z, vect.o, DEFAULT_DESPAWN_TIMER);
-			}
+				SummonCreature(_unit, 9521, _unit->GetPositionX()+RandomFloat(2.0f), _unit->GetPositionY()+RandomFloat(2.0f), _unit->GetPositionZ(), _unit->GetOrientation(), 180000);
 		}
 };
 
-class DragonhawkMasters : public CreatureAIScript
+class DragonhawkMasters : public CreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(DragonhawkMasters)
-		DragonhawkMasters(Creature *pCreature) : CreatureAIScript(pCreature) {}
+		DragonhawkMasters(Creature *pCreature) : CreatureAI(pCreature) {}
 
 		void OnCombatStart(Unit *mTarget)
 		{
-			LocationVector vect(GetUnit()->GetPositionX(), GetUnit()->GetPositionY(), GetUnit()->GetPositionZ(), GetUnit()->GetOrientation());
 			for(int i = 0; i < 2; ++i)
-			{
-				vect.x += RandomFloat(2.0f);
-				vect.y += RandomFloat(2.0f);
-				sEAS.SpawnCreature(TO_PLAYER(mTarget), 27946, vect.x, vect.y, vect.z, vect.o, DEFAULT_DESPAWN_TIMER);
-			}
+				SummonCreature(27946, _unit->GetPositionX()+RandomFloat(2.0f), _unit->GetPositionY()+RandomFloat(2.0f), _unit->GetPositionZ(), _unit->GetOrientation(), 180000);
 		}
 };
 
-class NeutralMasters : public CreatureAIScript
+class NeutralMasters : public CreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(NeutralMasters)
-		NeutralMasters(Creature *pCreature) : CreatureAIScript(pCreature) {}
+		NeutralMasters(Creature *pCreature) : CreatureAI(pCreature) {}
 
 		void OnCombatStart(Unit *mTarget)
 		{
-			LocationVector vect(GetUnit()->GetPositionX(), GetUnit()->GetPositionY(), GetUnit()->GetPositionZ(), GetUnit()->GetOrientation());
 			for(int i = 0; i < 2; ++i)
-			{
-				vect.x += RandomFloat(2.0f);
-				vect.y += RandomFloat(2.0f);
-				sEAS.SpawnCreature(TO_PLAYER(mTarget), 9526+i, vect.x, vect.y, vect.z, vect.o, DEFAULT_DESPAWN_TIMER);
-			}
+				SummonCreature(_unit, 9526+i, _unit->GetPositionX()+RandomFloat(2.0f), _unit->GetPositionY()+RandomFloat(2.0f), _unit->GetPositionZ(), _unit->GetOrientation(), 180000);
 		}
 };
 

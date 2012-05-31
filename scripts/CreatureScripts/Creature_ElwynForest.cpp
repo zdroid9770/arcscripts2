@@ -18,27 +18,30 @@
 
 #include "Setup.h"
 
-class StormwindGuardAI : public MoonScriptCreatureAI
+class StormwindGuardAI : public CreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(StormwindGuardAI)
-		StormwindGuardAI(Creature *pCreature) : MoonScriptCreatureAI(pCreature) 
+		StormwindGuardAI(Creature *pCreature) : CreatureAI(pCreature) 
 		{
+/*
 			//Getting default equiped item
 			MainHand = _unit->GetEquippedItem(MELEE);
 
 			//starting guard equipment changes
 			RegisterAIUpdateEvent(0);
 			IsNightItemSet = false;
+*/
 		}
 
 		void OnLoad()
 		{
-			RegisterAIUpdateEvent(0);
+			//RegisterAIUpdateEvent(0);
 		}
 
 		void AIUpdate()
 		{
+/*
 			if(!sEAS.IsDay())
 			{
 				if(!IsNightItemSet)
@@ -56,6 +59,7 @@ class StormwindGuardAI : public MoonScriptCreatureAI
 				}
 				SetAIUpdateFreq(MINUTE*5*SEC_IN_MS);
 			}
+*/
 		}
 
 	private:

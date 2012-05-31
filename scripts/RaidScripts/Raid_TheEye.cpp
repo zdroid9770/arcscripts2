@@ -374,10 +374,10 @@ class StarScryerAI : public CreatureAIScript
 #define ASTROMANCER_CONFLAGRATION	37018
 #define ASTROMANCER_ARCANE_BURST	36970
 
-class AstromancerAI : public MoonScriptCreatureAI
+class AstromancerAI : public CreatureAI
 {
 		ADD_CREATURE_FACTORY_FUNCTION(AstromancerAI)
-		AstromancerAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
+		AstromancerAI(Creature* pCreature) : CreatureAI(pCreature)
 		{
 			//spells
 			mArcaneBurst = AddSpell(ASTROMANCER_ARCANE_BURST, Target_Self, 0, 0, 0, 0, 10);
@@ -1651,11 +1651,11 @@ class CrystalMechanicAI : public CreatureAIScript
 #define VOID_REAVER_KNOCK_AWAY			25778
 #define VOID_REAVER_ENRAGE				27680 // Needs checking (as it can be wrong [or maybe IS wrong])
 
-class VoidReaverAI : public MoonScriptBossAI
+class VoidReaverAI : public CreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(VoidReaverAI)
-		VoidReaverAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
+		VoidReaverAI(Creature* pCreature) : CreatureAI(pCreature)
 		{
 			SpellDesc* pPounding = AddSpell(VOID_REAVER_POUNDING, Target_Self, 100, 0, 12);
 			if(pPounding != NULL)
@@ -1724,14 +1724,14 @@ class VoidReaverAI : public MoonScriptBossAI
 #define SOLARIUMPRIEST_HOLY_SMITE				31740	//Deals 553 to 747 holy damage
 
 bool Dummy_Solarian_WrathOfTheAstromancer(uint32 pEffectIndex, Spell* pSpell);
-void SpellFunc_Solarian_Disappear(SpellDesc* pThis, MoonScriptCreatureAI* pCreatureAI, Unit* pTarget, TargetType pType);
-void SpellFunc_Solarian_Reappear(SpellDesc* pThis, MoonScriptCreatureAI* pCreatureAI, Unit* pTarget, TargetType pType);
+void SpellFunc_Solarian_Disappear(SpellDesc* pThis, CreatureAI* pCreatureAI, Unit* pTarget, TargetType pType);
+void SpellFunc_Solarian_Reappear(SpellDesc* pThis, CreatureAI* pCreatureAI, Unit* pTarget, TargetType pType);
 
-class HighAstromancerSolarianAI : public MoonScriptBossAI
+class HighAstromancerSolarianAI : public CreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(HighAstromancerSolarianAI)
-		HighAstromancerSolarianAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
+		HighAstromancerSolarianAI(Creature* pCreature) : CreatureAI(pCreature)
 		{
 			//Initialize timers
 			mSplitTimer = mAgentsTimer = mSolarianTimer = INVALIDATE_TIMER;
@@ -1827,7 +1827,7 @@ bool Dummy_Solarian_WrathOfTheAstromancer(uint32 pEffectIndex, Spell* pSpell)
 	return true;
 }
 
-void SpellFunc_Solarian_Disappear(SpellDesc* pThis, MoonScriptCreatureAI* pCreatureAI, Unit* pTarget, TargetType pType)
+void SpellFunc_Solarian_Disappear(SpellDesc* pThis, CreatureAI* pCreatureAI, Unit* pTarget, TargetType pType)
 {
 	HighAstromancerSolarianAI* Solarian = (pCreatureAI) ? TO< HighAstromancerSolarianAI* >(pCreatureAI) : NULL;
 	if(Solarian)
@@ -1845,7 +1845,7 @@ void SpellFunc_Solarian_Disappear(SpellDesc* pThis, MoonScriptCreatureAI* pCreat
 	}
 }
 
-void SpellFunc_Solarian_Reappear(SpellDesc* pThis, MoonScriptCreatureAI* pCreatureAI, Unit* pTarget, TargetType pType)
+void SpellFunc_Solarian_Reappear(SpellDesc* pThis, CreatureAI* pCreatureAI, Unit* pTarget, TargetType pType)
 {
 	HighAstromancerSolarianAI* Solarian = (pCreatureAI) ? TO< HighAstromancerSolarianAI* >(pCreatureAI) : NULL;
 	if(Solarian)
@@ -1857,11 +1857,11 @@ void SpellFunc_Solarian_Reappear(SpellDesc* pThis, MoonScriptCreatureAI* pCreatu
 	}
 }
 
-class SolariumAgentAI : public MoonScriptCreatureAI
+class SolariumAgentAI : public CreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(SolariumAgentAI)
-		SolariumAgentAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
+		SolariumAgentAI(Creature* pCreature) : CreatureAI(pCreature)
 		{
 			SetDespawnWhenInactive(true);	//despawn creature if it gets out of combat or dead
 		}
@@ -1872,11 +1872,11 @@ class SolariumAgentAI : public MoonScriptCreatureAI
 		}
 };
 
-class SolariumPriestAI : public MoonScriptCreatureAI
+class SolariumPriestAI : public CreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(SolariumPriestAI)
-		SolariumPriestAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
+		SolariumPriestAI(Creature* pCreature) : CreatureAI(pCreature)
 		{
 			AddSpell(SOLARIUMPRIEST_GREATER_HEAL, Target_WoundedFriendly, 20, 2, 0, 0, 40);
 			AddSpell(SOLARIUMPRIEST_HOLY_SMITE, Target_Current, 80, 2.5f, 0, 0, 40);
@@ -1889,11 +1889,11 @@ class SolariumPriestAI : public MoonScriptCreatureAI
 		}
 };
 
-class SolariumSpotLight : public MoonScriptCreatureAI
+class SolariumSpotLight : public CreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(SolariumSpotLight)
-		SolariumSpotLight(Creature* pCreature) : MoonScriptCreatureAI(pCreature) { SetCanEnterCombat(false); }
+		SolariumSpotLight(Creature* pCreature) : CreatureAI(pCreature) { SetCanEnterCombat(false); }
 };
 
 // Al'ar AI
@@ -2590,11 +2590,11 @@ class PatchAlarAI : public CreatureAIScript
 #define DARKENER_PSYCHIC_BLOW	36966
 #define DARKENER_SILENCE		29943
 
-class DarkenerAI : public MoonScriptCreatureAI
+class DarkenerAI : public CreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(DarkenerAI)
-		DarkenerAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
+		DarkenerAI(Creature* pCreature) : CreatureAI(pCreature)
 		{
 			AddSpell(DARKENER_PSYCHIC_BLOW, Target_Current, 10, 0, 20);
 			AddSpell(DARKENER_SILENCE, Target_Current, 10, 0, 15);
@@ -2664,11 +2664,11 @@ class DarkenerAI : public MoonScriptCreatureAI
 #define CN_SANGUINAR			20060
 #define SANGUINAR_BELLOWING		36922
 
-class SanguinarAI : public MoonScriptCreatureAI
+class SanguinarAI : public CreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(SanguinarAI)
-		SanguinarAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
+		SanguinarAI(Creature* pCreature) : CreatureAI(pCreature)
 		{
 			AddSpell(SANGUINAR_BELLOWING, Target_Self, 100, 0, 30);
 			AddEmote(Event_OnCombatStart, "Blood for blood!", Text_Yell, 11152);
@@ -2694,11 +2694,11 @@ class SanguinarAI : public MoonScriptCreatureAI
 #define CAPERNIAN_FIREBALL			36971
 #define CAPERNIAN_ARCANE_BURST		36970
 
-class CapernianAI : public MoonScriptCreatureAI
+class CapernianAI : public CreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(CapernianAI)
-		CapernianAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
+		CapernianAI(Creature* pCreature) : CreatureAI(pCreature)
 		{
 			AddSpell(CAPERNIAN_CONFLAGRATION, Target_RandomPlayer, 7, 0, 10, 0, 30, true);
 			AddSpell(CAPERNIAN_FIREBALL, Target_Current, 73, 2, 0);
@@ -2754,11 +2754,11 @@ class CapernianAI : public MoonScriptCreatureAI
 #define TELONICUS_BOMB			37036
 #define TELONICUS_REMOTE_TOY	37027	// doesn't seems to work like it should
 
-class TelonicusAI : public MoonScriptCreatureAI
+class TelonicusAI : public CreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(TelonicusAI)
-		TelonicusAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
+		TelonicusAI(Creature* pCreature) : CreatureAI(pCreature)
 		{
 			AddSpell(TELONICUS_BOMB, Target_RandomPlayerDestination, 10, 1.5f, 15, 0, 30);
 			AddSpell(TELONICUS_REMOTE_TOY, Target_RandomPlayer, 10, 0, 15, 0, 30);
@@ -2784,11 +2784,11 @@ class TelonicusAI : public MoonScriptCreatureAI
 #define FLAME_STRIKE_TRIGGER_FLAME_STRIKE			36731
 #define FLAME_STRIKE_TRIGGER_FLAME_STRIKE_EFFECT	36730
 
-class FlameStrikeAI : public MoonScriptCreatureAI
+class FlameStrikeAI : public CreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(FlameStrikeAI)
-		FlameStrikeAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
+		FlameStrikeAI(Creature* pCreature) : CreatureAI(pCreature)
 		{
 			ApplyAura(FLAME_STRIKE_TRIGGER_FLAME_STRIKE_EFFECT);
 			RegisterAIUpdateEvent(5000);
@@ -2820,11 +2820,11 @@ class FlameStrikeAI : public MoonScriptCreatureAI
 #define PHOENIX_BURN	36721
 #define PHOENIX_REBIRTH 35369		// used as instant cast - but it does not show animation now (maybe it would be good to move it to trigger?)
 
-class PhoenixAI : public MoonScriptCreatureAI
+class PhoenixAI : public CreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(PhoenixAI)
-		PhoenixAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
+		PhoenixAI(Creature* pCreature) : CreatureAI(pCreature)
 		{
 			RegisterAIUpdateEvent(1000);
 			Unit* pTarget = GetBestPlayerTarget();
@@ -2878,11 +2878,11 @@ class PhoenixAI : public MoonScriptCreatureAI
 //Phoenix Egg AI
 #define CN_PHOENIX_EGG				21364
 
-class PhoenixEggAI : public MoonScriptCreatureAI
+class PhoenixEggAI : public CreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(PhoenixEggAI)
-		PhoenixEggAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
+		PhoenixEggAI(Creature* pCreature) : CreatureAI(pCreature)
 		{
 			RegisterAIUpdateEvent(15000);
 			SetCanEnterCombat(false);
@@ -2912,11 +2912,11 @@ class PhoenixEggAI : public MoonScriptCreatureAI
 #define PHASESHIFT_BULWARK		21273
 #define STAFF_OF_DISINTEGRATION	21274
 
-class WeaponsAI : public MoonScriptCreatureAI
+class WeaponsAI : public CreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(WeaponsAI)
-		WeaponsAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
+		WeaponsAI(Creature* pCreature) : CreatureAI(pCreature)
 		{
 			_unit->m_noRespawn = true;
 
@@ -3025,14 +3025,14 @@ enum AdvisorPhase
     PHASE_ADV_FIGHT,
 };
 
-void SpellFunc_KaelThasArcaneDisruption(SpellDesc* pThis, MoonScriptCreatureAI* pCreatureAI, Unit* pTarget, TargetType pType);
-void SpellFunc_KaelThasFlameStrike(SpellDesc* pThis, MoonScriptCreatureAI* pCreatureAI, Unit* pTarget, TargetType pType);
+void SpellFunc_KaelThasArcaneDisruption(SpellDesc* pThis, CreatureAI* pCreatureAI, Unit* pTarget, TargetType pType);
+void SpellFunc_KaelThasFlameStrike(SpellDesc* pThis, CreatureAI* pCreatureAI, Unit* pTarget, TargetType pType);
 
-class KaelThasAI : public MoonScriptBossAI
+class KaelThasAI : public CreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(KaelThasAI)
-		KaelThasAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
+		KaelThasAI(Creature* pCreature) : CreatureAI(pCreature)
 		{
 			for(int i = 1; i < 4; ++i)
 			{
@@ -3255,7 +3255,7 @@ class KaelThasAI : public MoonScriptBossAI
 							pCreature->Despawn(0, 0);
 						}
 
-						MoonScriptCreatureAI* pAI = SpawnCreature(mAdvCoords[i].addition, mAdvCoords[i].x, mAdvCoords[i].y, mAdvCoords[i].z, false);
+						CreatureAI* pAI = SpawnCreature(mAdvCoords[i].addition, mAdvCoords[i].x, mAdvCoords[i].y, mAdvCoords[i].z, false);
 						if(pAI != NULL)
 						{
 							pCreature = pAI->GetUnit();
@@ -3268,7 +3268,7 @@ class KaelThasAI : public MoonScriptBossAI
 							pCreature->SetUInt64Value(UNIT_FIELD_FLAGS, 0);
 							if(pCreature->GetScript() != NULL)
 							{
-								TO< MoonScriptCreatureAI* >(pCreature->GetScript())->AggroNearestUnit(200);
+								TO< CreatureAI* >(pCreature->GetScript())->AggroNearestUnit(200);
 							}
 						}
 					}
@@ -3366,7 +3366,7 @@ class KaelThasAI : public MoonScriptBossAI
 		std::vector<LocationExtra>	mAdvCoords;
 };
 
-void SpellFunc_KaelThasArcaneDisruption(SpellDesc* pThis, MoonScriptCreatureAI* pCreatureAI, Unit* pTarget, TargetType pType)
+void SpellFunc_KaelThasArcaneDisruption(SpellDesc* pThis, CreatureAI* pCreatureAI, Unit* pTarget, TargetType pType)
 {
 	KaelThasAI* KaelThas = (pCreatureAI) ? TO< KaelThasAI* >(pCreatureAI) : NULL;
 	if(KaelThas != NULL)
@@ -3382,7 +3382,7 @@ void SpellFunc_KaelThasArcaneDisruption(SpellDesc* pThis, MoonScriptCreatureAI* 
 	}
 }
 
-void SpellFunc_KaelThasFlameStrike(SpellDesc* pThis, MoonScriptCreatureAI* pCreatureAI, Unit* pTarget, TargetType pType)
+void SpellFunc_KaelThasFlameStrike(SpellDesc* pThis, CreatureAI* pCreatureAI, Unit* pTarget, TargetType pType)
 {
 	KaelThasAI* KaelThas = (pCreatureAI) ? TO< KaelThasAI* >(pCreatureAI) : NULL;
 	if(KaelThas != NULL)

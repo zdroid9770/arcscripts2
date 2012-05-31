@@ -93,17 +93,17 @@ class ShadowfangPrisonerGossip : public Arcemu::Gossip::Script
 
 		void OnSelectOption(Object* pObject, Player* Plr, uint32 Id, const char * Code)
 		{
-			MoonScriptCreatureAI* pUnit = dynamic_cast<MoonScriptCreatureAI *>(TO_CREATURE(pObject)->GetScript());
+			CreatureAI* pUnit = dynamic_cast<CreatureAI *>(TO_CREATURE(pObject)->GetScript());
 			TO_CREATURE(pObject)->SetUInt32Value(UNIT_NPC_FLAGS, 0);
 			pUnit->StartWaypointMovement();
 		}
 };
 
-class ShadowfangPrisonerAI : public MoonScriptCreatureAI
+class ShadowfangPrisonerAI : public CreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(ShadowfangPrisonerAI)
-		ShadowfangPrisonerAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
+		ShadowfangPrisonerAI(Creature* pCreature) : CreatureAI(pCreature)
 		{
 			StopWaypointMovement();
 			SetCanEnterCombat(false);
@@ -172,11 +172,11 @@ class ShadowfangPrisonerAI : public MoonScriptCreatureAI
 
 // Commander Springvale AI
 #define CN_SPRINGVALE 4278
-class SpringvaleAI : public MoonScriptCreatureAI
+class SpringvaleAI : public CreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(SpringvaleAI)
-		SpringvaleAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
+		SpringvaleAI(Creature* pCreature) : CreatureAI(pCreature)
 		{	
 			AddSpell(1026, Target_Self, 10, 2.5f, 0);			// Holy Light	
 			DevoAura = AddSpell(10290, Target_Self, 0, 0, 0);	// Devotion Aura
@@ -206,11 +206,11 @@ class SpringvaleAI : public MoonScriptCreatureAI
 
 // Odo the Blindwatcher AI
 #define CN_BLINDWATCHER 4279
-class BlindWatcherAI : public MoonScriptBossAI
+class BlindWatcherAI : public CreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(BlindWatcherAI)
-		BlindWatcherAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
+		BlindWatcherAI(Creature* pCreature) : CreatureAI(pCreature)
 		{
 			HowlingRage1 = AddSpell(7481, Target_Self, 0, 5, 0);
 			HowlingRage2 = AddSpell(7483, Target_Self, 0, 1.5f, 0);
@@ -247,11 +247,11 @@ static Location VWSpawns[] =
 	{ -150.860092f, 2165.156250f, 128.448502f, 0.999966f},
 };
 
-class FenrusAI : public MoonScriptCreatureAI
+class FenrusAI : public CreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(FenrusAI)
-		FenrusAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
+		FenrusAI(Creature* pCreature) : CreatureAI(pCreature)
 		{
 			AddSpell(7125, Target_Current, 12, 1.5f, 60);
 		}
@@ -261,7 +261,7 @@ class FenrusAI : public MoonScriptCreatureAI
 			_unit->SendChatMessageAlternateEntry(4275, CHAT_MSG_MONSTER_YELL, LANG_UNIVERSAL, "Who dares interfere with the Sons of Arugal?");
 			_unit->PlaySoundToSet(5791);
 
-			MoonScriptCreatureAI* voidwalker = NULL;
+			CreatureAI* voidwalker = NULL;
 			// Spawn 4 x Arugal's Voidwalkers
 			for(int x = 0; x < 4; x++)
 			{
@@ -277,11 +277,11 @@ class FenrusAI : public MoonScriptCreatureAI
 
 // Archmage Arugal AI
 #define CN_ARUGAL 4275
-class ArugalAI : public MoonScriptCreatureAI
+class ArugalAI : public CreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(ArugalAI)
-		ArugalAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
+		ArugalAI(Creature* pCreature) : CreatureAI(pCreature)
 		{
 			AddEmote(Event_OnCombatStart, "You, too, shall serve!", Text_Yell, 5793);
 			AddEmote(Event_OnTargetDied, "Another falls!", Text_Yell, 5795);
@@ -298,11 +298,11 @@ class ArugalAI : public MoonScriptCreatureAI
 
 //Rethilgore AI
 #define CN_RETHILGORE 3914
-class RETHILGOREAI : public MoonScriptCreatureAI
+class RETHILGOREAI : public CreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(RETHILGOREAI)
-		RETHILGOREAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature) {}
+		RETHILGOREAI(Creature* pCreature) : CreatureAI(pCreature) {}
 
 		void OnDied(Unit*  pKiller)
 		{

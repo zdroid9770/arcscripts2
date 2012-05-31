@@ -18,18 +18,18 @@
 
 #include "Setup.h"
 
-class PeonSleepingAI : public CreatureAIScript
+class PeonSleepingAI : public CreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(PeonSleepingAI)
-		PeonSleepingAI(Creature *pCreature) : CreatureAIScript(pCreature) 
+		PeonSleepingAI(Creature *pCreature) : CreatureAI(pCreature) 
 		{
 			RegisterAIUpdateEvent(3000 + RandomUInt(180000));
 		}
 
 		void AIUpdate()
 		{
-			GetUnit()->CastSpell(GetUnit(), 17743, true);
+			_unit->CastSpell(GetUnit(), 17743, true);
 			RemoveAIUpdateEvent();
 		}
 };

@@ -126,65 +126,113 @@ class ArcatrazInstanceScript : public MoonInstanceScript
 #define CN_VOIDZONEARC		21101
 
 #define SEED_OF_C			36123
-#define SHADOW_NOVA			HeroicInt(39005, 36127)
-#define CONSUMPTION			HeroicInt(39004, 30498)
+#define SHADOW_NOVA			36127
+#define CONSUMPTION			30498
 #define VOID_ZONE 36119
 
-class ZerekethAI : public MoonScriptBossAI
+class ZerekethAI : public CreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(ZerekethAI)
-		ZerekethAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
+		ZerekethAI(Creature* pCreature) : CreatureAI(pCreature)
 		{
-			AddEmote(Event_OnCombatStart, "Life energy to... consume.", Text_Yell, 11250);
-			AddEmote(Event_OnTargetDied, "This vessel...is empty.", Text_Yell, 11251);
-			AddEmote(Event_OnTargetDied, "No... more... life.", Text_Yell, 11252);
-			AddEmote(Event_OnDied, "The Void... beckons.", Text_Yell, 11255);
-
-			AddSpell(SEED_OF_C, Target_RandomPlayer, 6.0f, 2, 20, 0, 100.0f);
-			AddSpell(SHADOW_NOVA, Target_Self, 15, 2, 15);
-			AddSpell(VOID_ZONE, Target_RandomPlayer, 20, 0, rand()%10+30);
+			SpeechTimer = (40+rand()%11) * 1000;
+			SeedTimer		= (14+rand()%14)*1000;
+			ShadowNovaTimer	= (15+rand()%6)*1000;
+			VoidZoneTimer	= (21+rand()%12)*1000;
 		}
 
 		void OnCombatStart(Unit* mTarget)
 		{
-			SpeechTimer = AddTimer((rand()%10 + 40) * 1000);
+			Emote(_unit, "Life energy to... consume.", Text_Yell, 11250);
+		}
+
+		void OnTargetDied(Unit * pUnit)
+		{
+			if(rand()%2)
+				Emote(_unit, "This vessel...is empty.", Text_Yell, 11251);
+			else
+				Emote(_unit, "No... more... life.", Text_Yell, 11252);
+		}
+
+		void OnDied(Unit * mKiller)
+		{
+			Emote(_unit, "The Void... beckons.", Text_Yell, 11255);
 		}
 
 		void AIUpdate()
 		{
-			if(IsTimerFinished(SpeechTimer))
+			if(SeedTimer < mAIUpdateFrequency)
 			{
-				switch(rand()%2)
-				{
-					case 0: Emote("The shadow... will engulf you.", Text_Yell, 11253); break;
-					case 1: Emote("Darkness... consumes all.", Text_Yell, 11254); break;
-				}
-				ResetTimer(SpeechTimer, (rand()%10 + 40) * 1000);
+				if(Unit * pTarget = GetTarget(TARGET_RANDOM_SINGLE))
+					_unit->CastSpell(pTarget, dbcSpell.LookupEntry(VOID_ZONE), true);
+
+				SeedTimer = (14+rand()%8)*1000;
 			}
+			else
+				SeedTimer -= mAIUpdateFrequency;
+
+			if(VoidZoneTimer < mAIUpdateFrequency)
+			{
+				if(Unit * pTarget = GetTarget(TARGET_RANDOM_SINGLE))
+					_unit->CastSpell(pTarget, dbcSpell.LookupEntry(VOID_ZONE), true);
+
+				VoidZoneTimer = (32+rand()%14)*1000;
+			}
+			else
+				VoidZoneTimer -= mAIUpdateFrequency;
+
+			if(VoidZoneTimer -= mAIUpdateFrequency)
+			{
+				if(rand()%2)
+					Emote(_unit, "The shadow... will engulf you.", Text_Yell, 11253);
+				else
+					Emote(_unit, "Darkness...consumes...all.", Text_Yell, 11254);
+
+				if(Unit * pTarget = GetTarget(TARGET_ATTACKING))
+					_unit->CastSpell(pTarget, dbcSpell.LookupEntry(SHADOW_NOVA), true);
+
+				ShadowNovaTimer = (35+rand()%11)*1000;
+			}
+			else
+				ShadowNovaTimer -= mAIUpdateFrequency;
+
+			if(SpeechTimer < mAIUpdateFrequency)
+			{
+				if(rand()%2 == 1)
+					Emote(_unit, "The shadow... will engulf you.", Text_Yell, 11253);
+				else 
+					Emote(_unit, "Darkness... consumes all.", Text_Yell, 11254);
+
+				SpeechTimer = (40+rand()%11) * 1000;
+			}
+			else 
+				SpeechTimer -= mAIUpdateFrequency;
 		}
 
 	protected:
-		int32 SpeechTimer;
+		uint32 SpeechTimer;
+		uint32 SeedTimer;
+		uint32 ShadowNovaTimer;
+		uint32 VoidZoneTimer;
 };
 
-class VoidZoneARC : public MoonScriptCreatureAI
+class VoidZoneARC : public CreatureAI
 {
-public:
-	ADD_CREATURE_FACTORY_FUNCTION(VoidZoneARC)
-	VoidZoneARC(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
-	{
-		StopMovement();
-		SetCanMove(false);
-		SetCanEnterCombat(false);
-		RegisterAIUpdateEvent(1000);
-	}
+	public:
+		ADD_CREATURE_FACTORY_FUNCTION(VoidZoneARC)
+		VoidZoneARC(Creature* pCreature) : CreatureAI(pCreature)
+		{
+			_unit->Unroot();
+			_unit->GetAIInterface()->SetAllowedToEnterCombat(false);
+			RegisterAIUpdateEvent(1000);
+		}
 
-	void AIUpdate()
-	{
-		_unit->CastSpell(_unit, CONSUMPTION, true);
-		RemoveAIUpdateEvent();
-	}
+		void AIUpdate()
+		{
+			_unit->CastSpell(_unit, dbcSpell.LookupEntry(CONSUMPTION), true);
+			RemoveAIUpdateEvent();
+		}
 };
 
 // Dalliah the DoomsayerAI
@@ -193,30 +241,43 @@ public:
 #define HEAL 36144
 #define SHADOW_WAVE 39016	// Heroic mode spell
 
-class DalliahTheDoomsayerAI : public MoonScriptBossAI
+class DalliahTheDoomsayerAI : public CreatureAI
 {
-public:
-	ADD_CREATURE_FACTORY_FUNCTION(DalliahTheDoomsayerAI)
-	DalliahTheDoomsayerAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
-	{
-		AddSpell(GIFT_OF_THE_DOOMSAYER, Target_Current, 8.0f, 0.0f, -1);
+	public:
+		ADD_CREATURE_FACTORY_FUNCTION(DalliahTheDoomsayerAI)
+		DalliahTheDoomsayerAI(Creature* pCreature) : CreatureAI(pCreature)
+		{
+			AddSpell(GIFT_OF_THE_DOOMSAYER, Target_Current, 8.0f, 0.0f, -1);
 
-		SpellDesc* WhirlTemp = AddSpell(WHIRLWIND, Target_Self, 15.0f, 0.0f, -1);
-		WhirlTemp->AddEmote("Reap the Whirlwind!", Text_Yell, 11089);
-		WhirlTemp->AddEmote("I'll cut you to peices!", Text_Yell, 11090);
+			SpellDesc* WhirlTemp = AddSpell(WHIRLWIND, Target_Self, 15.0f, 0.0f, -1);
+			WhirlTemp->AddEmote("Reap the Whirlwind!", Text_Yell, 11089);
+			WhirlTemp->AddEmote("I'll cut you to peices!", Text_Yell, 11090);
 
-		SpellDesc* HealTemp = AddSpell(HEAL, Target_Self, 8.0f, 0, -1);
-		HealTemp->AddEmote("That is much better.", Text_Yell, 11091);
-		HealTemp->AddEmote("Ah, just what I needed.", Text_Yell, 11092);
+			SpellDesc* HealTemp = AddSpell(HEAL, Target_Self, 8.0f, 0, -1);
+			HealTemp->AddEmote("That is much better.", Text_Yell, 11091);
+			HealTemp->AddEmote("Ah, just what I needed.", Text_Yell, 11092);
 
-		if(IsHeroic())
-			AddSpell(SHADOW_WAVE, Target_Current, 8.0f, 0, -1);
+			if(IsHeroic())
+				AddSpell(SHADOW_WAVE, Target_Current, 8.0f, 0, -1);
+		}
 
-		AddEmote(Event_OnCombatStart, "It is unwise to anger me.", Text_Yell, 11086);
-		AddEmote(Event_OnTargetDied, "Completely ineffective! Just like someone else I know!", Text_Yell, 11087);
-		AddEmote(Event_OnTargetDied, "You chose the wrong opponent!", Text_Yell, 11088);
-		AddEmote(Event_OnDied, "Now I'm really... angry...", Text_Yell, 11093);
-	}
+		void OnCombatStart(Unit* pUnit)
+		{
+			Emote(_unit, "It is unwise to anger me.", Text_Yell, 11086);
+		}
+
+		void OnTargetDied(Unit* pUnit)
+		{
+			if(rand()%2)
+				Emote(_unit, "Completely ineffective! Just like someone else I know!", Text_Yell, 11087);
+			else
+				Emote(_unit, "You chose the wrong opponent!", Text_Yell, 11088);
+		}
+
+		void OnDied(Unit* pUnit)
+		{
+			Emote(_unit, "Now I'm really... angry...", Text_Yell, 11093);
+		}
 };
 
 // Wrath-Scryer SoccothratesAI
@@ -226,11 +287,11 @@ public:
 #define KNOCK_AWAY 20686
 #define CHARGE 35754
 
-class WrathScryerSoccothratesAI : public MoonScriptCreatureAI
+class WrathScryerSoccothratesAI : public CreatureAI
 {
 public:
 	ADD_CREATURE_FACTORY_FUNCTION(WrathScryerSoccothratesAI)
-	WrathScryerSoccothratesAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
+	WrathScryerSoccothratesAI(Creature* pCreature) : CreatureAI(pCreature)
 	{
 		AddEmote(Event_OnCombatStart, "At last, a target for my frustrations!", Text_Yell, 11238);
 		AddEmote(Event_OnTargetDied, "Yes, that was quiet... satisfying.", Text_Yell, 11239);
@@ -258,11 +319,11 @@ public:
 // SIMPLE_TELEPORT 12980 ?
 // Add sounds related to his dialog with mind controlled guy
 
-class HarbringerSkyrissAI : public MoonScriptCreatureAI
+class HarbringerSkyrissAI : public CreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(HarbringerSkyrissAI)
-		HarbringerSkyrissAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
+		HarbringerSkyrissAI(Creature* pCreature) : CreatureAI(pCreature)
 		{
 			AddEmote(Event_OnCombatStart, "Bear witness to the agent of your demise!", Text_Yell, 11123);
 			AddEmote(Event_OnTargetDied, "Your fate is written!", Text_Yell, 11124);
@@ -337,11 +398,11 @@ static Location pSummonCoords[5]=
     {445.763f, -191.639f, 44.64f, 1.60f}                    // Skyriss
 };
 
-class WardenMellicharAI : public MoonScriptBossAI
+class WardenMellicharAI : public CreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(WardenMellicharAI)
-		WardenMellicharAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
+		WardenMellicharAI(Creature* pCreature) : CreatureAI(pCreature)
 		{
 			SetCanMove(false);
 			mInstance = GetInstanceScript();
@@ -462,7 +523,7 @@ class WardenMellicharAI : public MoonScriptBossAI
 		uint32 Phasepart, NPC_ID_Spawn, Spawncounter;
 		int32 Phase_Timer;
 		MoonInstanceScript* mInstance;
-		MoonScriptCreatureAI* pSummon;
+		CreatureAI* pSummon;
 		Creature* Millhouse;
 };
 

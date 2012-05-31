@@ -31,11 +31,11 @@
 #define KELIDAN_EVOCATION				30935
 #define KELIDAN_VORTEX					37370
 
-class KelidanTheBreakerAI : public MoonScriptBossAI
+class KelidanTheBreakerAI : public CreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(KelidanTheBreakerAI)
-		KelidanTheBreakerAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
+		KelidanTheBreakerAI(Creature* pCreature) : CreatureAI(pCreature)
 		{
 			//spells
 			mShadowBoltVolley = AddSpell(KELIDAN_SHADOW_BOLT_VOLLEY, Target_Self, 25, 0, 6);
@@ -89,11 +89,11 @@ class KelidanTheBreakerAI : public MoonScriptBossAI
 #define POISON_CLOUD 31259 // DBC: 30916; no idea if correct
 #define SLIME_SPRAY 30913
 
-class BroggokAI : public MoonScriptCreatureAI
+class BroggokAI : public CreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(BroggokAI);
-		BroggokAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
+		BroggokAI(Creature* pCreature) : CreatureAI(pCreature)
 		{
 			AddSpell(POISON_BOLT, Target_Self, 12.0f, 0, 15);
 			AddSpell(POISON_CLOUD, Target_RandomPlayerDestination, 8.0f, 0, 40, 0, 40);
@@ -116,11 +116,11 @@ class BroggokAI : public MoonScriptCreatureAI
 #define ACID_SPRAY 38973 // 38973 or 38153	// not sure about casting of this
 #define THROW_BEAKER 30925 // Throw beaker <--- maybe this is it?
 
-class TheMakerAI : public MoonScriptCreatureAI
+class TheMakerAI : public CreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(TheMakerAI);
-		TheMakerAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
+		TheMakerAI(Creature* pCreature) : CreatureAI(pCreature)
 		{
 			AddEmote(Event_OnCombatStart, "My work must not be interrupted.", Text_Yell, 10286);
 			AddEmote(Event_OnCombatStart, "Perhaps I can find a use for you.", Text_Yell, 10287);

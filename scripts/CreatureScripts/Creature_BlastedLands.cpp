@@ -18,19 +18,42 @@
 
 #include "Setup.h"
 
-class KirithAI : public MoonScriptCreatureAI
+class KirithAI : public CreatureAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(KirithAI);
-		KirithAI(Creature* c) : MoonScriptCreatureAI(c) {}
+		ADD_CREATURE_FACTORY_FUNCTION(KirithAI)
+		KirithAI(Creature* c) : CreatureAI(c)
+		{
+			PieceArmorTimer = (rand()%3+4)*1000;
+			ManaBurnTimer = (rand()%13+9)*1000;
+		}
 
 		void OnDied(Unit *mKiller)
 		{
-			_unit->CastSpell(_unit, 10853, true);
+			_unit->CastSpell(_unit, 10853, true);	//Spirit of Kirith
 		}
+
+		void AIUpdate()
+		{
+			if(PieceArmorTimer <= mAIUpdateFrequency)
+			{
+				_unit->CastSpell(GetTarget(TARGET_ATTACKING), 12097, true);
+				PieceArmorTimer = (rand()%8+20)*1000;
+			}else PieceArmorTimer -= mAIUpdateFrequency;
+
+			if(ManaBurnTimer <= mAIUpdateFrequency)
+			{
+				_unit->CastSpell(GetTarget(TARGET_ATTACKING), 12745, true);
+				ManaBurnTimer = (rand()%3+2)*1000;
+			}else ManaBurnTimer -= mAIUpdateFrequency;
+		}
+
+	private:
+		uint32 ManaBurnTimer;
+		uint32 PieceArmorTimer;
 };
 
 void SetupBlastedLandsCreature(ScriptMgr * mgr)
 {
-	mgr->register_creature_script(7728,  &KirithAI::Create);	// Kirith the Damned
+	mgr->register_creature_script(7728,  &KirithAI::Create);
 }

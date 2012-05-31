@@ -25,11 +25,11 @@
 #define VOID_BLAST 32325 //38760
 #define DARK_SHELL 32358 //38759
 
-class PANDEMONIUSAI : public MoonScriptCreatureAI
+class PANDEMONIUSAI : public CreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(PANDEMONIUSAI)
-		PANDEMONIUSAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
+		PANDEMONIUSAI(Creature* pCreature) : CreatureAI(pCreature)
 		{
 			AddSpell(DARK_SHELL, Target_Self, 20, 1, 20);
 			AddEmote(Event_OnCombatStart, "I will feed on your soul!", Text_Yell, 10561);
@@ -79,11 +79,11 @@ class PANDEMONIUSAI : public MoonScriptCreatureAI
 #define SUMMON_ETEREAL_BECON	32371 // not sure about spawning way
 // TO DO: Work on beacons and find out if my current way of spawning them is correct
 
-class NEXUSPRINCESHAFFARAI : public MoonScriptCreatureAI
+class NEXUSPRINCESHAFFARAI : public CreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(NEXUSPRINCESHAFFARAI)
-		NEXUSPRINCESHAFFARAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
+		NEXUSPRINCESHAFFARAI(Creature* pCreature) : CreatureAI(pCreature)
 		{
 			AddSpell(FIREBALL, Target_RandomPlayer, 35, 1, 5);
 			AddSpell(FROSTBOLT, Target_RandomPlayer, 35, 1, 5);

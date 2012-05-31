@@ -70,11 +70,11 @@ static LocationExtra FelCrystals[] =
 	{263.149f, 0.309245f, 1.32057f, 3.15905f, TRASH_FelCrystal}
 };
 
-class SelinFireheartAI : public MoonScriptCreatureAI
+class SelinFireheartAI : public CreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(SelinFireheartAI)
-		SelinFireheartAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
+		SelinFireheartAI(Creature* pCreature) : CreatureAI(pCreature)
 		{
 			AddSpell(SF_DRAINLIFE, Target_RandomPlayer, 8, 0, 35);
 
@@ -204,11 +204,11 @@ class SelinFireheartAI : public MoonScriptCreatureAI
 #define VEXALLUS_ARCANE_SHOCK 44319
 #define VEXALLUS_SUMMON_PURE_ENERGY 44322
 
-class VexallusAI : public MoonScriptBossAI
+class VexallusAI : public CreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(VexallusAI)
-		VexallusAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
+		VexallusAI(Creature* pCreature) : CreatureAI(pCreature)
 		{
 			AddPhaseSpell(1, AddSpell(VEXALLUS_CHAIN_LIGHTNING, Target_Current, 19, 0, 8, 0, 0));
 			AddPhaseSpell(1, AddSpell(VEXALLUS_ARCANE_SHOCK, Target_ClosestPlayer, 12, 0, 20, 0, 0, true, "Un...con...tainable.", Text_Yell, 12392));
@@ -256,11 +256,11 @@ class VexallusAI : public MoonScriptBossAI
 #define PRIESTESS_DELRISSA_POWERWORD_SHIELD 44291
 #define PRIESTESS_DELRISSA_RENEW 44174
 
-class Priestess_DelrissaAI : public MoonScriptBossAI
+class Priestess_DelrissaAI : public CreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(Priestess_DelrissaAI)
-		Priestess_DelrissaAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
+		Priestess_DelrissaAI(Creature* pCreature) : CreatureAI(pCreature)
 		{
 			AddSpell(PRIESTESS_DELRISSA_DISPEL_MAGIC, Target_RandomFriendly, 35, 0, 5, 0, 30);
 			AddSpell(PRIESTESS_DELRISSA_FLASH_HEAL, Target_RandomFriendly, 40, 1.5, 7, 0, 40);
