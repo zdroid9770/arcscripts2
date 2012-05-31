@@ -21,7 +21,7 @@
 
 CreatureAI::CreatureAI(Creature* pCreature) : CreatureAIScript(pCreature)
 {
-	mAIUpdateFrequency = _unit->GetBaseAttackTime(MELEE);
+	mAIUpdateFrequency = DEFAULT_UPDATE_FREQUENCY
 }
 
 void CreatureAI::Emote(Unit* pUnit, const char* pText, TextType pType, uint32 pSoundId, EmoteType pEmote)
