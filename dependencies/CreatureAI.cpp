@@ -21,7 +21,7 @@
 
 CreatureAI::CreatureAI(Creature* pCreature) : CreatureAIScript(pCreature)
 {
-	mAIUpdateFrequency = DEFAULT_UPDATE_FREQUENCY;
+	mAIUpdateFrequency = _unit->GetBaseAttackTime(MELEE);
 }
 
 void CreatureAI::Emote(Unit* pUnit, const char* pText, TextType pType, uint32 pSoundId, EmoteType pEmote)
@@ -66,20 +66,20 @@ GameObject * CreatureAI::SummonGameobject(Unit* pUnit, uint32 pEntry, float x, f
 }
 
 
-Unit* CreatureAI::GetTarget(TargetType Type)
+Unit* CreatureAI::GetTarget(Unit * pUnit, TargetType Type)
 {
 	switch(Type)
 	{
 		case TARGET_SELF:
 		case TARGET_VARIOUS:
-			return _unit;
+			return pUnit;
 		case TARGET_ATTACKING:
 		case TARGET_DESTINATION:
-			return _unit->GetAIInterface()->getNextTarget();
+			return pUnit->GetAIInterface()->getNextTarget();
 		case TARGET_RANDOM_SINGLE:
 			{
 				std::vector<Player* > TargetTable;
-				for(set< Object* >::iterator itr = _unit->GetInRangePlayerSetBegin(); itr != _unit->GetInRangePlayerSetEnd(); ++itr)
+				for(set< Object* >::iterator itr = pUnit->GetInRangePlayerSetBegin(); itr != pUnit->GetInRangePlayerSetEnd(); ++itr)
 				{
 					Player* RandomTarget = TO< Player* >(*itr);
 					if(RandomTarget && RandomTarget->isAlive())
@@ -90,16 +90,32 @@ Unit* CreatureAI::GetTarget(TargetType Type)
 				if(!TargetTable.size())
 					return NULL;
 
-				size_t RandTarget = rand()%TargetTable.size();
-				Unit* RandomTarget = TargetTable[RandTarget];
+				Unit* RandomTarget = TargetTable[rand()%TargetTable.size()];
 
 				if(!RandomTarget)
 					return NULL;
 				else
 					return RandomTarget;
 			}
+		default:
+			{
+				sLog.Error("ArcScripts2", "Creature (%i) is trying to get invalid type target", pUnit->GetEntry());
+				return NULL;
+			}
 	}
-	return NULL;
+}
+
+void CreatureAI::CastSpell(Unit* pUnit, Unit* pTarget, uint32 SpellId, bool Triggered)
+{
+	SpellEntry * pSpell = dbcSpell.LookupEntry(SpellId);
+	if(!pSpell)
+	{
+		sLog.Error("ArcScripts2", "Creature (%i) is trying to cast non existing spell (%i)", pUnit->GetEntry(), SpellId);
+		return;
+	}
+
+	pUnit->setAttackTimer(pUnit->GetCurrentSpell()->GetDuration(), false);
+	pUnit->CastSpell(pTarget, pSpell, Triggered);
 }
 
 void CreatureAI::OnCombatStart(Unit* pTarget)
