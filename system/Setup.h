@@ -20,6 +20,8 @@
 #include "System.h"
 #include "../dependencies/MoonInstanceScript.h"
 #include "../dependencies/CreatureAI.h"
+#include "../dependencies/MoonScriptCreatureAI.h"
+#include "../dependencies/MoonScriptBossAI.h"
 
 //////////////////Macros
 //used on creature ai scripts
