@@ -18,11 +18,11 @@
 
 #include "Setup.h"
 
-class GryponMasters : public CreatureAI
+class GryponMasters : public MoonScriptCreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(GryponMasters)
-		GryponMasters(Creature *pCreature) : CreatureAI(pCreature) {}
+		GryponMasters(Creature *pCreature) : MoonScriptCreatureAI(pCreature) {}
 
 		void OnCombatStart(Unit *mTarget)
 		{
@@ -31,11 +31,11 @@ class GryponMasters : public CreatureAI
 		}
 };
 
-class HippogryphMasters : public CreatureAI
+class HippogryphMasters : public MoonScriptCreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(HippogryphMasters)
-		HippogryphMasters(Creature *pCreature) : CreatureAI(pCreature) {}
+		HippogryphMasters(Creature *pCreature) : MoonScriptCreatureAI(pCreature) {}
 
 		void OnCombatStart(Unit *mTarget)
 		{
@@ -44,11 +44,11 @@ class HippogryphMasters : public CreatureAI
 		}
 };
 
-class WyvernMasters : public CreatureAI
+class WyvernMasters : public MoonScriptCreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(WyvernMasters)
-		WyvernMasters(Creature *pCreature) : CreatureAI(pCreature) {}
+		WyvernMasters(Creature *pCreature) : MoonScriptCreatureAI(pCreature) {}
 
 		void OnCombatStart(Unit *mTarget)
 		{
@@ -57,11 +57,11 @@ class WyvernMasters : public CreatureAI
 		}
 };
 
-class BatMasters : public CreatureAI
+class BatMasters : public MoonScriptCreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(BatMasters)
-		BatMasters(Creature *pCreature) : CreatureAI(pCreature) {}
+		BatMasters(Creature *pCreature) : MoonScriptCreatureAI(pCreature) {}
 
 		void OnCombatStart(Unit *mTarget)
 		{
@@ -70,11 +70,11 @@ class BatMasters : public CreatureAI
 		}
 };
 
-class DragonhawkMasters : public CreatureAI
+class DragonhawkMasters : public MoonScriptCreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(DragonhawkMasters)
-		DragonhawkMasters(Creature *pCreature) : CreatureAI(pCreature) {}
+		DragonhawkMasters(Creature *pCreature) : MoonScriptCreatureAI(pCreature) {}
 
 		void OnCombatStart(Unit *mTarget)
 		{
@@ -83,11 +83,11 @@ class DragonhawkMasters : public CreatureAI
 		}
 };
 
-class NeutralMasters : public CreatureAI
+class NeutralMasters : public MoonScriptCreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(NeutralMasters)
-		NeutralMasters(Creature *pCreature) : CreatureAI(pCreature) {}
+		NeutralMasters(Creature *pCreature) : MoonScriptCreatureAI(pCreature) {}
 
 		void OnCombatStart(Unit *mTarget)
 		{

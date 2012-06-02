@@ -18,11 +18,11 @@
 
 #include "Setup.h"
 
-class MobsGhoulFlayer : public CreatureAI
+class MobsGhoulFlayer : public MoonScriptCreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(MobsGhoulFlayer);
-		MobsGhoulFlayer(Creature* c) : CreatureAI(c){}
+		MobsGhoulFlayer(Creature* c) : MoonScriptCreatureAI(c){}
 
 		void OnDied(Unit *mKiller)
 		{
@@ -33,11 +33,11 @@ class MobsGhoulFlayer : public CreatureAI
 		}
 };
 
-class ArajTheSummoner : public CreatureAI
+class ArajTheSummoner : public MoonScriptCreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(ArajTheSummoner);
-		ArajTheSummoner(Creature* c) : CreatureAI(c){}
+		ArajTheSummoner(Creature* c) : MoonScriptCreatureAI(c){}
 
 		void OnDied(Unit* mKiller)
 		{
@@ -48,11 +48,11 @@ class ArajTheSummoner : public CreatureAI
 		}
 };
 
-class CursedMageAI : public CreatureAI
+class CursedMageAI : public MoonScriptCreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(CursedMageAI);
-		CursedMageAI(Creature* pCreature) : CreatureAI(pCreature)
+		CursedMageAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			ArcaneBoltTimer = (4+rand()%2)*1000;
 		}
@@ -75,11 +75,11 @@ class CursedMageAI : public CreatureAI
 		uint32 ArcaneBoltTimer;
 };
 
-class CarrionDevourerAI : public CreatureAI
+class CarrionDevourerAI : public MoonScriptCreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(CarrionDevourerAI);
-		CarrionDevourerAI(Creature* pCreature) : CreatureAI(pCreature)
+		CarrionDevourerAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			MaggotGooTimer = (4+rand()%4)*1000;
 		}

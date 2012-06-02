@@ -23,11 +23,11 @@ Information: http://www.wowhead.com/zone=4723
 ISSUES: Need to have a check if alliance or horde player than spawn the correct people.
 */
 
-class BrightStarAI : public CreatureAI
+class BrightStarAI : public MoonScriptCreatureAI
 {
 public:
 	ADD_CREATURE_FACTORY_FUNCTION(BrightStarAI)
-	BrightStarAI(Creature* pCreature) : CreatureAI(pCreature)
+	BrightStarAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 	{
 	}
 	// This needs work I skipped the horses part this is the 2nd boss.
@@ -95,11 +95,11 @@ enum BlackKnightData{
 	SPELL_DEATHBITE		= 67808 // PHASE 3 SPELL
 };
 
-class BlackKnightAI : public CreatureAI
+class BlackKnightAI : public MoonScriptCreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(BlackKnightAI)
-		BlackKnightAI(Creature* pCreature) : CreatureAI(pCreature)
+		BlackKnightAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			AddPhaseSpell(1, AddSpell(SPELL_ICYTOUCH, Target_Current, 30, 0, 0));
 			AddPhaseSpell(1, AddSpell(SPELL_OBLIT, Target_Current, 45, 0, 4));
@@ -152,11 +152,11 @@ enum PUREData{
 	SPELL_RADIANCE		= 66935
 };
 
-class PureAI : public CreatureAI
+class PureAI : public MoonScriptCreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(PureAI)
-		PureAI(Creature* pCreature) : CreatureAI(pCreature)
+		PureAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			AddPhaseSpell(1, AddSpell(SPELL_HOJ, Target_Current, 30, 0, 8));
 			AddPhaseSpell(1, AddSpell(SPELL_HOTR, Target_RandomPlayer, 26, 2.5, 10, 0, 0, false, "Hammer of the Righteous!", Text_Yell, 16136));
@@ -200,11 +200,11 @@ enum PALETRESSData{
 	SPELL_CONFESS		= 66680
 };
 
-class PaletressAI : public CreatureAI
+class PaletressAI : public MoonScriptCreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(PaletressAI)
-		PaletressAI(Creature* pCreature) : CreatureAI(pCreature)
+		PaletressAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			AddSpell(SPELL_HOLYSMITE, Target_RandomPlayer, 60, 2, 0);
 			AddSpell(SPELL_HOLYNOVA, Target_Self, 40, 0, 10);
@@ -249,11 +249,11 @@ class PaletressAI : public CreatureAI
 		SpellDesc * Confess;
 };
 
-class MemoryAI : public CreatureAI
+class MemoryAI : public MoonScriptCreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(MemoryAI)
-		MemoryAI(Creature* pCreature) : CreatureAI(pCreature)
+		MemoryAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 		}
 

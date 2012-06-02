@@ -18,11 +18,11 @@
 
 #include "Setup.h"
 
-class Aeranas : public CreatureAI
+class Aeranas : public MoonScriptCreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(Aeranas)
-		Aeranas(Creature * pCreature) : CreatureAI(pCreature)
+		Aeranas(Creature * pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			//AddSpell(15535, Target_Current, 30.0f, 2.0f, 20);
 			//AddSpell(12553, Target_Current, 50.0f, 0, 10);

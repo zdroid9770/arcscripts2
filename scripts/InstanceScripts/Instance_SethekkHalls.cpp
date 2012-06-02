@@ -1473,11 +1473,11 @@ static LocationExtra LakkaWaypoint[] =
 	{ -73.749f, 173.171f, 0.009f, 6.234f, Flag_Walk },
 };
 
-class LakkaAI : public CreatureAI
+class LakkaAI : public MoonScriptCreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(LakkaAI);
-		LakkaAI(Creature* pCreature) : CreatureAI(pCreature)
+		LakkaAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			SetMoveType(Move_DontMoveWP);
 

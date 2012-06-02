@@ -183,11 +183,11 @@ class ThrallGS : public GossipScript
 #define FROST_NOVA 31250
 #define FROST_ARMOR 31256
 
-class RageWinterchillAI : public CreatureAI
+class RageWinterchillAI : public MoonScriptCreatureAI
 {
 public:
 	ADD_CREATURE_FACTORY_FUNCTION(RageWinterchillAI)
-	RageWinterchillAI(Creature* pCreature) : CreatureAI(pCreature)
+	RageWinterchillAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 	{
 		AddEmote(Event_OnCombatStart, "The Legion's final conquest has begun! Once again the subjugation of this world is within our grasp. Let none survive!", Text_Yell, 11022);
 		AddEmote(Event_OnTargetDied, "Crumble and rot!", Text_Yell, 11023);
@@ -214,11 +214,11 @@ public:
 #define SLEEP			31298	// 12098
 #define BERSERK			26662
 
-class AnetheronAI : public CreatureAI
+class AnetheronAI : public MoonScriptCreatureAI
 {
 public:
 	ADD_CREATURE_FACTORY_FUNCTION(AnetheronAI)
-	AnetheronAI(Creature* pCreature) : CreatureAI(pCreature)
+	AnetheronAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 	{
 		AddEmote(Event_OnCombatStart, "You are defenders of a doomed world. Flee here and perhaps you will prolong your pathetic lives!", Text_Yell, 10977);
 		AddEmote(Event_OnTargetDied, "Your hopes are lost.", Text_Yell, 10981);
@@ -244,11 +244,11 @@ public:
 #define MARK_OF_KAZROGAL	31447
 #define MARK_OF_KAZROGAL2	31463	// should it be scripted to attack friends?
 
-class KazrogalAI : public CreatureAI
+class KazrogalAI : public MoonScriptCreatureAI
 {
 public:
 	ADD_CREATURE_FACTORY_FUNCTION(KazrogalAI)
-	KazrogalAI(Creature* pCreature) : CreatureAI(pCreature)
+	KazrogalAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 	{
 		AddEmote(Event_OnCombatStart, "Cry for mercy! Your meaningless lives will soon be forfeit.", Text_Yell, 11015);
 		AddEmote(Event_OnTargetDied, "Your death will be a painful one.", Text_Yell, 11016);
@@ -303,11 +303,11 @@ protected:
 #define HOWL_OF_AZGALOR	31344
 #define DOOM			31347	// it's applied, but doesn't do anything more - should be scripted?
 
-class AzgalorAI : public CreatureAI
+class AzgalorAI : public MoonScriptCreatureAI
 {
 public:
 	ADD_CREATURE_FACTORY_FUNCTION(AzgalorAI)
-	AzgalorAI(Creature* pCreature) : CreatureAI(pCreature)
+	AzgalorAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 	{
 		AddEmote(Event_OnCombatStart, "Abandon all hope! The legion has returned to finish what was begun so many years ago. This time there will be no escape!", Text_Yell, 10999);
 		AddEmote(Event_OnTargetDied, "Reesh, hokta!", Text_Yell, 11001);

@@ -329,11 +329,11 @@ enum LM_Summons
     NPC_COLD_FLAME			= 36672
 };
 
-class LordMarrowgarAI : public CreatureAI
+class LordMarrowgarAI : public MoonScriptCreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(LordMarrowgarAI)
-		LordMarrowgarAI(Creature* pCreature) : CreatureAI(pCreature)
+		LordMarrowgarAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			mInstance = GetInstanceScript();
 			Reset();
@@ -445,11 +445,11 @@ class LordMarrowgarAI : public CreatureAI
 		MoonInstanceScript* mInstance;
 };
 
-class ColdFlameAI : public CreatureAI
+class ColdFlameAI : public MoonScriptCreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(ColdFlameAI)
-		ColdFlameAI(Creature* pCreature) : CreatureAI(pCreature){}
+		ColdFlameAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature){}
 
 		void OnLoad()
 		{
@@ -468,11 +468,11 @@ class ColdFlameAI : public CreatureAI
 		}
 };
 
-class BoneSpikeAI : public CreatureAI
+class BoneSpikeAI : public MoonScriptCreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(BoneSpikeAI)
-		BoneSpikeAI(Creature* pCreature) : CreatureAI(pCreature) {}
+		BoneSpikeAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature) {}
 
 		void OnLoad()
 		{
@@ -540,11 +540,11 @@ static LocationExtra LD_SummonPositions[] ={
     {-524.2480f, 2211.920f, 62.90960f, 3.141592f, 0} // 7 Upper (Random Cultist)
 };
 
-class LadyDeathwhisperAI : public CreatureAI
+class LadyDeathwhisperAI : public MoonScriptCreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(LadyDeathwhisperAI)
-		LadyDeathwhisperAI(Creature* pCreature) : CreatureAI(pCreature)
+		LadyDeathwhisperAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			DominateHandTimer = SummonCultistTimer = -1;
 			Count = 0;

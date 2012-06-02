@@ -730,8 +730,8 @@ void MoonScriptCreatureAI::Announce(const char* pText)
 
 int32 MoonScriptCreatureAI::AddTimer(int32 pDurationMillisec)
 {
-	mTimerIdCounter++;
-	mTimers[mTimerIdCounter].push_back(pDurationMillisec);
+	uint32 Index = mTimerIdCounter++;
+	mTimers.push_back(make_pair(mTimerIdCounter, pDurationMillisec));
 	++mTimerCount;
 	return Index;
 }
@@ -1128,11 +1128,13 @@ void MoonScriptCreatureAI::AIUpdate()
 		if(ChanceRoll >= 95)
 			RandomEmote(mOnTauntEmotes);
 	}
+	CreatureAIScript::AIUpdate();
 }
 
 void MoonScriptCreatureAI::Destroy()
 {
 	delete this;
+	CreatureAIScript::Destroy();
 }
 
 bool MoonScriptCreatureAI::IsSpellScheduled(SpellDesc* pSpell)

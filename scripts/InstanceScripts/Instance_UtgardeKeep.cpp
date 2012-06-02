@@ -187,11 +187,11 @@ class UtgardeKeepScript : public MoonInstanceScript
 #define CN_DRAGONFLAYER_FORGE_MASTER				24079
 #define DRAGONFLAYER_FORGE_MASTER_BURNING_BRAND		43757
 
-class DragonflayerForgeMasterAI : public CreatureAI
+class DragonflayerForgeMasterAI : public MoonScriptCreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(DragonflayerForgeMasterAI)
-		DragonflayerForgeMasterAI(Creature* pCreature) : CreatureAI(pCreature)
+		DragonflayerForgeMasterAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			mInstance = GetInstanceScript();
 
@@ -222,11 +222,11 @@ class DragonflayerForgeMasterAI : public CreatureAI
 #define SHADOW_BOLT 43649
 #define SKELETON_ADD 28878
 
-class SkarvaldTheConstructorAI : public CreatureAI
+class SkarvaldTheConstructorAI : public MoonScriptCreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(SkarvaldTheConstructorAI)
-		SkarvaldTheConstructorAI(Creature* pCreature) : CreatureAI(pCreature)
+		SkarvaldTheConstructorAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			AddSpell(SKARVALD_CHARGE, Target_RandomPlayerNotCurrent, 35, 0, 8);
 			AddSpell(STONE_STRIKE, Target_ClosestPlayer, 25, 0, 10);
@@ -300,11 +300,11 @@ class SkarvaldTheConstructorAI : public CreatureAI
 		CreatureAI*	pDalronnGhost;
 };
 
-class DalronnTheControllerAI : public CreatureAI
+class DalronnTheControllerAI : public MoonScriptCreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(DalronnTheControllerAI)
-		DalronnTheControllerAI(Creature* pCreature) : CreatureAI(pCreature)
+		DalronnTheControllerAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			AddSpell(SHADOW_BOLT, Target_RandomPlayer, 35, 2, 8);
 			AddSpell(DEBILITATE, Target_RandomPlayer, 25, 0, 12);
@@ -374,11 +374,11 @@ class DalronnTheControllerAI : public CreatureAI
 		CreatureAI*	pSkarvaldGhost;
 };
 
-class SkarvaldTheConstructorGhostAI : public CreatureAI
+class SkarvaldTheConstructorGhostAI : public MoonScriptCreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(SkarvaldTheConstructorGhostAI)
-		SkarvaldTheConstructorGhostAI(Creature* pCreature) : CreatureAI(pCreature)
+		SkarvaldTheConstructorGhostAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			AddSpell(SKARVALD_CHARGE, Target_RandomPlayerNotCurrent, 35, 0, 8);
 			AddSpell(STONE_STRIKE, Target_ClosestPlayer, 25, 0, 10);
@@ -393,11 +393,11 @@ class SkarvaldTheConstructorGhostAI : public CreatureAI
 		}
 };
 
-class DalronnTheControllerGhostAI : public CreatureAI
+class DalronnTheControllerGhostAI : public MoonScriptCreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(DalronnTheControllerGhostAI)
-		DalronnTheControllerGhostAI(Creature* pCreature) : CreatureAI(pCreature)
+		DalronnTheControllerGhostAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			AddSpell(SHADOW_BOLT, Target_RandomPlayer, 35, 2, 8);
 			AddSpell(DEBILITATE, Target_RandomPlayer, 25, 0, 12);
@@ -448,11 +448,11 @@ void SpellFunc_KelesethAddSummon(SpellDesc* pThis, CreatureAI* pCreatureAI, Unit
 	}
 };
 
-class PrinceKelesethAI : public CreatureAI
+class PrinceKelesethAI : public MoonScriptCreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(PrinceKelesethAI)
-		PrinceKelesethAI(Creature* pCreature) : CreatureAI(pCreature)
+		PrinceKelesethAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			mFrostTomb = AddSpellFunc(&SpellFunc_KelesethFrostTomb, Target_RandomPlayer, 25, 0, 15, 0, 20);
 			mAddSummon = AddSpellFunc(&SpellFunc_KelesethAddSummon, Target_Self, 0, 0, 0);
@@ -473,11 +473,11 @@ class PrinceKelesethAI : public CreatureAI
 		SpellDesc*			mFrostTomb;
 };
 
-class FrostTombAI : public CreatureAI
+class FrostTombAI : public MoonScriptCreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(FrostTombAI)
-		FrostTombAI(Creature* pCreature) : CreatureAI(pCreature)
+		FrostTombAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			SetAIUpdateFreq(1000);
 		}
@@ -506,11 +506,11 @@ class FrostTombAI : public CreatureAI
 		Player* plr;
 };
 
-class SkeletonAddAI : public CreatureAI
+class SkeletonAddAI : public MoonScriptCreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(SkeletonAddAI)
-		SkeletonAddAI(Creature* pCreature) : CreatureAI(pCreature)
+		SkeletonAddAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			AddSpell(DECREPIFY, Target_Current, 8, 0, 40);
 		}
@@ -574,11 +574,11 @@ void SpellFunc_ShadowAxe(SpellDesc* pThis, CreatureAI* pCreatureAI, Unit* pTarge
 	};
 };
 
-class IngvarThePlundererAI : public CreatureAI
+class IngvarThePlundererAI : public MoonScriptCreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(IngvarThePlundererAI)
-		IngvarThePlundererAI(Creature* pCreature) : CreatureAI(pCreature)
+		IngvarThePlundererAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			AddSpell(INGVAR_CLEAVE, Target_Current, 24, 0, 6);
 			AddSpell(INGVAR_ENRAGE, Target_Self, 45, 0, 4);
@@ -600,11 +600,11 @@ class IngvarThePlundererAI : public CreatureAI
 		}
 };
 /* MAY BE USEFUL LATER!
-class AnnhyldeAI : public CreatureAI
+class AnnhyldeAI : public MoonScriptCreatureAI
 {
 public:
 	ADD_CREATURE_FACTORY_FUNCTION(AnnhlydeAI)
-		AnnhlydeAI(Creature* pCreature) : CreatureAI(pCreature)
+		AnnhlydeAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			_unit->AddAura(50236);
 	}
@@ -621,11 +621,11 @@ public:
 		_unit->Despawn(20000, 0);
 	};
 */
-class IngvarUndeadAI : public CreatureAI
+class IngvarUndeadAI : public MoonScriptCreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(IngvarUndeadAI)
-		IngvarUndeadAI(Creature* pCreature) : CreatureAI(pCreature)
+		IngvarUndeadAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			mInstance = GetInstanceScript();
 

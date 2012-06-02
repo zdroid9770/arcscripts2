@@ -18,11 +18,11 @@
 
 #include "Setup.h"
 
-class KirithAI : public CreatureAI
+class KirithAI : public MoonScriptCreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(KirithAI)
-		KirithAI(Creature* c) : CreatureAI(c)
+		KirithAI(Creature* c) : MoonScriptCreatureAI(c)
 		{
 			PieceArmorTimer = (rand()%3+4)*1000;
 			ManaBurnTimer = (rand()%13+9)*1000;

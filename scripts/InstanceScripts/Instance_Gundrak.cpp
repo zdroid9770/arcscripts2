@@ -364,11 +364,11 @@ class GundrakScript : public MoonInstanceScript
 #define POWERFUL_BITE       HeroicInt( 48287, 59840 )
 #define VENOM_BOLT          HeroicInt( 54970, 59839 )
 
-class SladranAI : public CreatureAI
+class SladranAI : public MoonScriptCreatureAI
 {
 	public:
 			ADD_CREATURE_FACTORY_FUNCTION(SladranAI)
-			SladranAI(Creature* pCreature) : CreatureAI(pCreature)
+			SladranAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 			{
 				mInstance = GetInstanceScript();
 
@@ -406,11 +406,11 @@ class SladranAI : public CreatureAI
 
 #define WHIRLING_SLASH    HeroicInt( 55250, 59824 )
 
-class GalDarahAI : public CreatureAI
+class GalDarahAI : public MoonScriptCreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(GalDarahAI)
-		GalDarahAI(Creature* pCreature) : CreatureAI(pCreature)
+		GalDarahAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			mInstance = mInstance = GetInstanceScript();;
 

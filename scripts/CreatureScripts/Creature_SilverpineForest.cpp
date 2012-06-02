@@ -18,11 +18,11 @@
 
 #include "Setup.h"
 
-class CorruptMinorManifestationWater : public CreatureAI
+class CorruptMinorManifestationWater : public MoonScriptCreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(CorruptMinorManifestationWater)
-		CorruptMinorManifestationWater(Creature *pCreature) : CreatureAI(pCreature) {}
+		CorruptMinorManifestationWater(Creature *pCreature) : MoonScriptCreatureAI(pCreature) {}
 
 		void OnDied(Unit *mKiller)
 		{

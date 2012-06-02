@@ -67,11 +67,11 @@ class Berthold : public GossipScript
 #define ATTUMEN_BERSERKER_CHARGE	22886
 #define ATTUMEN_INTANGIBLE_PRESENCE	29833
 
-class AttumenTheHuntsmanAI : public CreatureAI
+class AttumenTheHuntsmanAI : public MoonScriptCreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(AttumenTheHuntsmanAI)
-		AttumenTheHuntsmanAI(Creature* pCreature) : CreatureAI(pCreature)
+		AttumenTheHuntsmanAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			//All phase spells
 			AddSpell(ATTUMEN_SHADOW_CLEAVE, Target_Current, 15, 0, 6, 0, 5, true);
@@ -120,11 +120,11 @@ class AttumenTheHuntsmanAI : public CreatureAI
 		}
 };
 
-class MidnightAI : public CreatureAI
+class MidnightAI : public MoonScriptCreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(MidnightAI)
-		MidnightAI(Creature* pCreature) : CreatureAI(pCreature)
+		MidnightAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 		}
 
@@ -196,11 +196,11 @@ class MidnightAI : public CreatureAI
 #define MOROES_ENRAGE	37023
 #define MOROES_GARROTE	37066
 
-class MoroesAI : public CreatureAI
+class MoroesAI : public MoonScriptCreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(MoroesAI)
-		MoroesAI(Creature* pCreature) : CreatureAI(pCreature)
+		MoroesAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			//Initialize timers
 			mVanishTimer = mGarroteTimer = INVALIDATE_TIMER;
@@ -276,11 +276,11 @@ class MoroesAI : public CreatureAI
 #define MAIDENOFVIRTUE_HOLY_FIRE	29522
 #define MAIDENOFVIRTUE_HOLY_WRATH	32445
 
-class MaidenOfVirtueAI : public CreatureAI
+class MaidenOfVirtueAI : public MoonScriptCreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(MaidenOfVirtueAI)
-		MaidenOfVirtueAI(Creature* pCreature) : CreatureAI(pCreature)
+		MaidenOfVirtueAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			//Spells
 			AddSpell(MAIDENOFVIRTUE_HOLY_GROUND, Target_Self, 100, 0, 3);
@@ -1328,11 +1328,11 @@ class CuratorAI : public CreatureAIScript
 #define ASTRAL_FLARE_VISUAL		30237
 #define ARCING_SEAR				30235
 
-class AstralFlareAI : public CreatureAI
+class AstralFlareAI : public MoonScriptCreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(AstralFlareAI)
-		AstralFlareAI(Creature* pCreature) : CreatureAI(pCreature)
+		AstralFlareAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			AddSpell(ASTRAL_FLARE_PASSIVE, Target_Self, 100, 0, 3);
 			AddSpell(ASTRAL_FLARE_VISUAL, Target_Self, 100, 0, 6);
@@ -2707,14 +2707,14 @@ SPECIAL? - 9223 - 9320
 AXETOSS2? - 9317
 */
 
-class MalchezaarAI : public CreatureAI
+class MalchezaarAI : public MoonScriptCreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(MalchezaarAI);
 		bool m_spellcheck[9];
 		SP_AI_Spell spells[9];
 
-		MalchezaarAI(Creature* pCreature) : CreatureAI(pCreature)
+		MalchezaarAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			m_phase = 1;
 			nrspells = 5;
@@ -3207,11 +3207,11 @@ class MalchezaarAI : public CreatureAI
 		uint64 Enfeeble_Health[5];
 };
 
-class NetherInfernalAI : public CreatureAI
+class NetherInfernalAI : public MoonScriptCreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(NetherInfernalAI)
-		NetherInfernalAI(Creature* pCreature) : CreatureAI(pCreature) {};
+		NetherInfernalAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature) {};
 
 		void OnLoad()
 		{

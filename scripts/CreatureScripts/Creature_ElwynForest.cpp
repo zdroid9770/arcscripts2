@@ -18,11 +18,11 @@
 
 #include "Setup.h"
 
-class StormwindGuardAI : public CreatureAI
+class StormwindGuardAI : public MoonScriptCreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(StormwindGuardAI)
-		StormwindGuardAI(Creature *pCreature) : CreatureAI(pCreature) 
+		StormwindGuardAI(Creature *pCreature) : MoonScriptCreatureAI(pCreature) 
 		{
 /*
 			//Getting default equiped item

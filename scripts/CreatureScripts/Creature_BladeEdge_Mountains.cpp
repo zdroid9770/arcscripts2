@@ -19,11 +19,11 @@
 #include "Setup.h"
 
 //Nihil the Banished
-class NihilTheBanished : public CreatureAI
+class NihilTheBanished : public MoonScriptCreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(NihilTheBanished)
-		NihilTheBanished(Creature *pCreature) : CreatureAI(pCreature) {}
+		NihilTheBanished(Creature *pCreature) : MoonScriptCreatureAI(pCreature) {}
 
 		void OnLoad()
 		{
@@ -41,11 +41,11 @@ class NihilTheBanished : public CreatureAI
 };
 
 //Bloodmaul Brutebane Stout Trigger
-class BrutebaneStoutTrigger : public CreatureAI
+class BrutebaneStoutTrigger : public MoonScriptCreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(BrutebaneStoutTrigger)
-		BrutebaneStoutTrigger(Creature *pCreature) : CreatureAI(pCreature)
+		BrutebaneStoutTrigger(Creature *pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			_unit->Root();
 			Plr = _unit->GetMapMgr()->GetInterface()->GetPlayerNearestCoords(_unit->GetPositionX(), _unit->GetPositionY(), _unit->GetPositionZ());

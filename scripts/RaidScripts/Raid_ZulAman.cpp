@@ -33,11 +33,11 @@
 // Other spells
 #define NALORAKK_BERSERK			41924
 
-class NalorakkAI : public CreatureAI
+class NalorakkAI : public MoonScriptCreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(NalorakkAI)
-		NalorakkAI(Creature* pCreature) : CreatureAI(pCreature)
+		NalorakkAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			AddPhaseSpell(1, AddSpell(NALORAKK_BRUTAL_SWIPE, Target_Current, 2, 0, 35));
 			AddPhaseSpell(1, AddSpell(NALORAKK_MANGLE, Target_Current, 12, 0, 20));
@@ -116,11 +116,11 @@ class NalorakkAI : public CreatureAI
 #define AKILZON_GUST_OF_WIND		43621 //INSTANT
 #define AKILZON_ELECTRICAL_STORM	43648
 
-class AkilzonAI : public CreatureAI
+class AkilzonAI : public MoonScriptCreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(AkilzonAI)
-		AkilzonAI(Creature* pCreature) : CreatureAI(pCreature)
+		AkilzonAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			AddSpell(AKILZON_STATIC_DISRUPTION, Target_Self, 2, 0, 60);
 			AddSpell(AKILZON_CALL_LIGHTING, Target_Current, 2, 0, 0);
@@ -168,11 +168,11 @@ class AkilzonAI : public CreatureAI
 //SOARING_EAGLE Summon Akil'zon
 #define EAGLE_SWOOP		 44732 //INSTANT
 
-class SoaringEagleAI : public CreatureAI
+class SoaringEagleAI : public MoonScriptCreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(SoaringEagleAI)
-		SoaringEagleAI(Creature* pCreature) : CreatureAI(pCreature)
+		SoaringEagleAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			AddSpell(EAGLE_SWOOP, Target_Destination, 5, 0, 0);
 			GetUnit()->m_noRespawn = true;
@@ -193,11 +193,11 @@ class SoaringEagleAI : public CreatureAI
 //Phase 3
 //Halazzi now drops his totems more frequently as well as doing more damage.
 
-class HalazziAI : public CreatureAI
+class HalazziAI : public MoonScriptCreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(HalazziAI)
-		HalazziAI(Creature* pCreature) : CreatureAI(pCreature)
+		HalazziAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			AddPhaseSpell(1, AddSpell(HALAZZI_SABER_LASH, Target_Destination, 0.5, 0, 0, 0, 0, false, "Me gonna carve ya now!", Text_Yell, 12023));
 
@@ -318,11 +318,11 @@ class HalazziAI : public CreatureAI
 		uint8 SplitCount;
 };
 
-class LynxSpiritAI : public CreatureAI
+class LynxSpiritAI : public MoonScriptCreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(LynxSpiritAI)
-		LynxSpiritAI(Creature* pCreature) : CreatureAI(pCreature)
+		LynxSpiritAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			// Lynx Flurry
 			AddSpell(43290, Target_Self, 15, 0, 8);

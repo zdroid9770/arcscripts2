@@ -18,11 +18,11 @@
 
 #include "Setup.h"
 
-class RottingCadaver : public CreatureAI
+class RottingCadaver : public MoonScriptCreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(RottingCadaver)
-		RottingCadaver(Creature *pCreature) : CreatureAI(pCreature) {}
+		RottingCadaver(Creature *pCreature) : MoonScriptCreatureAI(pCreature) {}
 
 		void OnDied(Unit *mKiller)
 		{
@@ -30,11 +30,11 @@ class RottingCadaver : public CreatureAI
 		}
 };
 
-class SummonOozeling : public CreatureAI
+class SummonOozeling : public MoonScriptCreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(SummonOozeling)
-		SummonOozeling(Creature *pCreature) : CreatureAI(pCreature)
+		SummonOozeling(Creature *pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			CrimsonFuryTimer = (5+rand()%9)*1000;
 		}

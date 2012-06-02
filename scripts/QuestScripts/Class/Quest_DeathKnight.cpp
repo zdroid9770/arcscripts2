@@ -157,11 +157,11 @@ class AcherusSoulPrison : GameObjectAIScript
 		}
 };
 
-class UnworthyInitiate : public CreatureAI
+class UnworthyInitiate : public MoonScriptCreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(UnworthyInitiate)
-		UnworthyInitiate(Creature * c) : CreatureAI(c)
+		UnworthyInitiate(Creature * c) : MoonScriptCreatureAI(c)
 		{
 			AddSpell(SPELL_BLOOD_STRIKE, Target_Current, 85.0f, 0.0f, 4000);
 			AddSpell(SPELL_DEATH_COIL, Target_Current, 85.f, 0.0f, 6000);

@@ -32,7 +32,7 @@ typedef std::vector<PhaseSpellPair> PhaseSpellArray;
 class MoonScriptBossAI : public MoonScriptCreatureAI
 {
 	public:
-		MoonScriptBossAI(Creature* pCreature);
+		explicit MoonScriptBossAI(Creature* pCreature);
 		virtual ~MoonScriptBossAI();
 
 		//Basic Interface

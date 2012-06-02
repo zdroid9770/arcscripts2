@@ -2089,11 +2089,11 @@ class BloodGuardPorungAI : public CreatureAIScript
 
 void SpellFunc_Warbringer_BurningMaul(SpellDesc* pThis, CreatureAI* pCreatureAI, Unit* pTarget, TargetType pType);
 
-class WarbringerOmroggAI : public CreatureAI
+class WarbringerOmroggAI : public MoonScriptCreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(WarbringerOmroggAI)
-		WarbringerOmroggAI(Creature* pCreature) : CreatureAI(pCreature)
+		WarbringerOmroggAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			AddSpell(WARBRINGER_OMROGG_THUNDERCLAP, Target_Self, 25, 1, 12);
 			AddSpell(WARBRINGER_OMROGG_FEAR, Target_Self, 7, 0, 20);
@@ -2314,11 +2314,11 @@ void SpellFunc_Warbringer_BurningMaul(SpellDesc* pThis, CreatureAI* pCreatureAI,
 	}
 }
 
-class HeadAI : public CreatureAI
+class HeadAI : public MoonScriptCreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(HeadAI)
-		HeadAI(Creature* pCreature) : CreatureAI(pCreature)
+		HeadAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			SetScale(4.0f);
 			_unit->SetUInt32Value(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);

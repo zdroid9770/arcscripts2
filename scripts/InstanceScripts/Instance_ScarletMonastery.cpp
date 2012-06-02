@@ -30,11 +30,11 @@
 #define VISHAS 3983
 #define SHADOW_WORD 2767
 
-class VishasAI : public CreatureAI
+class VishasAI : public MoonScriptCreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(VishasAI)
-		VishasAI(Creature* pCreature) : CreatureAI(pCreature)
+		VishasAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			AddSpell(SHADOW_WORD, Target_RandomPlayer, 20, 0, 8);
 
@@ -73,11 +73,11 @@ class VishasAI : public CreatureAI
 #define SHADOW_BOLT 9613
 #define FLAME_SPIKE 8814
 
-class ThalnosAI : public CreatureAI
+class ThalnosAI : public MoonScriptCreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(ThalnosAI)
-		ThalnosAI(Creature* pCreature) : CreatureAI(pCreature)
+		ThalnosAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			AddSpell(SHADOW_BOLT, Target_RandomPlayer, 20, 3.0f, 2);
 			AddSpell(FLAME_SPIKE, Target_RandomPlayerDestination, 20, 3.0f, 14);
@@ -108,11 +108,11 @@ class ThalnosAI : public CreatureAI
 
 #define LOKSEY 3974
 
-class LokseyAI : public CreatureAI
+class LokseyAI : public MoonScriptCreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(LokseyAI)
-		LokseyAI(Creature* pCreature) : CreatureAI(pCreature)
+		LokseyAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			AddSpell(6742, Target_Self, 5, 0, 40);
 			AddEmote(Event_OnCombatStart, "Release the hounds!", Text_Yell, 5841);
@@ -128,11 +128,11 @@ class LokseyAI : public CreatureAI
 #define SILENCE 30225
 #define ARCANE_EXP 9433
 
-class DoanAI : public CreatureAI
+class DoanAI : public MoonScriptCreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(DoanAI)
-		DoanAI(Creature* pCreature) : CreatureAI(pCreature)
+		DoanAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			AddSpell(SILENCE, Target_Self, 25, 1.5f, 14);
 			AddSpell(POLY, Target_SecondMostHated, 15, 1.5f, 10);
@@ -172,11 +172,11 @@ class DoanAI : public CreatureAI
 #define WHIRLWIND 5832
 #define HEROD_ENRAGE 5833
 
-class HerodAI : public CreatureAI
+class HerodAI : public MoonScriptCreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(HerodAI)
-		HerodAI(Creature* pCreature) : CreatureAI(pCreature)
+		HerodAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			AddSpell(WHIRLWINDSPELL, Target_Self, 12, 0, 12)->AddEmote("Blades of Light!", Text_Yell, 5832);
 			AddSpell(CHARGE, Target_RandomPlayer, 6, 0, 20);
@@ -217,11 +217,11 @@ class HerodAI : public CreatureAI
 #define CRUSADER 14517
 #define RESTALK 5835
 
-class MograineAI : public CreatureAI
+class MograineAI : public MoonScriptCreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(MograineAI)
-		MograineAI(Creature* pCreature) : CreatureAI(pCreature)
+		MograineAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			AddEmote(Event_OnCombatStart, "Infidels. They must be purified!", Text_Yell, 5835);
 			AddEmote(Event_OnTargetDied, "Unworthy.", Text_Yell, 5836);
@@ -251,11 +251,11 @@ class MograineAI : public CreatureAI
 #define SLEEP 9256
 #define RESURRECTION 25435
 
-class WhitemaneAI : public CreatureAI
+class WhitemaneAI : public MoonScriptCreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(WhitemaneAI)
-		WhitemaneAI(Creature* pCreature) : CreatureAI(pCreature)
+		WhitemaneAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			AddEmote(Event_OnCombatStart, "Mograine has fallen? You shall pay for this treachery!", Text_Yell, 5838);
 			AddEmote(Event_OnTargetDied, "The light has spoken!", Text_Yell, 5839);
@@ -294,11 +294,11 @@ class WhitemaneAI : public CreatureAI
 #define FAIRBANKS 4542
 #define PWS 11647 //PWS = Power Word: Shield 
 
-class FairbanksAI : public CreatureAI
+class FairbanksAI : public MoonScriptCreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(FairbanksAI)
-		FairbanksAI(Creature* pCreature) : CreatureAI(pCreature)
+		FairbanksAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			AddEmote(Event_OnTargetDied, "Ha! Had enough?", Text_Yell, 0);
 			AddSpell(PWS, Target_Self, 15.0f, 0, 0);
