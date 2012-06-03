@@ -35,7 +35,7 @@ public:
 	{
 			if(Creature * mBoss = _unit->GetMapMgr()->GetInterface()->GetCreatureNearestCoords(746.583f, 559.018f, 435.492f, 34996))
 			{
-				CreatureAI * Tirion = dynamic_cast<CreatureAI*>(mBoss->GetScript());
+				MoonScriptCreatureAI* Tirion = dynamic_cast<MoonScriptCreatureAI *>(mBoss->GetScript());
 				Tirion->Emote("Welcome champions! You have heard the call of the Argent Crusade and you boldly answered! It is here, in the Crusaders' Coliseum, that you will face your greatest challenges. Those of you who survive the rigors of the coliseum will join the Argent Crusade on its march to Icecrown Citadel.", Text_Yell, 16036);
 				BossSpawnTimer = AddTimer(13000);
 			}
@@ -43,20 +43,22 @@ public:
 			if(IsTimerFinished(BossSpawnTimer))
 			{
 				Creature * mBoss = _unit->GetMapMgr()->GetInterface()->GetCreatureNearestCoords(746.583f, 559.018f, 435.492f, 34996);
-				CreatureAI * Tirion = dynamic_cast<CreatureAI*>(mBoss->GetScript());
+				MoonScriptCreatureAI * Tirion = dynamic_cast<MoonScriptCreatureAI*>(mBoss->GetScript());
 				// 50% chance that its the Argent Confessor Paletress or the Eadric the Pure.
 				switch(rand()%2)
 				{
 					case 1:
-				Tirion->SpawnCreature(34928, 746.974f, 636.627f, 411.572f, 4.66f); // Argent Confessor Paletress
-				Tirion->SpawnCreature(35309, 722.880f, 630.767f, 411.781f, 5.21f); // Adds Right Side (Argent LightWelder)
-				Tirion->SpawnCreature(35305, 724.252f, 632.047f, 411.775f, 5.31f); // Adds Right Side (Argent Monk)
-				Tirion->SpawnCreature(35307, 725.394f, 633.517f, 411.775f, 5.26f); // Adds Right Side (Argent Priestess)
-				Tirion->SpawnCreature(35309, 759.615f, 639.582f, 411.742f, 4.55f); // Adds Left Side (Argent LightWelder)
-				Tirion->SpawnCreature(35305, 756.946f, 639.834f, 411.716f, 4.50f); // Adds Left Side (Argent Monk)
-				Tirion->SpawnCreature(35307, 761.847f, 639.304f, 411.763f, 4.45f); // Adds Left Side (Argent Priestess)
+						Tirion->SpawnCreature(34928, 746.974f, 636.627f, 411.572f, 4.66f); // Argent Confessor Paletress
+						Tirion->SpawnCreature(35309, 722.880f, 630.767f, 411.781f, 5.21f); // Adds Right Side (Argent LightWelder)
+						Tirion->SpawnCreature(35305, 724.252f, 632.047f, 411.775f, 5.31f); // Adds Right Side (Argent Monk)
+						Tirion->SpawnCreature(35307, 725.394f, 633.517f, 411.775f, 5.26f); // Adds Right Side (Argent Priestess)
+						Tirion->SpawnCreature(35309, 759.615f, 639.582f, 411.742f, 4.55f); // Adds Left Side (Argent LightWelder)
+						Tirion->SpawnCreature(35305, 756.946f, 639.834f, 411.716f, 4.50f); // Adds Left Side (Argent Monk)
+						Tirion->SpawnCreature(35307, 761.847f, 639.304f, 411.763f, 4.45f); // Adds Left Side (Argent Priestess)
+						break;
 					case 2: // NOT SURE IF HE SPAWNS WITH ADDS LIKE PALETRESS DOES
-				Tirion->SpawnCreature(35119, 746.974f, 636.627f, 411.572f, 4.66f); // Eadric the Pure
+						Tirion->SpawnCreature(35119, 746.974f, 636.627f, 411.572f, 4.66f); // Eadric the Pure
+						break;
 				}
 			}
 	}
@@ -95,11 +97,11 @@ enum BlackKnightData{
 	SPELL_DEATHBITE		= 67808 // PHASE 3 SPELL
 };
 
-class BlackKnightAI : public MoonScriptCreatureAI
+class BlackKnightAI : public MoonScriptBossAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(BlackKnightAI)
-		BlackKnightAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
+		BlackKnightAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
 		{
 			AddPhaseSpell(1, AddSpell(SPELL_ICYTOUCH, Target_Current, 30, 0, 0));
 			AddPhaseSpell(1, AddSpell(SPELL_OBLIT, Target_Current, 45, 0, 4));
@@ -152,11 +154,11 @@ enum PUREData{
 	SPELL_RADIANCE		= 66935
 };
 
-class PureAI : public MoonScriptCreatureAI
+class PureAI : public MoonScriptBossAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(PureAI)
-		PureAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
+		PureAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
 		{
 			AddPhaseSpell(1, AddSpell(SPELL_HOJ, Target_Current, 30, 0, 8));
 			AddPhaseSpell(1, AddSpell(SPELL_HOTR, Target_RandomPlayer, 26, 2.5, 10, 0, 0, false, "Hammer of the Righteous!", Text_Yell, 16136));
@@ -200,11 +202,11 @@ enum PALETRESSData{
 	SPELL_CONFESS		= 66680
 };
 
-class PaletressAI : public MoonScriptCreatureAI
+class PaletressAI : public MoonScriptBossAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(PaletressAI)
-		PaletressAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
+		PaletressAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
 		{
 			AddSpell(SPELL_HOLYSMITE, Target_RandomPlayer, 60, 2, 0);
 			AddSpell(SPELL_HOLYNOVA, Target_Self, 40, 0, 10);
@@ -249,11 +251,11 @@ class PaletressAI : public MoonScriptCreatureAI
 		SpellDesc * Confess;
 };
 
-class MemoryAI : public MoonScriptCreatureAI
+class MemoryAI : public MoonScriptBossAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(MemoryAI)
-		MemoryAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
+		MemoryAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
 		{
 		}
 
@@ -261,7 +263,7 @@ class MemoryAI : public MoonScriptCreatureAI
 		{
 			if(Creature * mBoss = _unit->GetMapMgr()->GetInterface()->GetCreatureNearestCoords(_unit->GetPositionX(), _unit->GetPositionY(), _unit->GetPositionZ(), NPC_PALETRESS))
 			{
-				CreatureAI * pBoss = dynamic_cast<CreatureAI*>(mBoss->GetScript());
+				MoonScriptBossAI * pBoss = dynamic_cast<MoonScriptBossAI*>(mBoss->GetScript());
 				pBoss->RemoveAura(SPELL_REFLECTSHIELD);
 				pBoss->Emote("Even the darkest memory fades when confronted.", Text_Yell, 16249);
 				pBoss->SetPhase(3);

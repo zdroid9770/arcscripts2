@@ -1372,8 +1372,6 @@ class FathomGuardSharkissAI : public MoonScriptCreatureAI
 		{
 			CurrentPet = NULL;
 			SummonPetTimer = 5;
-
-			CreatureAI::OnCombatStart(pTarget);
 		}
 
 		void OnDied(Unit* pKiller)
@@ -1388,8 +1386,6 @@ class FathomGuardSharkissAI : public MoonScriptCreatureAI
 					TO< KarathressAI* >(FLK->GetScript())->AdvisorsLeft--;
 				FLK->RemoveAura(BLESSING_OF_THE_TIDES);
 			}
-
-			CreatureAI::OnDied(pKiller);
 		}
 
 		void AIUpdate()
@@ -1414,8 +1410,6 @@ class FathomGuardSharkissAI : public MoonScriptCreatureAI
 					SummonPetTimer = 5;
 				}
 			}
-
-			CreatureAI::AIUpdate();
 		}
 
 	private:
@@ -1457,8 +1451,6 @@ class FathomGuardTidalvessAI : public MoonScriptCreatureAI
 					TO< KarathressAI* >(FLK->GetScript())->AdvisorsLeft--;
 				FLK->RemoveAura(BLESSING_OF_THE_TIDES);
 			}
-
-			CreatureAI::OnDied(pKiller);
 		}
 };
 
@@ -1480,8 +1472,6 @@ class FathomGuardCaribdisAI : public MoonScriptCreatureAI
 		void OnCombatStart(Unit* pTarget)
 		{
 			HealingWaveTimer = 15;
-
-			CreatureAI::OnCombatStart(pTarget);
 		}
 
 		void AIUpdate()
@@ -1498,8 +1488,6 @@ class FathomGuardCaribdisAI : public MoonScriptCreatureAI
 
 				HealingWaveTimer = 15;
 			}*/
-
-			CreatureAI::AIUpdate();
 		}
 
 		void OnDied(Unit*  pKiller)
@@ -1514,7 +1502,6 @@ class FathomGuardCaribdisAI : public MoonScriptCreatureAI
 					TO< KarathressAI* >(FLK->GetScript())->AdvisorsLeft--;
 				FLK->RemoveAura(BLESSING_OF_THE_TIDES);
 			}
-			CreatureAI::OnDied(pKiller);
 		}
 
 	private:
@@ -3042,8 +3029,6 @@ class UnderbogColossusAI : public MoonScriptCreatureAI
 					//Many small adds, TODO
 					//Refreshing mist, TODO
 			}
-
-			CreatureAI::OnDied(pKiller);
 		}
 };
 

@@ -214,11 +214,11 @@ public:
 #define SLEEP			31298	// 12098
 #define BERSERK			26662
 
-class AnetheronAI : public MoonScriptCreatureAI
+class AnetheronAI : public MoonScriptBossAI
 {
 public:
 	ADD_CREATURE_FACTORY_FUNCTION(AnetheronAI)
-	AnetheronAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
+	AnetheronAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
 	{
 		AddEmote(Event_OnCombatStart, "You are defenders of a doomed world. Flee here and perhaps you will prolong your pathetic lives!", Text_Yell, 10977);
 		AddEmote(Event_OnTargetDied, "Your hopes are lost.", Text_Yell, 10981);

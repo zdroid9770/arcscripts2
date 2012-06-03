@@ -93,7 +93,7 @@ class ShadowfangPrisonerGossip : public Arcemu::Gossip::Script
 
 		void OnSelectOption(Object* pObject, Player* Plr, uint32 Id, const char * Code)
 		{
-			CreatureAI* pUnit = dynamic_cast<CreatureAI *>(TO_CREATURE(pObject)->GetScript());
+			MoonScriptCreatureAI* pUnit = dynamic_cast<MoonScriptCreatureAI*>(TO_CREATURE(pObject)->GetScript());
 			TO_CREATURE(pObject)->SetUInt32Value(UNIT_NPC_FLAGS, 0);
 			pUnit->StartWaypointMovement();
 		}
@@ -206,11 +206,11 @@ class SpringvaleAI : public MoonScriptCreatureAI
 
 // Odo the Blindwatcher AI
 #define CN_BLINDWATCHER 4279
-class BlindWatcherAI : public MoonScriptCreatureAI
+class BlindWatcherAI : public MoonScriptBossAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(BlindWatcherAI)
-		BlindWatcherAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
+		BlindWatcherAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
 		{
 			HowlingRage1 = AddSpell(7481, Target_Self, 0, 5, 0);
 			HowlingRage2 = AddSpell(7483, Target_Self, 0, 1.5f, 0);
@@ -261,7 +261,7 @@ class FenrusAI : public MoonScriptCreatureAI
 			_unit->SendChatMessageAlternateEntry(4275, CHAT_MSG_MONSTER_YELL, LANG_UNIVERSAL, "Who dares interfere with the Sons of Arugal?");
 			_unit->PlaySoundToSet(5791);
 
-			CreatureAI* voidwalker = NULL;
+			MoonScriptCreatureAI* voidwalker = NULL;
 			// Spawn 4 x Arugal's Voidwalkers
 			for(int x = 0; x < 4; x++)
 			{

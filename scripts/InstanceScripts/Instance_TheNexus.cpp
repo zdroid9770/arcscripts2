@@ -225,11 +225,11 @@ static Location FormSpawns[] =
 #define BLIZZARD 47727
 #define ICE_BARB 47729
 
-class TelestraBossAI : public MoonScriptCreatureAI
+class TelestraBossAI : public MoonScriptBossAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(TelestraBossAI)
-		TelestraBossAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
+		TelestraBossAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
 		{
 			mInstance = GetInstanceScript();
 			AddSpell(ICE_NOVA, Target_Self, 25.0f, 2.0, 15);

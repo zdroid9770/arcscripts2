@@ -44,15 +44,15 @@ enum GarfrostData{
 
 static Location JumpCords[]=
 {
-	{639.075f, -208.774f, 528.931f},
-	{725.325f, -236.978f, 528.848f},
+	{639.075f, -208.774f, 528.931f, 0.0f},
+	{725.325f, -236.978f, 528.848f, 0.0f},
 };
 
-class GarfrostAI : public MoonScriptCreatureAI
+class GarfrostAI : public MoonScriptBossAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(GarfrostAI)
-		GarfrostAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
+		GarfrostAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
 		{
 			AddSpell(SPELL_THROWSARONITE, Target_RandomPlayerDestination, 20, 2, 15);
 			AddPhaseSpell(2, AddSpell(SPELL_CHILLINGWAVE, Target_Current, 25, 0, 14));

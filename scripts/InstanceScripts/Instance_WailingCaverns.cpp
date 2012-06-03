@@ -291,11 +291,11 @@ static Location Ectoplasm[]=
 #define CN_MUTANUS				3654
 
 // Disciple of Naralex AI by Soulshifter
-class DofNaralexAI : public MoonScriptCreatureAI
+class DofNaralexAI : public MoonScriptBossAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(DofNaralexAI)
-		DofNaralexAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
+		DofNaralexAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
 		{
 			// --- Initialization ---
 			for(uint8 i = 0; i < 38; i++)
@@ -353,7 +353,7 @@ class DofNaralexAI : public MoonScriptCreatureAI
 
 			if(GetPhase() == 5 && (!Mutanus || !Mutanus->GetUnit()->isAlive()))
 			{
-				CreatureAI* Naralex = GetNearestCreature(3679);
+				MoonScriptCreatureAI *Naralex = GetNearestCreature(3679);
 				if(Naralex && Naralex->IsAlive())
 				{
 					SetDisplayId(17089);
@@ -372,7 +372,7 @@ class DofNaralexAI : public MoonScriptCreatureAI
 	protected:
 		int32 SpawnTimer;
 		SpellDesc* Awakening;
-		CreatureAI* Mutanus;
+		MoonScriptCreatureAI* Mutanus;
 };
 
 // Naralex State

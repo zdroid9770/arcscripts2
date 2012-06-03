@@ -1704,7 +1704,7 @@ class DARKWEAVERSYTHAI : public CreatureAIScript
 
 			if(mLakka != NULL && mLakka->GetScript())
 			{
-				CreatureAI* pLakkaAI = TO< CreatureAI* >(mLakka->GetScript());
+				MoonScriptCreatureAI* pLakkaAI = TO< MoonScriptCreatureAI* >(mLakka->GetScript());
 				mLakka->GetAIInterface()->SetAIState(STATE_SCRIPTMOVE);
 				pLakkaAI->SetMoveType(Move_WantedWP);
 				pLakkaAI->SetWaypointToMove(1);

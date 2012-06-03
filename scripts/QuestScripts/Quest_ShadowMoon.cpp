@@ -119,7 +119,7 @@ class DeathbringerJovaanAI : public MoonScriptCreatureAI
 				{
 					case 0:
 						{
-							CreatureAI* pRazuunAI = SpawnCreature(21502, -3300.47f, 2927.22f, 173.870f, 2.42924f, false);	// Spawn Razuun
+							MoonScriptCreatureAI* pRazuunAI = SpawnCreature(21502, -3300.47f, 2927.22f, 173.870f, 2.42924f, false);	// Spawn Razuun
 							if(pRazuunAI != NULL)
 							{
 								pRazuunAI->GetUnit()->SetUInt64Value(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_ATTACKABLE_2);

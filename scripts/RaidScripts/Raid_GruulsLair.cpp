@@ -27,7 +27,7 @@
 #define LAIR_BRUTE_CLEAVE			39174
 #define LAIR_BRUTE_CHARGE			24193
 
-void SpellFunc_LairBrute_Charge(SpellDesc* pThis, CreatureAI* pCreatureAI, Unit* pTarget, TargetType pType);
+void SpellFunc_LairBrute_Charge(SpellDesc* pThis, MoonScriptCreatureAI* pCreatureAI, Unit* pTarget, TargetType pType);
 
 class LairBruteAI : public MoonScriptCreatureAI
 {
@@ -44,7 +44,7 @@ class LairBruteAI : public MoonScriptCreatureAI
 		SpellDesc*	mCharge;
 };
 
-void SpellFunc_LairBrute_Charge(SpellDesc* pThis, CreatureAI* pCreatureAI, Unit* pTarget, TargetType pType)
+void SpellFunc_LairBrute_Charge(SpellDesc* pThis, MoonScriptCreatureAI* pCreatureAI, Unit* pTarget, TargetType pType)
 {
 	LairBruteAI* pBruteAI = (pCreatureAI != NULL) ? TO< LairBruteAI* >(pCreatureAI) : NULL;
 	if(pBruteAI != NULL)
@@ -88,15 +88,15 @@ class GronnPriestAI : public MoonScriptCreatureAI
 #define HIGH_KING_MAULGAR_WHIRLWIND			33238
 #define HIGH_KING_MAULGAR_WHIRLWIND2		33239
 
-void SpellFunc_Maulgar_Enrage(SpellDesc* pThis, CreatureAI* pCreatureAI, Unit* pTarget, TargetType pType);
+void SpellFunc_Maulgar_Enrage(SpellDesc* pThis, MoonScriptCreatureAI* pCreatureAI, Unit* pTarget, TargetType pType);
 // 4th unit sometimes cannot be found - blame cell system
 uint32 Adds[4] = { 18832, 18834, 18836, 18835 };
 
-class HighKingMaulgarAI : public MoonScriptCreatureAI
+class HighKingMaulgarAI : public MoonScriptBossAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(HighKingMaulgarAI)
-		HighKingMaulgarAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
+		HighKingMaulgarAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
 		{
 			AddPhaseSpell(2, AddSpell(HIGH_KING_MAULGAR_BERSERKER_CHARGE, Target_RandomPlayer, 10, 0, 25, 0, 40));
 			AddPhaseSpell(2, AddSpell(HIGH_KING_MAULGAR_INTIMIDATING_ROAR, Target_Current, 7, 0, 20, 0, 5));
@@ -186,7 +186,7 @@ class HighKingMaulgarAI : public MoonScriptCreatureAI
 		SpellDesc*	mEnrage;
 };
 
-void SpellFunc_Maulgar_Enrage(SpellDesc* pThis, CreatureAI* pCreatureAI, Unit* pTarget, TargetType pType)
+void SpellFunc_Maulgar_Enrage(SpellDesc* pThis, MoonScriptCreatureAI* pCreatureAI, Unit* pTarget, TargetType pType)
 {
 	HighKingMaulgarAI* pMaulgarAI = (pCreatureAI != NULL) ? TO< HighKingMaulgarAI* >(pCreatureAI) : NULL;
 	if(pMaulgarAI != NULL)
@@ -399,9 +399,9 @@ class KroshFirehandAI : public MoonScriptCreatureAI
 #define GRUUL_THE_DRAGONKILLER_STONED				33652	// +
 #define GRUUL_THE_DRAGONKILLER_GRONN_LORDS_GRASP	33572	// Should be used only after Ground Slam
 
-void SpellFunc_Gruul_GroundSlam(SpellDesc* pThis, CreatureAI* pCreatureAI, Unit* pTarget, TargetType pType);
-void SpellFunc_Gruul_Stoned(SpellDesc* pThis, CreatureAI* pCreatureAI, Unit* pTarget, TargetType pType);
-void SpellFunc_Gruul_Shatter(SpellDesc* pThis, CreatureAI* pCreatureAI, Unit* pTarget, TargetType pType);
+void SpellFunc_Gruul_GroundSlam(SpellDesc* pThis, MoonScriptCreatureAI* pCreatureAI, Unit* pTarget, TargetType pType);
+void SpellFunc_Gruul_Stoned(SpellDesc* pThis, MoonScriptCreatureAI* pCreatureAI, Unit* pTarget, TargetType pType);
+void SpellFunc_Gruul_Shatter(SpellDesc* pThis, MoonScriptCreatureAI* pCreatureAI, Unit* pTarget, TargetType pType);
 
 class GruulTheDragonkillerAI : public MoonScriptCreatureAI
 {
@@ -531,7 +531,7 @@ class GruulTheDragonkillerAI : public MoonScriptCreatureAI
 		SpellDesc*	mShatter2;
 };
 
-void SpellFunc_Gruul_GroundSlam(SpellDesc* pThis, CreatureAI* pCreatureAI, Unit* pTarget, TargetType pType)
+void SpellFunc_Gruul_GroundSlam(SpellDesc* pThis, MoonScriptCreatureAI* pCreatureAI, Unit* pTarget, TargetType pType)
 {
 	GruulTheDragonkillerAI* pGruul = (pCreatureAI != NULL) ? TO< GruulTheDragonkillerAI* >(pCreatureAI) : NULL;
 	if(pGruul != NULL)
@@ -542,7 +542,7 @@ void SpellFunc_Gruul_GroundSlam(SpellDesc* pThis, CreatureAI* pCreatureAI, Unit*
 	}
 }
 
-void SpellFunc_Gruul_Stoned(SpellDesc* pThis, CreatureAI* pCreatureAI, Unit* pTarget, TargetType pType)
+void SpellFunc_Gruul_Stoned(SpellDesc* pThis, MoonScriptCreatureAI* pCreatureAI, Unit* pTarget, TargetType pType)
 {
 	GruulTheDragonkillerAI* pGruul = (pCreatureAI != NULL) ? TO< GruulTheDragonkillerAI* >(pCreatureAI) : NULL;
 	if(pGruul != NULL)
@@ -561,7 +561,7 @@ void SpellFunc_Gruul_Stoned(SpellDesc* pThis, CreatureAI* pCreatureAI, Unit* pTa
 	}
 }
 
-void SpellFunc_Gruul_Shatter(SpellDesc* pThis, CreatureAI* pCreatureAI, Unit* pTarget, TargetType pType)
+void SpellFunc_Gruul_Shatter(SpellDesc* pThis, MoonScriptCreatureAI* pCreatureAI, Unit* pTarget, TargetType pType)
 {
 	GruulTheDragonkillerAI* pGruul = (pCreatureAI != NULL) ? TO< GruulTheDragonkillerAI* >(pCreatureAI) : NULL;
 	if(pGruul != NULL)

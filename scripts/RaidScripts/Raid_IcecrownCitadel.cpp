@@ -329,11 +329,11 @@ enum LM_Summons
     NPC_COLD_FLAME			= 36672
 };
 
-class LordMarrowgarAI : public MoonScriptCreatureAI
+class LordMarrowgarAI : public MoonScriptBossAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(LordMarrowgarAI)
-		LordMarrowgarAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
+		LordMarrowgarAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
 		{
 			mInstance = GetInstanceScript();
 			Reset();
@@ -455,7 +455,7 @@ class ColdFlameAI : public MoonScriptCreatureAI
 		{
 			SetCanEnterCombat(false);
 			Despawn(15*SEC_IN_MS);
-			if(CreatureAI * pLord = dynamic_cast<CreatureAI*>(GetNearestCreature(NPC_LORD_MARROWGAR)))
+			if(MoonScriptBossAI * pLord = dynamic_cast<MoonScriptBossAI*>(GetNearestCreature(NPC_LORD_MARROWGAR)))
 			{
 				if(pLord->GetPhase() == 2)
 					MoveTo(_unit->GetPositionX()+75.0f, _unit->GetPositionY(), _unit->GetPositionZ());
@@ -540,11 +540,11 @@ static LocationExtra LD_SummonPositions[] ={
     {-524.2480f, 2211.920f, 62.90960f, 3.141592f, 0} // 7 Upper (Random Cultist)
 };
 
-class LadyDeathwhisperAI : public MoonScriptCreatureAI
+class LadyDeathwhisperAI : public MoonScriptBossAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(LadyDeathwhisperAI)
-		LadyDeathwhisperAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
+		LadyDeathwhisperAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
 		{
 			DominateHandTimer = SummonCultistTimer = -1;
 			Count = 0;
@@ -641,7 +641,7 @@ class LadyDeathwhisperAI : public MoonScriptCreatureAI
 		SpellDesc * DominateHand;
 		uint8 Count;
 		int32 DominateHandTimer, SummonCultistTimer;
-		CreatureAI * pSummons[7];
+		MoonScriptCreatureAI * pSummons[7];
 		bool LeftSide;
 };
 

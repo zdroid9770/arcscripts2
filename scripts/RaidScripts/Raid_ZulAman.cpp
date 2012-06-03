@@ -33,11 +33,11 @@
 // Other spells
 #define NALORAKK_BERSERK			41924
 
-class NalorakkAI : public MoonScriptCreatureAI
+class NalorakkAI : public MoonScriptBossAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(NalorakkAI)
-		NalorakkAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
+		NalorakkAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
 		{
 			AddPhaseSpell(1, AddSpell(NALORAKK_BRUTAL_SWIPE, Target_Current, 2, 0, 35));
 			AddPhaseSpell(1, AddSpell(NALORAKK_MANGLE, Target_Current, 12, 0, 20));
@@ -143,7 +143,7 @@ class AkilzonAI : public MoonScriptCreatureAI
 		{
 			if(IsTimerFinished(mSummonTime))
 			{
-				CreatureAI* Eagle = NULL;
+				MoonScriptCreatureAI* Eagle = NULL;
 				// Spawn 3 Soaring Eagles
 				for(int x = 0; x < 3; x++)
 				{
@@ -193,11 +193,11 @@ class SoaringEagleAI : public MoonScriptCreatureAI
 //Phase 3
 //Halazzi now drops his totems more frequently as well as doing more damage.
 
-class HalazziAI : public MoonScriptCreatureAI
+class HalazziAI : public MoonScriptBossAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(HalazziAI)
-		HalazziAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
+		HalazziAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
 		{
 			AddPhaseSpell(1, AddSpell(HALAZZI_SABER_LASH, Target_Destination, 0.5, 0, 0, 0, 0, false, "Me gonna carve ya now!", Text_Yell, 12023));
 
@@ -253,7 +253,7 @@ class HalazziAI : public MoonScriptCreatureAI
 			{
 				if(IsTimerFinished(mTotemTimer))
 				{
-					CreatureAI* Totem = NULL;
+					MoonScriptCreatureAI* Totem = NULL;
 					Totem = SpawnCreature(CN_TOTEM, (_unit->GetPositionX() + RandomFloat(3) - 3), (_unit->GetPositionY() + RandomFloat(3) - 3), _unit->GetPositionZ(), 0, true);
 					if(Totem)
 					{

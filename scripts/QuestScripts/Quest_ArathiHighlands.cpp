@@ -92,11 +92,11 @@ class Professor_Phizzlethorpe : public MoonScriptCreatureAI
 				case 8: Emote("%s begins tinkering with the goggles before the stone.", Text_Yell, 0); break;
 				case 9:
 				{
-					CreatureAI * pCreature1 = SpawnCreature(2776, -2056.41f, -2144.01f, 20.59f, 5.70f);
+					MoonScriptCreatureAI * pCreature1 = SpawnCreature(2776, -2056.41f, -2144.01f, 20.59f, 5.70f);
 					if(pCreature1 != NULL)
 						pCreature1->SetDespawnWhenInactive(true);
 
-					CreatureAI * pCreature2 = SpawnCreature(2776, -2050.17f, -2140.02f, 19.54f, 5.17f);
+					MoonScriptCreatureAI * pCreature2 = SpawnCreature(2776, -2050.17f, -2140.02f, 19.54f, 5.17f);
 					if(pCreature2 != NULL)
 						pCreature2->SetDespawnWhenInactive(true);
 				}break;

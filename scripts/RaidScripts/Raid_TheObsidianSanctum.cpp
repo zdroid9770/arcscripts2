@@ -164,7 +164,7 @@ class ObsidianSanctumScript : public MoonInstanceScript
 		};
 };
 
-void SpellFunc_FlameTsunami(SpellDesc* pThis, CreatureAI* pCreatureAI, Unit* pTarget, TargetType pType)
+void SpellFunc_FlameTsunami(SpellDesc* pThis, MoonScriptCreatureAI* pCreatureAI, Unit* pTarget, TargetType pType)
 {
 	if(pCreatureAI != NULL)
 	{
@@ -212,7 +212,7 @@ void SpellFunc_FlameTsunami(SpellDesc* pThis, CreatureAI* pCreatureAI, Unit* pTa
 	};
 };
 
-void SpellFunc_LavaSpawn(SpellDesc* pThis, CreatureAI* pCreatureAI, Unit* pTarget, TargetType pType)
+void SpellFunc_LavaSpawn(SpellDesc* pThis, MoonScriptCreatureAI* pCreatureAI, Unit* pTarget, TargetType pType)
 {
 	if(pCreatureAI == NULL)
 		return;

@@ -27,7 +27,7 @@ class GryponMasters : public MoonScriptCreatureAI
 		void OnCombatStart(Unit *mTarget)
 		{
 			for(int i = 0; i < 2; ++i)
-				SummonCreature(_unit, 9526, _unit->GetPositionX()+RandomFloat(2.0f), _unit->GetPositionY()+RandomFloat(2.0f), _unit->GetPositionZ(), _unit->GetOrientation(), 180000);
+				SpawnCreature(9526, _unit->GetPositionX()+RandomFloat(2.0f), _unit->GetPositionY()+RandomFloat(2.0f), _unit->GetPositionZ(), _unit->GetOrientation());
 		}
 };
 
@@ -40,7 +40,7 @@ class HippogryphMasters : public MoonScriptCreatureAI
 		void OnCombatStart(Unit *mTarget)
 		{
 			for(int i = 0; i < 2; ++i)
-				SummonCreature(_unit, 9527, _unit->GetPositionX()+RandomFloat(2.0f), _unit->GetPositionY()+RandomFloat(2.0f), _unit->GetPositionZ(), _unit->GetOrientation(), 180000);
+				SpawnCreature(9527, _unit->GetPositionX()+RandomFloat(2.0f), _unit->GetPositionY()+RandomFloat(2.0f), _unit->GetPositionZ(), _unit->GetOrientation());
 		}
 };
 
@@ -53,7 +53,7 @@ class WyvernMasters : public MoonScriptCreatureAI
 		void OnCombatStart(Unit *mTarget)
 		{
 			for(int i = 0; i < 2; ++i)
-				SummonCreature(_unit, 9527, _unit->GetPositionX()+RandomFloat(2.0f), _unit->GetPositionY()+RandomFloat(2.0f), _unit->GetPositionZ(), _unit->GetOrientation(), 180000);
+				SpawnCreature(9527, _unit->GetPositionX()+RandomFloat(2.0f), _unit->GetPositionY()+RandomFloat(2.0f), _unit->GetPositionZ(), _unit->GetOrientation());
 		}
 };
 
@@ -66,7 +66,7 @@ class BatMasters : public MoonScriptCreatureAI
 		void OnCombatStart(Unit *mTarget)
 		{
 			for(int i = 0; i < 2; ++i)
-				SummonCreature(_unit, 9521, _unit->GetPositionX()+RandomFloat(2.0f), _unit->GetPositionY()+RandomFloat(2.0f), _unit->GetPositionZ(), _unit->GetOrientation(), 180000);
+				SpawnCreature(9521, _unit->GetPositionX()+RandomFloat(2.0f), _unit->GetPositionY()+RandomFloat(2.0f), _unit->GetPositionZ(), _unit->GetOrientation());
 		}
 };
 
@@ -79,7 +79,7 @@ class DragonhawkMasters : public MoonScriptCreatureAI
 		void OnCombatStart(Unit *mTarget)
 		{
 			for(int i = 0; i < 2; ++i)
-				SummonCreature(27946, _unit->GetPositionX()+RandomFloat(2.0f), _unit->GetPositionY()+RandomFloat(2.0f), _unit->GetPositionZ(), _unit->GetOrientation(), 180000);
+				SpawnCreature(27946, _unit->GetPositionX()+RandomFloat(2.0f), _unit->GetPositionY()+RandomFloat(2.0f), _unit->GetPositionZ(), _unit->GetOrientation());
 		}
 };
 
@@ -92,7 +92,7 @@ class NeutralMasters : public MoonScriptCreatureAI
 		void OnCombatStart(Unit *mTarget)
 		{
 			for(int i = 0; i < 2; ++i)
-				SummonCreature(_unit, 9526+i, _unit->GetPositionX()+RandomFloat(2.0f), _unit->GetPositionY()+RandomFloat(2.0f), _unit->GetPositionZ(), _unit->GetOrientation(), 180000);
+				SpawnCreature(9526+i, _unit->GetPositionX()+RandomFloat(2.0f), _unit->GetPositionY()+RandomFloat(2.0f), _unit->GetPositionZ(), _unit->GetOrientation());
 		}
 };
 

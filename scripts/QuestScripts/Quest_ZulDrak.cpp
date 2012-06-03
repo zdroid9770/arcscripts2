@@ -541,7 +541,7 @@ class HebJinAI : public MoonScriptCreatureAI
 				_unit->SetMount(0);
 				SetFlyMode(false);
 				Emote("Now you gonna die!", Text_Yell, 0);
-				if(CreatureAI* pSummon = SpawnCreature(28639, _unit->GetPositionX()-3.0f, _unit->GetPositionY()-3.0f, 364.82f, 2.47f))
+				if(MoonScriptCreatureAI* pSummon = SpawnCreature(28639, _unit->GetPositionX()-3.0f, _unit->GetPositionY()-3.0f, 364.82f, 2.47f))
 					pSummon->Despawn(MINUTE*6*SEC_IN_MS);
 				AggroNearestPlayer();
 			}

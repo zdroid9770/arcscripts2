@@ -67,11 +67,11 @@ class Berthold : public GossipScript
 #define ATTUMEN_BERSERKER_CHARGE	22886
 #define ATTUMEN_INTANGIBLE_PRESENCE	29833
 
-class AttumenTheHuntsmanAI : public MoonScriptCreatureAI
+class AttumenTheHuntsmanAI : public MoonScriptBossAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(AttumenTheHuntsmanAI)
-		AttumenTheHuntsmanAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
+		AttumenTheHuntsmanAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
 		{
 			//All phase spells
 			AddSpell(ATTUMEN_SHADOW_CLEAVE, Target_Current, 15, 0, 6, 0, 5, true);
@@ -111,7 +111,7 @@ class AttumenTheHuntsmanAI : public MoonScriptCreatureAI
 					SetAllowMelee(false);
 					SetAllowSpell(false);
 					Emote("Come Midnight, let's disperse this petty rabble!", Text_Yell, 9168);
-					CreatureAI* midnight = TO< CreatureAI* >(GetLinkedCreature());
+					MoonScriptBossAI* midnight = TO< MoonScriptBossAI *>(GetLinkedCreature());
 					midnight->SetPhase(2);
 					midnight->MoveTo(this);
 					midnight->SetAllowMelee(false);
@@ -120,11 +120,11 @@ class AttumenTheHuntsmanAI : public MoonScriptCreatureAI
 		}
 };
 
-class MidnightAI : public MoonScriptCreatureAI
+class MidnightAI : public MoonScriptBossAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(MidnightAI)
-		MidnightAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
+		MidnightAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
 		{
 		}
 
@@ -137,7 +137,7 @@ class MidnightAI : public MoonScriptCreatureAI
 		void OnTargetDied(Unit* pTarget)
 		{
 			if(GetLinkedCreature() && GetLinkedCreature()->IsAlive())
-				TO< CreatureAI* >(GetLinkedCreature())->Emote("Well done Midnight!", Text_Yell, 9173);
+				TO< MoonScriptCreatureAI *>(GetLinkedCreature())->Emote("Well done Midnight!", Text_Yell, 9173);
 		}
 
 		void AIUpdate()
@@ -157,7 +157,7 @@ class MidnightAI : public MoonScriptCreatureAI
 				else if(GetLinkedCreature() && GetLinkedCreature()->IsAlive() && GetHealthPercent() <= 25 && !IsCasting())
 				{
 					SetPhase(2);
-					CreatureAI* attumen = TO< CreatureAI* >(GetLinkedCreature());
+					MoonScriptBossAI* attumen = TO< MoonScriptBossAI *>(GetLinkedCreature());
 					MoveTo(attumen);
 					SetAllowMelee(false);
 					attumen->SetPhase(2);
@@ -170,7 +170,7 @@ class MidnightAI : public MoonScriptCreatureAI
 			{
 				if(GetLinkedCreature() && GetLinkedCreature()->IsAlive())
 				{
-					CreatureAI* attumen = TO< CreatureAI* >(GetLinkedCreature());
+					MoonScriptCreatureAI* attumen = TO< MoonScriptCreatureAI *>(GetLinkedCreature());
 					if(GetRange(attumen) <= 15)
 					{
 						attumen->Regenerate();
@@ -196,11 +196,11 @@ class MidnightAI : public MoonScriptCreatureAI
 #define MOROES_ENRAGE	37023
 #define MOROES_GARROTE	37066
 
-class MoroesAI : public MoonScriptCreatureAI
+class MoroesAI : public MoonScriptBossAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(MoroesAI)
-		MoroesAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
+		MoroesAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
 		{
 			//Initialize timers
 			mVanishTimer = mGarroteTimer = INVALIDATE_TIMER;

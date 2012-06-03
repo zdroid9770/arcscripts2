@@ -48,7 +48,7 @@ class SummonOozeling : public MoonScriptCreatureAI
 		{
 			if(CrimsonFuryTimer <= mAIUpdateFrequency)
 			{
-				_unit->CastSpell(GetTarget(TARGET_ATTACKING), dbcSpell.LookupEntry(12745), true);
+				_unit->CastSpell(GetBestPlayerTarget(TargetFilter_NotCurrent), dbcSpell.LookupEntry(12745), true);
 				CrimsonFuryTimer = (8+rand()%7)*1000;
 			}else CrimsonFuryTimer -= mAIUpdateFrequency;
 		}

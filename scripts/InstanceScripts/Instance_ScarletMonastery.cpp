@@ -251,11 +251,11 @@ class MograineAI : public MoonScriptCreatureAI
 #define SLEEP 9256
 #define RESURRECTION 25435
 
-class WhitemaneAI : public MoonScriptCreatureAI
+class WhitemaneAI : public MoonScriptBossAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(WhitemaneAI)
-		WhitemaneAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
+		WhitemaneAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
 		{
 			AddEmote(Event_OnCombatStart, "Mograine has fallen? You shall pay for this treachery!", Text_Yell, 5838);
 			AddEmote(Event_OnTargetDied, "The light has spoken!", Text_Yell, 5839);

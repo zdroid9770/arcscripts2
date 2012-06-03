@@ -2087,7 +2087,7 @@ class BloodGuardPorungAI : public CreatureAIScript
 #define CN_LEFT_HEAD					19523
 #define CN_RIGHT_HEAD					19524
 
-void SpellFunc_Warbringer_BurningMaul(SpellDesc* pThis, CreatureAI* pCreatureAI, Unit* pTarget, TargetType pType);
+void SpellFunc_Warbringer_BurningMaul(SpellDesc* pThis, MoonScriptCreatureAI* pCreatureAI, Unit* pTarget, TargetType pType);
 
 class WarbringerOmroggAI : public MoonScriptCreatureAI
 {
@@ -2113,6 +2113,7 @@ class WarbringerOmroggAI : public MoonScriptCreatureAI
 			{
 				mLeftHead->GetUnit()->GetAIInterface()->SetUnitToFollow(_unit);
 			}
+
 			if(mRightHead != NULL)
 			{
 				mRightHead->GetUnit()->GetAIInterface()->SetUnitToFollow(_unit);
@@ -2295,8 +2296,8 @@ class WarbringerOmroggAI : public MoonScriptCreatureAI
 			}
 		}
 
-		CreatureAI*	mLeftHead;
-		CreatureAI*	mRightHead;
+		MoonScriptCreatureAI*	mLeftHead;
+		MoonScriptCreatureAI*	mRightHead;
 		int32					mAggroShiftTimer;
 		int32					mBlastWaveTimer;
 		int32					mSpeechTimer;
@@ -2304,7 +2305,7 @@ class WarbringerOmroggAI : public MoonScriptCreatureAI
 		SpellDesc*				mBlastWave;
 };
 
-void SpellFunc_Warbringer_BurningMaul(SpellDesc* pThis, CreatureAI* pCreatureAI, Unit* pTarget, TargetType pType)
+void SpellFunc_Warbringer_BurningMaul(SpellDesc* pThis, MoonScriptCreatureAI* pCreatureAI, Unit* pTarget, TargetType pType)
 {
 	WarbringerOmroggAI* Warbringer = (pCreatureAI) ? TO< WarbringerOmroggAI* >(pCreatureAI) : NULL;
 	if(Warbringer != NULL)
@@ -2340,9 +2341,9 @@ class HeadAI : public MoonScriptCreatureAI
 			if(pUnit != NULL && TO_CREATURE(pUnit)->GetScript() != NULL)
 			{
 				WarbringerOmroggAI* pAI = TO< WarbringerOmroggAI* >(TO_CREATURE(pUnit)->GetScript());
-				if(pAI->mLeftHead == (CreatureAI*)(this))
+				if(pAI->mLeftHead == (MoonScriptCreatureAI*)(this))
 					pAI->mLeftHead = NULL;
-				if(pAI->mRightHead == (CreatureAI*)(this))
+				if(pAI->mRightHead == (MoonScriptCreatureAI*)(this))
 					pAI->mRightHead = NULL;
 			}
 		}

@@ -37,13 +37,13 @@ class KirithAI : public MoonScriptCreatureAI
 		{
 			if(PieceArmorTimer <= mAIUpdateFrequency)
 			{
-				_unit->CastSpell(GetTarget(TARGET_ATTACKING), 12097, true);
+				_unit->CastSpell(GetBestPlayerTarget(TargetFilter_NotCurrent), 12097, true);
 				PieceArmorTimer = (rand()%8+20)*1000;
 			}else PieceArmorTimer -= mAIUpdateFrequency;
 
 			if(ManaBurnTimer <= mAIUpdateFrequency)
 			{
-				_unit->CastSpell(GetTarget(TARGET_ATTACKING), 12745, true);
+				_unit->CastSpell(GetBestPlayerTarget(TargetFilter_NotCurrent), 12745, true);
 				ManaBurnTimer = (rand()%3+2)*1000;
 			}else ManaBurnTimer -= mAIUpdateFrequency;
 		}

@@ -76,11 +76,11 @@ class VaulOfArchavon : public MoonInstanceScript
 #define	SPELL_CHOCKING_CLOUD	58965
 #define	SPELL_ARCHAVON_BERSERK	47008
 
-class ArchavonAI : public MoonScriptCreatureAI
+class ArchavonAI : public MoonScriptBossAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(ArchavonAI)
-		ArchavonAI(Creature *pCreature) : MoonScriptCreatureAI(pCreature)
+		ArchavonAI(Creature *pCreature) : MoonScriptBossAI(pCreature)
 		{
 			mStompTimer = INVALIDATE_TIMER;
 			SetEnrageInfo(AddSpell(SPELL_ARCHAVON_BERSERK, Target_Self, 0, 0, 0), MINUTE*5*SEC_IN_MS);
@@ -117,11 +117,11 @@ class ArchavonAI : public MoonScriptCreatureAI
 #define SPELL_EMALON_BERSERK	26662
 #define SPELL_OVERCHARGE		64218
 
-class EmalonAI : public MoonScriptCreatureAI
+class EmalonAI : public MoonScriptBossAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(EmalonAI)
-		EmalonAI(Creature *pCreature) : MoonScriptCreatureAI(pCreature)
+		EmalonAI(Creature *pCreature) : MoonScriptBossAI(pCreature)
 		{
 			mInstance = GetInstanceScript();
 			SetEnrageInfo(AddSpell(SPELL_EMALON_BERSERK, Target_Self, 0, 0, 0), MINUTE*6*SEC_IN_MS);

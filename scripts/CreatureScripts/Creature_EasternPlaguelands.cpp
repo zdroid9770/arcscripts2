@@ -29,7 +29,7 @@ class MobsGhoulFlayer : public MoonScriptCreatureAI
 			if(!mKiller->IsPlayer())
 				return;
 
-			SummonCreature(11064, _unit->GetPositionX(), _unit->GetPositionY(), _unit->GetPositionZ(), _unit->GetOrientation(), 60000);
+			SpawnCreature(11064, _unit->GetPositionX(), _unit->GetPositionY(), _unit->GetPositionZ(), _unit->GetOrientation());
 		}
 };
 
@@ -44,7 +44,7 @@ class ArajTheSummoner : public MoonScriptCreatureAI
 			if(!mKiller->IsPlayer())
 				return;
 
-			SummonGameobject(177241, _unit->GetPositionX(), _unit->GetPositionY(), _unit->GetPositionZ(), _unit->GetOrientation(), 60000);
+			_unit->GetMapMgr()->GetInterface()->SpawnGameObject(177241, _unit->GetPositionX(), _unit->GetPositionY(), _unit->GetPositionZ(), _unit->GetOrientation(), true, 0, 0, 1);
 		}
 };
 
@@ -66,7 +66,7 @@ class CursedMageAI : public MoonScriptCreatureAI
 		{
 			if(ArcaneBoltTimer <= mAIUpdateFrequency)
 			{
-				_unit->CastSpell(GetTarget(TARGET_ATTACKING), 20829, true);
+				_unit->CastSpell(_unit->GetAIInterface()->getNextTarget(), 20829, true);
 				ArcaneBoltTimer = (4+rand()%2)*1000;
 			}else ArcaneBoltTimer -= mAIUpdateFrequency;
 		}
@@ -93,7 +93,7 @@ class CarrionDevourerAI : public MoonScriptCreatureAI
 		{
 			if(MaggotGooTimer <= mAIUpdateFrequency)
 			{
-				_unit->CastSpell(GetTarget(TARGET_ATTACKING), 16449, true);
+				_unit->CastSpell(_unit->GetAIInterface()->getNextTarget(), 16449, true);
 				MaggotGooTimer = (8+rand()%5)*1000;
 			}else MaggotGooTimer -= mAIUpdateFrequency;
 		}

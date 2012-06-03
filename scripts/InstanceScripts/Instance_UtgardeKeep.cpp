@@ -296,8 +296,8 @@ class SkarvaldTheConstructorAI : public MoonScriptCreatureAI
 
 	private:
 		int32					mReplyTimer;
-		CreatureAI*	pDalronn;
-		CreatureAI*	pDalronnGhost;
+		MoonScriptCreatureAI*	pDalronn;
+		MoonScriptCreatureAI*	pDalronnGhost;
 };
 
 class DalronnTheControllerAI : public MoonScriptCreatureAI
@@ -370,8 +370,8 @@ class DalronnTheControllerAI : public MoonScriptCreatureAI
 
 	private:
 		int32					mSummonTimer;
-		CreatureAI*	pSkarvald;
-		CreatureAI*	pSkarvaldGhost;
+		MoonScriptCreatureAI*	pSkarvald;
+		MoonScriptCreatureAI*	pSkarvaldGhost;
 };
 
 class SkarvaldTheConstructorGhostAI : public MoonScriptCreatureAI
@@ -425,7 +425,7 @@ class DalronnTheControllerGhostAI : public MoonScriptCreatureAI
 #define DECREPIFY 42702
 #define DECREPIFY_HC 59397
 
-void SpellFunc_KelesethFrostTomb(SpellDesc* pThis, CreatureAI* pCreatureAI, Unit* pTarget, TargetType pType)
+void SpellFunc_KelesethFrostTomb(SpellDesc* pThis, MoonScriptCreatureAI* pCreatureAI, Unit* pTarget, TargetType pType)
 {
 	if(pCreatureAI != NULL)
 	{
@@ -439,7 +439,7 @@ void SpellFunc_KelesethFrostTomb(SpellDesc* pThis, CreatureAI* pCreatureAI, Unit
 };
 
 
-void SpellFunc_KelesethAddSummon(SpellDesc* pThis, CreatureAI* pCreatureAI, Unit* pTarget, TargetType pType)
+void SpellFunc_KelesethAddSummon(SpellDesc* pThis, MoonScriptCreatureAI* pCreatureAI, Unit* pTarget, TargetType pType)
 {
 	if(pCreatureAI != NULL)
 	{
@@ -557,7 +557,7 @@ class SkeletonAddAI : public MoonScriptCreatureAI
 
 #define SHADOW_AXE_SPELL 42751
 
-void SpellFunc_ShadowAxe(SpellDesc* pThis, CreatureAI* pCreatureAI, Unit* pTarget, TargetType pType)
+void SpellFunc_ShadowAxe(SpellDesc* pThis, MoonScriptCreatureAI* pCreatureAI, Unit* pTarget, TargetType pType)
 {
 	if(pCreatureAI != NULL)
 	{
@@ -609,7 +609,7 @@ public:
 			_unit->AddAura(50236);
 	}
 
-	void SpellFunc_SpawnIngvar(SpellDesc* pThis, CreatureAI* pCreatureAI, Unit* pTarget, TargetType pType)
+	void SpellFunc_SpawnIngvar(SpellDesc* pThis, MoonScriptCreatureAI pCreatureAI, Unit* pTarget, TargetType pType)
 	{
 		SpawnCreature(CN_INGVAR_UNDEAD, true);
 	};

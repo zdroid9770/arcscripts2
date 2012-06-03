@@ -393,7 +393,7 @@ class Volkhan : public MoonScriptCreatureAI
 					case 1: Emote("Nothing is wasted in the process. You will see....",	Text_Yell, 13962); break;
 				}
 
-				CreatureAI* pAnvil = GetNearestCreature(CN_VOLKHANS_ANVIL);
+				MoonScriptCreatureAI* pAnvil = GetNearestCreature(CN_VOLKHANS_ANVIL);
 				_unit->CastSpell(pAnvil ? pAnvil->GetUnit() : GetUnit() , SPELL_TEMPER, true);
 
 				SetCanEnterCombat(true);

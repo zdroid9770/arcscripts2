@@ -702,7 +702,7 @@ class FireswornAI : public MoonScriptCreatureAI
 
 		void OnCombatStart(Unit* pTarget)
 		{
-			mGarr = TO< CreatureAI* >(GetNearestCreature(CN_GARR));
+			mGarr = TO< MoonScriptCreatureAI *>(GetNearestCreature(CN_GARR));
 		}
 
 		void OnDied(Unit* pKiller)
@@ -718,7 +718,7 @@ class FireswornAI : public MoonScriptCreatureAI
 
 		SpellDesc*			mEruption;
 		SpellDesc*			mSeparationAnxiety;
-		CreatureAI*	mGarr;
+		MoonScriptCreatureAI*	mGarr;
 };
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -749,7 +749,7 @@ class BaronGeddonAI : public MoonScriptCreatureAI
 #define SHAZZRAH_COUNTERSPELL		19715
 #define SHAZZRAH_BLINK				29883	//dummy spell, need to be coded in core
 
-void SpellFunc_ShazzrahBlinkArcaneExplosions(SpellDesc* pThis, CreatureAI* pCreatureAI, Unit* pTarget, TargetType pType);
+void SpellFunc_ShazzrahBlinkArcaneExplosions(SpellDesc* pThis, MoonScriptCreatureAI* pCreatureAI, Unit* pTarget, TargetType pType);
 
 class ShazzrahAI : public MoonScriptCreatureAI
 {
@@ -770,7 +770,7 @@ class ShazzrahAI : public MoonScriptCreatureAI
 		SpellDesc* mArcaneExplosion;
 };
 
-void SpellFunc_ShazzrahBlinkArcaneExplosions(SpellDesc* pThis, CreatureAI* pCreatureAI, Unit* pTarget, TargetType pType)
+void SpellFunc_ShazzrahBlinkArcaneExplosions(SpellDesc* pThis, MoonScriptCreatureAI* pCreatureAI, Unit* pTarget, TargetType pType)
 {
 	ShazzrahAI* Shazzrah = (pCreatureAI) ? TO< ShazzrahAI* >(pCreatureAI) : NULL;
 	if(Shazzrah)

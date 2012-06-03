@@ -93,7 +93,7 @@ class ShadowswordCommanderAI : public MoonScriptCreatureAI
 #define KALECGOS_SPECTRAL_BLAST		44866
 #define KALECGOS_ARCANE_BUFFET		45018
 
-void SpellFunc_Kalecgos_WildMagic(SpellDesc* pThis, CreatureAI* pCreatureAI, Unit* pTarget, TargetType pType);
+void SpellFunc_Kalecgos_WildMagic(SpellDesc* pThis, MoonScriptCreatureAI pCreatureAI, Unit* pTarget, TargetType pType);
 
 class KalecgosAI : public MoonScriptCreatureAI
 {
@@ -113,7 +113,7 @@ class KalecgosAI : public MoonScriptCreatureAI
 	}
 };
 
-void SpellFunc_Kalecgos_WildMagic(SpellDesc* pThis, CreatureAI* pCreatureAI, Unit* pTarget, TargetType pType)
+void SpellFunc_Kalecgos_WildMagic(SpellDesc* pThis, MoonScriptCreatureAI pCreatureAI, Unit* pTarget, TargetType pType)
 {
 	KalecgosAI* Kalecgos = ( pCreatureAI ) ? (KalecgosAI*)pCreatureAI : NULL;
 	if( Kalecgos )
@@ -160,11 +160,11 @@ class SathrovarrTheCorruptorAI : public MoonScriptCreatureAI
 #define BRUTALLUS_STOMP			45185
 #define BRUTALLUS_BERSERK		26662
 
-class BrutallusAI : public MoonScriptCreatureAI
+class BrutallusAI : public MoonScriptBossAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(BrutallusAI)
-		BrutallusAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
+		BrutallusAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
 		{
 			AddSpell(BRUTALLUS_METEOR_SLASH, Target_Self, 100, 1, 12);
 			AddSpell(BRUTALLUS_BURN, Target_RandomPlayer, 50, 0, 20);
@@ -197,11 +197,11 @@ class BrutallusAI : public MoonScriptCreatureAI
 #define FELMYST_FOG_OF_CORRUPTION	45717
 #define FELMYST_ENRAGE				26662	//Using same as Brutallus for now, need to find actual spell id
 
-class FelmystAI : public MoonScriptCreatureAI
+class FelmystAI : public MoonScriptBossAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(FelmystAI)
-		FelmystAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
+		FelmystAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
 		{
 			//Phase 1 spells
 			AddPhaseSpell(1, AddSpell(FELMYST_CLEAVE, Target_Current, 6, 0, 10, 0, 5));
@@ -243,11 +243,11 @@ class FelmystAI : public MoonScriptCreatureAI
 #define LADY_SACROLASH_CONFOUNDING_BLOW	45256
 #define LADY_SACROLASH_ENRAGE			26662	//Using same as Brutallus for now, need to find actual spell id
 
-class LadySacrolashAI : public MoonScriptCreatureAI
+class LadySacrolashAI : public MoonScriptBossAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(LadySacrolashAI)
-		LadySacrolashAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
+		LadySacrolashAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
 		{
 			AddSpell(LADY_SACROLASH_DARK_TOUCHED, Target_RandomPlayerApplyAura, 50, 0, 10, 0, 50);
 			AddSpell(LADY_SACROLASH_SHADOW_BLADES, Target_Current, 25, 1.5, 5, 0, 50);
@@ -262,7 +262,7 @@ class LadySacrolashAI : public MoonScriptCreatureAI
 
 		void OnDied(Unit* pKiller)
 		{
-			CreatureAI* mGrandWarlockAlythess = GetNearestCreature(CN_GRAND_WARLOCK_ALYTHESS);
+			MoonScriptCreatureAI* mGrandWarlockAlythess = GetNearestCreature(CN_GRAND_WARLOCK_ALYTHESS);
 			if(mGrandWarlockAlythess != NULL && mGrandWarlockAlythess->IsAlive())
 				mGrandWarlockAlythess->Emote("Sacrolash!", Text_Yell, 12492);
 		}
@@ -277,11 +277,11 @@ class LadySacrolashAI : public MoonScriptCreatureAI
 #define GRAND_WARLOCK_ALYTHESS_FLAME_SEAR		46771
 #define GRAND_WARLOCK_ALYTHESS_ENRAGE			26662	//Using same as Brutallus for now, need to find actual spell id
 
-class GrandWarlockAlythessAI : public MoonScriptCreatureAI
+class GrandWarlockAlythessAI : public MoonScriptBossAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(GrandWarlockAlythessAI)
-		GrandWarlockAlythessAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
+		GrandWarlockAlythessAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
 		{
 			AddSpell(GRAND_WARLOCK_ALYTHESS_PYROGENICS, Target_Self, 100, 0, 10, 0, 50);
 			AddSpell(GRAND_WARLOCK_ALYTHESS_FLAME_TOUCHED, Target_RandomPlayerApplyAura, 10, 0, 30, 0, 50);
@@ -297,7 +297,7 @@ class GrandWarlockAlythessAI : public MoonScriptCreatureAI
 
 		void OnDied(Unit* pKiller)
 		{
-			CreatureAI* mLadySacrolash = GetNearestCreature(CN_LADY_SACROLASH);
+			MoonScriptCreatureAI* mLadySacrolash = GetNearestCreature(CN_LADY_SACROLASH);
 			if(mLadySacrolash != NULL && mLadySacrolash->IsAlive())
 				mLadySacrolash->Emote("Alythess! Your fire burns within me!", Text_Yell, 12488);
 		}
