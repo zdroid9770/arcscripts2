@@ -26,11 +26,11 @@
 #define AOE_FEAR 33547
 // Help sound
 
-class AMBASSADORHELLMAWAI : public CreatureAI
+class AMBASSADORHELLMAWAI : public MoonScriptCreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(AMBASSADORHELLMAWAI)
-		AMBASSADORHELLMAWAI(Creature* pCreature) : CreatureAI(pCreature)
+		AMBASSADORHELLMAWAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			AddSpell(CORROSIVE_ACID, Target_Self, 10, 2, 15);
 			AddSpell(AOE_FEAR, Target_Self, 15, 0, 25);
@@ -55,11 +55,11 @@ class AMBASSADORHELLMAWAI : public CreatureAI
 // Help sound? And other (as there were sounds like _BlckHrt02_ (and I used only with 01)
 // Is sound id 10488 for aggro or mind control?
 
-class BLACKHEARTTHEINCITERAI : public CreatureAI
+class BLACKHEARTTHEINCITERAI : public MoonScriptCreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(BLACKHEARTTHEINCITERAI)
-		BLACKHEARTTHEINCITERAI(Creature* pCreature) : CreatureAI(pCreature)
+		BLACKHEARTTHEINCITERAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			AddSpell(CHARGE, Target_RandomPlayer, 10, 0, 15);
 			AddSpell(WAR_STOMP, Target_Self, 10, 0, 20);
@@ -88,11 +88,11 @@ to Vorpil to aggro him. Vorpil will immediately open the Void Rifts
 around him, and Voidwalkers will start spawning, at an increasingly
 faster rate as the battle progresses.*/
 
-class GRANDMASTERVORPILAI : public CreatureAI
+class GRANDMASTERVORPILAI : public MoonScriptCreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(GRANDMASTERVORPILAI)
-		GRANDMASTERVORPILAI(Creature* pCreature) : CreatureAI(pCreature)
+		GRANDMASTERVORPILAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			AddSpell(SHADOW_BOLT_VOLLEY, Target_Self, 15, 0, 10);
 			AddSpell(DRAW_SHADOWS, Target_Self, 8, 0, 25);
@@ -125,11 +125,11 @@ class GRANDMASTERVORPILAI : public CreatureAI
 // Murmur draws energy from the air then use Murmur's Touch (33711), Sonic Boom (33923) and
 // release Sonic Boom (38052); it also shouldn't attack during all those casts;
 
-class MURMURAI : public CreatureAI
+class MURMURAI : public MoonScriptCreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(MURMURAI);
-		MURMURAI(Creature* pCreature) : CreatureAI(pCreature)
+		MURMURAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			_unit->SetHealthPct(40);
 			AddSpell(SONIC_BOOM1, Target_Self, 10, 7, 25, 0, 0, false, NULL, Text_Emote, 0, "Murmur draws energy from the air...");

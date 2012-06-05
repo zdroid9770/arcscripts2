@@ -27,11 +27,11 @@ enum GatewatcherGyroKill{
 	STEAM_OF_MACHINE_FLUID_GKILL	= 35311
 };
 
-class GatewatcherGyroKillAI : public CreatureAI
+class GatewatcherGyroKillAI : public MoonScriptCreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(GatewatcherGyroKillAI)
-		GatewatcherGyroKillAI(Creature* pCreature) : CreatureAI(pCreature)
+		GatewatcherGyroKillAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			SpellDesc * sSawBlade = AddSpell(SAW_BLADE, Target_Current, 13.0f, 0, -1);
 			sSawBlade->AddEmote("Measure twice; cut once.", Text_Yell, 11104);
@@ -56,11 +56,11 @@ enum Gatewatcher_IronHand{
 	SHADOW_POWER_IHAND				= 35322
 };
 
-class GatewatcherIronHandAI : public CreatureAI
+class GatewatcherIronHandAI : public MoonScriptCreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(GatewatcherIronHandAI)
-		GatewatcherIronHandAI(Creature* pCreature) : CreatureAI(pCreature)
+		GatewatcherIronHandAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			SpellDesc * sHammer = AddSpell(JACK_HAMMER, Target_Current, 7, 1.5f, -1);
 			sHammer->AddEmote("With the precise angle and velocity...", Text_Yell, 11112);
@@ -85,11 +85,11 @@ enum MechanoLordCapacitus{
 	REFLECTIVE_MAGIC_SHIELD		= 35158,
 	SEED_OF_CORRUPTION			= 37826
 };
-class MechanoLordCapacitusAI : public CreatureAI
+class MechanoLordCapacitusAI : public MoonScriptCreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(MechanoLordCapacitusAI)
-		MechanoLordCapacitusAI(Creature* pCreature) : CreatureAI(pCreature)
+		MechanoLordCapacitusAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			AddSpell(HEAD_CRACK, Target_Current, 8, 0, -1);
 			AddSpell(REFLECTIVE_DAMAGE_SHIELD, Target_Self, 7, 0, -1, 0, 0, false, "Think you can hurt me, huh? Think I'm afraid a' you?", Text_Yell, 11165);
@@ -112,11 +112,11 @@ class MechanoLordCapacitusAI : public CreatureAI
 #define DRAGONS_BREATH 35250
 //#define KNOCKBACK 37317	// not sure to this one!
 
-class NethermancerSepethreaAI : public CreatureAI
+class NethermancerSepethreaAI : public MoonScriptCreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(NethermancerSepethreaAI)
-		NethermancerSepethreaAI(Creature* pCreature) : CreatureAI(pCreature)
+		NethermancerSepethreaAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			AddSpell(FROST_ATTACK, Target_Current, 9, 0, -1);
 			AddSpell(ARCANE_BLAST, Target_Current, 3, 0, -1);
@@ -150,11 +150,11 @@ class NethermancerSepethreaAI : public CreatureAI
 // hmm... he switches weapons and there is sound for it, but I must know when he does that, how it looks like etc.
 // before adding weapon switching =/	(Sound: 11199; speech: "I prefer to be hands-on...";)
 
-class PathaleonTheCalculatorAI : public CreatureAI
+class PathaleonTheCalculatorAI : public MoonScriptCreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(PathaleonTheCalculatorAI)
-		PathaleonTheCalculatorAI(Creature* pCreature) : CreatureAI(pCreature)
+		PathaleonTheCalculatorAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			SummonTimer = -1;
 			AddSpell(MANA_TRAP, Target_Current, 8, 0, -1);

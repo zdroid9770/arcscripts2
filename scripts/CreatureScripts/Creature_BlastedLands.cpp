@@ -18,11 +18,11 @@
 
 #include "Setup.h"
 
-class KirithAI : public CreatureAI
+class KirithAI : public MoonScriptCreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(KirithAI)
-		KirithAI(Creature* c) : CreatureAI(c)
+		KirithAI(Creature* c) : MoonScriptCreatureAI(c)
 		{
 			PieceArmorTimer = (rand()%3+4)*1000;
 			ManaBurnTimer = (rand()%13+9)*1000;
@@ -37,13 +37,13 @@ class KirithAI : public CreatureAI
 		{
 			if(PieceArmorTimer <= mAIUpdateFrequency)
 			{
-				_unit->CastSpell(GetTarget(TARGET_ATTACKING), 12097, true);
+				_unit->CastSpell(GetBestPlayerTarget(TargetFilter_NotCurrent), 12097, true);
 				PieceArmorTimer = (rand()%8+20)*1000;
 			}else PieceArmorTimer -= mAIUpdateFrequency;
 
 			if(ManaBurnTimer <= mAIUpdateFrequency)
 			{
-				_unit->CastSpell(GetTarget(TARGET_ATTACKING), 12745, true);
+				_unit->CastSpell(GetBestPlayerTarget(TargetFilter_NotCurrent), 12745, true);
 				ManaBurnTimer = (rand()%3+2)*1000;
 			}else ManaBurnTimer -= mAIUpdateFrequency;
 		}

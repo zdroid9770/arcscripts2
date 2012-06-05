@@ -20,11 +20,11 @@
 
 // Druid of the Fang AI by Soulshifter
 #define CN_DRUID_FANG				3840
-class DruidFangAI : public CreatureAI
+class DruidFangAI : public MoonScriptCreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(DruidFangAI)
-		DruidFangAI(Creature* pCreature) : CreatureAI(pCreature)
+		DruidFangAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			SerpentForm = AddSpell(8041, Target_Self, 0, 0, 0);
 			HealingTouch = AddSpell(5187, Target_Self, 0, 2.5, 0);
@@ -70,11 +70,11 @@ class DruidFangAI : public CreatureAI
 #define SPELL_LIGHTNING_BOLT      	915
 #define SPELL_SLEEP			     	1090
 
-class LadyAnacondraAI : public CreatureAI
+class LadyAnacondraAI : public MoonScriptCreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(LadyAnacondraAI)
-		LadyAnacondraAI(Creature* pCreature) : CreatureAI(pCreature)
+		LadyAnacondraAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			AddEmote(Event_OnCombatStart, "None can stand against the Serpent Lords!", Text_Yell, 5786);
 			AddSpell(9532, Target_Current, 30, 3, 0);					// Lightning Bolt
@@ -88,11 +88,11 @@ class LadyAnacondraAI : public CreatureAI
 #define SPELL_POISON		     	34969
 #define SPELL_SERPENTFORM			7965
 
-class LordCobrahnAI : public CreatureAI
+class LordCobrahnAI : public MoonScriptCreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(LordCobrahnAI)
-		LordCobrahnAI(Creature* pCreature) : CreatureAI(pCreature)
+		LordCobrahnAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			AddEmote(Event_OnCombatStart, "You will never wake the dreamer!", Text_Yell, 5785);
 			LightningBolt = AddSpell(9532, Target_Current, 30, 3, 0);
@@ -120,11 +120,11 @@ class LordCobrahnAI : public CreatureAI
 
 // Lord Pythas AI by Soulshifter
 #define CN_LORD_PYTHAS				3670
-class LordPythasAI : public CreatureAI
+class LordPythasAI : public MoonScriptCreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(LordPythasAI)
-		LordPythasAI(Creature* pCreature) : CreatureAI(pCreature)
+		LordPythasAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			AddEmote(Event_OnCombatStart, "The coils of death... Will crush you!", Text_Yell, 5787);
 			AddSpell(9532, Target_Current, 30.0f, 3, 0);		// Lightning Bolt
@@ -136,11 +136,11 @@ class LordPythasAI : public CreatureAI
 // Lord Serpentis AI by Soulshifter
 
 #define CN_LORD_SERPENTIS			3673
-class LordSerpentisAI : public CreatureAI
+class LordSerpentisAI : public MoonScriptCreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(LordSerpentisAI)
-		LordSerpentisAI(Creature* pCreature) : CreatureAI(pCreature)
+		LordSerpentisAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			AddEmote(Event_OnCombatStart, "I am the serpent king, i can do anything!", Text_Yell, 5788);
 			AddSpell(9532, Target_Current, 30.0f, 3, 0);		// Lightning Bolt
@@ -150,11 +150,11 @@ class LordSerpentisAI : public CreatureAI
 
 // Skum AI by Soulshifter
 #define CN_SKUM						3674
-class SkumAI : public CreatureAI
+class SkumAI : public MoonScriptCreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(SkumAI)
-		SkumAI(Creature* pCreature) : CreatureAI(pCreature)
+		SkumAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			AddSpell(6254, Target_Current, 50.0f, 1.8f, 0);	// Chained Bolt
 		}
@@ -291,11 +291,11 @@ static Location Ectoplasm[]=
 #define CN_MUTANUS				3654
 
 // Disciple of Naralex AI by Soulshifter
-class DofNaralexAI : public CreatureAI
+class DofNaralexAI : public MoonScriptBossAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(DofNaralexAI)
-		DofNaralexAI(Creature* pCreature) : CreatureAI(pCreature)
+		DofNaralexAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
 		{
 			// --- Initialization ---
 			for(uint8 i = 0; i < 38; i++)
@@ -353,7 +353,7 @@ class DofNaralexAI : public CreatureAI
 
 			if(GetPhase() == 5 && (!Mutanus || !Mutanus->GetUnit()->isAlive()))
 			{
-				CreatureAI* Naralex = GetNearestCreature(3679);
+				MoonScriptCreatureAI *Naralex = GetNearestCreature(3679);
 				if(Naralex && Naralex->IsAlive())
 				{
 					SetDisplayId(17089);
@@ -372,15 +372,15 @@ class DofNaralexAI : public CreatureAI
 	protected:
 		int32 SpawnTimer;
 		SpellDesc* Awakening;
-		CreatureAI* Mutanus;
+		MoonScriptCreatureAI* Mutanus;
 };
 
 // Naralex State
-class Naralex : public CreatureAI
+class Naralex : public MoonScriptCreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(Naralex)
-		Naralex(Creature* pCreature) : CreatureAI(pCreature)
+		Naralex(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			_unit->SetUInt32Value(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
 			_unit->SetStandState(STANDSTATE_SLEEP);

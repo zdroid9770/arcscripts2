@@ -18,41 +18,41 @@
 
 #include "Setup.h"
 
-class MobsGhoulFlayer : public CreatureAI
+class MobsGhoulFlayer : public MoonScriptCreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(MobsGhoulFlayer);
-		MobsGhoulFlayer(Creature* c) : CreatureAI(c){}
+		MobsGhoulFlayer(Creature* c) : MoonScriptCreatureAI(c){}
 
 		void OnDied(Unit *mKiller)
 		{
 			if(!mKiller->IsPlayer())
 				return;
 
-			SummonCreature(11064, _unit->GetPositionX(), _unit->GetPositionY(), _unit->GetPositionZ(), _unit->GetOrientation(), 60000);
+			SpawnCreature(11064, _unit->GetPositionX(), _unit->GetPositionY(), _unit->GetPositionZ(), _unit->GetOrientation());
 		}
 };
 
-class ArajTheSummoner : public CreatureAI
+class ArajTheSummoner : public MoonScriptCreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(ArajTheSummoner);
-		ArajTheSummoner(Creature* c) : CreatureAI(c){}
+		ArajTheSummoner(Creature* c) : MoonScriptCreatureAI(c){}
 
 		void OnDied(Unit* mKiller)
 		{
 			if(!mKiller->IsPlayer())
 				return;
 
-			SummonGameobject(177241, _unit->GetPositionX(), _unit->GetPositionY(), _unit->GetPositionZ(), _unit->GetOrientation(), 60000);
+			_unit->GetMapMgr()->GetInterface()->SpawnGameObject(177241, _unit->GetPositionX(), _unit->GetPositionY(), _unit->GetPositionZ(), _unit->GetOrientation(), true, 0, 0, 1);
 		}
 };
 
-class CursedMageAI : public CreatureAI
+class CursedMageAI : public MoonScriptCreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(CursedMageAI);
-		CursedMageAI(Creature* pCreature) : CreatureAI(pCreature)
+		CursedMageAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			ArcaneBoltTimer = (4+rand()%2)*1000;
 		}
@@ -66,7 +66,7 @@ class CursedMageAI : public CreatureAI
 		{
 			if(ArcaneBoltTimer <= mAIUpdateFrequency)
 			{
-				_unit->CastSpell(GetTarget(TARGET_ATTACKING), 20829, true);
+				_unit->CastSpell(_unit->GetAIInterface()->getNextTarget(), 20829, true);
 				ArcaneBoltTimer = (4+rand()%2)*1000;
 			}else ArcaneBoltTimer -= mAIUpdateFrequency;
 		}
@@ -75,11 +75,11 @@ class CursedMageAI : public CreatureAI
 		uint32 ArcaneBoltTimer;
 };
 
-class CarrionDevourerAI : public CreatureAI
+class CarrionDevourerAI : public MoonScriptCreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(CarrionDevourerAI);
-		CarrionDevourerAI(Creature* pCreature) : CreatureAI(pCreature)
+		CarrionDevourerAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			MaggotGooTimer = (4+rand()%4)*1000;
 		}
@@ -93,7 +93,7 @@ class CarrionDevourerAI : public CreatureAI
 		{
 			if(MaggotGooTimer <= mAIUpdateFrequency)
 			{
-				_unit->CastSpell(GetTarget(TARGET_ATTACKING), 16449, true);
+				_unit->CastSpell(_unit->GetAIInterface()->getNextTarget(), 16449, true);
 				MaggotGooTimer = (8+rand()%5)*1000;
 			}else MaggotGooTimer -= mAIUpdateFrequency;
 		}

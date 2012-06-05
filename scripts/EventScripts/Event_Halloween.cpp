@@ -25,11 +25,11 @@ Team  : Sun++
 */
 
 //Black Cat
-class BlackCat : public CreatureAI
+class BlackCat : public MoonScriptCreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(BlackCat)
-		BlackCat(Creature* pCreature) : CreatureAI(pCreature) {}
+		BlackCat(Creature* pCreature) : MoonScriptCreatureAI(pCreature) {}
 
 		void OnDied(Unit* pKiller)
 		{
@@ -86,17 +86,17 @@ static Location WaypointGoldshire[] =
  * I guess this is the target of the water spells
  * Need to check all visual auras for these http://www.wowhead.com/?search=horseman#uncategorized-spells
  */
-class ShadeOfTheHorsemanAI : public CreatureAI
+class ShadeOfTheHorsemanAI : public MoonScriptCreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(ShadeOfTheHorsemanAI)
-		ShadeOfTheHorsemanAI(Creature* pCreature) : CreatureAI(pCreature)
+		ShadeOfTheHorsemanAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			_unit->GetAIInterface()->SetAllowedToEnterCombat(false);
 			_unit->SetMount(22653);
 
 			//Emotes
-			Emote(_unit, "Prepare yourselves, the bells have tolled! Shelter your weak, your young, and your old! Each of you shall pay the final sum. Cry for mercy, the reckoning has come!", Text_Yell, 11966);	//On Spawn?
+			Emote("Prepare yourselves, the bells have tolled! Shelter your weak, your young, and your old! Each of you shall pay the final sum. Cry for mercy, the reckoning has come!", Text_Yell, 11966);	//On Spawn?
 
 			for(uint32 i=0; i<WPCount; ++i)
 			{
@@ -125,11 +125,11 @@ class ShadeOfTheHorsemanAI : public CreatureAI
 				_unit->GetAIInterface()->setMoveType(MOVEMENTTYPE_DONTMOVEWP);
 				if(_unit->GetMapMgr()->GetInterface()->GetCreatureNearestCoords(_unit->GetPositionX(), _unit->GetPositionY(), _unit->GetPositionZ(), CN_HEADLESS_HORSEMAN_FIRE))     // CASE players win
 				{
-					Emote(_unit, "My flames have died, left not a spark! I shall send you now to the lifeless dark!", Text_Yell, 11968);
+					Emote( "My flames have died, left not a spark! I shall send you now to the lifeless dark!", Text_Yell, 11968);
 					_unit->Despawn(30000, 0); //Despawn after 30 secs
 				}else // CASE players lost
 				{
-					Emote(_unit, "Fire consumes! You've tried and failed. Let there be no doubt, justice prevailed!", Text_Yell, 11967);
+					Emote("Fire consumes! You've tried and failed. Let there be no doubt, justice prevailed!", Text_Yell, 11967);
 					_unit->Despawn(12000, 0); //Despawn after 12 secs
 				}
 			}else if(_unit->GetMapMgr()->GetAreaID(_unit->GetPositionX(), _unit->GetPositionY()) == 87)
@@ -141,9 +141,9 @@ class ShadeOfTheHorsemanAI : public CreatureAI
 
 		void OnDied(Unit* pKiller)
 		{
-			Emote(_unit, "So eager you are, for my blood to spill. Yet to vanquish me, 'tis my head you must kill!", Text_Yell, 11969);
+			Emote("So eager you are, for my blood to spill. Yet to vanquish me, 'tis my head you must kill!", Text_Yell, 11969);
 			
-			if(GameObject* Pumpkin = SummonGameobject(_unit, 2883, _unit->GetPositionX() + RandomFloat(5.0f), _unit->GetPositionY() + RandomFloat(5.0f), _unit->GetPositionZ(), _unit->GetOrientation(), 180000))
+			if(GameObject* Pumpkin = _unit->GetMapMgr()->GetInterface()->SpawnGameObject(2883, _unit->GetPositionX() + RandomFloat(5.0f), _unit->GetPositionY() + RandomFloat(5.0f), _unit->GetPositionZ(), _unit->GetOrientation(), true, 0, 0, 1))
 				_unit->CastSpell(Pumpkin->GetGUID(), dbcSpell.LookupEntry(42277), true);
 		}
 };
@@ -151,11 +151,11 @@ class ShadeOfTheHorsemanAI : public CreatureAI
 // Headless Horseman - Wisp Invis
 #define CN_HEADLESS_HORSEMAN_WISP_INVIS				24034//						42394
 
-class HeadlessHorsemanWispInvisAI : public CreatureAI
+class HeadlessHorsemanWispInvisAI : public MoonScriptCreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(HeadlessHorsemanWispInvisAI)
-		HeadlessHorsemanWispInvisAI(Creature* pCreature) : CreatureAI(pCreature) {}
+		HeadlessHorsemanWispInvisAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature) {}
 
 		void AIUpdate()
 		{
@@ -167,7 +167,7 @@ class HeadlessHorsemanWispInvisAI : public CreatureAI
 			{
 				if(_unit->GetMapMgr()->GetInterface()->GetCreatureNearestCoords(_unit->GetPositionX(), _unit->GetPositionY(), _unit->GetPositionZ(), CN_SHADE_OF_THE_HORSEMAN))
 				{
-					SummonCreature(_unit, CN_SHADE_OF_THE_HORSEMAN, _unit->GetPositionX(), _unit->GetPositionY(), _unit->GetPositionZ(), _unit->GetOrientation(), 180000);
+					SpawnCreature(CN_SHADE_OF_THE_HORSEMAN, _unit->GetPositionX(), _unit->GetPositionY(), _unit->GetPositionZ(), _unit->GetOrientation());
 					ModifyAIUpdateEvent(4 * 60 * 1000);
 				}
 			}

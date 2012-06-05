@@ -53,11 +53,11 @@ enum NexusEncounterList
 #define CHAOTIC_RIFT_AURA		47687
 #define SUMMON_MANA_WRAITH		47692
 
-class AnomalusAI : public CreatureAI
+class AnomalusAI : public MoonScriptCreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(AnomalusAI)
-		AnomalusAI(Creature* pCreature) : CreatureAI(pCreature)
+		AnomalusAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			AddEmote(Event_OnDied, "Of course.", Text_Yell, 13187);
 			AddEmote(Event_OnCombatStart, "Chaos beckons.", Text_Yell, 13186);
@@ -146,11 +146,11 @@ class AnomalusAI : public CreatureAI
 		MoonInstanceScript*		mInstance;
 };
 
-class ChaoticRiftAI : public CreatureAI
+class ChaoticRiftAI : public MoonScriptCreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(ChaoticRiftAI)
-		ChaoticRiftAI(Creature* pCreature) : CreatureAI(pCreature)
+		ChaoticRiftAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			SetCanEnterCombat(false);
 			AddSpell(SUMMON_MANA_WRAITH, Target_Self, 30, 0, dbcSpell.LookupEntryForced(SUMMON_MANA_WRAITH)->RecoveryTime);
@@ -174,11 +174,11 @@ class ChaoticRiftAI : public CreatureAI
 		}
 };
 
-class CraziedManaWrathAI : public CreatureAI
+class CraziedManaWrathAI : public MoonScriptCreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(CraziedManaWrathAI)
-		CraziedManaWrathAI(Creature* pCreature) : CreatureAI(pCreature) {};
+		CraziedManaWrathAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature) {};
 
 		void OnCombatStop(Unit* pTarget)
 		{
@@ -225,11 +225,11 @@ static Location FormSpawns[] =
 #define BLIZZARD 47727
 #define ICE_BARB 47729
 
-class TelestraBossAI : public CreatureAI
+class TelestraBossAI : public MoonScriptBossAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(TelestraBossAI)
-		TelestraBossAI(Creature* pCreature) : CreatureAI(pCreature)
+		TelestraBossAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
 		{
 			mInstance = GetInstanceScript();
 			AddSpell(ICE_NOVA, Target_Self, 25.0f, 2.0, 15);
@@ -334,11 +334,11 @@ class TelestraBossAI : public CreatureAI
 		MoonInstanceScript* mInstance;
 };
 
-class TelestraFireAI : public CreatureAI
+class TelestraFireAI : public MoonScriptCreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(TelestraFireAI)
-		TelestraFireAI(Creature* pCreature) : CreatureAI(pCreature)
+		TelestraFireAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			AddSpell(FIRE_BLAST, Target_RandomPlayer, 30.0f, 0, 14);
 			AddSpell(SCORCH, Target_Current, 100.0f, 1, 3);
@@ -350,11 +350,11 @@ class TelestraFireAI : public CreatureAI
 		}
 };
 
-class TelestraFrostAI : public CreatureAI
+class TelestraFrostAI : public MoonScriptCreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(TelestraFrostAI)
-		TelestraFrostAI(Creature* pCreature) : CreatureAI(pCreature)
+		TelestraFrostAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			AddSpell(BLIZZARD, Target_RandomPlayerDestination, 20.0f, 0, 20);
 			AddSpell(ICE_BARB, Target_RandomPlayer, 25.0f, 0.5, 6);
@@ -366,11 +366,11 @@ class TelestraFrostAI : public CreatureAI
 		}
 };
 
-class TelestraArcaneAI : public CreatureAI
+class TelestraArcaneAI : public MoonScriptCreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(TelestraArcaneAI)
-		TelestraArcaneAI(Creature* pCreature) : CreatureAI(pCreature)
+		TelestraArcaneAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			AddSpell(TIME_STOP, Target_Self, 30.0f, 1.5, 30);
 			AddSpell(CRITTER, Target_RandomPlayer, 25.0f, 0, 20);
@@ -401,11 +401,11 @@ class TelestraArcaneAI : public CreatureAI
 #define SPELL_CRYSTAL_SPIKE_VISUAL	50442
 #define SPELL_CRYSTAL_SPIKE			47944
 
-class OrmorokAI : public CreatureAI
+class OrmorokAI : public MoonScriptCreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(OrmorokAI)
-		OrmorokAI(Creature* pCreature) : CreatureAI(pCreature)
+		OrmorokAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			AddEmote(Event_OnCombatStart, "Noo!", Text_Yell, 13328);
 			AddEmote(Event_OnDied, "Aaggh!", Text_Yell, 13330);
@@ -445,11 +445,11 @@ class OrmorokAI : public CreatureAI
 		MoonInstanceScript* mInstance;
 };
 
-class CrystalSpikeAI : public CreatureAI
+class CrystalSpikeAI : public MoonScriptCreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(CrystalSpikeAI)
-		CrystalSpikeAI(Creature* pCreature) : CreatureAI(pCreature) {};
+		CrystalSpikeAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature) {};
 
 		void OnLoad()
 		{
@@ -489,11 +489,11 @@ class CrystalSpikeAI : public CreatureAI
 // normal mode
 #define CRYSTALFIRE_BREATH			48096
 
-class KeristraszaAI : public CreatureAI
+class KeristraszaAI : public MoonScriptCreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(KeristraszaAI)
-		KeristraszaAI(Creature* pCreature) : CreatureAI(pCreature)
+		KeristraszaAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			AddEmote(Event_OnCombatStart, "Preserve? Why? There's no truth in it. No no no... only in the taking! I see that now!", Text_Yell, 13450);
 			AddEmote(Event_OnTargetDied, "Now we've come to the truth!", Text_Yell, 13453);

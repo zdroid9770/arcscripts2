@@ -18,11 +18,11 @@
 
 #include "Setup.h"
 
-class QuetzLunGate : public CreatureAI
+class QuetzLunGate : public MoonScriptCreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(QuetzLunGate)
-		QuetzLunGate(Creature* pCreature) : CreatureAI(pCreature){};
+		QuetzLunGate(Creature* pCreature) : MoonScriptCreatureAI(pCreature){};
 
 		void OnLoad()
 		{
@@ -55,11 +55,11 @@ class QuetzLunGate : public CreatureAI
 		}
 };
 
-class QuetzLunWorshipper : public CreatureAI
+class QuetzLunWorshipper : public MoonScriptCreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(QuetzLunWorshipper)
-		QuetzLunWorshipper(Creature* pCreature) : CreatureAI(pCreature){};
+		QuetzLunWorshipper(Creature* pCreature) : MoonScriptCreatureAI(pCreature){};
 
 		void OnDeath(Unit * killer)
 		{
@@ -83,11 +83,11 @@ class QuetzLunWorshipper : public CreatureAI
 		}
 };
 
-class TheLeaders : public CreatureAI
+class TheLeaders : public MoonScriptCreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(TheLeaders)
-		TheLeaders(Creature* pCreature) : CreatureAI(pCreature){};
+		TheLeaders(Creature* pCreature) : MoonScriptCreatureAI(pCreature){};
 
 		void OnDied(Unit * killer)
 		{
@@ -136,11 +136,11 @@ class TheLeaders : public CreatureAI
 		}
 };
 
-class LeadersSpawnChest : public CreatureAI
+class LeadersSpawnChest : public MoonScriptCreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(LeadersSpawnChest)
-		LeadersSpawnChest(Creature* pCreature) : CreatureAI(pCreature){};
+		LeadersSpawnChest(Creature* pCreature) : MoonScriptCreatureAI(pCreature){};
 
 		void OnDied(Unit * killer)
 		{
@@ -204,11 +204,11 @@ public:
 	}
 };
 
-class BloodroseQuestAI : public CreatureAI
+class BloodroseQuestAI : public MoonScriptCreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(BloodroseQuestAI)
-		BloodroseQuestAI(Creature* pCreature) : CreatureAI(pCreature)
+		BloodroseQuestAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			phase = 1;
 		}
@@ -298,11 +298,11 @@ class BloodroseQuestAI : public CreatureAI
 		int32 timer;
 };
 
-class DecaingGhoulQuestAI : public CreatureAI
+class DecaingGhoulQuestAI : public MoonScriptCreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(DecaingGhoulQuestAI)
-		DecaingGhoulQuestAI(Creature* pCreature) : CreatureAI(pCreature)
+		DecaingGhoulQuestAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			running = false;
 		}
@@ -440,11 +440,11 @@ bool SummonStefan(uint32 i, Spell * pSpell)
 	return true;
 };
 
-class StefanVaduQuestAI : public CreatureAI
+class StefanVaduQuestAI : public MoonScriptCreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(StefanVaduQuestAI)
-		StefanVaduQuestAI(Creature* pCreature) : CreatureAI(pCreature){};
+		StefanVaduQuestAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature){};
 
 		void OnLoad()
 		{
@@ -494,11 +494,11 @@ class HebJinDrum : public GameObjectAIScript
 		}
 };
 
-class HebJinAI : public CreatureAI
+class HebJinAI : public MoonScriptCreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(HebJinAI)
-		HebJinAI(Creature* pCreature) : CreatureAI(pCreature)
+		HebJinAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			phase = 1;
 
@@ -541,7 +541,7 @@ class HebJinAI : public CreatureAI
 				_unit->SetMount(0);
 				SetFlyMode(false);
 				Emote("Now you gonna die!", Text_Yell, 0);
-				if(CreatureAI* pSummon = SpawnCreature(28639, _unit->GetPositionX()-3.0f, _unit->GetPositionY()-3.0f, 364.82f, 2.47f))
+				if(MoonScriptCreatureAI* pSummon = SpawnCreature(28639, _unit->GetPositionX()-3.0f, _unit->GetPositionY()-3.0f, 364.82f, 2.47f))
 					pSummon->Despawn(MINUTE*6*SEC_IN_MS);
 				AggroNearestPlayer();
 			}

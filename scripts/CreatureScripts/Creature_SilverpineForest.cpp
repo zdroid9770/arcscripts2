@@ -18,15 +18,15 @@
 
 #include "Setup.h"
 
-class CorruptMinorManifestationWater : public CreatureAI
+class CorruptMinorManifestationWater : public MoonScriptCreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(CorruptMinorManifestationWater)
-		CorruptMinorManifestationWater(Creature *pCreature) : CreatureAI(pCreature) {}
+		CorruptMinorManifestationWater(Creature *pCreature) : MoonScriptCreatureAI(pCreature) {}
 
 		void OnDied(Unit *mKiller)
 		{
-			SummonCreature(_unit, 5895, _unit->GetPositionX()+2, _unit->GetPositionY()+2, _unit->GetPositionZ(), _unit->GetOrientation(), 180000);
+			SpawnCreature(5895, _unit->GetPositionX()+2, _unit->GetPositionY()+2, _unit->GetPositionZ(), _unit->GetOrientation());
 		}
 };
 

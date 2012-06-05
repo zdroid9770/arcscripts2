@@ -28,11 +28,11 @@
 #define	OVERPOWER		32154
 #define RETALIATION		22857
 
-class WatchkeeperGargolmarAI : public CreatureAI
+class WatchkeeperGargolmarAI : public MoonScriptCreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(WatchkeeperGargolmarAI)
-		WatchkeeperGargolmarAI(Creature* pCreature) : CreatureAI(pCreature)
+		WatchkeeperGargolmarAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			AddSpell(SURGE, Target_RandomUnit, 20.0f, 0, 15, 5, 40, false, "Back off, pup!", Text_Yell, 10330);
 			AddSpell(OVERPOWER, Target_Current, 10.0f, 0, 5);
@@ -81,11 +81,11 @@ class WatchkeeperGargolmarAI : public CreatureAI
 #define OMOR_THE_UNSCARRED_TREACHEROUS_AURA			30695
 #define OMOR_THE_UNSCARRED_BANE_OF_TREACHERY		37566
 
-class OmorTheUnscarredAI : public CreatureAI
+class OmorTheUnscarredAI : public MoonScriptCreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(OmorTheUnscarredAI)
-		OmorTheUnscarredAI(Creature* pCreature) : CreatureAI(pCreature)
+		OmorTheUnscarredAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			AddEmote(Event_OnCombatStart, "I will not be defeated!", Text_Yell, 10279);
 			AddEmote(Event_OnCombatStart, "You dare challenge me?!", Text_Yell, 10280);	// corrections

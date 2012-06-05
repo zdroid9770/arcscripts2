@@ -18,81 +18,81 @@
 
 #include "Setup.h"
 
-class GryponMasters : public CreatureAI
+class GryponMasters : public MoonScriptCreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(GryponMasters)
-		GryponMasters(Creature *pCreature) : CreatureAI(pCreature) {}
+		GryponMasters(Creature *pCreature) : MoonScriptCreatureAI(pCreature) {}
 
 		void OnCombatStart(Unit *mTarget)
 		{
 			for(int i = 0; i < 2; ++i)
-				SummonCreature(_unit, 9526, _unit->GetPositionX()+RandomFloat(2.0f), _unit->GetPositionY()+RandomFloat(2.0f), _unit->GetPositionZ(), _unit->GetOrientation(), 180000);
+				SpawnCreature(9526, _unit->GetPositionX()+RandomFloat(2.0f), _unit->GetPositionY()+RandomFloat(2.0f), _unit->GetPositionZ(), _unit->GetOrientation());
 		}
 };
 
-class HippogryphMasters : public CreatureAI
+class HippogryphMasters : public MoonScriptCreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(HippogryphMasters)
-		HippogryphMasters(Creature *pCreature) : CreatureAI(pCreature) {}
+		HippogryphMasters(Creature *pCreature) : MoonScriptCreatureAI(pCreature) {}
 
 		void OnCombatStart(Unit *mTarget)
 		{
 			for(int i = 0; i < 2; ++i)
-				SummonCreature(_unit, 9527, _unit->GetPositionX()+RandomFloat(2.0f), _unit->GetPositionY()+RandomFloat(2.0f), _unit->GetPositionZ(), _unit->GetOrientation(), 180000);
+				SpawnCreature(9527, _unit->GetPositionX()+RandomFloat(2.0f), _unit->GetPositionY()+RandomFloat(2.0f), _unit->GetPositionZ(), _unit->GetOrientation());
 		}
 };
 
-class WyvernMasters : public CreatureAI
+class WyvernMasters : public MoonScriptCreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(WyvernMasters)
-		WyvernMasters(Creature *pCreature) : CreatureAI(pCreature) {}
+		WyvernMasters(Creature *pCreature) : MoonScriptCreatureAI(pCreature) {}
 
 		void OnCombatStart(Unit *mTarget)
 		{
 			for(int i = 0; i < 2; ++i)
-				SummonCreature(_unit, 9527, _unit->GetPositionX()+RandomFloat(2.0f), _unit->GetPositionY()+RandomFloat(2.0f), _unit->GetPositionZ(), _unit->GetOrientation(), 180000);
+				SpawnCreature(9527, _unit->GetPositionX()+RandomFloat(2.0f), _unit->GetPositionY()+RandomFloat(2.0f), _unit->GetPositionZ(), _unit->GetOrientation());
 		}
 };
 
-class BatMasters : public CreatureAI
+class BatMasters : public MoonScriptCreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(BatMasters)
-		BatMasters(Creature *pCreature) : CreatureAI(pCreature) {}
+		BatMasters(Creature *pCreature) : MoonScriptCreatureAI(pCreature) {}
 
 		void OnCombatStart(Unit *mTarget)
 		{
 			for(int i = 0; i < 2; ++i)
-				SummonCreature(_unit, 9521, _unit->GetPositionX()+RandomFloat(2.0f), _unit->GetPositionY()+RandomFloat(2.0f), _unit->GetPositionZ(), _unit->GetOrientation(), 180000);
+				SpawnCreature(9521, _unit->GetPositionX()+RandomFloat(2.0f), _unit->GetPositionY()+RandomFloat(2.0f), _unit->GetPositionZ(), _unit->GetOrientation());
 		}
 };
 
-class DragonhawkMasters : public CreatureAI
+class DragonhawkMasters : public MoonScriptCreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(DragonhawkMasters)
-		DragonhawkMasters(Creature *pCreature) : CreatureAI(pCreature) {}
+		DragonhawkMasters(Creature *pCreature) : MoonScriptCreatureAI(pCreature) {}
 
 		void OnCombatStart(Unit *mTarget)
 		{
 			for(int i = 0; i < 2; ++i)
-				SummonCreature(27946, _unit->GetPositionX()+RandomFloat(2.0f), _unit->GetPositionY()+RandomFloat(2.0f), _unit->GetPositionZ(), _unit->GetOrientation(), 180000);
+				SpawnCreature(27946, _unit->GetPositionX()+RandomFloat(2.0f), _unit->GetPositionY()+RandomFloat(2.0f), _unit->GetPositionZ(), _unit->GetOrientation());
 		}
 };
 
-class NeutralMasters : public CreatureAI
+class NeutralMasters : public MoonScriptCreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(NeutralMasters)
-		NeutralMasters(Creature *pCreature) : CreatureAI(pCreature) {}
+		NeutralMasters(Creature *pCreature) : MoonScriptCreatureAI(pCreature) {}
 
 		void OnCombatStart(Unit *mTarget)
 		{
 			for(int i = 0; i < 2; ++i)
-				SummonCreature(_unit, 9526+i, _unit->GetPositionX()+RandomFloat(2.0f), _unit->GetPositionY()+RandomFloat(2.0f), _unit->GetPositionZ(), _unit->GetOrientation(), 180000);
+				SpawnCreature(9526+i, _unit->GetPositionX()+RandomFloat(2.0f), _unit->GetPositionY()+RandomFloat(2.0f), _unit->GetPositionZ(), _unit->GetOrientation());
 		}
 };
 

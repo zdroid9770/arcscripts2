@@ -18,11 +18,11 @@
 
 #include "Setup.h"
 
-class Aeranas : public CreatureAI
+class Aeranas : public MoonScriptCreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(Aeranas)
-		Aeranas(Creature * pCreature) : CreatureAI(pCreature)
+		Aeranas(Creature * pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			//AddSpell(15535, Target_Current, 30.0f, 2.0f, 20);
 			//AddSpell(12553, Target_Current, 50.0f, 0, 10);
@@ -31,7 +31,7 @@ class Aeranas : public CreatureAI
 
 		void OnLoad()
 		{
-			Emote(_unit, "Avruu's magic... it still controls me. You must fight me, mortal. It's the only way to break the spell!", Text_Yell, 0);
+			Emote("Avruu's magic... it still controls me. You must fight me, mortal. It's the only way to break the spell!", Text_Yell, 0);
 		}
 
 		void OnCombatStop(Unit * mTarget)
@@ -43,13 +43,13 @@ class Aeranas : public CreatureAI
 		{
 			if(EnvelopingWindsTimer <= mAIUpdateFrequency)
 			{
-				_unit->CastSpell(GetTarget(TARGET_ATTACKING), 12745, true);
+				_unit->CastSpell(_unit->GetAIInterface()->getNextTarget(), 12745, true);
 				EnvelopingWindsTimer = (12+rand()%5)*1000;
 			}else EnvelopingWindsTimer -= mAIUpdateFrequency;
 
 			if(_unit->GetHealthPct() <= 30)
 			{
-				Emote(_unit, "Avruu's magic is broken! I'm free once again!", Text_Say, 0);
+				Emote("Avruu's magic is broken! I'm free once again!", Text_Say, 0);
 				_unit->WipeHateList();
 				_unit->SetFaction(35);
 			}

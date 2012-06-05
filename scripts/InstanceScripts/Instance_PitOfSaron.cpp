@@ -44,15 +44,15 @@ enum GarfrostData{
 
 static Location JumpCords[]=
 {
-	{639.075f, -208.774f, 528.931f},
-	{725.325f, -236.978f, 528.848f},
+	{639.075f, -208.774f, 528.931f, 0.0f},
+	{725.325f, -236.978f, 528.848f, 0.0f},
 };
 
-class GarfrostAI : public CreatureAI
+class GarfrostAI : public MoonScriptBossAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(GarfrostAI)
-		GarfrostAI(Creature* pCreature) : CreatureAI(pCreature)
+		GarfrostAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
 		{
 			AddSpell(SPELL_THROWSARONITE, Target_RandomPlayerDestination, 20, 2, 15);
 			AddPhaseSpell(2, AddSpell(SPELL_CHILLINGWAVE, Target_Current, 25, 0, 14));
@@ -98,11 +98,11 @@ enum TyrannusData{
 	SPELL_UNHOLYPOWER	= 69167,
 };
 
-class TyrannusAI : public CreatureAI
+class TyrannusAI : public MoonScriptCreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(TyrannusAI)
-		TyrannusAI(Creature* pCreature) : CreatureAI(pCreature)
+		TyrannusAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			AddSpell(SPELL_FORCESMASH, Target_Current, 55, 0, 13);
 			AddSpell(SPELL_BRAND, Target_RandomPlayerNotCurrent, 45, 0, 15);

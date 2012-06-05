@@ -96,11 +96,11 @@ const WPWaitTimes DeathbringerJovaanWP[] =
 	{ { -3310.743896f, 2951.929199f, 171.132538f, 1.743588f, Flag_Walk }, 0 }
 };
 
-class DeathbringerJovaanAI : public CreatureAI
+class DeathbringerJovaanAI : public MoonScriptCreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(DeathbringerJovaanAI)
-		DeathbringerJovaanAI(Creature* pCreature) : CreatureAI(pCreature)
+		DeathbringerJovaanAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			mJovaanTimer = INVALIDATE_TIMER;
 			mJovaanPhase = -1;
@@ -119,7 +119,7 @@ class DeathbringerJovaanAI : public CreatureAI
 				{
 					case 0:
 						{
-							CreatureAI* pRazuunAI = SpawnCreature(21502, -3300.47f, 2927.22f, 173.870f, 2.42924f, false);	// Spawn Razuun
+							MoonScriptCreatureAI* pRazuunAI = SpawnCreature(21502, -3300.47f, 2927.22f, 173.870f, 2.42924f, false);	// Spawn Razuun
 							if(pRazuunAI != NULL)
 							{
 								pRazuunAI->GetUnit()->SetUInt64Value(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_ATTACKABLE_2);
@@ -204,11 +204,11 @@ class DeathbringerJovaanAI : public CreatureAI
 /////// Warbringer Razuun
 #define CN_WARBRINGER_RAZUUN	21502
 
-class WarbringerRazuunAI : public CreatureAI
+class WarbringerRazuunAI : public MoonScriptCreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(WarbringerRazuunAI)
-		WarbringerRazuunAI(Creature* pCreature) : CreatureAI(pCreature)
+		WarbringerRazuunAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			RegisterAIUpdateEvent(1000);
 			mRazuunTimer = AddTimer(800);
@@ -338,11 +338,11 @@ class NeltharakusTale_Gossip : public GossipScript
 /////// Warbringer Razuun
 #define CN_ENSLAVED_NETHERWING_DRAKE	21722
 
-class EnslavedNetherwingDrakeAI : public CreatureAI
+class EnslavedNetherwingDrakeAI : public MoonScriptCreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(EnslavedNetherwingDrakeAI)
-		EnslavedNetherwingDrakeAI(Creature* pCreature) : CreatureAI(pCreature)
+		EnslavedNetherwingDrakeAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			LocationExtra WayPoint = { _unit->GetPositionX(), _unit->GetPositionY() + 30, _unit->GetPositionZ() + 100, _unit->GetOrientation(), Flag_Fly };
 			SetCanMove(false);

@@ -18,11 +18,11 @@
 
 #include "Setup.h"
 
-class thekaAI : public CreatureAI
+class thekaAI : public MoonScriptCreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(thekaAI)
-		thekaAI(Creature* pCreature) : CreatureAI(pCreature)
+		thekaAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			AddSpell(8600, Target_Current, 20, 4.5f, -1);	//Fevered Plague
 			morph = false;
@@ -45,11 +45,11 @@ class thekaAI : public CreatureAI
 #define healingward 11889
 #define earthgrabward 8376
 #define HEALING_WAVE_OF_ANTUSUL	11895
-class antusulAI : public CreatureAI
+class antusulAI : public MoonScriptCreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(antusulAI)
-		antusulAI(Creature* pCreature) : CreatureAI(pCreature)
+		antusulAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			AddEmote(Event_OnCombatStart, "Lunch has arrived, my beutiful childern. Tear them to pieces!", Text_Yell, 0);
 			AddSpell(healingward, Target_Self, 15, 2, -1);
@@ -80,11 +80,11 @@ class antusulAI : public CreatureAI
 };
 
 //todo: Ward of Zum'rah (7785)
-class WitchDoctorZumrahAI : public CreatureAI
+class WitchDoctorZumrahAI : public MoonScriptCreatureAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(WitchDoctorZumrahAI)
-		WitchDoctorZumrahAI(Creature* pCreature) : CreatureAI(pCreature)
+		WitchDoctorZumrahAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			AddSpell(12491, Target_WoundedFriendly, 15, 3, -1);	//Healing Wave
 			AddSpell(12739, Target_Current, 20, 3, -1);			//Shadow Bolt

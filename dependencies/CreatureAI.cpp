@@ -24,6 +24,7 @@ CreatureAI::CreatureAI(Creature* pCreature) : CreatureAIScript(pCreature)
 	mAIUpdateFrequency = DEFAULT_UPDATE_FREQUENCY;
 }
 
+/*
 void CreatureAI::Emote(Unit* pUnit, const char* pText, TextType pType, uint32 pSoundId, EmoteType pEmote)
 {
 	if(pText && strlen(pText) > 0)
@@ -44,7 +45,7 @@ void CreatureAI::Emote(Unit* pUnit, const char* pText, TextType pType, uint32 pS
 	if(pEmote != EMOTE_ONESHOT_NONE)
 		pUnit->Emote(pEmote);
 }
-
+*/
 Creature* CreatureAI::SummonCreature(Unit* pUnit, uint32 pEntry, float x, float y, float z, float o, uint32 DespawnTimr, uint8 Phase)
 {
 	if(Creature * pCreature = pUnit->GetMapMgr()->GetInterface()->SpawnCreature(pEntry, x, y, z, o, false, true, 0, 0, Phase))
@@ -65,13 +66,12 @@ GameObject * CreatureAI::SummonGameobject(Unit* pUnit, uint32 pEntry, float x, f
 	return NULL;
 }
 
-
+/*
 Unit* CreatureAI::GetTarget(TargetType Type)
 {
 	switch(Type)
 	{
 		case TARGET_SELF:
-		case TARGET_VARIOUS:
 			return _unit;
 		case TARGET_ATTACKING:
 		case TARGET_DESTINATION:
@@ -100,7 +100,7 @@ Unit* CreatureAI::GetTarget(TargetType Type)
 			}
 	}
 	return NULL;
-}
+}*/
 
 void CreatureAI::OnCombatStart(Unit* pTarget)
 {
