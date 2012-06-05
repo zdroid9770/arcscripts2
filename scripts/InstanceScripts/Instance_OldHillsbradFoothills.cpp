@@ -276,7 +276,7 @@ class LieutenantDrakeAI : public CreatureAI
 
 		void OnLoad()
 		{
-			Emote("I know what your doing and I won't let that happen!") // Need right text ID
+			Emote("I know what your doing and I won't let that happen!", Text_Yell, 0) // Need right text ID & sound
 		}
 
 		void OnCombatStart(Unit* pTarget)
