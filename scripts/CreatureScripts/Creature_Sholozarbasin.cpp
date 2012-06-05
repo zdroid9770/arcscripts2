@@ -27,6 +27,7 @@ class PrimordialDrakeEggAI : public MoonScriptCreatureAI
 		void OnDied(Unit *mKiller)
 		{
 			_unit->CastSpell(_unit, 51595, true);	//Summon Primordial Hatchling
+			MoonScriptCreatureAI::OnDied(mKiller);
 		}
 };
 

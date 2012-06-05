@@ -27,6 +27,7 @@ class RottedOneAI : public MoonScriptCreatureAI
 		void OnDied(Unit *mKiller)
 		{
 			_unit->CastSpell(_unit, 3428, true);
+			MoonScriptCreatureAI::OnDied(mKiller);
 		}
 };
 

@@ -35,9 +35,10 @@ class ArmyofDeadGhoul : public MoonScriptCreatureAI
 
 		void AIUpdate()
 		{
-			GetUnit()->CastSpell(GetUnit(), 20480, false);
-			GetUnit()->GetAIInterface()->m_canMove = true;
+			_unit->CastSpell(_unit, 20480, false);
+			_unit->GetAIInterface()->m_canMove = true;
 			RemoveAIUpdateEvent();
+			MoonScriptCreatureAI::AIUpdate();
 		}
 };
 

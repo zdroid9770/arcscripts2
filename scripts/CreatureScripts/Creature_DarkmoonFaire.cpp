@@ -45,6 +45,7 @@ class Sayge : public MoonScriptCreatureAI
 				case 3: _unit->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, BARK_SAYGE_4); break;
 			}
 			ModifyAIUpdateEvent( rand() % 180000 + 300000 ); // Modify timer to a random value between: 3-5mins
+			MoonScriptCreatureAI::AIUpdate();
 		}
 };
 
@@ -77,6 +78,7 @@ class SilasDarkmoon : public MoonScriptCreatureAI
 				case 5: _unit->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, BARK_SILAS_DARKMOON_6); break;
 			}
 			ModifyAIUpdateEvent(rand()%300000 + 240000); // Modify timer to a random value between: 3-5mins
+			MoonScriptCreatureAI::AIUpdate();
 		}
 };
 
@@ -105,6 +107,7 @@ class GevasGrimegate : public MoonScriptCreatureAI
 				case 3: _unit->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, BARK_GEVAS_GRIMEGATE_4); break;
 			}
 			ModifyAIUpdateEvent(rand() % 300000 + 180000); // Modify timer to a random value between: 3-5mins
+			MoonScriptCreatureAI::AIUpdate();
 		}
 };
 
@@ -133,6 +136,7 @@ class Sylannia : public MoonScriptCreatureAI
 				case 3: _unit->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, BARK_SYLANNIA_4); break;
 			}
 			ModifyAIUpdateEvent( rand() % 360000 + 180000 ); // Modify timer to a random value between: 3-6mins
+			MoonScriptCreatureAI::AIUpdate();
 		}
 };
 
@@ -163,6 +167,7 @@ class StampThunderhorn : public MoonScriptCreatureAI
 				case 4: _unit->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, BARK_STAMP_THUNDERHORN_5); break;
 			}
 			ModifyAIUpdateEvent( rand() % 300000 + 180000 ); // Modify timer to a random value between: 3-5mins
+			MoonScriptCreatureAI::AIUpdate();
 		}
 };
 
@@ -191,6 +196,7 @@ class Lhara : public MoonScriptCreatureAI
 				case 3: _unit->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, BARK_LHARA_4); break;
 			}
 			ModifyAIUpdateEvent(rand()%360000 + 240000); // Modify timer to a random value between: 4-6mins
+			MoonScriptCreatureAI::AIUpdate();
 		}
 };
 
@@ -219,6 +225,7 @@ class ProfessorThaddeusPaleo : public MoonScriptCreatureAI
 				case 3: _unit->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, BARK_PROFESSOR_THADDEUS_PALEO_4); break;
 			}
 			ModifyAIUpdateEvent(rand()%180000 + 300000); // Modify timer to a random value between: 3-5mins
+			MoonScriptCreatureAI::AIUpdate();
 		}
 };
 
@@ -234,6 +241,7 @@ class ProfessorThaddeusPaleo : public MoonScriptCreatureAI
 	#define BARK_CARNIES_3	"Don't forget to buy refreshments and souvenirs!"
 	#define BARK_CARNIES_4	"The Darkmoon Faire is the greatest show on all of Azeroth!"
 #endif
+
 class Carnies : public MoonScriptCreatureAI
 {
 	public:
@@ -247,21 +255,17 @@ class Carnies : public MoonScriptCreatureAI
 		{
 			switch(rand()%4)
 			{
-				case 0: _unit->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, BARK_CARNIES_1); break;
-				case 1: _unit->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, BARK_CARNIES_2); break;
-				case 2: _unit->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, BARK_CARNIES_3); break;
-				case 3: _unit->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, BARK_CARNIES_4); break;
+				case 0: Emote(BARK_CARNIES_1, Text_Say, 0); break;
+				case 1: Emote(BARK_CARNIES_2, Text_Say, 0); break;
+				case 2: Emote(BARK_CARNIES_3, Text_Say, 0); break;
+				case 3: Emote(BARK_CARNIES_4, Text_Say, 0); break;
 			}
 			ModifyAIUpdateEvent(rand()%300000 + 120000); // Modify timer to a random value between: 2-5mins
+			MoonScriptCreatureAI::AIUpdate();
 		}
 };
 
 // Flik
-#define BARK_FLIK_1	"It's getting away!"
-#define BARK_FLIK_2	"Get back here!"
-#define BARK_FLIK_3	"Hey, someone help me catch this thing!"
-#define BARK_FLIK_4	"Frogs and leather balls for sale!"
-
 class Flik : public MoonScriptCreatureAI
 {
 	public:
@@ -275,18 +279,17 @@ class Flik : public MoonScriptCreatureAI
 		{
 			switch (rand()%4)
 			{
-				case 0: _unit->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, BARK_FLIK_1); break;
-				case 1: _unit->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, BARK_FLIK_2); break;
-				case 2: _unit->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, BARK_FLIK_3); break;
-				case 3: _unit->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, BARK_FLIK_4); break;
+				case 0: Emote("It's getting away!", Text_Say, 0); break;
+				case 1: Emote("Get back here!", Text_Say, 0); break;
+				case 2: Emote("Hey, someone help me catch this thing!", Text_Say, 0); break;
+				case 3: Emote("Frogs and leather balls for sale!", Text_Say, 0); break;
 			}
 			ModifyAIUpdateEvent(rand()%240000 + 120000); // Modify timer to a random value between: 2-4mins
+			MoonScriptCreatureAI::AIUpdate();
 		}
 };
 
 // Morja
-#define BARK_MORJA_1	"Jubjub? Where are you, Jubjub? Oh no! Where did you go this time!"
-
 class Morja : public MoonScriptCreatureAI
 {
 	public:
@@ -298,8 +301,9 @@ class Morja : public MoonScriptCreatureAI
 
 		void AIUpdate()
 		{
-			_unit->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, BARK_MORJA_1);
+			Emote("Jubjub? Where are you, Jubjub? Oh no! Where did you go this time!", Text_Say, 0);
 			ModifyAIUpdateEvent(rand()%360000 + 240000); // Modify timer to a random value between: 4-6mins
+			MoonScriptCreatureAI::AIUpdate();
 		}
 };
 

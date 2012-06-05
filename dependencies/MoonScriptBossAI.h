@@ -32,7 +32,7 @@ typedef std::vector<PhaseSpellPair> PhaseSpellArray;
 class MoonScriptBossAI : public MoonScriptCreatureAI
 {
 	public:
-		explicit MoonScriptBossAI(Creature* pCreature);
+		MoonScriptBossAI(Creature* pCreature);
 		virtual ~MoonScriptBossAI();
 
 		//Basic Interface
@@ -42,9 +42,9 @@ class MoonScriptBossAI : public MoonScriptCreatureAI
 		void			SetEnrageInfo(SpellDesc* pSpell, int32 pTriggerMilliseconds);
 
 		//Reimplemented Events
-		void	OnCombatStart(Unit* pTarget);
-		void	OnCombatStop(Unit* pTarget);
-		void	AIUpdate();
+		virtual void	OnCombatStart(Unit* pTarget);
+		virtual void	OnCombatStop(Unit* pTarget);
+		virtual void	AIUpdate();
 
 	protected:
 		int32			mPhaseIndex;

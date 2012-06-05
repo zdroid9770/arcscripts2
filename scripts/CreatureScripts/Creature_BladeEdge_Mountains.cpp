@@ -60,6 +60,7 @@ class BrutebaneStoutTrigger : public MoonScriptCreatureAI
 
 		void AIUpdate()
 		{
+			MoonScriptCreatureAI::AIUpdate();
 			if(Ogre == NULL)
 				return;
 

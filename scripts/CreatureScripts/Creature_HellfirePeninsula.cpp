@@ -24,29 +24,15 @@ class Aeranas : public MoonScriptCreatureAI
 		ADD_CREATURE_FACTORY_FUNCTION(Aeranas)
 		Aeranas(Creature * pCreature) : MoonScriptCreatureAI(pCreature)
 		{
-			//AddSpell(15535, Target_Current, 30.0f, 2.0f, 20);
-			//AddSpell(12553, Target_Current, 50.0f, 0, 10);
-			EnvelopingWindsTimer = (12+rand()%5)*1000;
-		}
-
-		void OnLoad()
-		{
-			Emote("Avruu's magic... it still controls me. You must fight me, mortal. It's the only way to break the spell!", Text_Yell, 0);
-		}
-
-		void OnCombatStop(Unit * mTarget)
-		{
+			AddSpell(15535, Target_Current, 30, 2.0f, 20);
+			AddSpell(12553, Target_Current, 50, 0, 10);
+			AddSpell(12745, Target_Current, 45, 3, -1);
+			AddEmote(Event_OnCombatStart, "Avruu's magic... it still controls me. You must fight me, mortal. It's the only way to break the spell!", Text_Yell, 0);
 			_unit->Despawn(180000, 0);	//3 min
 		}
 
 		void AIUpdate()
 		{
-			if(EnvelopingWindsTimer <= mAIUpdateFrequency)
-			{
-				_unit->CastSpell(_unit->GetAIInterface()->getNextTarget(), 12745, true);
-				EnvelopingWindsTimer = (12+rand()%5)*1000;
-			}else EnvelopingWindsTimer -= mAIUpdateFrequency;
-
 			if(_unit->GetHealthPct() <= 30)
 			{
 				Emote("Avruu's magic is broken! I'm free once again!", Text_Say, 0);
@@ -54,9 +40,6 @@ class Aeranas : public MoonScriptCreatureAI
 				_unit->SetFaction(35);
 			}
 		}
-
-	private:
-		uint32 EnvelopingWindsTimer;
 };
 
 void SetupHellfireCreatures(ScriptMgr * mgr)

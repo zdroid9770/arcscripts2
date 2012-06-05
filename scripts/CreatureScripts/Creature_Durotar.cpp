@@ -29,8 +29,9 @@ class PeonSleepingAI : public MoonScriptCreatureAI
 
 		void AIUpdate()
 		{
-			_unit->CastSpell(GetUnit(), 17743, true);
+			_unit->CastSpell(_unit, 17743, true);
 			RemoveAIUpdateEvent();
+			MoonScriptCreatureAI::AIUpdate();
 		}
 };
 

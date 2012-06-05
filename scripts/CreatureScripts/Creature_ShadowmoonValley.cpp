@@ -27,6 +27,7 @@ class EclipsionSpawn : public MoonScriptCreatureAI
 		void OnDied(Unit *mKiller)
 		{
 			_unit->CastSpell(_unit, 38311, true); // Cast spell: "Summon Eclipsion Hawkstrider"
+			MoonScriptCreatureAI::OnDied(mKiller);
 		}
 };
 

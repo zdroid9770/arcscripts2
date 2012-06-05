@@ -137,32 +137,32 @@ class MoonInstanceScript : public InstanceScript
 		uint8				GetInstanceMode();
 
 		// Player
-		void				OnPlayerDeath(Player* pVictim, Unit* pKiller) override;
+		virtual void		OnPlayerDeath(Player* pVictim, Unit* pKiller);
 
 		// Area and AreaTrigger
-		void				OnPlayerEnter(Player* pPlayer) override;
-		void				OnAreaTrigger(Player* pPlayer, uint32 pAreaId) override;
-		void				OnZoneChange(Player* pPlayer, uint32 pNewZone, uint32 pOldZone) override;
+		virtual void		OnPlayerEnter(Player* pPlayer);
+		virtual void		OnAreaTrigger(Player* pPlayer, uint32 pAreaId);
+		virtual void		OnZoneChange(Player* pPlayer, uint32 pNewZone, uint32 pOldZone);
 
 		// Data get / set - idea taken from ScriptDev2
-		void				SetInstanceData(uint32 pType, uint32 pIndex, uint32 pData) override;
-		uint32				GetInstanceData(uint32 pType, uint32 pIndex) override;
+		virtual void		SetInstanceData(uint32 pType, uint32 pIndex, uint32 pData);
+		virtual uint32		GetInstanceData(uint32 pType, uint32 pIndex);
 		virtual void		SetInstanceData(uint32 pIndex, uint32 pData);
 		virtual uint32		GetInstanceData(uint32 pIndex);
 
 		// Creature / GameObject
-		void				OnCreatureDeath(Creature* pVictim, Unit* pKiller) override;
-		void				OnCreaturePushToWorld(Creature* pCreature) override;
-		void				OnGameObjectActivate(GameObject* pGameObject, Player* pPlayer) override;
-		void				OnGameObjectPushToWorld(GameObject* pGameObject) override;
+		virtual void		OnCreatureDeath(Creature* pVictim, Unit* pKiller);
+		virtual void		OnCreaturePushToWorld(Creature* pCreature);
+		virtual void		OnGameObjectActivate(GameObject* pGameObject, Player* pPlayer);
+		virtual void		OnGameObjectPushToWorld(GameObject* pGameObject);
 
 		// Reimplemented events
-		GameObject*			GetObjectForOpenLock(Player* pCaster, Spell* pSpell, SpellEntry* pSpellEntry) override;
-		void				SetLockOptions(uint32 pEntryId, GameObject* pGameObject) override;
-		uint32				GetRespawnTimeForCreature(uint32 pEntryId, Creature* pCreature) override;
-		void				OnLoad();
-		void				UpdateEvent();
-		void				Destroy();
+		virtual GameObject*	GetObjectForOpenLock(Player* pCaster, Spell* pSpell, SpellEntry* pSpellEntry);
+		virtual void		SetLockOptions(uint32 pEntryId, GameObject* pGameObject);
+		virtual uint32		GetRespawnTimeForCreature(uint32 pEntryId, Creature* pCreature);
+		virtual void		OnLoad();
+		virtual void		UpdateEvent();
+		virtual void		Destroy();
 
 	protected:
 

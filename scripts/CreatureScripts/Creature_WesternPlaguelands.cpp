@@ -27,6 +27,7 @@ class RottingCadaver : public MoonScriptCreatureAI
 		void OnDied(Unit *mKiller)
 		{
 			_unit->CastSpell(_unit, dbcSpell.LookupEntry(17064), true); // Cast spell: "Summon Rotting Worms".
+			MoonScriptCreatureAI::OnDied(mKiller);
 		}
 };
 
@@ -36,25 +37,14 @@ class SummonOozeling : public MoonScriptCreatureAI
 		ADD_CREATURE_FACTORY_FUNCTION(SummonOozeling)
 		SummonOozeling(Creature *pCreature) : MoonScriptCreatureAI(pCreature)
 		{
-			CrimsonFuryTimer = (5+rand()%9)*1000;
+			AddSpell(12745, Target_RandomPlayer, 20, 3, -1);
 		}
 
 		void OnDied(Unit *mKiller)
 		{
 			_unit->CastSpell(_unit, dbcSpell.LookupEntry(12018), true); // Cast spell: "Summon Oozeling".
+			MoonScriptCreatureAI::OnDied(mKiller);
 		}
-
-		void AIUpdate()
-		{
-			if(CrimsonFuryTimer <= mAIUpdateFrequency)
-			{
-				_unit->CastSpell(GetBestPlayerTarget(TargetFilter_NotCurrent), dbcSpell.LookupEntry(12745), true);
-				CrimsonFuryTimer = (8+rand()%7)*1000;
-			}else CrimsonFuryTimer -= mAIUpdateFrequency;
-		}
-
-	private:
-		uint32 CrimsonFuryTimer;
 };
 
 void SetupWesternPlaguelandsCreature(ScriptMgr * mgr)

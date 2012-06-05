@@ -279,7 +279,7 @@ class SpellDesc
 class SCRIPT_DECL MoonScriptCreatureAI : public CreatureAIScript
 {
 	public:
-		explicit MoonScriptCreatureAI(Creature* pCreature);
+		MoonScriptCreatureAI(Creature* pCreature);
 		virtual ~MoonScriptCreatureAI();
 
 		//Movement
@@ -422,12 +422,12 @@ class SCRIPT_DECL MoonScriptCreatureAI : public CreatureAIScript
 		void					AddLoot(Unit* pTarget, uint32 pItemID, uint32 pMinCount, uint32 pMaxCount);
 
 		//Reimplemented Events
-		void			OnCombatStart(Unit* pTarget) override;
-		void			OnCombatStop(Unit* pTarget) override;
-		void			OnTargetDied(Unit* pTarget) override;
-		void			OnDied(Unit* pKiller) override;
-		void			AIUpdate() override;
-		void			Destroy() override;
+		virtual void			OnCombatStart(Unit* pTarget);
+		virtual void			OnCombatStop(Unit* pTarget);
+		virtual void			OnTargetDied(Unit* pTarget);
+		virtual void			OnDied(Unit* pKiller);
+		virtual void			AIUpdate();
+		virtual void			Destroy();
 
 	protected:
 		bool					IsSpellScheduled(SpellDesc* pSpell);

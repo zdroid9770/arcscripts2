@@ -18,12 +18,6 @@
 
 #include "Setup.h"
 
-/*
-Event : Winter Veil
-Author: Angelis
-Team  : Sun++
-*/
-
 class PX238WinterWondervolt : public GameObjectAIScript
 {
 	public:

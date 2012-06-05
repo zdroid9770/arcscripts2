@@ -30,6 +30,7 @@ class MobsGhoulFlayer : public MoonScriptCreatureAI
 				return;
 
 			SpawnCreature(11064, _unit->GetPositionX(), _unit->GetPositionY(), _unit->GetPositionZ(), _unit->GetOrientation());
+			MoonScriptCreatureAI::OnDied(mKiller);
 		}
 };
 
@@ -45,6 +46,7 @@ class ArajTheSummoner : public MoonScriptCreatureAI
 				return;
 
 			_unit->GetMapMgr()->GetInterface()->SpawnGameObject(177241, _unit->GetPositionX(), _unit->GetPositionY(), _unit->GetPositionZ(), _unit->GetOrientation(), true, 0, 0, 1);
+			MoonScriptCreatureAI::OnDied(mKiller);
 		}
 };
 
@@ -54,25 +56,14 @@ class CursedMageAI : public MoonScriptCreatureAI
 		ADD_CREATURE_FACTORY_FUNCTION(CursedMageAI);
 		CursedMageAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
-			ArcaneBoltTimer = (4+rand()%2)*1000;
+			AddSpell(20829, Target_Current, 20, 1, -1);
 		}
 
 		void OnDied(Unit* mKiller)
 		{
 			_unit->CastSpell(mKiller, 16567, true);	//Tainted Mind
+			MoonScriptCreatureAI::OnDied(mKiller);
 		}
-
-		void AIUpdate()
-		{
-			if(ArcaneBoltTimer <= mAIUpdateFrequency)
-			{
-				_unit->CastSpell(_unit->GetAIInterface()->getNextTarget(), 20829, true);
-				ArcaneBoltTimer = (4+rand()%2)*1000;
-			}else ArcaneBoltTimer -= mAIUpdateFrequency;
-		}
-
-	private:
-		uint32 ArcaneBoltTimer;
 };
 
 class CarrionDevourerAI : public MoonScriptCreatureAI
@@ -81,25 +72,14 @@ class CarrionDevourerAI : public MoonScriptCreatureAI
 		ADD_CREATURE_FACTORY_FUNCTION(CarrionDevourerAI);
 		CarrionDevourerAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
-			MaggotGooTimer = (4+rand()%4)*1000;
+			AddSpell(16449, Target_Current, 20, 0, -1);
 		}
 
 		void OnDied(Unit* mKiller)
 		{
 			_unit->CastSpell(mKiller, 17197, true);	//Maggot Goo
+			MoonScriptCreatureAI::OnDied(mKiller);
 		}
-
-		void AIUpdate()
-		{
-			if(MaggotGooTimer <= mAIUpdateFrequency)
-			{
-				_unit->CastSpell(_unit->GetAIInterface()->getNextTarget(), 16449, true);
-				MaggotGooTimer = (8+rand()%5)*1000;
-			}else MaggotGooTimer -= mAIUpdateFrequency;
-		}
-
-	private:
-		uint32 MaggotGooTimer;
 };
 
 void SetupEasternPlaguelandsCreatures(ScriptMgr * mgr)

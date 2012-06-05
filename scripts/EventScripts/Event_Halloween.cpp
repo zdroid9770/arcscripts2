@@ -34,6 +34,7 @@ class BlackCat : public MoonScriptCreatureAI
 		void OnDied(Unit* pKiller)
 		{
 			pKiller->CastSpell(pKiller, dbcSpell.LookupEntry(39477), true);
+			MoonScriptCreatureAI::OnDied(pKiller);
 		}
 };
 
@@ -145,6 +146,7 @@ class ShadeOfTheHorsemanAI : public MoonScriptCreatureAI
 			
 			if(GameObject* Pumpkin = _unit->GetMapMgr()->GetInterface()->SpawnGameObject(2883, _unit->GetPositionX() + RandomFloat(5.0f), _unit->GetPositionY() + RandomFloat(5.0f), _unit->GetPositionZ(), _unit->GetOrientation(), true, 0, 0, 1))
 				_unit->CastSpell(Pumpkin->GetGUID(), dbcSpell.LookupEntry(42277), true);
+			MoonScriptCreatureAI::OnDied(pKiller);
 		}
 };
 
@@ -171,6 +173,7 @@ class HeadlessHorsemanWispInvisAI : public MoonScriptCreatureAI
 					ModifyAIUpdateEvent(4 * 60 * 1000);
 				}
 			}
+			MoonScriptCreatureAI::AIUpdate();
 		}
 };
 

@@ -1128,13 +1128,11 @@ void MoonScriptCreatureAI::AIUpdate()
 		if(ChanceRoll >= 95)
 			RandomEmote(mOnTauntEmotes);
 	}
-	CreatureAIScript::AIUpdate();
 }
 
 void MoonScriptCreatureAI::Destroy()
 {
 	delete this;
-	CreatureAIScript::Destroy();
 }
 
 bool MoonScriptCreatureAI::IsSpellScheduled(SpellDesc* pSpell)

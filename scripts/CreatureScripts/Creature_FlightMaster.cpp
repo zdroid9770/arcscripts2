@@ -28,6 +28,7 @@ class GryponMasters : public MoonScriptCreatureAI
 		{
 			for(int i = 0; i < 2; ++i)
 				SpawnCreature(9526, _unit->GetPositionX()+RandomFloat(2.0f), _unit->GetPositionY()+RandomFloat(2.0f), _unit->GetPositionZ(), _unit->GetOrientation());
+			MoonScriptCreatureAI::OnCombatStart(mTarget);
 		}
 };
 
@@ -41,6 +42,7 @@ class HippogryphMasters : public MoonScriptCreatureAI
 		{
 			for(int i = 0; i < 2; ++i)
 				SpawnCreature(9527, _unit->GetPositionX()+RandomFloat(2.0f), _unit->GetPositionY()+RandomFloat(2.0f), _unit->GetPositionZ(), _unit->GetOrientation());
+			MoonScriptCreatureAI::OnCombatStart(mTarget);
 		}
 };
 
@@ -54,6 +56,7 @@ class WyvernMasters : public MoonScriptCreatureAI
 		{
 			for(int i = 0; i < 2; ++i)
 				SpawnCreature(9527, _unit->GetPositionX()+RandomFloat(2.0f), _unit->GetPositionY()+RandomFloat(2.0f), _unit->GetPositionZ(), _unit->GetOrientation());
+			MoonScriptCreatureAI::OnCombatStart(mTarget);
 		}
 };
 
@@ -67,6 +70,7 @@ class BatMasters : public MoonScriptCreatureAI
 		{
 			for(int i = 0; i < 2; ++i)
 				SpawnCreature(9521, _unit->GetPositionX()+RandomFloat(2.0f), _unit->GetPositionY()+RandomFloat(2.0f), _unit->GetPositionZ(), _unit->GetOrientation());
+			MoonScriptCreatureAI::OnCombatStart(mTarget);
 		}
 };
 
@@ -80,6 +84,7 @@ class DragonhawkMasters : public MoonScriptCreatureAI
 		{
 			for(int i = 0; i < 2; ++i)
 				SpawnCreature(27946, _unit->GetPositionX()+RandomFloat(2.0f), _unit->GetPositionY()+RandomFloat(2.0f), _unit->GetPositionZ(), _unit->GetOrientation());
+			MoonScriptCreatureAI::OnCombatStart(mTarget);
 		}
 };
 
@@ -93,6 +98,7 @@ class NeutralMasters : public MoonScriptCreatureAI
 		{
 			for(int i = 0; i < 2; ++i)
 				SpawnCreature(9526+i, _unit->GetPositionX()+RandomFloat(2.0f), _unit->GetPositionY()+RandomFloat(2.0f), _unit->GetPositionZ(), _unit->GetOrientation());
+			MoonScriptCreatureAI::OnCombatStart(mTarget);
 		}
 };
 

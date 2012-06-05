@@ -30,11 +30,13 @@ class KirithAI : public MoonScriptCreatureAI
 
 		void OnDied(Unit *mKiller)
 		{
+			MoonScriptCreatureAI::OnDied(mKiller);
 			_unit->CastSpell(_unit, 10853, true);	//Spirit of Kirith
 		}
 
 		void AIUpdate()
 		{
+			MoonScriptCreatureAI::AIUpdate();
 			if(PieceArmorTimer <= mAIUpdateFrequency)
 			{
 				_unit->CastSpell(GetBestPlayerTarget(TargetFilter_NotCurrent), 12097, true);

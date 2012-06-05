@@ -27,6 +27,7 @@ class CorruptMinorManifestationWater : public MoonScriptCreatureAI
 		void OnDied(Unit *mKiller)
 		{
 			SpawnCreature(5895, _unit->GetPositionX()+2, _unit->GetPositionY()+2, _unit->GetPositionZ(), _unit->GetOrientation());
+			MoonScriptCreatureAI::OnDied(mKiller);
 		}
 };
 

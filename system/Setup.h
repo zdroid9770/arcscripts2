@@ -52,7 +52,6 @@ void SetupBoreanTundraCreature(ScriptMgr * mgr);
 void SetupDarkmoonFaireCreatures(ScriptMgr * mgr);
 void SetupDurotarCreature(ScriptMgr * mgr);
 void SetupElwynForestCreature(ScriptMgr * mgr);
-void SetupEmoteCreatures(ScriptMgr * mgr);
 void SetupFlightMasterCreatures(ScriptMgr * mgr);
 void SetupHellfireCreatures(ScriptMgr * mgr);
 void SetupMiscCreatures(ScriptMgr * mgr);
