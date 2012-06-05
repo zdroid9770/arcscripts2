@@ -276,7 +276,11 @@ class LieutenantDrakeAI : public MoonScriptCreatureAI
 
 		void OnLoad()
 		{
+<<<<<<< HEAD
+			Emote("I know what your doing and I won't let that happen!", Text_Yell, 0) // Need right text ID & sound
+=======
 			Emote("I know what your doing and I won't let that happen!"); // Need right text ID
+>>>>>>> a4ff8e25a0e4114a518853a7470ccd83ad797639
 		}
 
 		void OnCombatStart(Unit* pTarget)
