@@ -287,6 +287,7 @@ public:
 			if(MarkDeto == 3)
 				MarkDeto = 0;
 		}
+		MoonScriptCreatureAI::AIUpdate();
 	}
 
 protected:
