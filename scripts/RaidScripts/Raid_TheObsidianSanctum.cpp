@@ -94,7 +94,7 @@ class ObsidianSanctumScript : public MoonInstanceScript
 		ObsidianSanctumScript(MapMgr* pMapMgr) : MoonInstanceScript(pMapMgr)
 		{
 			memset(m_creatureGuid, 0, sizeof(m_creatureGuid));
-		};
+		}
 
 		void OnCreaturePushToWorld(Creature* pCreature)
 		{
@@ -114,8 +114,8 @@ class ObsidianSanctumScript : public MoonInstanceScript
 					break;
 				default:
 					break;
-			};
-		};
+			}
+		}
 
 		void OnCreatureDeath(Creature* pVictim, Unit* pKiller)
 		{
@@ -126,8 +126,8 @@ class ObsidianSanctumScript : public MoonInstanceScript
 					break;
 				default:
 					break;
-			};
-		};
+			}
+		}
 
 		void DoDrakeAura(uint8 pData)
 		{
@@ -145,7 +145,7 @@ class ObsidianSanctumScript : public MoonInstanceScript
 					break;
 				default:
 					break;
-			};
+			}
 
 			Creature* pSartharion = GetCreature(BOSS_SARTHARION);
 			if(pSartharion == NULL)
@@ -153,7 +153,7 @@ class ObsidianSanctumScript : public MoonInstanceScript
 
 			pSartharion->CastSpell(pSartharion, pSpellEntry, true);
 			pSartharion->RemoveAura(pSpellEntry);   // unproper hackfix
-		};
+		}
 
 		Creature* GetCreature(uint8 pData)
 		{
@@ -161,7 +161,7 @@ class ObsidianSanctumScript : public MoonInstanceScript
 				return NULL;
 
 			return GetCreatureByGuid(m_creatureGuid[pData]);
-		};
+		}
 };
 
 void SpellFunc_FlameTsunami(SpellDesc* pThis, MoonScriptCreatureAI* pCreatureAI, Unit* pTarget, TargetType pType)
@@ -185,7 +185,7 @@ void SpellFunc_FlameTsunami(SpellDesc* pThis, MoonScriptCreatureAI* pCreatureAI,
 			case 3:
 				pCreatureAI->Emote("All will be reduced to ash!", Text_Yell, 14103);
 				break;
-		};
+		}
 
 		uint32 RndSide = rand() % 2;
 		Creature* Tsunami = NULL;
@@ -205,11 +205,11 @@ void SpellFunc_FlameTsunami(SpellDesc* pThis, MoonScriptCreatureAI* pCreatureAI,
 
 					if(Tsunami != NULL)
 						Tsunami->GetAIInterface()->MoveTo(TSUNAMI_MOVE[i + 3].x, TSUNAMI_MOVE[i + 3].y, TSUNAMI_MOVE[i + 3].z, TSUNAMI_MOVE[i + 3].o);
-			};
+			}
 
 			Tsunami = NULL;
-		};
-	};
+		}
+	}
 };
 
 void SpellFunc_LavaSpawn(SpellDesc* pThis, MoonScriptCreatureAI* pCreatureAI, Unit* pTarget, TargetType pType)
@@ -221,7 +221,7 @@ void SpellFunc_LavaSpawn(SpellDesc* pThis, MoonScriptCreatureAI* pCreatureAI, Un
 	{
 		uint32 j = rand() % 6;
 		pCreatureAI->SpawnCreature(CN_LAVA_BLAZE, pTarget->GetPositionX() + j, pTarget->GetPositionY() + j, pTarget->GetPositionZ(), pTarget->GetOrientation(), true);
-	};
+	}
 };
 
 class SartharionAI : public MoonScriptCreatureAI
@@ -255,7 +255,7 @@ class SartharionAI : public MoonScriptCreatureAI
 			mDrakeTimer = 0;
 			m_bEnraged = false;
 			m_iDrakeCount = 0;
-		};
+		}
 
 		void OnCombatStart(Unit* pTarget)
 		{
@@ -270,6 +270,7 @@ class SartharionAI : public MoonScriptCreatureAI
 				RemoveAuraOnPlayers(SARTHARION_AURA);   // unproper hackfix
 				Regenerate();// Lets heal him as aura increase his hp for 25%
 			}
+			MoonScriptCreatureAI::OnCombatStart(pTarget);
 		}
 
 		void AIUpdate()
@@ -296,6 +297,7 @@ class SartharionAI : public MoonScriptCreatureAI
 
 				m_bEnraged = true;
 			}
+			MoonScriptCreatureAI::AIUpdate();
 		}
 
 		void CheckDrakes()
@@ -313,9 +315,9 @@ class SartharionAI : public MoonScriptCreatureAI
 					m_bDrakes[i] = true;
 					m_iDrakeCount++;
 					mInstance->DoDrakeAura(i);
-				};
-			};
-		};
+				}
+			}
+		}
 
 		void CallTenebron()
 		{
@@ -323,9 +325,9 @@ class SartharionAI : public MoonScriptCreatureAI
 			{
 				Emote("Tenebron! The eggs are yours to protect as well!", Text_Yell, 14106);
 				m_cDrakes[DRAKE_TENEBRON]->GetAIInterface()->MoveTo(3254.606689f, 531.867859f, 66.898163f, 4.215994f);
-			};
+			}
 			m_bDrakes[DRAKE_TENEBRON] = false;
-		};
+		}
 
 		void CallShadron()
 		{
@@ -333,9 +335,9 @@ class SartharionAI : public MoonScriptCreatureAI
 			{
 				Emote("Shadron! The clutch is in danger! Assist me!", Text_Yell, 14104);
 				m_cDrakes[DRAKE_SHADRON]->GetAIInterface()->MoveTo(3254.606689f, 531.867859f, 66.898163f, 4.215994f);
-			};
+			}
 			m_bDrakes[DRAKE_SHADRON] = false;
-		};
+		}
 
 		void CallVesperon()
 		{
@@ -343,15 +345,16 @@ class SartharionAI : public MoonScriptCreatureAI
 			{
 				Emote("Vesperon! Come to me, all is at risk!", Text_Yell, 14105);
 				m_cDrakes[DRAKE_VESPERON]->GetAIInterface()->MoveTo(3254.606689f, 531.867859f, 66.898163f, 4.215994f);
-			};
+			}
 			m_bDrakes[DRAKE_VESPERON] = false;
-		};
+		}
 
 		void OnDied(Unit* pKiller)
 		{
 			Emote("Such is the price... of failure...", Text_Yell, 14107);
 
 			RemoveAIUpdateEvent();
+			MoonScriptCreatureAI::OnDied(pKiller);
 		}
 
 	private:
@@ -386,6 +389,7 @@ class TsunamiAI : public MoonScriptCreatureAI
 			ApplyAura(TSUNAMI);
 			ApplyAura(TSUNAMI_VISUAL);
 			RegisterAIUpdateEvent(11000);
+			MoonScriptCreatureAI::AIUpdate();
 		}
 };
 
@@ -394,7 +398,7 @@ class CyclonAI : public MoonScriptCreatureAI
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(CyclonAI)
 		CyclonAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
-		{};
+		{}
 
 		void OnLoad()
 		{
@@ -420,11 +424,13 @@ class LavaBlazeAI : public MoonScriptCreatureAI
 		void OnCombatStop(Unit* pTarget)
 		{
 			Despawn(1000, 0);
+			MoonScriptCreatureAI::OnCombatStop(pTarget);
 		}
 
 		void OnDied(Unit* pKiller)
 		{
 			Despawn(1000, 0);
+			MoonScriptCreatureAI::OnDied(pKiller);
 		}
 };
 

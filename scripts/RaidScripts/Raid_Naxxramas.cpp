@@ -100,11 +100,13 @@ class VigilantShadeAI : public MoonScriptCreatureAI
 		void OnCombatStart(Unit* pTarget)
 		{
 			RemoveAura(VIGILANT_SHADE_INVISIBILITY);
+			MoonScriptCreatureAI::OnCombatStart(pTarget);
 		}
 
 		void OnCombatStop(Unit* pTarget)
 		{
 			ApplyAura(VIGILANT_SHADE_INVISIBILITY);
+			MoonScriptCreatureAI::OnCombatStop(pTarget);
 		}
 };
 
@@ -143,12 +145,14 @@ class WebWrapAI : public MoonScriptCreatureAI
 			SetAllowMelee(false);
 			SetCanMove(false);
 			StopMovement();
+			MoonScriptCreatureAI::OnCombatStart(pTarget);
 		}
 
 		void OnCombatStop(Unit* pTarget)
 		{
 			SetAllowMelee(true);
 			SetCanMove(true);
+			MoonScriptCreatureAI::OnCombatStop(pTarget);
 		}
 
 		void OnDied(Unit* pKiller)
@@ -166,6 +170,7 @@ class WebWrapAI : public MoonScriptCreatureAI
 				RemoveAIUpdateEvent();
 				mPlayerGuid = 0;
 			}
+			MoonScriptCreatureAI::OnDied(pKiller);
 		}
 
 		void AIUpdate()
@@ -180,6 +185,7 @@ class WebWrapAI : public MoonScriptCreatureAI
 					Despawn(1);
 				}
 			}
+			MoonScriptCreatureAI::AIUpdate();
 		}
 
 		void Destroy()
@@ -251,11 +257,13 @@ class MaexxnaAI : public MoonScriptCreatureAI
 			mHasEnraged = false;
 			if(RandomUInt(1) == 1)
 				mLeftWall = !mLeftWall;
+			MoonScriptCreatureAI::OnCombatStart(pTarget);
 		}
 
 		void OnCombatStop(Unit* pTarget)
 		{
 			RemoveTimer(mWebWrapTimer);
+			MoonScriptCreatureAI::OnCombatStop(pTarget);
 		}
 
 		void AIUpdate()
@@ -306,6 +314,7 @@ class MaexxnaAI : public MoonScriptCreatureAI
 					ResetTimer(mWebWrapTimer, 40000);
 				}
 			}
+			MoonScriptCreatureAI::AIUpdate();
 		}
 
 		SpellDesc*			mWebWrapProc;
@@ -543,6 +552,7 @@ class GrandWidowFaerlinaAI : public MoonScriptCreatureAI
 			GameObject* WebGate = _unit->GetMapMgr()->GetInterface()->GetGameObjectNearestCoords(3318.65f, -3695.85f, 259.094f, 181235);
 			if(WebGate != NULL)
 				WebGate->SetState(1);
+			MoonScriptCreatureAI::OnCombatStart(pTarget);
 		}
 
 		void OnCombatStop(Unit* pTarget)
@@ -564,6 +574,7 @@ class GrandWidowFaerlinaAI : public MoonScriptCreatureAI
 					}
 				}
 			}
+			MoonScriptCreatureAI::OnCombatStop(pTarget);
 		}
 
 		void AIUpdate()
@@ -581,6 +592,7 @@ class GrandWidowFaerlinaAI : public MoonScriptCreatureAI
 					ResetTimer(mFrenzyTimer, 60000 + RandomUInt(20) * 1000);
 				}
 			}
+			MoonScriptCreatureAI::AIUPdate();
 		}
 
 		set< NaxxramasWorshipperAI* >	mWorshippers;
@@ -616,6 +628,7 @@ class CryptGuardAI : public MoonScriptCreatureAI
 		void OnCombatStart(Unit* pTarget)
 		{
 			mEnraged = false;
+			MoonScriptCreatureAI::OnCombatStart(pTarget);
 		}
 
 		void AIUpdate()
@@ -625,6 +638,7 @@ class CryptGuardAI : public MoonScriptCreatureAI
 				ApplyAura(CRYPT_GUARD_FRENZY);
 				mEnraged = true;
 			}
+			MoonScriptCreatureAI::AIUpdate();
 		}
 
 		bool			mEnraged;
@@ -678,11 +692,13 @@ class AnubRekhanAI : public MoonScriptBossAI
 		{
 			mLocustSwarmTimer = AddTimer(70000 + RandomUInt(50) * 1000);
 			mCryptSpawnTimer = AddTimer(20000);
+			MoonScriptBossAI::OnCombatStart(pTarget);
 		}
 
 		void OnCombatStop(Unit* pTarget)
 		{
 			mLocustSwarmTimer = mCryptSpawnTimer = INVALIDATE_TIMER;
+			MoonScriptBossAI::OnCombatStop(pTarget);
 		}
 
 		void AIUpdate()
@@ -708,6 +724,7 @@ class AnubRekhanAI : public MoonScriptBossAI
 				CastSpellNowNoScheduling(mLocustSwarm);
 				mLocustSwarmTimer = AddTimer(70000 + RandomUInt(50) * 1000);
 			}
+			MoonScriptBossAI::AIUpdate();
 		}
 
 		SpellDesc*				mLocustSwarm;
@@ -816,6 +833,7 @@ class InfectiousGhoulAI : public MoonScriptCreatureAI
 		void OnCombatStart(Unit* pTarget)
 		{
 			mEnraged = false;
+			MoonScriptCreatureAI::OnCombatStart(pTarget);
 		}
 
 		void AIUpdate()
@@ -825,6 +843,7 @@ class InfectiousGhoulAI : public MoonScriptCreatureAI
 				ApplyAura(INFECTIOUS_GHOUL_FRENZY_NORMAL);
 				mEnraged = true;
 			}
+			MoonScriptCreatureAI::AIUpdate();
 		}
 
 		bool	mEnraged;
@@ -865,6 +884,7 @@ class StoneskinGargoyleAI : public MoonScriptCreatureAI
 				StopMovement();
 				return;
 			}
+			MoonScriptCreatureAI::AIUpdate();
 		}
 
 		SpellDesc*	mStoneskin;
@@ -890,6 +910,7 @@ class EyeStalkerAI : public MoonScriptCreatureAI
 			SetBehavior(Behavior_Spell);
 			SetCanMove(false);
 			StopMovement();
+			MoonScriptCreatureAI::OnCombatStart(pTarget);
 		}
 
 		void AIUpdate()
@@ -918,6 +939,7 @@ class EyeStalkerAI : public MoonScriptCreatureAI
 			SetBehavior(Behavior_Spell);
 			SetCanMove(false);
 			StopMovement();
+			MoonScriptCreatureAI:;AIUpdate();
 		}
 };
 
@@ -1005,6 +1027,7 @@ class NothThePlaguebringerAI : public MoonScriptBossAI
 				if(GameObject* Gate = _unit->GetMapMgr()->GetInterface()->GetGameObjectNearestCoords(2683.670654f, -3556.429688f, 261.823334f, 181201))
 					Gate->SetState(1);
 			}
+			MoonScriptBossAI::OnCombatStart(pTarget);
 		}
 
 		void OnCombatStop(Unit* pTarget)
@@ -1017,6 +1040,7 @@ class NothThePlaguebringerAI : public MoonScriptBossAI
 				if(GameObject* Gate = _unit->GetMapMgr()->GetInterface()->GetGameObjectNearestCoords(2683.670654f, -3556.429688f, 261.823334f, 181201))
 					Gate->SetState(GAMEOBJECT_STATE_OPEN);
 			}
+			MoonScriptBossAI::OnCombatStop(pTarget);
 		}
 
 		void AIUpdate()
@@ -1157,6 +1181,7 @@ class NothThePlaguebringerAI : public MoonScriptBossAI
 				SetCanMove(false);
 				StopMovement();
 			}
+			MoonScriptBossAI::AIUpdate();
 		}
 
 		SpellDesc*					mCriple;
@@ -1346,6 +1371,7 @@ class HeiganTheUncleanAI : public MoonScriptBossAI
 				if(GameObject* Gate = _unit->GetMapMgr()->GetInterface()->GetGameObjectNearestCoords(2771.718506f, -3739.965820f, 273.616211f, 181203))
 					Gate->SetState(1);
 			}
+			MoonScriptBossAI::OnCombatStart(pTarget);
 		}
 
 		void OnCombatStop(Unit* pTarget)
@@ -1359,6 +1385,7 @@ class HeiganTheUncleanAI : public MoonScriptBossAI
 				if(GameObject* Gate = _unit->GetMapMgr()->GetInterface()->GetGameObjectNearestCoords(2771.718506f, -3739.965820f, 273.616211f, 181203))
 					Gate->SetState(GAMEOBJECT_STATE_OPEN);
 			}
+			MoonScriptBossAI::OnCombatStart(pTarget);
 		}
 
 		void AIUpdate()
@@ -1406,6 +1433,7 @@ class HeiganTheUncleanAI : public MoonScriptBossAI
 				SetCanMove(false);
 				StopMovement();
 			}
+			MoonScriptBossAI::AIUpdate();
 		}
 
 		int32										mPhaseSwitchTimer;
@@ -1505,6 +1533,7 @@ class LoathebAI : public MoonScriptCreatureAI
 			mDoomTimer = AddTimer(mDoomStaticTimer);
 			mDeathbloomTimer = AddTimer(30000);
 			mDeathbloomDamagePhase = false;
+			MoonScriptCreatureAI::OnCombatStart(pTarget);
 		}
 
 		void AIUpdate()
@@ -1594,6 +1623,7 @@ class LoathebAI : public MoonScriptCreatureAI
 					mDeathbloomDamagePhase = !mDeathbloomDamagePhase;
 				}
 			}
+			MoonScriptCreatureAI::AIUpdate();
 		}
 
 		uint32			mDoomStaticTimer;
@@ -1619,6 +1649,7 @@ class SporeAI : public MoonScriptCreatureAI
 		void OnDied(Unit* pKiller)
 		{
 			ApplyAura(SPORE_FUNGAL_CREEP);
+			MoonScriptCreatureAI::OnDied(pKiller);
 		}
 };
 
@@ -1651,6 +1682,7 @@ class ShadeOfNaxxramasAI : public MoonScriptCreatureAI
 				Ghost->SetDespawnWhenInactive(true);
 				Ghost->AggroNearestPlayer(200);
 			}
+			MoonScriptCreatureAI::OnDied(pKiller);
 		}
 };
 
@@ -1674,6 +1706,7 @@ class PortalOfShadowsAI : public MoonScriptCreatureAI
 			SetBehavior(Behavior_Spell);
 			SetCanMove(false);
 			StopMovement();
+			MoonScriptCreatureAI::OnCombatStart(pTarget);
 		}
 
 		void OnCombatStop(Unit* pTarget)
@@ -1682,6 +1715,7 @@ class PortalOfShadowsAI : public MoonScriptCreatureAI
 			CancelAllTimers();
 			SetCanMove(true);
 			SetBehavior(Behavior_Default);
+			MoonScriptCreatureAI::OnCombatStop(pTarget);
 		}
 
 		void AIUpdate()
@@ -1709,6 +1743,7 @@ class PortalOfShadowsAI : public MoonScriptCreatureAI
 			SetBehavior(Behavior_Spell);
 			SetCanMove(false);
 			StopMovement();
+			MoonScriptCreatureAI::AIUpdate();
 		}
 
 		ShadeOfNaxxramasAI*	mShadeAI;
@@ -1797,6 +1832,7 @@ class DeathKnightCavalierAI : public MoonScriptCreatureAI
 				ApplyAura(DEATH_KNIGHT_CAVALIER_DISMOUNT_DEATHCHARGER);
 				mIsMounted = false;
 			}
+			MoonScriptCreatureAI::AIUpdate();
 		}
 
 		DeathchargerSteedAI*	mChargerAI;
@@ -1843,6 +1879,7 @@ class DeathchargerSteedAI : public MoonScriptCreatureAI
 					Despawn(1);
 				}
 			}
+			MoonScriptCreatureAI::OnCombatStop(pTarget);
 		}
 
 		void Destroy()
@@ -1894,6 +1931,7 @@ class DarkTouchedWarriorAI : public MoonScriptCreatureAI
 		void OnCombatStart(Unit* pTarget)
 		{
 			mResetHateTimer = AddTimer(8000 + RandomUInt(7) * 1000);
+			MoonScriptCreatureAI::OnCombatStart(pTarget);
 		}
 
 		void AIUpdate()
@@ -1903,6 +1941,7 @@ class DarkTouchedWarriorAI : public MoonScriptCreatureAI
 				ClearHateList();
 				mResetHateTimer = AddTimer(8000 + RandomUInt(7) * 1000);
 			}
+			MoonScriptCreatureAI::AIUpdate();
 		}
 
 		int32	mResetHateTimer;
@@ -2057,11 +2096,13 @@ class PatchworkGolemAI : public MoonScriptCreatureAI
 		void OnCombatStart(Unit* pTarget)
 		{
 			ApplyAura(PATCHWORK_GOLEM_DISEASE_CLOUD_NORMAL);
+			MoonScriptCreatureAI::OnCombatStart(pTarget);
 		}
 
 		void OnCombatStop(Unit* pTarget)
 		{
 			ApplyAura(PATCHWORK_GOLEM_DISEASE_CLOUD_NORMAL);
+			MoonScriptCreatureAI::OnCombatStop(pTarget);
 		}
 };
 
@@ -2088,6 +2129,7 @@ class LightningTotemAI : public MoonScriptCreatureAI
 			SetBehavior(Behavior_Spell);
 			SetCanMove(false);
 			StopMovement();
+			MoonScriptCreatureAI::OnCombatStart(pTarget);
 		}
 
 		void AIUpdate()
@@ -2096,6 +2138,7 @@ class LightningTotemAI : public MoonScriptCreatureAI
 			SetBehavior(Behavior_Spell);
 			SetCanMove(false);
 			StopMovement();
+			MoonScriptCreatureAI::AIUpdate();
 		}
 };
 
@@ -2118,6 +2161,7 @@ class StitchedColossusAI : public MoonScriptCreatureAI
 		void OnCombatStart(Unit* pTarget)
 		{
 			mEnraged = false;
+			MoonScriptCreatureAI::OnCombatStart(pTarget);
 		}
 
 		void AIUpdate()
@@ -2127,6 +2171,7 @@ class StitchedColossusAI : public MoonScriptCreatureAI
 				ApplyAura(STITCHED_COLOSSUS_UNSTOPPABLE_ENRAGE);
 				mEnraged = true;
 			}
+			MoonScriptCreatureAI:;AIUpdate();
 		}
 
 		bool	mEnraged;
@@ -2166,6 +2211,7 @@ class PatchwerkAI : public MoonScriptBossAI
 				GetUnit()->SendChatMessage(CHAT_MSG_RAID_BOSS_EMOTE, LANG_UNIVERSAL, "Patchwerk goes into a frenzy!");
 				mEnraged = true;
 			}
+			MoonScriptCreatureAI::AIUpdate();
 		}
 
 		bool	mEnraged;

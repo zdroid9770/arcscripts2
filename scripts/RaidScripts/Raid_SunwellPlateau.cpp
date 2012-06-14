@@ -230,6 +230,7 @@ class FelmystAI : public MoonScriptBossAI
 		void OnCombatStart(Unit* pTarget)
 		{
 			ApplyAura(FELMYST_NOXIOUS_FUME);
+			MoonScriptBossAI::OnCombatStart(pTarget);
 		}
 };
 
@@ -265,6 +266,7 @@ class LadySacrolashAI : public MoonScriptBossAI
 			MoonScriptCreatureAI* mGrandWarlockAlythess = GetNearestCreature(CN_GRAND_WARLOCK_ALYTHESS);
 			if(mGrandWarlockAlythess != NULL && mGrandWarlockAlythess->IsAlive())
 				mGrandWarlockAlythess->Emote("Sacrolash!", Text_Yell, 12492);
+			MoonScriptBossAI::OnDied(pKiller);
 		}
 };
 
@@ -300,6 +302,7 @@ class GrandWarlockAlythessAI : public MoonScriptBossAI
 			MoonScriptCreatureAI* mLadySacrolash = GetNearestCreature(CN_LADY_SACROLASH);
 			if(mLadySacrolash != NULL && mLadySacrolash->IsAlive())
 				mLadySacrolash->Emote("Alythess! Your fire burns within me!", Text_Yell, 12488);
+			MoonScriptBossAI::OnDied(pKiller);
 		}
 };
 

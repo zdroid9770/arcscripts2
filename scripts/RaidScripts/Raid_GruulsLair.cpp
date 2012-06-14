@@ -137,17 +137,20 @@ class HighKingMaulgarAI : public MoonScriptBossAI
 				SetBehavior(Behavior_Spell);
 				SetCanMove(false);
 			}
+			MoonScriptBossAI::OnCombatStart(pTarget);
 		}
 
 		void OnCombatStop(Unit* pTarget)
 		{
 			SetCanEnterCombat(true);
+			MoonScriptBossAI::OnCombatStop(pTarget);
 		}
 
 		void OnDied(Unit* mKiller)
 		{
 			if(GameObject* pDoor = mKiller->GetMapMgr()->GetInterface()->GetGameObjectNearestCoords(95.26f, 251.836f, 0.47f, 183817))
 				pDoor->SetState(GAMEOBJECT_STATE_OPEN);
+			MoonScriptBossAI::OnDied(mKiller);
 		}
 
 		void AIUpdate()
@@ -157,6 +160,7 @@ class HighKingMaulgarAI : public MoonScriptBossAI
 
 			if(GetPhase() == 1 && GetHealthPercent() <= 50)
 				SetPhase(2, mEnrage);
+			MoonScriptBossAI::AIUpdate();
 		}
 
 		void OnAddDied()
@@ -221,6 +225,7 @@ class KigglerTheCrazedAI : public MoonScriptCreatureAI
 				SetBehavior(Behavior_Spell);
 				SetCanMove(false);
 			}
+			MoonScriptCreatureAI::OnCombatStart(pTarget);
 		}
 
 		void OnDied(Unit* mKiller)
@@ -231,6 +236,7 @@ class KigglerTheCrazedAI : public MoonScriptCreatureAI
 				HighKingMaulgarAI* pMaulgarAI = TO< HighKingMaulgarAI* >(pMaulgar->GetScript());
 				pMaulgarAI->OnAddDied();
 			}
+			MoonScriptCreatureAI::OnDied(mKiller);
 		}
 
 		void AIUpdate()
@@ -243,6 +249,7 @@ class KigglerTheCrazedAI : public MoonScriptCreatureAI
 					SetCanMove(false);
 				}
 			}
+			MoonScriptCreatureAI::AIUpdate();
 		}
 };
 
@@ -270,6 +277,7 @@ class BlindeyeTheSeerAI : public MoonScriptCreatureAI
 				HighKingMaulgarAI* pMaulgarAI = TO< HighKingMaulgarAI* >(pMaulgar->GetScript());
 				pMaulgarAI->OnAddDied();
 			}
+			MoonScriptCreatureAI::OnDied(mKiller);
 		}
 };
 
@@ -297,6 +305,7 @@ class OlmTheSummonerAI : public MoonScriptCreatureAI
 				HighKingMaulgarAI* pMaulgarAI = TO< HighKingMaulgarAI* >(pMaulgar->GetScript());
 				pMaulgarAI->OnAddDied();
 			}
+			MoonScriptCreatureAI::OnDied(mKiller);
 		}
 };
 
@@ -344,6 +353,7 @@ class KroshFirehandAI : public MoonScriptCreatureAI
 		void OnCombatStart(Unit* pTarget)
 		{
 			CastSpellNowNoScheduling(mSpellShield);
+			MoonScriptCreatureAI::OnCombatStart(pTarget);
 		}
 
 		void AIUpdate()
@@ -370,6 +380,7 @@ class KroshFirehandAI : public MoonScriptCreatureAI
 					CastSpellNowNoScheduling(mSpellShield);
 				}
 			}
+			MoonScriptCreatureAI::AIUpdate();
 		}
 
 		void OnDied(Unit* mKiller)
@@ -380,6 +391,7 @@ class KroshFirehandAI : public MoonScriptCreatureAI
 				HighKingMaulgarAI* pMaulgarAI = TO< HighKingMaulgarAI* >(pMaulgar->GetScript());
 				pMaulgarAI->OnAddDied();
 			}
+			MoonScriptCreatureAI::OnDied(mKiller);
 		}
 
 		SpellDesc*      mSpellShield;
@@ -440,18 +452,21 @@ class GruulTheDragonkillerAI : public MoonScriptCreatureAI
 
 			if(GameObject* pGate = _unit->GetMapMgr()->GetInterface()->GetGameObjectNearestCoords(166.897f, 368.226f, 16.9209f, 184662))
 				pGate->SetState(GAMEOBJECT_STATE_CLOSED);
+			MoonScriptCreatureAI::OnCombatStart(pTarget);
 		}
 
 		void OnCombatStop(Unit* pTarget)
 		{
 			if(GameObject* pGate = _unit->GetMapMgr()->GetInterface()->GetGameObjectNearestCoords(166.897f, 368.226f, 16.9209f, 184662))
 				pGate->SetState(GAMEOBJECT_STATE_OPEN);
+			MoonScriptCreatureAI::OnCombatStop(pTarget);
 		}
 
 		void OnDied(Unit* mKiller)
 		{
 			if(GameObject* pGate = _unit->GetMapMgr()->GetInterface()->GetGameObjectNearestCoords(166.897f, 368.226f, 16.9209f, 184662))
 				pGate->SetState(GAMEOBJECT_STATE_OPEN);
+			MoonScriptCreatureAI::OnDied(mKiller);
 		}
 
 		void AIUpdate()
@@ -505,6 +520,7 @@ class GruulTheDragonkillerAI : public MoonScriptCreatureAI
 					ResetTimer(mHurtfulTimer, 8000);
 				}
 			}
+			MoonScriptCreatureAI::AIUpdate();
 		}
 
 		UnitArray GetInRangePlayers()

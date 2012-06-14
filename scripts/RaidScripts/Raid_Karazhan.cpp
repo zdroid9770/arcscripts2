@@ -99,6 +99,7 @@ class AttumenTheHuntsmanAI : public MoonScriptBossAI
 		void OnCombatStop(Unit* pTarget)
 		{
 			Despawn(10000);
+			MoonScriptBossAI::OnCombatStop(mTarget);
 		}
 
 		void AIUpdate()
@@ -117,6 +118,7 @@ class AttumenTheHuntsmanAI : public MoonScriptBossAI
 					midnight->SetAllowMelee(false);
 				}
 			}
+			MoonScriptBossAI::AIUpdate();
 		}
 };
 
@@ -138,6 +140,7 @@ class MidnightAI : public MoonScriptBossAI
 		{
 			if(GetLinkedCreature() && GetLinkedCreature()->IsAlive())
 				TO< MoonScriptCreatureAI *>(GetLinkedCreature())->Emote("Well done Midnight!", Text_Yell, 9173);
+			MoonScriptBossAI::OnTargetDied(pTarget);
 		}
 
 		void AIUpdate()
@@ -184,6 +187,7 @@ class MidnightAI : public MoonScriptBossAI
 					else MoveTo(attumen);
 				}
 			}
+			MoonScriptBossAI::AIUpdate();
 		}
 };
 
@@ -228,11 +232,13 @@ class MoroesAI : public MoonScriptBossAI
 		{
 			mEnrage->mEnabled = true;
 			mVanishTimer = AddTimer(35000);	//First vanish after 35sec
+			MoonScriptBossAI::OnCombatStart(pTarget);
 		}
 
 		void OnDied(Unit* pKiller)
 		{
 			RemoveAuraOnPlayers(MOROES_GARROTE);
+			MoonScriptBossAI::OnDied(pKiller);
 		}
 
 		void AIUpdate()
@@ -260,6 +266,7 @@ class MoroesAI : public MoonScriptBossAI
 					RemoveTimer(mGarroteTimer);
 				}
 			}
+			MoonScriptBossAI::AIUpdate();
 		}
 
 		SpellDesc*	mVanish;
@@ -301,6 +308,7 @@ class MaidenOfVirtueAI : public MoonScriptCreatureAI
 		void OnCombatStart(Unit* pTarget)
 		{
 			mRepentance->TriggerCooldown();	//No repentance at the beginning of the fight
+			MoonScriptCreatureAI::OnCombatStart(pTarget);
 		}
 
 		SpellDesc* mRepentance;

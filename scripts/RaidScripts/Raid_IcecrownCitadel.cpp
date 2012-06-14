@@ -374,6 +374,7 @@ class LordMarrowgarAI : public MoonScriptBossAI
 			ColdFlameTimer = AddTimer(5*SEC_IN_MS);
 			if(mInstance)
 				mInstance->SetInstanceData(ICC_LORD_MARROWGAR, State_InProgress);
+			MoonScriptBossAI::OnCombatStart(pUnit);
 		}
 
 		void OnCombatStop(Unit* mTarget)
@@ -382,11 +383,13 @@ class LordMarrowgarAI : public MoonScriptBossAI
 
 			if(mInstance)
 				mInstance->SetInstanceData(ICC_LORD_MARROWGAR, State_NotStarted);
+			MoonScriptBossAI::OnCombatStop(mTarget);
 		}
 
 		void OnDied(Unit* mKiller)
 		{
 			_unit->CastSpell(_unit, SPELL_SOUL_FEAST, false);
+			MoonScriptBossAI::OnDied(mKiller);
 		}
 
 		void AIUpdate()
@@ -436,6 +439,7 @@ class LordMarrowgarAI : public MoonScriptBossAI
 				_unit->CastSpellAoF(_unit->GetPositionX(), _unit->GetPositionY(), _unit->GetPositionZ(), dbcSpell.LookupEntry(SPELL_COLDFLAME), true);
 				ResetTimer(ColdFlameTimer, 5*SEC_IN_MS);
 			}
+			MoonScriptBossAI::AIUpdate();
 		}
 
 	protected:
@@ -567,6 +571,7 @@ class LadyDeathwhisperAI : public MoonScriptBossAI
 			DominateHandTimer = AddTimer(27*SEC_IN_MS);
 			SummonCultistTimer = AddTimer((20+rand()%10)*SEC_IN_MS);
 			_unit->CastSpell(_unit, SPELL_MANA_BARRIER, true);
+			MoonScriptBossAI::OnCombatStart(pAttacker);
 		}
 
 		void OnCombatStop(Unit* pUnit)
@@ -576,6 +581,7 @@ class LadyDeathwhisperAI : public MoonScriptBossAI
 				if(pSummons[i])
 					pSummons[i]->Despawn();
 			}
+			MoonScriptBossAI::OnCombatStop(pUnit);
 		}
 
 		uint8 GetAlliveSummonsCount()
@@ -635,6 +641,7 @@ class LadyDeathwhisperAI : public MoonScriptBossAI
 				SetCanMove(false);
 				SetPhase(2);
 			}
+			MoonScriptBossAI::AIUpdate();
 		}
 
 	private:

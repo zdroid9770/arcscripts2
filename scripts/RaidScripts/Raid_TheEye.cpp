@@ -406,6 +406,7 @@ class AstromancerAI : public MoonScriptCreatureAI
 					}
 				}
 			}
+			MoonScriptCreatureAI::AIUpdate();
 		}
 
 		SpellDesc*      mArcaneBurst;
@@ -1684,6 +1685,7 @@ class VoidReaverAI : public MoonScriptBossAI
 				mArcaneOrbTimer = AddTimer(10000);
 				mArcaneOrb->mEnabled = false;
 			}
+			MoonScriptBossAI::OnCombatStart(mTarget);
 		}
 
 		void AIUpdate()
@@ -1693,6 +1695,7 @@ class VoidReaverAI : public MoonScriptBossAI
 				RemoveTimer(mArcaneOrbTimer);
 				mArcaneOrb->mEnabled = true;
 			}
+			MoonScriptBossAI::AIUpdate();
 		}
 
 		int32		mArcaneOrbTimer;
@@ -1765,6 +1768,7 @@ class HighAstromancerSolarianAI : public MoonScriptBossAI
 		void OnCombatStart(Unit* pTarget)
 		{
 			mSplitTimer = AddTimer(50000);	//First split after 50sec
+			MoonScriptBossAI::OnCombatStart(pTarget);
 		}
 
 		void AIUpdate()
@@ -1802,6 +1806,7 @@ class HighAstromancerSolarianAI : public MoonScriptBossAI
 					RemoveTimer(mAgentsTimer);
 				}
 			}
+			MoonScriptBossAI::AIUpdate();
 		}
 
 		SpellDesc*	mVoidForm;
@@ -2611,6 +2616,7 @@ class DarkenerAI : public MoonScriptCreatureAI
 			SwitchTarget();
 
 			mGazeSwitchTimer = AddTimer((RandomUInt(4) + 8) * 1000);
+			MoonScriptCreatureAI::OnCombatStart(mTarget);
 		}
 
 		void OnCombatStop(Unit*  mTarget)
@@ -2619,11 +2625,13 @@ class DarkenerAI : public MoonScriptCreatureAI
 
 			if(IsAlive())
 				SetCanEnterCombat(false);
+			MoonScriptCreatureAI::OnCombatStop(mTarget);
 		}
 
 		void OnTargetDied(Unit* mTarget)
 		{
 			SwitchTarget();
+			MoonScriptCreatureAI::OnTargetDied(mTarget);
 		}
 
 		void AIUpdate()
@@ -2634,6 +2642,7 @@ class DarkenerAI : public MoonScriptCreatureAI
 				if(!SwitchTarget())
 					return;
 			}
+			MoonScriptCreatureAI::AIUpdate();
 		}
 
 		bool SwitchTarget()
@@ -2679,12 +2688,14 @@ class SanguinarAI : public MoonScriptCreatureAI
 		void OnCombatStart(Unit*  mTarget)
 		{
 			SetCanEnterCombat(true);
+			MoonScriptCreatureAI::OnCombatStart(mTarget);
 		}
 
 		void OnCombatStop(Unit*  mTarget)
 		{
 			if(IsAlive())
 				SetCanEnterCombat(false);
+			MoonScriptCreatureAI::OnCombatStop(mTarget);
 		}
 };
 
@@ -2717,12 +2728,14 @@ class CapernianAI : public MoonScriptCreatureAI
 				SetBehavior(Behavior_Spell);
 				SetCanMove(false);
 			}
+			MoonScriptCreatureAI::OnCombatStart(mTarget);
 		}
 
 		void OnCombatStop(Unit* mTarget)
 		{
 			if(IsAlive())
 				SetCanEnterCombat(false);
+			MoonScriptCreatureAI::OnCombatStop(mtarget);
 		}
 
 		void AIUpdate()
@@ -2731,9 +2744,7 @@ class CapernianAI : public MoonScriptCreatureAI
 			SetCanMove(true);
 			Unit* pClosestTarget = GetBestPlayerTarget(TargetFilter_Closest);
 			if(pClosestTarget != NULL && GetRangeToUnit(pClosestTarget) <= 6.0f)
-			{
 				CastSpellNowNoScheduling(mArcaneBurst);
-			}
 
 			Unit* pTarget = _unit->GetAIInterface()->getNextTarget();
 			if(pTarget != NULL && GetRangeToUnit(pTarget) <= 30.0f)
@@ -2744,6 +2755,7 @@ class CapernianAI : public MoonScriptCreatureAI
 					SetCanMove(false);
 				}
 			}
+			MoonScriptCreatureAI::AIUpdate();
 		}
 
 		SpellDesc*	mArcaneBurst;
@@ -2770,12 +2782,14 @@ class TelonicusAI : public MoonScriptCreatureAI
 		void OnCombatStart(Unit*  mTarget)
 		{
 			SetCanEnterCombat(true);
+			MoonScriptCreatureAI::OnCombatStart(mTarget);
 		}
 
 		void OnCombatStop(Unit*  mTarget)
 		{
 			if(IsAlive())
 				SetCanEnterCombat(false);
+			MoonScriptCreatureAI::OnCombatStop(mTarget);
 		}
 };
 
@@ -2802,6 +2816,7 @@ class FlameStrikeAI : public MoonScriptCreatureAI
 		{
 			RemoveAura(FLAME_STRIKE_TRIGGER_FLAME_STRIKE_EFFECT);
 			Despawn(500);
+			MoonScriptCreatureAI::OnDied(mKiller);
 		}
 
 		void AIUpdate()
@@ -2810,6 +2825,7 @@ class FlameStrikeAI : public MoonScriptCreatureAI
 			ApplyAura(FLAME_STRIKE_TRIGGER_FLAME_STRIKE);
 			RemoveAIUpdateEvent();
 			Despawn(8500);
+			MoonScriptCreatureAI::AIUpdate();
 		}
 
 		int32	mDespawnTimer;
@@ -2845,6 +2861,7 @@ class PhoenixAI : public MoonScriptCreatureAI
 				_unit->GetAIInterface()->AttackReaction(pTarget, 500);
 			else
 				Despawn(1, 0);
+			MoonScriptCreatureAI::OnTargetDied(mTarget);
 		}
 
 		void OnDied(Unit* mKiller)
@@ -2852,6 +2869,7 @@ class PhoenixAI : public MoonScriptCreatureAI
 			ApplyAura(PHOENIX_REBIRTH);
 			SpawnCreature(21364);
 			Despawn(500);
+			MoonScriptCreatureAI::OnDied(mKiller);
 		}
 
 		void AIUpdate()
@@ -2870,6 +2888,7 @@ class PhoenixAI : public MoonScriptCreatureAI
 				Despawn(500);
 				return;
 			}
+			MoonScriptCreatureAI::AIUpdate();
 		}
 
 		int32	mBurnTimer;
@@ -2893,12 +2912,14 @@ class PhoenixEggAI : public MoonScriptCreatureAI
 		void OnDied(Unit* mKiller)
 		{
 			Despawn(500);
+			MoonScriptCreatureAI::OnDied(mKiller);
 		}
 
 		void AIUpdate()
 		{
 			SpawnCreature(CN_PHOENIX);
 			Despawn(0);
+			MoonScriptCreatureAI::AIUpdate();
 		}
 };
 
@@ -2922,22 +2943,17 @@ class WeaponsAI : public MoonScriptCreatureAI
 
 			Unit* pTarget = GetBestPlayerTarget();
 			if(pTarget != NULL)
-			{
 				_unit->GetAIInterface()->AttackReaction(pTarget, 200, 0);
-			}
 		}
 
 		void OnCombatStop(Unit*  mTarget)
 		{
 			Unit* pTarget = GetBestPlayerTarget();
 			if(pTarget != NULL)
-			{
 				_unit->GetAIInterface()->AttackReaction(pTarget, 500);
-			}
 			else
-			{
 				Despawn(1);
-			}
+			MoonScriptCreatureAI::OnCombatStart(mTarget);
 		}
 };
 
@@ -3035,9 +3051,7 @@ class KaelThasAI : public MoonScriptBossAI
 		KaelThasAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
 		{
 			for(int i = 1; i < 4; ++i)
-			{
 				AddWaypoint(CreateWaypoint(1, 0, Waypoints[i].addition, Waypoints[i]));
-			}
 
 			SetCanEnterCombat(true);
 			SetMoveType(Move_DontMoveWP);
@@ -3079,9 +3093,7 @@ class KaelThasAI : public MoonScriptBossAI
 			{
 				Creature* pCreature = TO_CREATURE(ForceCreatureFind(Advisors[i].addition, Advisors[i].x, Advisors[i].y, Advisors[i].z));
 				if(pCreature != NULL)
-				{
 					pCreature->Despawn(0, 0);
-				}
 
 				SpawnCreature(Advisors[i].addition, Advisors[i].x, Advisors[i].y, Advisors[i].z, Advisors[i].o);
 			}
@@ -3104,6 +3116,7 @@ class KaelThasAI : public MoonScriptBossAI
 			mEventTimer = mArcaneDisruptionTimer = mShockBarrierTimer = mFlameStrikeTimer = mPhoenixTimer = -1;
 			mAdvisorPhase = PHASE_SPEECH;
 			mAdvCoords.clear();
+			MoonScriptBossAI::OnCombatStart(mTarget);
 		}
 
 		void OnCombatStop(Unit* mTarget)
@@ -3129,6 +3142,7 @@ class KaelThasAI : public MoonScriptBossAI
 				if(pGameobject != NULL && pGameobject->GetState() == 1)
 					pGameobject->SetState(0);
 			}
+			MoonScriptBossAI::OnCombatStop(mTarget);
 		}
 
 		void SendAdvisorEmote()
@@ -3339,6 +3353,7 @@ class KaelThasAI : public MoonScriptBossAI
 					RemoveTimer(mPhoenixTimer);
 				}
 			}
+			MoonScriptBossAI::AIUPdate();
 		}
 
 		Unit* GetRandomPlayer()

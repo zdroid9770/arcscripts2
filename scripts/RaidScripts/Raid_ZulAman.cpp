@@ -62,18 +62,21 @@ class NalorakkAI : public MoonScriptBossAI
 		{
 			// 45 Seconds until switch to Bear Form
 			MorphTimer = AddTimer(45000);
+			MoonScriptBossAI::OnCombatStart(pTarget);
 		}
 
 		void OnCombatStop(Unit* pTarget)
 		{
 			// On leaving combat he changes back to a troll
 			SetDisplayId(21631);
+			MoonScriptBossAI::OnCombatStop(pTarget);
 		}
 
 		void OnDied(Unit* pKiller)
 		{
 			// On death he changes back to a troll
 			SetDisplayId(21631);
+			MoonScriptBossAI::OnDied(pKiller);
 		}
 
 		void AIUpdate()
@@ -101,6 +104,7 @@ class NalorakkAI : public MoonScriptBossAI
 
 				Emote("Make way for Nalorakk!", Text_Yell, 12073);
 			}
+			MoonScriptBossAI::AIUpdate();
 		}
 
 		SpellDesc* Morph;
@@ -137,6 +141,7 @@ class AkilzonAI : public MoonScriptCreatureAI
 		{
 			// 2 Minute timer till Soaring Eagles are spawned
 			mSummonTime = AddTimer(120000);
+			MoonScriptCreatureAI::OnCombatStart(pTarget);
 		}
 
 		void AIUpdate()
@@ -160,6 +165,7 @@ class AkilzonAI : public MoonScriptCreatureAI
 				// Restart the timer
 				ResetTimer(mSummonTime, 120000);
 			}
+			MoonScriptCreatureAI::AIUpdate();
 		}
 
 		int32 mSummonTime;
@@ -225,11 +231,13 @@ class HalazziAI : public MoonScriptBossAI
 			SplitCount = 1;
 			MaxHealth = _unit->GetUInt32Value(UNIT_FIELD_MAXHEALTH);
 			mLynx = NULL;
+			MoonScriptBossAI::OnCombatStart(pTarget);
 		}
 
 		void OnCombatStop(Unit* pTarget)
 		{
 			Merge();
+			MoonScriptBossAI::OnCombatStop(pTarget);
 		}
 
 		void AIUpdate()
@@ -272,6 +280,7 @@ class HalazziAI : public MoonScriptBossAI
 					}
 				}
 			}
+			MoonScriptBossAI::AIUpdate();
 		}
 
 		void Split()

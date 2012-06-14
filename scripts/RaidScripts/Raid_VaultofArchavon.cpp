@@ -93,6 +93,7 @@ class ArchavonAI : public MoonScriptBossAI
 		void OnCombatStart(Unit *mTarget)
 		{
 			mStompTimer = AddTimer(45*SEC_IN_MS);
+			MoonScriptBossAI::OnCombatStart(mTarget);
 		}
 
 		void AIUpdate()
@@ -104,8 +105,9 @@ class ArchavonAI : public MoonScriptBossAI
 				ResetTimer(mStompTimer, 45*SEC_IN_MS);
 			}
 
-			if(_unit->GetCurrentSpell() == (Spell*)SPELL_CRUSHING_LEAP)
+			if(_unit->GetCurrentSpell() == dbcSpell.LookupEntry(SPELL_CRUSHING_LEAP))
 				_unit->CastSpell(_unit, SPELL_CHOCKING_CLOUD, false);
+			MoonScriptBossAI::AIUpdate();
 		}
 
 	private:
@@ -145,6 +147,7 @@ class EmalonAI : public MoonScriptBossAI
 			if(mInstance)
 				mInstance->SetInstanceData(Data_EncounterState, 1, State_InProgress);
 			//mSpellOverchargeTimer = AddTimer(45*SEC_IN_MS);
+			MoonScriptBossAI::OnCombatStart(mAttacker);
 		}
 
 		void OnCombatStop(Unit* pUnit)
@@ -152,12 +155,14 @@ class EmalonAI : public MoonScriptBossAI
 			if(mInstance)
 				mInstance->SetInstanceData(Data_EncounterState, 1, State_Performed);
 			SummonMinions();
+			MoonScriptBossAI::OnCombatStop(pUnit);
 		}
 
 		void OnDied(Unit* mKiller)
 		{
 			if(mInstance)
 				mInstance->SetInstanceData(Data_EncounterState, 1, State_Finished);
+			MoonScriptBossAI::OnDied(mKiller);
 		}
 
 		void AIUpdate()
@@ -172,6 +177,7 @@ class EmalonAI : public MoonScriptBossAI
 				}
 				ResetTimer(mSpellOverchargeTimer, 45*SEC_IN_MS);
 			}*/
+			MoonScriptBossAI::AIUpdate();
 		}
 
 	private:
@@ -201,6 +207,7 @@ class EmalonMinionAI : public MoonScriptCreatureAI
 				if(pSummon != NULL)
 					pSummon->GetAIInterface()->AttackReaction(mKiller, 100);
 			}
+			MoonScriptCreatureAI::OnDied(mKiller);
 		}
 
 		void AIUpdate()
@@ -212,6 +219,7 @@ class EmalonMinionAI : public MoonScriptCreatureAI
 				_unit->CastSpell(_unit, SPELL_OVERCHARGED_BLAST, false);
 				Despawn();
 			}
+			MoonScriptCreatureAI::AIUpdate();
 		}
 
 	private:
@@ -240,6 +248,7 @@ class KoralonAI : public MoonScriptCreatureAI
 		{
 			mBreathTimer = AddTimer(15*SEC_IN_MS);
 			mBurningFuryTimer = AddTimer(20*SEC_IN_MS);
+			MoonScriptCreatureAI::OnCombatStart(pUnit);
 		}
 
 		void AIUpdate()
@@ -255,6 +264,7 @@ class KoralonAI : public MoonScriptCreatureAI
 				_unit->CastSpell(_unit, SPELL_BURNING_FURY, true);
 				ResetTimer(mBurningFuryTimer, 20*SEC_IN_MS);
 			}
+			MoonScriptCreatureAI::AIUpdate();
 		}
 
 	private:
@@ -294,6 +304,7 @@ class ToravonAI : public MoonScriptCreatureAI
 		{
 			_unit->CastSpell(_unit, SPELL_FROZEN_MALLET, true);
 			mFrozenOrbTimer = AddTimer(11*SEC_IN_MS);
+			MoonScriptCreatureAI::OnCombatStop(pUnit);
 		}
 
 		void AIUpdate()
@@ -304,6 +315,7 @@ class ToravonAI : public MoonScriptCreatureAI
 				_unit->CastSpell(_unit, SPELL_WHITEOUT, false);
 				ResetTimer(mFrozenOrbTimer, 38*SEC_IN_MS);
 			}
+			MoonScriptCreatureAI::AIUpdate();
 		}
 
 	private:
