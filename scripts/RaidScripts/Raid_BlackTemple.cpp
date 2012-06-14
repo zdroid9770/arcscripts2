@@ -49,7 +49,6 @@ class BlackTempleScript : public MoonInstanceScript
 				{
 					case CN_SUPREMUS: AddGameObjectStateByEntry(185882, GAMEOBJECT_STATE_OPEN);	break; // Gate to Black Temple behind Supremus
 					case CN_NAJENTUS: AddGameObjectStateByEntry(185483, GAMEOBJECT_STATE_OPEN);	break;
-					case CN_
 				}
 			}
 		}
@@ -69,8 +68,7 @@ class BlackTempleScript : public MoonInstanceScript
 			switch(pVictim->GetEntry())
 			{
 				case CN_SUPREMUS: AddGameObjectStateByEntry(185882, GAMEOBJECT_STATE_OPEN);	break;// Gate to Black Temple behind Supremus
-				case CN_NAJENTUS: AddGameObjectStateByEntry(185483, GAMEOBJECT_STATE_OPEN);	break;
-				case 
+				case CN_NAJENTUS: AddGameObjectStateByEntry(185483, GAMEOBJECT_STATE_OPEN);	break; 
 			}
 		}
 };
