@@ -44,7 +44,6 @@ class SilvaFilnaveth_Gossip : public Arcemu::Gossip::Script
 		}
 
 		void Destroy() { delete this; }
-
 };
 
 class BunthenPlainswind_Gossip : public Arcemu::Gossip::Script
@@ -73,7 +72,6 @@ class BunthenPlainswind_Gossip : public Arcemu::Gossip::Script
 		}
 
 		void Destroy() { delete this; }
-
 };
 
 void SetupMoongladeGossip(ScriptMgr* mgr)

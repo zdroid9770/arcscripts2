@@ -205,6 +205,7 @@ public:
 
 		if(IsTimerFinished(mWaitAtChest))
 			MoveToPlayer();
+
 		MoonScriptBossAI::AIUpdate();
 	}
 
@@ -306,7 +307,8 @@ public:
 		{
 			Emote("Lap dogs, all of you.", Text_Yell, 5782);
 			SetPhase(2);
-		}else if(GetHealthPercent() <= 50 && GetPhase() == 2)
+		}
+		else if(GetHealthPercent() <= 50 && GetPhase() == 2)
 		{
 			Emote("Fools! Our cause is righteous.", Text_Yell, 5783);
 			// Defias Blackguard x 2
@@ -321,7 +323,8 @@ public:
 
 			SetPhase(3);
 
-		}else if(GetHealthPercent() <= 25 && GetPhase() == 3)
+		}
+		else if(GetHealthPercent() <= 25 && GetPhase() == 3)
 		{
 			Emote("The brotherhood shall remain.", Text_Yell, 5784);
 			SetPhase(4);
