@@ -55,13 +55,14 @@ public:
 			ApplyAura(KRIKTHIR_ENRAGE);
 			mEnraged = true;
 		}
+		MoonScriptCreatureAI::AIUpdate();
 	}
 
 	void OnDied(Unit* pKiller)
 	{
-		GameObject* Doors = GetNearestGameObject(192395);
-		if(Doors != NULL)
+		if(GameObject* Doors = GetNearestGameObject(192395))
 			Doors->SetState(GAMEOBJECT_STATE_OPEN);
+		MoonScriptCreatureAI::OnDied(mKiller);
 	}
 
 protected:
@@ -91,6 +92,7 @@ public:
 	{
 		if(pTarget!=NULL && pTarget->HasAura(HADRONOX_LEECHPOISON) && IsAlive())
 			_unit->SetHealthPct(_unit->GetHealthPct()+10.0f);
+		MoonScriptCreatureAI::OnTargetDied(pTarget);
 	}
 };
 

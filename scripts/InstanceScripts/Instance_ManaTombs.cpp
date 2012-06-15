@@ -45,6 +45,7 @@ class PANDEMONIUSAI : public MoonScriptCreatureAI
 		void OnCombatStart(Unit* pAttacker)
 		{
 			VoidTimer = AddTimer((8+rand()%15)*SEC_IN_MS);
+			MoonScriptCreatureAI::OnCombatStart(pAttacker);
 		}
 
 		void AIUpdate()
@@ -61,6 +62,7 @@ class PANDEMONIUSAI : public MoonScriptCreatureAI
 				Counter = 0;
 				ResetTimer(VoidTimer, (8+rand()%15)*SEC_IN_MS);
 			}
+			MoonScriptCreatureAI::AIUpdate();
 		}
 
 	protected:

@@ -58,6 +58,7 @@ class KelidanTheBreakerAI : public MoonScriptCreatureAI
 		void OnCombatStart(Unit* pTarget)
 		{
 			mBurningNovaTimer = AddTimer(15000);
+			MoonScriptCreatureAI::OnCombatStart(pTarget);
 		}
 
 		void AIUpdate()
@@ -71,6 +72,7 @@ class KelidanTheBreakerAI : public MoonScriptCreatureAI
 
 				ResetTimer(mBurningNovaTimer, 30000);
 			}
+			MoonScriptCreatureAI::AIUpdate();
 		}
 
 		SpellDesc*      mShadowBoltVolley;
@@ -104,6 +106,7 @@ class BroggokAI : public MoonScriptCreatureAI
 		{
 			if(GameObject* pDoor = _unit->GetMapMgr()->GetInterface()->GetGameObjectNearestCoords(456.157349f, 34.248005f, 9.559463f, 181819))
 				pDoor->SetState(GAMEOBJECT_STATE_OPEN);
+			MoonScriptCreatureAI::OnDied(pKiller);
 		}
 };
 
@@ -138,6 +141,7 @@ class TheMakerAI : public MoonScriptCreatureAI
 		{
 			if(GameObject* pDoor = _unit->GetMapMgr()->GetInterface()->GetGameObjectNearestCoords(327.155487f, 149.753418f, 9.559869f, 181812))
 				pDoor->SetState(GAMEOBJECT_STATE_OPEN);
+			MoonScriptCreatureAI::OnDied(pKiller);
 		}
 };
 

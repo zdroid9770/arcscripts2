@@ -179,6 +179,7 @@ public:
 		SetPhase(1);
 		SwitchWeapons();
 		RemoveTimer(mWaitAtChest);
+		MoonScriptBossAI::OnCombatStop(pTarget);
 	}
 
 	void AIUpdate()
@@ -187,7 +188,8 @@ public:
 		{
 			Emote("You landlubbers are tougher than I thought. I'll have to improvise!", Text_Yell, 5778);
 			SetPhase(2, mStomp);
-		}else if(GetHealthPercent() <= 33 && GetPhase() == 3)
+		}
+		else if(GetHealthPercent() <= 33 && GetPhase() == 3)
 		{
 			Emote("D'ah! Now you're making me angry!", Text_Yell, 5779);
 			SetPhase(4, mStomp);
@@ -203,6 +205,7 @@ public:
 
 		if(IsTimerFinished(mWaitAtChest))
 			MoveToPlayer();
+		MoonScriptBossAI::AIUpdate();
 	}
 
 	void MoveToChest()
@@ -294,6 +297,7 @@ public:
 			sprintf(msg, "And stay down, %s.", TO_PET(pTarget)->GetName().c_str());
 
 		Emote(msg, Text_Yell, 5781);
+		MoonScriptBossAI::OnTargetDied(pTarget);
 	}
 
 	void AIUpdate()
@@ -322,6 +326,7 @@ public:
 			Emote("The brotherhood shall remain.", Text_Yell, 5784);
 			SetPhase(4);
 		}
+		MoonScriptBossAI::AIUpdate();
 	}
 };
 

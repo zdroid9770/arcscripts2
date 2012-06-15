@@ -48,6 +48,7 @@ class MaidenOfGriefAI : public MoonScriptCreatureAI
 		void OnCombatStart(Unit* pTarget)
 		{
 			mShock->TriggerCooldown();
+			MoonScriptCreatureAI::OnCombatStart(pTarget);
 		}
 
 	protected:
@@ -87,7 +88,8 @@ class KrystallusAI : public MoonScriptCreatureAI
 
 		void OnCombatStart(Unit* pTarget)
 		{
-			mStompTimer = AddTimer(STOMP_TIMER);
+			mStompTimer = AddTimer(35*SEC_IN_MS);
+			MoonScriptCreatureAI::OnCombatStart(pTarget);
 		}
 
 		void AIUpdate()
@@ -96,9 +98,8 @@ class KrystallusAI : public MoonScriptCreatureAI
 			{
 				CastSpellNowNoScheduling(mStomp);
 				SetCanMove(false);
-				ResetTimer(mStompTimer, (STOMP_TIMER + SHATTER_TIMER));
-				mShatterTimer = AddTimer(SHATTER_TIMER);
-
+				ResetTimer(mStompTimer, 39500);
+				mShatterTimer = AddTimer(4500);
 			}
 
 			if(IsTimerFinished(mShatterTimer))
@@ -107,6 +108,7 @@ class KrystallusAI : public MoonScriptCreatureAI
 				SetCanMove(true);
 				RemoveTimer(mShatterTimer);
 			}
+			MoonScriptCreatureAI::AIUpdate();
 		}
 
 	protected:

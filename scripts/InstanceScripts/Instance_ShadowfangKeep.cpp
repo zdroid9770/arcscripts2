@@ -150,7 +150,8 @@ class ShadowfangPrisonerAI : public MoonScriptCreatureAI
 						_unit->CastSpell(_unit, 6422, true);	//Ashcrombe's Teleport
 						Emote("%s vanishes.", Text_Say, 0, EMOTE_ONESHOT_NONE, 6*SEC_IN_MS);
 						Despawn();
-					}else
+					}
+					else
 					{
 						_unit->Emote(EMOTE_ONESHOT_USESTANDING);
 						if(pDoor)
@@ -188,15 +189,17 @@ class SpringvaleAI : public MoonScriptCreatureAI
 		{
 			if(!GetUnit()->HasAura(DevoAura->mInfo->Id))
 				CastSpellNowNoScheduling(DevoAura);
+			MoonScriptCreatureAI::OnCombatStart(pTarget);
 		}
 
 		void AIUpdate()
 		{
-			if(GetHealthPercent() <= 20)
+			if(GetHealthPercent() <= 20 && DivineProt->mEnabled)
 			{
 				CastSpellNowNoScheduling(DivineProt);
 				DivineProt->mEnabled = false;
 			}
+			MoonScriptCreatureAI::AIUpdate();
 		}
 
 	protected:
@@ -220,18 +223,20 @@ class BlindWatcherAI : public MoonScriptBossAI
 		void AIUpdate()
 		{
 			if(GetHealthPercent() <= 75 && GetPhase() == 1)
-					SetPhase(2, HowlingRage1);
+				SetPhase(2, HowlingRage1);
 			else if(GetHealthPercent() <= 45 && GetPhase() == 2)
 			{
 				if(GetUnit()->HasAura(7481))
 					RemoveAura(7481);
 				SetPhase(3, HowlingRage2);
-			}else if(GetHealthPercent() <= 20 && GetPhase() == 3)
+			}
+			else if(GetHealthPercent() <= 20 && GetPhase() == 3)
 			{
 				if(GetUnit()->HasAura(7483))
 					RemoveAura(7483);
 				SetPhase(4, HowlingRage3);
 			}
+			MoonScriptBossAI::AIUpdate();
 		}
 
 	protected:
@@ -272,6 +277,7 @@ class FenrusAI : public MoonScriptCreatureAI
 					voidwalker = NULL;
 				}
 			}
+			MoonScriptCreatureAI::OnDied(pKiller);
 		}
 };
 
@@ -308,6 +314,7 @@ class RETHILGOREAI : public MoonScriptCreatureAI
 		{
 			_unit->SendChatMessageAlternateEntry(3849, CHAT_MSG_MONSTER_SAY, LANG_GUTTERSPEAK, "About time someone killed the wretch.");
 			_unit->SendChatMessageAlternateEntry(3850, CHAT_MSG_MONSTER_SAY, LANG_COMMON, "For once I agree with you... scum.");      // dont know the allys text yet
+			MoonScriptCreatureAI::OnDied(pKiller);
 		}
 };
 

@@ -54,6 +54,7 @@ class DruidFangAI : public MoonScriptCreatureAI
 				CastSpellNowNoScheduling(HealingTouch);
 				HealingTouch->mEnabled = false;
 			}
+			MoonScriptCreatureAI::AIUpdate();
 		}
 
 	protected:
@@ -111,6 +112,7 @@ class LordCobrahnAI : public MoonScriptCreatureAI
 			}
 			else if(GetHealthPercent() <= 20 && SerpentForm->mEnabled == false && !GetUnit()->HasAura(7965))
 				LightningBolt->mEnabled = true;
+			MoonScriptCreatureAI::AIUpdate();
 		}
 
 	protected:
@@ -170,6 +172,7 @@ class SkumAI : public MoonScriptCreatureAI
 				SetAllowSpell(false);
 				MoveTo(-262.829742f, -299.363159f, -68.293579f, 0.0f, true);
 			}
+			MoonScriptCreatureAI::AIUpdate();
 		}
 };
 
@@ -367,6 +370,7 @@ class DofNaralexAI : public MoonScriptBossAI
 				}
 				SetPhase(6);
 			}
+			MoonScriptBossAI::AIUpdate();
 		}
 
 	protected:

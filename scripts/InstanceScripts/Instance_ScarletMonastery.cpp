@@ -47,6 +47,7 @@ class VishasAI : public MoonScriptCreatureAI
 		void OnCombatStop(Unit* pTarget)
 		{
 			m_uiSay = 0;
+			MoonScriptCreatureAI::OnCombatStop(pTarget);
 		}
 
 		void AIUpdate()
@@ -62,6 +63,7 @@ class VishasAI : public MoonScriptCreatureAI
 				Emote("I'll rip the secrets from your flesh!", Text_Yell, 5850);
 				m_uiSay++;
 			}
+			MoonScriptCreatureAI::AIUpdate();
 		}
 
 	private:
@@ -95,6 +97,7 @@ class ThalnosAI : public MoonScriptCreatureAI
 				Emote("No rest, for the angry dead.", Text_Yell, 5846);
 				m_bEmoted = true;
 			}
+			MoonScriptCreatureAI::AIUpdate();
 		}
 
 	private:
@@ -191,6 +194,7 @@ class HerodAI : public MoonScriptCreatureAI
 		{
 			m_bEnraged = false;
 			RemoveAura(ENRAGESPELL);
+			MoonScriptCreatureAI::OnCombatStop(pTarget);
 		}
 
 		void AIUpdate()
@@ -200,6 +204,7 @@ class HerodAI : public MoonScriptCreatureAI
 				ApplyAura(ENRAGESPELL);
 				Emote("Light, give me strength!", Text_Yell,  5833);
 			}
+			MoonScriptCreatureAI::AIUpdate();
 		}
 
 	protected:
@@ -235,12 +240,14 @@ class MograineAI : public MoonScriptCreatureAI
 			_unit->GetAIInterface()->setCurrentAgent(AGENT_NULL);
 			_unit->GetAIInterface()->SetAIState(STATE_IDLE);
 			RemoveAIUpdateEvent();
+			MoonScriptCreatureAI::OnCombatStop(mTarget);
 		}
 
 		void OnDied(Unit* mKiller)
 		{
 			if(GameObject * pDoor = _unit->GetMapMgr()->GetInterface()->GetGameObjectNearestCoords(1173.01f, 1389.91f, 31.9723f, 104600))
 				pDoor->SetState(GAMEOBJECT_STATE_OPEN);
+			MoonScriptCreatureAI::OnDied(mKiller);
 		}
 };
 
@@ -277,6 +284,7 @@ class WhitemaneAI : public MoonScriptBossAI
 				Emote("Arise, my champion!", Text_Yell, 5840);
 				_unit->CastSpell(_unit, RESURRECTION, false);				
 			}
+			MoonScriptBossAI::AIUpdate();
 		}
 
 	protected:

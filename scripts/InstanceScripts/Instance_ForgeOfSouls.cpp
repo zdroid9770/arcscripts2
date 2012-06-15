@@ -65,6 +65,7 @@ class BronjahmAI : public MoonScriptBossAI
 		void OnCombatStart(Unit * pAttacker)
 		{
 			CorruptedSoulTimer = AddTimer(25+rand()%11);
+			MoonScriptBossAI::OnCombatStart(pAttacker);
 		}
 
 		void AIUpdate()
@@ -91,6 +92,7 @@ class BronjahmAI : public MoonScriptBossAI
 				_unit->CastSpell(_unit, SPELL_TELEPORT, true);
 				SetPhase(2, SoulStorm);
 			}
+			MoonScriptBossAI::AIUpdate();
 		}
 
 	private:
@@ -125,6 +127,7 @@ class SoulFragmentAI : public MoonScriptCreatureAI
 					Despawn();
 				}
 			}
+			MoonScriptCreatureAI::AIUpdate();
 		}
 };
 
@@ -163,11 +166,12 @@ class DevourerAI : public MoonScriptBossAI
 				Emote("SUFFERING! ANGUISH! CHAOS! RISE AND FEED!", Text_Yell, 16888);
 				SetPhase(2);
 			}
-			if(GetHealthPercent() == 50 && GetPhase() == 2)
+			else if(GetHealthPercent() == 50 && GetPhase() == 2)
 			{
 				Emote("Stare into the abyss, and see your end!", Text_Yell, 16889);
 				SetPhase(3);
 			}
+			MoonScriptBossAI::AIUpdate();
 		}
 };
 

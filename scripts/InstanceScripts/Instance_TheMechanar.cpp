@@ -133,6 +133,7 @@ class NethermancerSepethreaAI : public MoonScriptCreatureAI
 		{
 			_unit->CastSpell(_unit, SUMMON_RAGIN_FLAMES, true);
 			//Emote("I am not alone!", Text_Yell, 11191); <- Don't see this on wowwiki
+			MoonScriptCreatureAI::OnCombatStart(mTarget);
 		}
 };
 
@@ -171,6 +172,7 @@ class PathaleonTheCalculatorAI : public MoonScriptCreatureAI
 		void OnCombatStart(Unit * pAttacker)
 		{
 			SummonTimer = AddTimer((rand()%16 + 30)*SEC_IN_MS);
+			MoonScriptCreatureAI::OnCombatStart(pAttacker);
 		}
 
 		void AIUpdate()
@@ -184,6 +186,7 @@ class PathaleonTheCalculatorAI : public MoonScriptCreatureAI
 				Emote("Time to supplement my workforce.", Text_Yell, 11196);//http://www.wowwiki.com/Pathaleon_the_Calculator
 				ResetTimer(SummonTimer, (rand()%16 + 30)*SEC_IN_MS);
 			}
+			MoonScriptCreatureAI::AIUpdate();
 		}
 	private:
 		int32 SummonTimer;

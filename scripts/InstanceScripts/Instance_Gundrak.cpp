@@ -107,37 +107,32 @@ class GundrakScript : public MoonInstanceScript
 					{
 						mSkadranGUID = pCreature->GetLowGUID();
 						mEncounters.insert(EncounterMap::value_type(CN_SLADRAN, BossData(0, mSkadranGUID)));
-					}
-					break;
+					}break;
 				case CN_MOORABI:
 					{
 						mMoorabiGUID = pCreature->GetLowGUID();
 						mEncounters.insert(EncounterMap::value_type(CN_MOORABI, BossData(0, mMoorabiGUID)));
-					}
-					break;
+					}break;
 				case CN_GAL_DARAH:
 					{
 						mGalDarahGUID = pCreature->GetLowGUID();
 						mEncounters.insert(EncounterMap::value_type(CN_GAL_DARAH, BossData(0, mGalDarahGUID)));
-					}
-					break;
+					}break;
 				case CN_DRAKKARI_COLOSSUS:
 					{
 						mColossusGUID = pCreature->GetLowGUID();
 						mEncounters.insert(EncounterMap::value_type(CN_DRAKKARI_COLOSSUS, BossData(0, mColossusGUID)));
-					}
-					break;
+					}break;
 				case CN_ECK:
 					{
 						if(mInstance->iInstanceMode == MODE_HEROIC)
 						{
 							mEckGUID = pCreature->GetLowGUID();
 							mEncounters.insert(EncounterMap::value_type(CN_ECK, BossData(0, mEckGUID)));
-						};
-					}
-					break;
-			};
-		};
+						}
+					}break;
+			}
+		}
 
 		void OnGameObjectPushToWorld(GameObject* pGameObject)
 		{
@@ -148,68 +143,57 @@ class GundrakScript : public MoonInstanceScript
 					{
 						mSladranAltarGUID = pGameObject->GetLowGUID();
 						pGameObject->SetFlag(GAMEOBJECT_FLAGS, GO_FLAG_UNCLICKABLE);
-					}
-					break;
+					}break;
 				case GO_STATUE1_SLADRAN:
 					{
 						mSladranStatueGUID = pGameObject->GetLowGUID();
 						pGameObject->SetFlag(GAMEOBJECT_FLAGS, GO_FLAG_UNCLICKABLE);
-					}
-					break;
+					}break;
 				case GO_ALTAR2_COLOSSUS:
 					{
 						mColossusAltarGUID = pGameObject->GetLowGUID();
 						pGameObject->SetFlag(GAMEOBJECT_FLAGS, GO_FLAG_UNCLICKABLE);
-					}
-					break;
+					}break;
 				case GO_STATUE2_COLOSSUS:
 					{
 						mColossusStatueGUID = pGameObject->GetLowGUID();
 						pGameObject->SetFlag(GAMEOBJECT_FLAGS, GO_FLAG_UNCLICKABLE);
-					}
-					break;
+					}break;
 				case GO_ALTAR3_MOORABI:
 					{
 						mMoorabiAltarGUID = pGameObject->GetLowGUID();
 						pGameObject->SetFlag(GAMEOBJECT_FLAGS, GO_FLAG_UNCLICKABLE);
-					}
-					break;
+					}break;
 				case GO_STATUE3_MOORABI:
 					{
 						mMoorabiStatueGUID = pGameObject->GetLowGUID();
 						pGameObject->SetFlag(GAMEOBJECT_FLAGS, GO_FLAG_UNCLICKABLE);
-					}
-					break;
+					}break;
 				case GO_ECKDOOR:
 					{
 						mEckDoorsGUID = pGameObject->GetLowGUID();
 						pGameObject->SetFlag(GAMEOBJECT_FLAGS, GO_FLAG_UNCLICKABLE);
-					}
-					break;
+					}break;
 				case GO_TRAPDOOR:
 					{
 						mTrapDoorGUID = pGameObject->GetLowGUID();
 						pGameObject->SetFlag(GAMEOBJECT_FLAGS, GO_FLAG_UNCLICKABLE);
-					}
-					break;
+					}break;
 				case GO_COILISION:
 					{
 						mCoilisionGUID = pGameObject->GetLowGUID();
 						pGameObject->SetFlag(GAMEOBJECT_FLAGS, GO_FLAG_UNCLICKABLE);
-					}
-					break;
+					}break;
 				case GO_GAL_DARAH_DOOR1:
 					{
 						mDoor1GUID = pGameObject->GetLowGUID();
 						pGameObject->SetFlag(GAMEOBJECT_FLAGS, GO_FLAG_UNCLICKABLE);
-					}
-					break;
+					}break;
 				case GO_GAL_DARAH_DOOR2:
 					{
 						mDoor2GUID = pGameObject->GetLowGUID();
 						pGameObject->SetFlag(GAMEOBJECT_FLAGS, GO_FLAG_UNCLICKABLE);
-					}
-					break;
+					}break;
 				case 192568:
 					mCombatDoorsGUID = pGameObject->GetLowGUID();
 					break;
@@ -227,8 +211,7 @@ class GundrakScript : public MoonInstanceScript
 
 						pGameObject->SetFlag(GAMEOBJECT_FLAGS, GO_FLAG_UNCLICKABLE);
 						mStatueCount++;
-					}
-					break;
+					}break;
 				case GO_ALTAR2_COLOSSUS:
 					{
 						if(GameObject* pStatue = GetGameObjectByGuid(mColossusStatueGUID))
@@ -236,8 +219,7 @@ class GundrakScript : public MoonInstanceScript
 
 						pGameObject->SetFlag(GAMEOBJECT_FLAGS, GO_FLAG_UNCLICKABLE);
 						mStatueCount++;
-					}
-					break;
+					}break;
 				case GO_ALTAR3_MOORABI:
 					{
 						if(GameObject* pStatue = GetGameObjectByGuid(mMoorabiStatueGUID))
@@ -245,8 +227,7 @@ class GundrakScript : public MoonInstanceScript
 
 						pGameObject->SetFlag(GAMEOBJECT_FLAGS, GO_FLAG_UNCLICKABLE);
 						mStatueCount++;
-					}
-					break;
+					}break;
 			}
 
 			if(mStatueCount < 3)
@@ -360,51 +341,53 @@ class GundrakScript : public MoonInstanceScript
 ////// Slad'ran encounter
 // Status: 50% done, missing add related stuff and maybe correct timers
 
-#define POISON_NOVA         HeroicInt( 55081, 59842 )
-#define POWERFUL_BITE       HeroicInt( 48287, 59840 )
-#define VENOM_BOLT          HeroicInt( 54970, 59839 )
+#define POISON_NOVA		55081
+#define POWERFUL_BITE	48287
+#define VENOM_BOLT		54970
 
 class SladranAI : public MoonScriptCreatureAI
 {
 	public:
-			ADD_CREATURE_FACTORY_FUNCTION(SladranAI)
-			SladranAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
-			{
-				mInstance = GetInstanceScript();
+		ADD_CREATURE_FACTORY_FUNCTION(SladranAI)
+		SladranAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
+		{
+			mInstance = GetInstanceScript();
 
-				SpellDesc* sdPoisonNova = AddSpell(POISON_NOVA, Target_Self, 10, 3.5f, 16);
-				sdPoisonNova->AddAnnouncement("Slad'ran begins to cast Poison Nova!");
+			SpellDesc* sdPoisonNova = AddSpell(POISON_NOVA, Target_Self, 10, 3.5f, 16);
+			sdPoisonNova->AddAnnouncement("Slad'ran begins to cast Poison Nova!");
 
-				AddSpell(POWERFUL_BITE, Target_Current, 25, 0, 6);
-				AddSpell(VENOM_BOLT, Target_RandomPlayerNotCurrent, 18, 1.5f, 8);
+			AddSpell(POWERFUL_BITE, Target_Current, 25, 0, 6);
+			AddSpell(VENOM_BOLT, Target_RandomPlayerNotCurrent, 18, 1.5f, 8);
 
-				AddEmote(Event_OnCombatStart, "Drakkari gonna kill anybody who trespass on these lands!", Text_Yell, 14443);
-				AddEmote(Event_OnTargetDied,  "Ye not breathin'! Good.", Text_Yell, 14446);
-				AddEmote(Event_OnTargetDied,  "You scared now?", Text_Yell, 14447);
-				AddEmote(Event_OnTargetDied,  "I'll eat you next, mon!" , Text_Yell, 14448);
-				AddEmote(Event_OnDied, "I sssee now... Ssscourge wasss not... our greatessst enemy...", Text_Yell, 14449);
-			}
+			AddEmote(Event_OnCombatStart, "Drakkari gonna kill anybody who trespass on these lands!", Text_Yell, 14443);
+			AddEmote(Event_OnTargetDied,  "Ye not breathin'! Good.", Text_Yell, 14446);
+			AddEmote(Event_OnTargetDied,  "You scared now?", Text_Yell, 14447);
+			AddEmote(Event_OnTargetDied,  "I'll eat you next, mon!" , Text_Yell, 14448);
+			AddEmote(Event_OnDied, "I sssee now... Ssscourge wasss not... our greatessst enemy...", Text_Yell, 14449);
+		}
 
-			void OnCombatStart(Unit* pTarget)
-			{
-				if(mInstance)
-					mInstance->SetInstanceData(Data_EncounterState, _unit->GetEntry(), State_InProgress);
-			}
+		void OnCombatStart(Unit* pTarget)
+		{
+			if(mInstance)
+				mInstance->SetInstanceData(Data_EncounterState, _unit->GetEntry(), State_InProgress);
+			MoonScriptCreatureAI::OnCombatStart(pTarget);
+		}
 
-			void OnCombatStop(Unit* pTarget)
-			{
-				if(mInstance)
-					mInstance->SetInstanceData(Data_EncounterState, _unit->GetEntry(), State_Performed);
-			}
+		void OnCombatStop(Unit* pTarget)
+		{
+			if(mInstance)
+				mInstance->SetInstanceData(Data_EncounterState, _unit->GetEntry(), State_Performed);
+			MoonScriptCreatureAI::OnCombatStop(pTarget);
+		}
 
-			MoonInstanceScript* mInstance;
+		MoonInstanceScript* mInstance;
 };
 
 /////////////////////////////////////////////////////////////////////////////////
 ////// Gal'darah encounter
 // Status: 20% done, missing rihno part, need vehicle support for that, missing stampade script
 
-#define WHIRLING_SLASH    HeroicInt( 55250, 59824 )
+#define WHIRLING_SLASH    55250
 
 class GalDarahAI : public MoonScriptCreatureAI
 {
@@ -427,12 +410,14 @@ class GalDarahAI : public MoonScriptCreatureAI
 		{
 			if(mInstance)
 				mInstance->SetInstanceData(Data_EncounterState, _unit->GetEntry(), State_InProgress);
+			MoonScriptCreatureAI::OnCombatStart(pTarget);
 		}
 
 		void OnCombatStop(Unit* pTarget)
 		{
 			if(mInstance)
 				mInstance->SetInstanceData(Data_EncounterState, _unit->GetEntry(), State_Performed);
+			MoonScriptCreatureAI::OnCombatStop(pTarget);
 		}
 
 		MoonInstanceScript* mInstance;

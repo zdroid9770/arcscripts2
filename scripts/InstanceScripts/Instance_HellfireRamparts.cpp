@@ -64,6 +64,7 @@ class WatchkeeperGargolmarAI : public MoonScriptCreatureAI
 				_unit->setAttackTimer(1500, false);
 				CastSpellNowNoScheduling(mRetaliation);
 			}
+			MoonScriptCreatureAI::AIUpdate();
 		}
 
 	protected:
@@ -92,6 +93,7 @@ class OmorTheUnscarredAI : public MoonScriptCreatureAI
 			AddEmote(Event_OnCombatStart, "Your incidents will be your death!", Text_Yell, 10281);
 			AddEmote(Event_OnTargetDied, "Die, weakling!", Text_Yell, 10282);
 			AddEmote(Event_OnDied, "It is... not over.", Text_Yell, 10284);
+			AddEmote(Event_OnCombatStop, "I am victorious!", Text_Yell, 10283);
 
 			pShield = AddSpell(OMOR_THE_UNSCARRED_DEMONIC_SHIELD, Target_Self, 30.0f, 0, 25);
 			pShield->mEnabled = false;
@@ -102,16 +104,11 @@ class OmorTheUnscarredAI : public MoonScriptCreatureAI
 			SetCanMove(false);
 		}
 
-		void OnCombatStop(Unit* pTarget)
-		{
-			if(IsAlive())
-				Emote("I am victorious!", Text_Yell, 10283);
-		}
-
 		void AIUpdate()
 		{
 			if(GetHealthPercent() <= 20 && !pShield->mEnabled)
 				pShield->mEnabled = true;
+			MoonScriptCreatureAI::AIUpdate();
 		}
 
 	protected:

@@ -2140,6 +2140,7 @@ class WarbringerOmroggAI : public MoonScriptCreatureAI
 					mSpeechId = 3;
 					break;
 			}
+			MoonScriptCreatureAI::OnCombatStart(pTarget);
 		}
 
 		void OnCombatStop(Unit* pTarget)
@@ -2157,6 +2158,7 @@ class WarbringerOmroggAI : public MoonScriptCreatureAI
 					mRightHead = NULL;
 				}
 			}
+			MoonScriptCreatureAI::OnCombatStop(pTarget);
 		}
 
 		void OnTargetDied(Unit* pTarget)
@@ -2175,6 +2177,7 @@ class WarbringerOmroggAI : public MoonScriptCreatureAI
 					mSpeechId = 0;
 					break;
 			}
+			MoonScriptCreatureAI::OnTargetDied(pTarget);
 		}
 
 		void OnDied(Unit* pKiller)
@@ -2188,6 +2191,7 @@ class WarbringerOmroggAI : public MoonScriptCreatureAI
 			mRightHead->RegisterAIUpdateEvent(3000);
 			mRightHead->Despawn(4000);
 			mRightHead = NULL;
+			MoonScriptCreatureAI::OnDied(pKiller);
 		}
 
 		void AIUpdate()
@@ -2247,6 +2251,7 @@ class WarbringerOmroggAI : public MoonScriptCreatureAI
 				RemoveTimer(mBlastWaveTimer);
 				CastSpell(mBlastWave);
 			}
+			MoonScriptCreatureAI::AIUpdate();
 		}
 
 		void ShiftAggro()
@@ -2333,6 +2338,7 @@ class HeadAI : public MoonScriptCreatureAI
 
 			Emote("I... hate... you!", Text_Yell, 10322);
 			RemoveAIUpdateEvent();								// Dangerous!
+			MoonScriptCreatureAI::AIUpdate();
 		}
 
 		void Destroy()

@@ -36,6 +36,7 @@ class Glutton : public MoonScriptCreatureAI
 		void OnCombatStart(Unit* pTarget)
 		{
 			CastSpellNowNoScheduling(mDiseaseCloud);
+			MoonScriptCreatureAI::OnCombatStart(pTarget);
 		}
 
 	private:

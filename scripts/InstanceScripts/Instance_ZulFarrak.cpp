@@ -35,6 +35,7 @@ class thekaAI : public MoonScriptCreatureAI
 				morph = true;
 				_unit->CastSpell(_unit, 11089, true);	//Theka Transform
 			}
+			MoonScriptCreatureAI::AIUpdate();
 		}
 
 	protected:
@@ -73,6 +74,7 @@ class antusulAI : public MoonScriptCreatureAI
 				_unit->CastSpell(_unit, servants, true);
 				SpawnCount++;
 			}
+			MoonScriptCreatureAI::AIUpdate();
 		}
 
 	protected:
@@ -96,6 +98,7 @@ class WitchDoctorZumrahAI : public MoonScriptCreatureAI
 		{
 			_unit->CastSpell(_unit, 11086, true); //Ward of Zum'rah
 			TotemTimer = AddTimer(20*SEC_IN_MS);
+			MoonScriptCreatureAI::OnCombatStart(mAttacker);
 		}
 
 		void AIUpdate()
@@ -105,6 +108,7 @@ class WitchDoctorZumrahAI : public MoonScriptCreatureAI
 				_unit->CastSpell(_unit, 11086, true); //Ward of Zum'rah
 				ResetTimer(TotemTimer, 20*SEC_IN_MS);
 			}
+			MoonScriptCreatureAI::AIUpdate();
 		}
 
 	protected:

@@ -1483,9 +1483,7 @@ class LakkaAI : public MoonScriptCreatureAI
 
 			//WPs
 			for(int i = 1; i < 4; ++i)
-			{
 				AddWaypoint(CreateWaypoint(i, 0, LakkaWaypoint[i].addition, LakkaWaypoint[i]));
-			}
 		}
 
 		void OnReachWP(uint32 iWaypointId, bool bForwards)

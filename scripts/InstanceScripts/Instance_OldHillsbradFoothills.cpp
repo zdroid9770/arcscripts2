@@ -276,17 +276,14 @@ class LieutenantDrakeAI : public MoonScriptCreatureAI
 
 		void OnLoad()
 		{
-<<<<<<< HEAD
-			Emote("I know what your doing and I won't let that happen!", Text_Yell, 0) // Need right text ID & sound
-=======
-			Emote("I know what your doing and I won't let that happen!"); // Need right text ID
->>>>>>> a4ff8e25a0e4114a518853a7470ccd83ad797639
+			Emote("I know what your doing and I won't let that happen!", Text_Yell, 0); // Need right text ID & sound
 		}
 
 		void OnCombatStart(Unit* pTarget)
 		{
 			if(pInstance)
 				pInstance->SetData(OHF_PHASE_2, OHF_DATA_IN_PROGRESS);
+			MoonScriptCreatureAI::OnCombatStart(pTarget);
 		}
 
 		void OnCombatStop(Unit* pTarget)
@@ -320,6 +317,7 @@ class ThrallAI : public MoonScriptCreatureAI // this will be replaced with escor
 		void OnCombatStop(Unit* pTarget)
 		{
 			SetWaypointToMove(m_currentWp);
+			MoonScriptCreatureAI::OnCombatStop(pTarget);
 		}
 
 		void OnReachWP(uint32 iWaypointId, bool bForwards)

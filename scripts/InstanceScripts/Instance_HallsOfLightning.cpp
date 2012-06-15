@@ -227,12 +227,14 @@ class GeneralBjarngrimAI : public MoonScriptBossAI
 
 			if(mInstance)
 				mInstance->SetInstanceData(Data_EncounterState, _unit->GetEntry(), State_InProgress);
+			MoonScriptBossAI::OnCombatStart(pTarget);
 		}
 
 		void OnCombatStop(Unit* pTarget)
 		{
 			if(mInstance)
 				mInstance->SetInstanceData(Data_EncounterState, _unit->GetEntry(), State_Performed);
+			MoonScriptBossAI::OnCombatStop(pTarget);
 		}
 
 		void AIUpdate()
@@ -247,6 +249,7 @@ class GeneralBjarngrimAI : public MoonScriptBossAI
 				}
 				ResetTimer(mStanceTimer, TIMER_STANCE_CHANGE + (RandomUInt(7) * 1000));
 			}
+			MoonScriptBossAI::AIUpdate();
 		}
 
 		void switchStance(int32 pStance)
@@ -349,12 +352,14 @@ class Volkhan : public MoonScriptCreatureAI
 
 			if(mInstance)
 				mInstance->SetInstanceData(Data_EncounterState, _unit->GetEntry(), State_InProgress);
+			MoonScriptCreatureAI::OnCombatStart(pTarget);
 		}
 
 		void OnCombatStop(Unit* pTarget)
 		{
 			if(mInstance)
 				mInstance->SetInstanceData(Data_EncounterState, _unit->GetEntry(), State_Performed);
+			MoonScriptCreatureAI::OnCombatStop(pTarget);
 		}
 
 		void AIUpdate()
@@ -381,6 +386,7 @@ class Volkhan : public MoonScriptCreatureAI
 				Announce("Volkhan runs to his anvil!");
 				++mPhase;
 			}
+			MoonScriptCreatureAI::AIUpdate();
 		}
 
 		void OnReachWP(uint32 iWaypointId, bool bForwards)
@@ -439,6 +445,7 @@ class MoltenGolem : public MoonScriptCreatureAI
 		{
 			SpawnCreature(CN_BRITTLE_GOLEM);
 			Despawn(1);
+			MoonScriptCreatureAI::OnDied(pKiller);
 		}
 };
 
@@ -502,12 +509,14 @@ class IonarAI : public MoonScriptCreatureAI
 		{
 			if(mInstance)
 				mInstance->SetInstanceData(Data_EncounterState, _unit->GetEntry(), State_InProgress);
+			MoonScriptCreatureAI::OnCombatStart(pTarget);
 		}
 
 		void OnCombatStop(Unit* pTarget)
 		{
 			if(mInstance)
 				mInstance->SetInstanceData(Data_EncounterState, _unit->GetEntry(), State_Performed);
+			MoonScriptCreatureAI::OnCombatStop(pTarget);
 		}
 
 		MoonInstanceScript* mInstance;
@@ -556,6 +565,7 @@ class LokenAI : public MoonScriptCreatureAI
 
 			if(mInstance)
 				mInstance->SetInstanceData(Data_EncounterState, _unit->GetEntry(), State_InProgress);
+			MoonScriptCreatureAI::OnCombatStart(pTarget);
 		}
 
 		void OnCombatStop(Unit* pTarget)
@@ -564,11 +574,13 @@ class LokenAI : public MoonScriptCreatureAI
 
 			if(mInstance)
 				mInstance->SetInstanceData(Data_EncounterState, _unit->GetEntry(), State_Performed);
+			MoonScriptCreatureAI::OnCombatStop(pTarget);
 		}
 
 		void OnDied(Unit* pKiller)
 		{
 			RemoveAuraOnPlayers(PULSING_SHOCKWAVE_AURA);
+			MoonScriptCreatureAI::OnDied(pKiller);
 		}
 
 		void AIUpdate()
@@ -607,6 +619,7 @@ class LokenAI : public MoonScriptCreatureAI
 				RemoveTimer(mRespondTimer);
 				RemoveAIUpdateEvent();
 			}
+			MoonScriptCreatureAI::AIUpdate();
 		}
 
 		SpellDesc*	mNova;

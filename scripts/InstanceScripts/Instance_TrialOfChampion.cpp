@@ -142,6 +142,7 @@ class BlackKnightAI : public MoonScriptBossAI
 				Emote("I have no need for bones to best you!", Text_Yell, 0);// need sound
 				SetPhase(3);
 			}
+			MoonScriptBossAI::AIUpdate();
 		}
 private:
 	SpellDesc * Army;
@@ -189,6 +190,7 @@ class PureAI : public MoonScriptBossAI
 				_unit->Despawn(10000, 0);
 				SetPhase(4);
 			}
+			MoonScriptBossAI::AIUpdate();
 		}
 };
 
@@ -245,6 +247,7 @@ class PaletressAI : public MoonScriptBossAI
 				_unit->Despawn(10000, 0);
 				SetPhase(4);
 			}
+			MoonScriptBossAI::AIUpdate();
 		}
 
 	private:
@@ -268,6 +271,7 @@ class MemoryAI : public MoonScriptBossAI
 				pBoss->Emote("Even the darkest memory fades when confronted.", Text_Yell, 16249);
 				pBoss->SetPhase(3);
 			}
+			MoonScriptBossAI::OnDied(mKiller);
 		}
 };
 

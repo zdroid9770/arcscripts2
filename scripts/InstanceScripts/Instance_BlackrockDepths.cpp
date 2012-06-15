@@ -30,6 +30,7 @@ class AmbassadorFlamelash : public MoonScriptCreatureAI
 		void OnCombatStart(Unit* mTarget)
 		{
 			SummonTimer = AddTimer(24000);
+			MoonScriptCreatureAI::OnCombatStart(mTarget);
 		}
 
 		void AIUpdate()
@@ -49,6 +50,7 @@ class AmbassadorFlamelash : public MoonScriptCreatureAI
 				}
 				ResetTimer(SummonTimer, 30000);
 			}
+			MoonScriptCreatureAI::AIUpdate();
 		}
 	
 	protected:

@@ -83,6 +83,7 @@ class GarfrostAI : public MoonScriptBossAI
 				SetPhase(GetPhase()+1);
 			}
 			_unit->CastSpell(_unit, SPELL_PERMAFROST, true);
+			MoonScriptBossAI::AIUpdate();
 		}
 };
 

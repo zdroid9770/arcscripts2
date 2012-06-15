@@ -93,6 +93,7 @@ class SelinFireheartAI : public MoonScriptCreatureAI
 				- ToDo: Set it so mana regen is off
 			*/
 			_unit->SetUInt32Value(UNIT_FIELD_POWER1, 0);
+			MoonScriptCreatureAI::OnCombatStart(pTarget);
 		}
 
 		/*
@@ -106,6 +107,7 @@ class SelinFireheartAI : public MoonScriptCreatureAI
 				Mana();
 			else if(!IsCasting())// Mana is greater than 10%
 				CastFelExplosion();
+			MoonScriptCreatureAI::AIUpdate();
 		}
 
 		void Mana()
@@ -224,6 +226,7 @@ class VexallusAI : public MoonScriptBossAI
 		{
 			Emote("Drain... life...", Text_Yell, 12389);
 			SetPhase(1);
+			MoonScriptBossAI::OnCombatStop(pTarget);
 		}
 
 		void AIUpdate()
@@ -241,6 +244,7 @@ class VexallusAI : public MoonScriptBossAI
 
 			if(GetHealthPercent() <= 10 && GetPhase() == 1)
 				SetPhase(2);
+			MoonScriptBossAI::AIUpdate();
 		}
 
 		SpellDesc*	mPureEnergy;
@@ -279,6 +283,7 @@ class Priestess_DelrissaAI : public MoonScriptCreatureAI
 			Emote("Annihilate them!", Text_Yell, 12395);
 			//AggroRandomUnit();	// Want to aggro random unit ? Set it instead of calling premade
 			// method that in this case recursively loops this procedure
+			MoonScriptCreatureAI::OnCombatStart(pTarget);
 		}
 
 		void OnTargetDied(Unit* pTarget)
@@ -298,12 +303,14 @@ class Priestess_DelrissaAI : public MoonScriptCreatureAI
 				Emote("One is such a lonely number.", Text_Yell, 12410);
 			else if(mKilledPlayers == 5)
 				Emote("It's been a kick, really.", Text_Yell, 12411);
+			MoonScriptCreatureAI::OnTargetDied(pTarget);
 		}
 
 		void OnCombatStop(Unit* pTarget)
 		{
 			Emote("It's been a kick, really.", Text_Yell, 12411);
 			mKilledPlayers = 0;
+			MoonScriptCreatureAI::OnCombatStop(pTarget);
 		}
 
 		void AIUpdate()
@@ -314,6 +321,7 @@ class Priestess_DelrissaAI : public MoonScriptCreatureAI
 				AggroRandomUnit();
 				ResetTimer(mClearHateList, 15000);
 			}
+			MoonScriptCreatureAI::AIUpdate();
 		}
 
 	protected:
