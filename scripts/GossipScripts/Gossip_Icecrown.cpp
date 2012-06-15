@@ -18,6 +18,25 @@
 
 #include "Setup.h"
 
+class DameEvnikiKapsalis_Gossip : public Arcemu::Gossip::Script
+{
+	public:
+		void OnHello(Object* pObject, Player* plr)
+		{
+			Arcemu::Gossip::Menu menu(pObject->GetGUID(), objmgr.GetGossipTextForNpc(pObject->GetEntry()), plr->GetSession()->language);
+			if(plr->HasTitle(PVPTITLE_CRUSADER))
+				menu.AddItem(Gossip::ICON_VENDOR, plr->GetSession()->LocalizedWorldSrv(Gossip::VENDOR), 1, false);
+			menu.Send(plr);
+		}
+
+		void OnSelectOption(Object* pObject, Player* plr, uint32 Id, const char* Code)
+		{
+			if(Id == 1)
+				plr->GetSession()->SendInventoryList(TO_CREATURE(pObject));
+		}
+};
+
 void SetupIcecrownGossip(ScriptMgr * mgr)
 {
+	mgr->register_creature_gossip(34885, new DameEvnikiKapsalis_Gossip);
 }
