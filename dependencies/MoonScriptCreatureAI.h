@@ -276,7 +276,7 @@ class SpellDesc
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //Class MoonScriptCreatureAI
-class SCRIPT_DECL MoonScriptCreatureAI : public CreatureAIScript
+class MoonScriptCreatureAI : public CreatureAIScript
 {
 	public:
 		MoonScriptCreatureAI(Creature* pCreature);
