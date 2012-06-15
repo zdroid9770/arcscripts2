@@ -28,9 +28,7 @@ class AshyenAndKeleth_Gossip : public Arcemu::Gossip::Script
 		{
 			Arcemu::Gossip::Menu menu(pObject->GetGUID(), objmgr.GetGossipTextForNpc(pObject->GetEntry()), plr->GetSession()->language);
 			if(plr->GetStandingRank(942) > STANDING_NEUTRAL)
-			{
 				menu.AddItem(Arcemu::Gossip::ICON_CHAT, pObject->GetEntry() == 17900 ? GOSSIP_AK_ITEM_1 : GOSSIP_AK_ITEM_2, 1);
-			}
 			menu.Send(plr);
 		}
 
