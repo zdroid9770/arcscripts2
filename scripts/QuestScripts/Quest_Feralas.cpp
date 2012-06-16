@@ -58,4 +58,5 @@ class ScreecherSpirit_Gossip : public Arcemu::Gossip::Script
 void Setup_FeralasQuest(ScriptMgr* mgr)
 {
 	mgr->register_creature_gossip(7775, new GreganBrewspewer_Gossip);
+	mgr->register_creature_gossip(8612, new ScreecherSpirit_Gossip);
 }
