@@ -18,25 +18,27 @@
 
 #include "Setup.h"
 
-class DrakeDealerHurlunk_Gossip : public Arcemu::Gossip::Script
+class GreganBrewspewer_Gossip : public Arcemu::Gossip::Script
 {
 	public:
 		void OnHello(Object* pObject, Player* plr)
 		{
 			Arcemu::Gossip::Menu menu(pObject->GetGUID(), objmgr.GetGossipTextForNpc(pObject->GetEntry()), plr->GetSession()->language);
-			if(plr->GetStandingRank(1015) == STANDING_EXALTED)
-				menu.AddItem(Arcemu::Gossip::VENDOR, Plr->GetSession()->LocalizedWorldSrv(Arcemu::Gossip::VENDOR), 1);
+			if(plr->HasQuest(3909))
+				menu.AddItem(Arcemu::Gossip::ICON_CHAT, "Buy somethin', will ya?", 0);
 			menu.Send(plr);
 		}
 
 		void OnSelectOption(Object* pObject, Player* plr, uint32 Id, const char* Code)
 		{
-			if(Id == 1)
+			if(Id == 0)
+				Arcemu::Gossip::Menu::SendQuickMenu(pObject->GetGUID(), 2434, plr, 1, Arcemu::Gossip::VENDOR, Plr->GetSession()->LocalizedWorldSrv(Arcemu::Gossip::VENDOR));
+			else if(Id == 1)
 				plr->GetSession()->SendInventoryList(TO_CREATURE(pObject));
 		}
 };
 
-void SetupShadowmoonValleyGossip(ScriptMgr * mgr)
+void Setup_FeralasQuest(ScriptMgr* mgr)
 {
-	mgr->register_creature_gossip(23489, new DrakeDealerHurlunk_Gossip);
+	mgr->register_creature_gossip(7775, new GreganBrewspewer_Gossip);
 }

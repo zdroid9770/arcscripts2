@@ -216,6 +216,7 @@ void SetupDuskwood(ScriptMgr* mgr);
 void SetupDustwallowMarsh(ScriptMgr* mgr);
 void SetupEasternPlaguelands(ScriptMgr* mgr);
 void SetupEversongWoods(ScriptMgr* mgr);
+void Setup_FeralasQuest(ScriptMgr* mgr);
 void SetupGhostlands(ScriptMgr* mgr);
 void SetupHellfirePeninsula(ScriptMgr* mgr);
 void SetupHillsbradFoothills(ScriptMgr* mgr);

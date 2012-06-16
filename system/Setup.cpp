@@ -204,6 +204,7 @@ extern "C" SCRIPT_DECL void _exp_script_register(ScriptMgr* mgr)	// Comment any 
 	SetupDustwallowMarsh(mgr);
 	SetupEasternPlaguelands(mgr);
 	SetupEversongWoods(mgr);
+	Setup_FeralasQuest(mgr);
 	SetupGhostlands(mgr);
 	SetupHellfirePeninsula(mgr);
 	SetupHillsbradFoothills(mgr);
