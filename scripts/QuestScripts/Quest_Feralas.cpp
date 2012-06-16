@@ -38,6 +38,23 @@ class GreganBrewspewer_Gossip : public Arcemu::Gossip::Script
 		}
 };
 
+class ScreecherSpirit_Gossip : public Arcemu::Gossip::Script
+{
+	public:
+		void OnHello(Object* pObject, Player* plr)
+		{
+			Arcemu::Gossip::Menu::SendSimpleMenu(pObject->GetGUID(), objmgr.GetGossipTextForNpc(pObject->GetEntry()), Plr);
+			QuestLogEntry* quest = plr->GetQuestLogForEntry(3520);
+			if(quest && quest->GetMobCount(0) < quest->GetQuest()->required_mobcount[0])
+			{
+				quest->SetMobCount(0, quest->GetMobCount(0) + 1);
+				quest->SendUpdateAddKill(0);
+				quest->UpdatePlayerFields();
+			}
+			SetUInt32Value(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
+		}
+};
+
 void Setup_FeralasQuest(ScriptMgr* mgr)
 {
 	mgr->register_creature_gossip(7775, new GreganBrewspewer_Gossip);
