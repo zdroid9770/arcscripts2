@@ -288,6 +288,38 @@ class ZephyrGossipScript : public Arcemu::Gossip::Script
 		}
 };
 
+class AldorScryerFlaskVendor_Gossip : public Arcemu::Gossip::Script
+{
+	public:
+		void OnHello(Object* pObject, Player* Plr)
+		{
+			if(pObject->GetEntry() == 23484)
+			{
+				if((plr->GetStandingRank(932) == STANDING_EXALTED) 
+				&& (plr->GetStandingRank(935) == STANDING_EXALTED)
+				&& (plr->GetStandingRank(942) == STANDING_EXALTED))
+					Arcemu::Gossip::Menu::SendQuickMenu(pObject->GetGUID(), 11085, Plr, 1, Arcemu::Gossip::VENDOR, Plr->GetSession()->LocalizedWorldSrv(Arcemu::Gossip::VENDOR));
+				else
+					Arcemu::Gossip::Menu::SendSimpleMenu(pObject->GetGUID(), 11083, Plr);
+			}
+			else
+			{
+				if((plr->GetStandingRank(934) == STANDING_EXALTED) 
+				&& (plr->GetStandingRank(935) == STANDING_EXALTED)
+				&& (plr->GetStandingRank(942) == STANDING_EXALTED))
+					Arcemu::Gossip::Menu::SendQuickMenu(pObject->GetGUID(), 11085, Plr, 1, Arcemu::Gossip::VENDOR, Plr->GetSession()->LocalizedWorldSrv(Arcemu::Gossip::VENDOR));
+				else
+					Arcemu::Gossip::Menu::SendSimpleMenu(pObject->GetGUID(), 11084, Plr);
+			}
+		}
+
+		void OnSelectOption(Object* pObject, Player* plr, uint32 Id, const char* Code)
+		{
+			if(Id == 1)
+				plr->GetSession()->SendInventoryList(TO_CREATURE(pObject));
+		}
+};
+
 void SetupTerrokarForestGossip(ScriptMgr* mgr)
 {
 	mgr->register_creature_gossip(19687, new ShattrathGuard);		// Shattrath City Guard
@@ -295,4 +327,6 @@ void SetupTerrokarForestGossip(ScriptMgr* mgr)
 	mgr->register_creature_gossip(18549, new ShattrathGuard);		// Shattrath City Guard
 	mgr->register_creature_gossip(25967, new ZephyrGossipScript);	// Zephyr
 	mgr->register_creature_gossip(24932, new ExarchNasuun_Gossip);	// Exarch Nasuun
+	mgr->register_creature_gossip(23484, new AldorScryerFlaskVendor_Gossip);	// Exarch Nasuun
+	mgr->register_creature_gossip(23483, new AldorScryerFlaskVendor_Gossip);	// Exarch Nasuun
 }
