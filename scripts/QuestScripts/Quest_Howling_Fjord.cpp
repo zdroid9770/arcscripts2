@@ -173,8 +173,8 @@ class Plaguethis_Gossip : public Arcemu::Gossip::Script
 						else
 						{
 							plr->SendItemPushResult(false, true, false, true, plr->GetItemInterface()->LastSearchResult()->ContainerSlot,
-							                        plr->GetItemInterface()->LastSearchResult()->Slot, 1, item->GetEntry(), item->GetItemRandomSuffixFactor(),
-							                        item->GetItemRandomPropertyId(), item->GetStackCount());
+							plr->GetItemInterface()->LastSearchResult()->Slot, 1, item->GetEntry(), item->GetItemRandomSuffixFactor(),
+							item->GetItemRandomPropertyId(), item->GetStackCount());
 
 						}
 						plr->TaxiStart(sTaxiMgr.GetTaxiPath(745), 17759, 0);
