@@ -71,7 +71,7 @@ class CairneBloodhoof_Gossip : public Arcemu::Gossip::Script
 		{
 			if(Id == 0)
 			{
-				Arcemu::Gossip::Menu::SendSimpleMenu(pObject->GetGUID(), 523, plr);
+				Arcemu::Gossip::Menu::SendSimpleMenu(pObject->GetGUID(), 7014, plr);
 				TO_CREATURE(pObject)->CastSpell(plr, 23123, false);
 			}
 		}
