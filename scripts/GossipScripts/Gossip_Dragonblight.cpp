@@ -50,19 +50,16 @@ class WyrmrestTemple_FlightGossip : public Arcemu::Gossip::Script
 			{
 				case CN_TOP:
 					{
-						menu.setTextID(NPCTEXT_TOP);
 						menu.AddItem(Arcemu::Gossip::ICON_CHAT, GOSSIP_TOP_TO_BOTTOM, 1);
 						menu.AddItem(Arcemu::Gossip::ICON_CHAT, GOSSIP_TOP_TO_MIDDLE, 2);
 					}break;
 				case CN_MIDDLE:
 					{
-						menu.setTextID(NPCTEXT_MIDDLE);
 						menu.AddItem(Arcemu::Gossip::ICON_CHAT, GOSSIP_MIDDLE_TO_TOP, 3);
 						menu.AddItem(Arcemu::Gossip::ICON_CHAT, GOSSIP_MIDDLE_TO_BOTTOM, 4);
 					}break;
 				case CN_BOTTOM:
 					{
-						menu.setTextID(NPCTEXT_BOTTOM);
 						menu.AddItem(Arcemu::Gossip::ICON_CHAT, GOSSIP_BOTTOM_TO_TOP, 5);
 						menu.AddItem(Arcemu::Gossip::ICON_CHAT, GOSSIP_BOTTOM_TO_MIDDLE, 6);
 					}break;
