@@ -20,23 +20,19 @@
 
 #include "Setup.h"
 
-#define SPELL_BENDINGSHINBONE 8856
-#define ITEM_STURDYSHINBONE 7134
-#define ITEM_BROKENSHINBONE 7135
-
 bool BendingShinbone(uint32 i, Spell *pSpell)
 {
 	if(pSpell->p_caster)
 	{
 		if(RandomUInt(100) < 17) // 17% chance
-			pSpell->p_caster->GetItemInterface()->AddItemById(ITEM_STURDYSHINBONE, 1, 0); // Sturdy Dragon
+			pSpell->p_caster->GetItemInterface()->AddItemById(7134, 1, 0);	//Sturdy Shinbone
 		else
-			pSpell->p_caster->GetItemInterface()->AddItemById(ITEM_BROKENSHINBONE, 1, 0);
+			pSpell->p_caster->GetItemInterface()->AddItemById(7135, 1, 0);	//Broken Shinbone
 	}
 	return true;
 }
 
 void SetupWetlands(ScriptMgr *mgr)
 {
-	mgr->register_script_effect(SPELL_BENDINGSHINBONE, &BendingShinbone);
+	mgr->register_script_effect(8856, &BendingShinbone);
 }

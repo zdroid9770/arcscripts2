@@ -85,5 +85,5 @@ class Corporal_Keeshan : public CreatureAIScript
 void SetupRedrigeMountains(ScriptMgr* mgr)
 {
 	mgr->register_creature_script(349, &Corporal_Keeshan::Create);
-	/*mgr->register_quest_script(219, new MissingInAction());*/
+	mgr->register_quest_script(219, new MissingInAction);
 }
