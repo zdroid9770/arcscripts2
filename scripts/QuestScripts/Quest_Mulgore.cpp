@@ -55,8 +55,31 @@ class SkornWhitecloud_Gossip : public Arcemu::Gossip::Script
 		}
 };
 
+class CairneBloodhoof_Gossip : public Arcemu::Gossip::Script
+{
+	public:
+		void OnHello(Object* pObject, Player* plr)
+		{
+			Arcemu::Gossip::Menu menu(pObject->GetGUID(), objmgr.GetGossipTextForNpc(pObject->GetEntry()), plr->GetSession()->language);
+			sQuestMgr.FillQuestMenu(TO_CREATURE(pObject), Plr, menu);
+			if(plr->HasQuest(925))
+				menu.AddItem(Arcemu::Gossip::ICON_CHAT, "I know this is rather silly but a young ward who is a bit shy would like your hoofprint.", 0);
+			menu.Send(plr);
+		}
+
+		void OnSelectOption(Object* pObject, Player* plr, uint32 Id, const char* Code)
+		{
+			if(Id == 0)
+			{
+				Arcemu::Gossip::Menu::SendSimpleMenu(pObject->GetGUID(), 523, plr);
+				TO_CREATURE(pObject)->CastSpell(plr, 23123, false);
+			}
+		}
+};
+
 void SetupMulgore(ScriptMgr* mgr)
 {
 	mgr->register_creature_script(2983, &The_Plains_Vision::Create);
-	mgr->register_creature_gossip(3052, new SkornWhitecloud_Gossip);			// Deathguard Bartholomew
+	mgr->register_creature_gossip(3052, new SkornWhitecloud_Gossip);
+	mgr->register_creature_gossip(3057, new CairneBloodhoof_Gossip);
 }
