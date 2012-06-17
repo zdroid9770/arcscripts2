@@ -279,6 +279,29 @@ class DarkTidingsHorde : public QuestScript
 		}
 };
 
+class TracyProudwell_Gossip : public Arcemu::Gossip::Script
+{
+	public:
+		void OnHello(Object* pObject, Player* plr)
+		{
+			Arcemu::Gossip::Menu menu(pObject->GetGUID(), objmgr.GetGossipTextForNpc(pObject->GetEntry()), plr->GetSession()->language);
+			menu.AddItem(Arcemu::Gossip::VENDOR, "I have marks to redeem!", 0);
+			sQuestMgr.FillQuestMenu(TO_CREATURE(pObject), Plr, menu);
+			if(plr->HasQuest(5126))
+				menu.AddItem(Arcemu::Gossip::ICON_CHAT, "I heard that your dog Fei Fei took Klatu's prayer beads...", 1);
+			menu.Send(plr);
+		}
+
+		void OnSelectOption(Object* pObject, Player* plr, uint32 Id, const char* Code)
+		{
+			if(Id == 0)
+				plr->GetSession()->SendInventoryList(TO_CREATURE(pObject));
+			else if(Id == 1)
+				Arcemu::Gossip::Menu::SendQuickMenu(pObject->GetGUID(), 10689, plr, 2, Arcemu::Gossip::ICON_CHAT, "<back>");
+			else if(Id == 2)
+				OnHello(pObject, plr);
+		}
+};
 
 void SetupHellfirePeninsula(ScriptMgr* mgr)
 {
@@ -290,4 +313,5 @@ void SetupHellfirePeninsula(ScriptMgr* mgr)
 	mgr->register_quest_script(9587, new DarkTidingsAlliance);
 	mgr->register_quest_script(9588, new DarkTidingsHorde);
 	mgr->register_creature_script(17077, &AncestralSpiritWolf::Create);
+	mgr->register_creature_gossip(18266, new TracyProudwell_Gossip);
 }
