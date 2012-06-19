@@ -2735,7 +2735,7 @@ class CapernianAI : public MoonScriptCreatureAI
 		{
 			if(IsAlive())
 				SetCanEnterCombat(false);
-			MoonScriptCreatureAI::OnCombatStop(mtarget);
+			MoonScriptCreatureAI::OnCombatStop(mTarget);
 		}
 
 		void AIUpdate()
@@ -3353,7 +3353,7 @@ class KaelThasAI : public MoonScriptBossAI
 					RemoveTimer(mPhoenixTimer);
 				}
 			}
-			MoonScriptBossAI::AIUPdate();
+			MoonScriptBossAI::AIUpdate();
 		}
 
 		Unit* GetRandomPlayer()

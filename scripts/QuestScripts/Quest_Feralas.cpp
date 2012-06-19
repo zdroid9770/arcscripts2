@@ -32,7 +32,7 @@ class GreganBrewspewer_Gossip : public Arcemu::Gossip::Script
 		void OnSelectOption(Object* pObject, Player* plr, uint32 Id, const char* Code)
 		{
 			if(Id == 0)
-				Arcemu::Gossip::Menu::SendQuickMenu(pObject->GetGUID(), 2434, plr, 1, Arcemu::Gossip::VENDOR, Plr->GetSession()->LocalizedWorldSrv(Arcemu::Gossip::VENDOR));
+				Arcemu::Gossip::Menu::SendQuickMenu(pObject->GetGUID(), 2434, plr, 1, Arcemu::Gossip::VENDOR, plr->GetSession()->LocalizedWorldSrv(Arcemu::Gossip::VENDOR));
 			else if(Id == 1)
 				plr->GetSession()->SendInventoryList(TO_CREATURE(pObject));
 		}
@@ -43,7 +43,7 @@ class ScreecherSpirit_Gossip : public Arcemu::Gossip::Script
 	public:
 		void OnHello(Object* pObject, Player* plr)
 		{
-			Arcemu::Gossip::Menu::SendSimpleMenu(pObject->GetGUID(), objmgr.GetGossipTextForNpc(pObject->GetEntry()), Plr);
+			Arcemu::Gossip::Menu::SendSimpleMenu(pObject->GetGUID(), objmgr.GetGossipTextForNpc(pObject->GetEntry()), plr);
 			QuestLogEntry* quest = plr->GetQuestLogForEntry(3520);
 			if(quest && quest->GetMobCount(0) < quest->GetQuest()->required_mobcount[0])
 			{
@@ -51,7 +51,7 @@ class ScreecherSpirit_Gossip : public Arcemu::Gossip::Script
 				quest->SendUpdateAddKill(0);
 				quest->UpdatePlayerFields();
 			}
-			SetUInt32Value(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
+			TO_CREATURE(pObject)->SetUInt32Value(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
 		}
 };
 

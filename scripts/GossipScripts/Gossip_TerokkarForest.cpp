@@ -291,25 +291,25 @@ class ZephyrGossipScript : public Arcemu::Gossip::Script
 class AldorScryerFlaskVendor_Gossip : public Arcemu::Gossip::Script
 {
 	public:
-		void OnHello(Object* pObject, Player* Plr)
+		void OnHello(Object* pObject, Player* plr)
 		{
 			if(pObject->GetEntry() == 23484)
 			{
 				if((plr->GetStandingRank(932) == STANDING_EXALTED) 
 				&& (plr->GetStandingRank(935) == STANDING_EXALTED)
 				&& (plr->GetStandingRank(942) == STANDING_EXALTED))
-					Arcemu::Gossip::Menu::SendQuickMenu(pObject->GetGUID(), 11085, Plr, 1, Arcemu::Gossip::VENDOR, Plr->GetSession()->LocalizedWorldSrv(Arcemu::Gossip::VENDOR));
+					Arcemu::Gossip::Menu::SendQuickMenu(pObject->GetGUID(), 11085, plr, 1, Arcemu::Gossip::VENDOR, plr->GetSession()->LocalizedWorldSrv(Arcemu::Gossip::VENDOR));
 				else
-					Arcemu::Gossip::Menu::SendSimpleMenu(pObject->GetGUID(), 11083, Plr);
+					Arcemu::Gossip::Menu::SendSimpleMenu(pObject->GetGUID(), 11083, plr);
 			}
 			else
 			{
 				if((plr->GetStandingRank(934) == STANDING_EXALTED) 
 				&& (plr->GetStandingRank(935) == STANDING_EXALTED)
 				&& (plr->GetStandingRank(942) == STANDING_EXALTED))
-					Arcemu::Gossip::Menu::SendQuickMenu(pObject->GetGUID(), 11085, Plr, 1, Arcemu::Gossip::VENDOR, Plr->GetSession()->LocalizedWorldSrv(Arcemu::Gossip::VENDOR));
+					Arcemu::Gossip::Menu::SendQuickMenu(pObject->GetGUID(), 11085, plr, 1, Arcemu::Gossip::VENDOR, plr->GetSession()->LocalizedWorldSrv(Arcemu::Gossip::VENDOR));
 				else
-					Arcemu::Gossip::Menu::SendSimpleMenu(pObject->GetGUID(), 11084, Plr);
+					Arcemu::Gossip::Menu::SendSimpleMenu(pObject->GetGUID(), 11084, plr);
 			}
 		}
 

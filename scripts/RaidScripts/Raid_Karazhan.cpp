@@ -99,7 +99,7 @@ class AttumenTheHuntsmanAI : public MoonScriptBossAI
 		void OnCombatStop(Unit* pTarget)
 		{
 			Despawn(10000);
-			MoonScriptBossAI::OnCombatStop(mTarget);
+			MoonScriptBossAI::OnCombatStop(pTarget);
 		}
 
 		void AIUpdate()

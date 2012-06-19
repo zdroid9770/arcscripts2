@@ -88,9 +88,7 @@ class ZethGorMustBurnAlliance : public GameObjectAIScript
 
 						GameObject* pGameobject = sEAS.SpawnGameobject(pPlayer, 183816, -1150.53f, 2109.92f, 84.4204f, 0, 4, 0, 0, 0, 0);
 						if(pGameobject != NULL)
-						{
 							sEAS.GameobjectDelete(pGameobject, 1 * 60 * 1000);
-						}
 
 						return;
 					}
@@ -108,9 +106,7 @@ class ZethGorMustBurnAlliance : public GameObjectAIScript
 
 						GameObject* pGameobject = sEAS.SpawnGameobject(pPlayer, 183816, -893.499f, 1919.27f, 81.6449f, 0, 4, 0, 0, 0, 0);
 						if(pGameobject != NULL)
-						{
 							sEAS.GameobjectDelete(pGameobject, 1 * 60 * 1000);
-						}
 
 						return;
 					}
@@ -128,9 +124,7 @@ class ZethGorMustBurnAlliance : public GameObjectAIScript
 
 						GameObject* pGameobject = sEAS.SpawnGameobject(pPlayer, 183816, -977.713f, 1879.500f, 110.892f, 0, 4, 0, 0, 0, 0);
 						if(pGameobject != NULL)
-						{
 							sEAS.GameobjectDelete(pGameobject, 1 * 60 * 1000);
-						}
 
 						return;
 					}
@@ -146,16 +140,11 @@ class ZethGorMustBurnAlliance : public GameObjectAIScript
 
 
 
-/*--------------------------------------------------------------------------------------------------------*/
-// The Dreghood Elders
 
-#define SendQuickMenu(textid) objmgr.CreateGossipMenuForPlayer(&Menu, pObject->GetGUID(), textid, pPlayer); \
-    Menu->SendTo(pPlayer);
-
-class PrisonerGossip : public GossipScript
+class PrisonerGossip : public Arcemu::Gossip::Script
 {
 	public:
-		void GossipHello(Object* pObject, Player* pPlayer)
+		void OnHello(Object* pObject, Player* plr)
 		{
 			int32 i = -1;
 			Creature* pPrisoner = TO_CREATURE(pObject);
@@ -169,25 +158,16 @@ class PrisonerGossip : public GossipScript
 			if(i == -1)
 				return;
 
-			QuestLogEntry* pQuest = pPlayer->GetQuestLogForEntry(10368);
-			if(pQuest != NULL && pQuest->GetMobCount(i) < pQuest->GetQuest()->required_mobcount[i])
-			{
-				if(pPlayer->GetItemInterface()->GetItemCount(29501) > 0)
-				{
-					GossipMenu* Menu;
-					objmgr.CreateGossipMenuForPlayer(&Menu, pObject->GetGUID(), 10104, pPlayer);
-					Menu->AddItem(0, "Walk free, Elder. Bring the spirits back to your tribe.", 1);
-
-					Menu->SendTo(pPlayer);
-				}
-			}
+			QuestLogEntry* pQuest = plr->GetQuestLogForEntry(10368);
+			if(pQuest != NULL && pQuest->GetMobCount(i) < pQuest->GetQuest()->required_mobcount[i] && plr->GetItemInterface()->GetItemCount(29501) > 0)
+				Arcemu::Gossip::Menu::SendQuickMenu(pObject->GetGUID(), 10104, plr, 1, Arcemu::Gossip::ICON_CHAT, "Walk free, Elder. Bring the spirits back to your tribe.");
 		}
 
-		void GossipSelectOption(Object* pObject, Player* pPlayer, uint32 Id, uint32 IntId, const char* EnteredCode)
+		void OnSelectOption(Object* pObject, Player* pPlayer, uint32 Id, const char* EnteredCode)
 		{
-			switch(IntId)
+			switch(Id)
 			{
-				case 0: GossipHello(pObject, pPlayer); break;
+				case 0: OnHello(pObject, pPlayer); break;
 				case 1:
 					{
 						int32 i = -1;
@@ -286,7 +266,7 @@ class TracyProudwell_Gossip : public Arcemu::Gossip::Script
 		{
 			Arcemu::Gossip::Menu menu(pObject->GetGUID(), objmgr.GetGossipTextForNpc(pObject->GetEntry()), plr->GetSession()->language);
 			menu.AddItem(Arcemu::Gossip::VENDOR, "I have marks to redeem!", 0);
-			sQuestMgr.FillQuestMenu(TO_CREATURE(pObject), Plr, menu);
+			sQuestMgr.FillQuestMenu(TO_CREATURE(pObject), plr, menu);
 			if(plr->HasQuest(5126))
 				menu.AddItem(Arcemu::Gossip::ICON_CHAT, "I heard that your dog Fei Fei took Klatu's prayer beads...", 1);
 			menu.Send(plr);
@@ -297,7 +277,7 @@ class TracyProudwell_Gossip : public Arcemu::Gossip::Script
 			if(Id == 0)
 				plr->GetSession()->SendInventoryList(TO_CREATURE(pObject));
 			else if(Id == 1)
-				Arcemu::Gossip::Menu::SendQuickMenu(pObject->GetGUID(), 10689, plr, 2, Arcemu::Gossip::ICON_CHAT, "<back>");
+				Arcemu::Gossip::Menu::SendQuickMenu(pObject->GetGUID(), 10104, plr, 2, Arcemu::Gossip::ICON_CHAT, "<back>");
 			else if(Id == 2)
 				OnHello(pObject, plr);
 		}
@@ -307,9 +287,9 @@ void SetupHellfirePeninsula(ScriptMgr* mgr)
 {
 	mgr->register_gameobject_script(181606, &HaaleshiAltar::Create);
 	mgr->register_gameobject_script(184661, &ZethGorMustBurnAlliance::Create);
-	mgr->register_gossip_script(20677, new PrisonerGossip);
-	mgr->register_gossip_script(20678, new PrisonerGossip);
-	mgr->register_gossip_script(20679, new PrisonerGossip);
+	mgr->register_creature_gossip(20677, new PrisonerGossip);
+	mgr->register_creature_gossip(20678, new PrisonerGossip);
+	mgr->register_creature_gossip(20679, new PrisonerGossip);
 	mgr->register_quest_script(9587, new DarkTidingsAlliance);
 	mgr->register_quest_script(9588, new DarkTidingsHorde);
 	mgr->register_creature_script(17077, &AncestralSpiritWolf::Create);

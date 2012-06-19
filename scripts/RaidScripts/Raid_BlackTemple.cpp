@@ -183,7 +183,7 @@ class NajentusAI : public MoonScriptBossAI
 {
 	public:
 		ADD_CREATURE_FACTORY_FUNCTION(NajentusAI)
-		NajentusAI(Creature* pCreature) : CreatureAIScript(pCreature)
+		NajentusAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
 		{
 			AddEmote(Event_OnCombatStart, "You will die, in the name of Lady Vashj!", Text_Yell, 11450);
 			AddEmote(Event_OnDied, "Lord Illidan will... crush you.", Text_Yell, 11459);
@@ -1034,6 +1034,7 @@ class EssenceOfAngerAI : public MoonScriptCreatureAI
 };
 
 #define CN_RELIQUARY_OF_SOULS	22856
+#define CN_ENSLAVED_SOUL		23469
 #define ROS_SUMMON_SUFFERING	41488
 #define ROS_SUMMON_DESIRE		41493
 #define ROS_SUMMON_ANGER		41496
@@ -1165,8 +1166,8 @@ class ReliquaryOfSoulsAI : public MoonScriptCreatureAI
 								{
 									pSpawnedEnsalvedSoul->AggroNearestPlayer();
 									pSpawnedEnsalvedSoul = NULL;
-								};
-							};
+								}
+							}
 							RemoveTimer(mEnslavedSoulTimer);
 						}
 						if(SpawnedEnsalvedSoul)

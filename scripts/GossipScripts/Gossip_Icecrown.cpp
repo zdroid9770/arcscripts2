@@ -25,7 +25,7 @@ class DameEvnikiKapsalis_Gossip : public Arcemu::Gossip::Script
 		{
 			Arcemu::Gossip::Menu menu(pObject->GetGUID(), objmgr.GetGossipTextForNpc(pObject->GetEntry()), plr->GetSession()->language);
 			if(plr->HasTitle(PVPTITLE_CRUSADER))
-				menu.AddItem(Arcemu::Gossip::ICON_VENDOR, plr->GetSession()->LocalizedWorldSrv(Gossip::VENDOR), 1);
+				menu.AddItem(Arcemu::Gossip::ICON_VENDOR, plr->GetSession()->LocalizedWorldSrv(Arcemu::Gossip::VENDOR), 1);
 			menu.Send(plr);
 		}
 

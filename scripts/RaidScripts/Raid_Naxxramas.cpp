@@ -592,7 +592,7 @@ class GrandWidowFaerlinaAI : public MoonScriptCreatureAI
 					ResetTimer(mFrenzyTimer, 60000 + RandomUInt(20) * 1000);
 				}
 			}
-			MoonScriptCreatureAI::AIUPdate();
+			MoonScriptCreatureAI::AIUpdate();
 		}
 
 		set< NaxxramasWorshipperAI* >	mWorshippers;

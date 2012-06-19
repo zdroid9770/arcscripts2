@@ -105,8 +105,8 @@ class ArchavonAI : public MoonScriptBossAI
 				ResetTimer(mStompTimer, 45*SEC_IN_MS);
 			}
 
-			if(_unit->GetCurrentSpell() == dbcSpell.LookupEntry(SPELL_CRUSHING_LEAP))
-				_unit->CastSpell(_unit, SPELL_CHOCKING_CLOUD, false);
+			/*if(_unit->GetCurrentSpell() == SPELL_CRUSHING_LEAP)
+				_unit->CastSpell(_unit, SPELL_CHOCKING_CLOUD, false);*/
 			MoonScriptBossAI::AIUpdate();
 		}
 

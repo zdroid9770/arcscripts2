@@ -62,7 +62,7 @@ public:
 	{
 		if(GameObject* Doors = GetNearestGameObject(192395))
 			Doors->SetState(GAMEOBJECT_STATE_OPEN);
-		MoonScriptCreatureAI::OnDied(mKiller);
+		MoonScriptCreatureAI::OnDied(pKiller);
 	}
 
 protected:
