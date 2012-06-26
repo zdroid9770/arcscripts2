@@ -112,6 +112,7 @@ extern "C" SCRIPT_DECL void _exp_script_register(ScriptMgr* mgr)	// Comment any 
 	SetupIcecrownGossip(mgr);
 
 	//INSTANCES
+	SetupGnomeregan(mgr);
 	SetupArcatraz(mgr);
 	SetupAuchenaiCrypts(mgr);
 	SetupAzjolNerub(mgr);

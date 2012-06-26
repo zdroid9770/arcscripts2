@@ -125,6 +125,7 @@ void SetupEversongWoodsGossip(ScriptMgr* mgr);
 void SetupIcecrownGossip(ScriptMgr * mgr);
 
 //INSTANCE
+void SetupGnomeregan(ScriptMgr* mgr);
 void SetupArcatraz(ScriptMgr* mgr);
 void SetupAuchenaiCrypts(ScriptMgr* mgr);
 void SetupAzjolNerub(ScriptMgr* mgr) ;
