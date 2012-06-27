@@ -70,7 +70,11 @@ class ProtectorateNetherDrake_Gossip : public Arcemu::Gossip::Script
 		void OnSelectOption(Object* pObject, Player* plr, uint32 Id, const char* Code)
 		{
 			if(Id == 0)
-				plr->TaxiStart(sTaxiMgr.GetTaxiPath(627), plr->GetTeam() == TEAM_ALLIANCE ? sTaxiMgr.GetTaxiNode(sTaxiMgr.GetTaxiPath(627)->to)->alliance_mount : sTaxiMgr.GetTaxiNode(sTaxiMgr.GetTaxiPath(627)->to)->horde_mount, 0);
+			{
+				TaxiPath * mPatch = sTaxiMgr.GetTaxiPath(627);
+				uint32 mount_display_id = plr->GetTeam() == TEAM_ALLIANCE ? sTaxiMgr.GetTaxiNode(mPatch->GetSourceNode())->alliance_mount : sTaxiMgr.GetTaxiNode(mPatch->GetSourceNode())->horde_mount;
+				plr->TaxiStart(mPatch, mount_display_id, 0);
+			}
 		}
 };
 
