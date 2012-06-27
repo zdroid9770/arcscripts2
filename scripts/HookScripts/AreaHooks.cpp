@@ -19,6 +19,9 @@
 
 #include "Setup.h"
 
+#define TEAM_ALLIANCE = pPlayer->GetTeam == 0
+#define TEAM_HORDE = pPlayer->GetTeam == 1
+
 /*************************************************************************************
 **************************************************************************************
 							   ON AREATRIGGER
@@ -50,6 +53,22 @@ void Scratches(Player* pPlayer, uint32 AreaTrigger)
 	qle->UpdatePlayerFields();
 }
 
+void Sunreaver(Player* pPlayer, uint32 AreaTrigger)
+{
+	if (pPlayer->GetTeam == 0) // If there at the Sunreaver Sancutary and they are alliance it will cast the Trespasser debuff on them.
+	{
+		pPlayer->CastSpell(54029);
+	}
+}
+
+void SilverEnclave(Player* pPlayer, uint32 AreaTrigger)
+{
+	if (pPlayer->GetTeam == 1) // If there at the Silver Enclave and they are horde it will cast the Trespasser debuff on them.
+	{
+		pPlayer->CastSpell(54028);
+	}
+}
+
 //=========================================================================================
 
 void scriptOnAreaTrigger(Player* pPlayer, uint32 AreaTrigger)
@@ -66,6 +85,14 @@ void scriptOnAreaTrigger(Player* pPlayer, uint32 AreaTrigger)
 				InvasionPointCataclysm(pPlayer, 4560);
 			}
 			break;
+		case 4616:
+			{
+				Sunreaver(pPlayer, 4616)
+			}
+		case 4740:
+			{
+				SilverEnclave(pPlayer, 4740)
+			}
 	}
 }
 
