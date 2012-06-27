@@ -220,6 +220,14 @@ class GeneralBjarngrimAI : public MoonScriptBossAI
 			mStanceTimer = INVALIDATE_TIMER;
 		}
 
+		void OnLoad()
+		{
+			if (_unit->HasAura(52098) == false)
+			{
+			_unit->CastSpell(_unit, 52098, true); // Charge up is on him when he loads and gives his allies buffs 
+		}
+		}
+
 		void OnCombatStart(Unit* pTarget)
 		{
 			mStanceTimer = AddTimer(TIMER_STANCE_CHANGE + (RandomUInt(7) * 1000));
