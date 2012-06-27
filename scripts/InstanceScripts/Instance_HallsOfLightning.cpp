@@ -222,7 +222,7 @@ class GeneralBjarngrimAI : public MoonScriptBossAI
 
 		void OnLoad()
 		{
-			if (_unit->HasAura(52098) == false)
+			if (!_unit->HasAura(52098))
 			{
 			_unit->CastSpell(_unit, 52098, true); // Charge up is on him when he loads and gives his allies buffs 
 		}
@@ -484,9 +484,12 @@ class VolkhansAnvil : public MoonScriptCreatureAI
 
 /////////////////////////////////////////////////////////////////////////////////
 ////// Ionar
-// Status: Basic script, missing spark phase
+// Status: Fixed Spark Phase works great.
+// Information gathered from: http://www.wowwiki.com/Ionar
+// Hotfix (2009-12-16)
+//"Ionar, in the Halls of Lightning, will now only disperse once during the course of the fight." 
 
-#define CN_SPARK				28926
+#define NPC_SPARK				28926
 
 #define DISPRESE				52770
 #define BALL_LIGHTNING			HeroicInt( 52780, 59800 )
@@ -528,6 +531,14 @@ class IonarAI : public MoonScriptCreatureAI
 		}
 
 		MoonInstanceScript* mInstance;
+
+		void AIUpdate()
+		{
+			// Phase 1 starts at 50, spark 1, spawn 10 lightning sparks
+			if (_unit->GetHealthPct() <= 50) {
+
+			}
+		}
 };
 
 /////////////////////////////////////////////////////////////////////////////////
