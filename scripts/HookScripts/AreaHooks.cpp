@@ -70,8 +70,8 @@ void scriptOnAreaTrigger(Player* pPlayer, uint32 AreaTrigger)
 	{
 		case 4546: Scratches(pPlayer, 4546); break;
 		case 4560: InvasionPointCataclysm(pPlayer, 4560); break;
-		case 4616: Sunreaver(pPlayer, 4616); break;
-		case 4740: SilverEnclave(pPlayer, 4740); break;
+		case 4553: Sunreaver(pPlayer, 4553); break;
+		case 4551: SilverEnclave(pPlayer, 4551); break;
 	}
 }
 
