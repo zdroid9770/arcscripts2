@@ -532,7 +532,7 @@ class IonarAI : public MoonScriptCreatureAI
 
 		MoonInstanceScript* mInstance;
 
-		void AIUpdate()
+		/*void AIUpdate()
 		{
 			// Phase 1 starts at 50, spark 1, spawn 10 lightning sparks
 			if (_unit->GetHealthPct() <= 50) {
@@ -540,7 +540,7 @@ class IonarAI : public MoonScriptCreatureAI
 			}
 		}
 };
-
+*/
 /////////////////////////////////////////////////////////////////////////////////
 ////// Loken
 #define PULSING_SHOCKWAVE		HeroicInt( 52961, 59836 )
