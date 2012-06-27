@@ -18,8 +18,20 @@
  
  #include "Setup.h"
 
+//#define PRISON_GATE	186757 // WRONG ID NEED RIGHT ID!
+
 /*/ The Violet Hold
 // ISSUES: There is 18 waves but we need world states so the portal #'s can show. Prison gate thing does not work.
+
+void OnGameObjectPushToWorld(GameObject* pGameObject)
+{
+			switch(pGameObject->GetEntry())
+			{
+			case PRISON_GATE: mPrisonGate[0] = pGameObject->GetLowGUID(); 
+			break;
+			}
+			}
+
 class LieutenantSinclariGossip : public GossipScript
 {
 	public:
@@ -47,6 +59,7 @@ class LieutenantSinclariGossip : public GossipScript
 						_unit->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, "Im locking the door, thanks again for doing this.", 1000);
 						_unit->GetAIInterface()->setCurrentAgent(AGENT_NULL);
 						_unit->GetAIInterface()->SetAIState(STATE_SCRIPTIDLE);
+
 					*/
 
 
