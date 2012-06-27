@@ -53,13 +53,13 @@ void Scratches(Player* pPlayer, uint32 AreaTrigger)
 void Sunreaver(Player* pPlayer, uint32 AreaTrigger)
 {
 	if(pPlayer->GetTeam() == TEAM_ALLIANCE) // If there at the Sunreaver Sancutary and they are alliance it will cast the Trespasser debuff on them.
-		pPlayer->CastSpell(54029);
+		pPlayer->CastSpell(pPlayer, 54029, true);
 }
 
 void SilverEnclave(Player* pPlayer, uint32 AreaTrigger)
 {
 	if(pPlayer->GetTeam() == TEAM_HORDE) // If there at the Silver Enclave and they are horde it will cast the Trespasser debuff on them.
-		pPlayer->CastSpell(54028);
+		pPlayer->CastSpell(pPlayer, 54028, true);
 }
 
 //=========================================================================================
