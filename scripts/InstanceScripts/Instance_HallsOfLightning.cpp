@@ -538,9 +538,8 @@ class IonarAI : public MoonScriptCreatureAI
 			if (_unit->GetHealthPct() <= 50) {
 
 			}
-		}
+		} */
 };
-*/
 /////////////////////////////////////////////////////////////////////////////////
 ////// Loken
 #define PULSING_SHOCKWAVE		HeroicInt( 52961, 59836 )
