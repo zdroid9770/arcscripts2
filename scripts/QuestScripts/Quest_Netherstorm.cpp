@@ -65,6 +65,7 @@ class ProtectorateNetherDrake_Gossip : public Arcemu::Gossip::Script
 			Arcemu::Gossip::Menu menu(pObject->GetGUID(), objmgr.GetGossipTextForNpc(pObject->GetEntry()), plr->GetSession()->language);
 			if(plr->HasQuest(10438))
 				menu.AddItem(Arcemu::Gossip::ICON_CHAT, "Fly me to Ultris", 0);
+			menu.Send(plr);
 		}
 
 		void OnSelectOption(Object* pObject, Player* plr, uint32 Id, const char* Code)
