@@ -304,16 +304,17 @@ class GeneralBjarngrimAI : public MoonScriptBossAI
 class Slag : public MoonScriptCreatureAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(Slag)
-			Slag(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
+		MOONSCRIPT_FACTORY_FUNCTION(Slag, MoonScriptCreatureAI);
+		Slag(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 		}
 
-		void OnDied()
+		void OnDied(Unit* pKiller)
 		{
-			Unit* Volkhan = ForceCreatureFind(CN_VOLKHAN, 1338.949, -124.431, 57.358);
+			Unit* Volkhan = ForceCreatureFind(CN_VOLKHAN, 1338.949f, -124.431f, 57.358f);
 			if (Volkhan->isAlive())
 			_unit->Despawn(1000, 10000);
+			ParentClass::OnDied(pKiller);
 		}
 };
 
