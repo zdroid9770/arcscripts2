@@ -506,7 +506,7 @@ class VolkhansAnvil : public MoonScriptCreatureAI
 
 /////////////////////////////////////////////////////////////////////////////////
 ////// Ionar
-// Status: Fixed Spark Phase works great.
+// Status: Spark Phase needs to be added, Basic script
 // Information gathered from: http://www.wowwiki.com/Ionar
 // Hotfix (2009-12-16)
 //"Ionar, in the Halls of Lightning, will now only disperse once during the course of the fight." 
