@@ -28,13 +28,13 @@ Team  : Sun++
 class BlackCat : public MoonScriptCreatureAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(BlackCat)
+		MOONSCRIPT_FACTORY_FUNCTION(BlackCat, MoonScriptCreatureAI);
 		BlackCat(Creature* pCreature) : MoonScriptCreatureAI(pCreature) {}
 
 		void OnDied(Unit* pKiller)
 		{
 			pKiller->CastSpell(pKiller, dbcSpell.LookupEntry(39477), true);
-			MoonScriptCreatureAI::OnDied(pKiller);
+			ParentClass::OnDied(pKiller);
 		}
 };
 
@@ -90,7 +90,7 @@ static Location WaypointGoldshire[] =
 class ShadeOfTheHorsemanAI : public MoonScriptCreatureAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(ShadeOfTheHorsemanAI)
+		MOONSCRIPT_FACTORY_FUNCTION(ShadeOfTheHorsemanAI, MoonScriptCreatureAI);
 		ShadeOfTheHorsemanAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			_unit->GetAIInterface()->SetAllowedToEnterCombat(false);
@@ -133,11 +133,13 @@ class ShadeOfTheHorsemanAI : public MoonScriptCreatureAI
 					Emote("Fire consumes! You've tried and failed. Let there be no doubt, justice prevailed!", Text_Yell, 11967);
 					_unit->Despawn(12000, 0); //Despawn after 12 secs
 				}
-			}else if(_unit->GetMapMgr()->GetAreaID(_unit->GetPositionX(), _unit->GetPositionY()) == 87)
+			}
+			else if(_unit->GetMapMgr()->GetAreaID(_unit->GetPositionX(), _unit->GetPositionY()) == 87)
 			{
 				if(iWaypointId == 6)
 					_unit->CastSpell(_unit, dbcSpell.LookupEntry(42118), true);
 			}
+			ParentClass::OnReachWP(iWaypointId, bForwards);
 		}
 
 		void OnDied(Unit* pKiller)
@@ -146,7 +148,7 @@ class ShadeOfTheHorsemanAI : public MoonScriptCreatureAI
 			
 			if(GameObject* Pumpkin = _unit->GetMapMgr()->GetInterface()->SpawnGameObject(2883, _unit->GetPositionX() + RandomFloat(5.0f), _unit->GetPositionY() + RandomFloat(5.0f), _unit->GetPositionZ(), _unit->GetOrientation(), true, 0, 0, 1))
 				_unit->CastSpell(Pumpkin->GetGUID(), dbcSpell.LookupEntry(42277), true);
-			MoonScriptCreatureAI::OnDied(pKiller);
+			ParentClass::OnDied(pKiller);
 		}
 };
 
@@ -156,7 +158,7 @@ class ShadeOfTheHorsemanAI : public MoonScriptCreatureAI
 class HeadlessHorsemanWispInvisAI : public MoonScriptCreatureAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(HeadlessHorsemanWispInvisAI)
+		MOONSCRIPT_FACTORY_FUNCTION(HeadlessHorsemanWispInvisAI, MoonScriptCreatureAI);
 		HeadlessHorsemanWispInvisAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature) {}
 
 		void AIUpdate()
@@ -173,7 +175,7 @@ class HeadlessHorsemanWispInvisAI : public MoonScriptCreatureAI
 					ModifyAIUpdateEvent(4 * 60 * 1000);
 				}
 			}
-			MoonScriptCreatureAI::AIUpdate();
+			ParentClass::AIUpdate();
 		}
 };
 

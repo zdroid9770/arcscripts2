@@ -2092,7 +2092,7 @@ void SpellFunc_Warbringer_BurningMaul(SpellDesc* pThis, MoonScriptCreatureAI* pC
 class WarbringerOmroggAI : public MoonScriptCreatureAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(WarbringerOmroggAI)
+		MOONSCRIPT_FACTORY_FUNCTION(WarbringerOmroggAI, MoonScriptCreatureAI);
 		WarbringerOmroggAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			AddSpell(WARBRINGER_OMROGG_THUNDERCLAP, Target_Self, 25, 1, 12);
@@ -2140,7 +2140,7 @@ class WarbringerOmroggAI : public MoonScriptCreatureAI
 					mSpeechId = 3;
 					break;
 			}
-			MoonScriptCreatureAI::OnCombatStart(pTarget);
+			ParentClass::OnCombatStart(pTarget);
 		}
 
 		void OnCombatStop(Unit* pTarget)
@@ -2158,7 +2158,7 @@ class WarbringerOmroggAI : public MoonScriptCreatureAI
 					mRightHead = NULL;
 				}
 			}
-			MoonScriptCreatureAI::OnCombatStop(pTarget);
+			ParentClass::OnCombatStop(pTarget);
 		}
 
 		void OnTargetDied(Unit* pTarget)
@@ -2177,7 +2177,7 @@ class WarbringerOmroggAI : public MoonScriptCreatureAI
 					mSpeechId = 0;
 					break;
 			}
-			MoonScriptCreatureAI::OnTargetDied(pTarget);
+			ParentClass::OnTargetDied(pTarget);
 		}
 
 		void OnDied(Unit* pKiller)
@@ -2191,7 +2191,7 @@ class WarbringerOmroggAI : public MoonScriptCreatureAI
 			mRightHead->RegisterAIUpdateEvent(3000);
 			mRightHead->Despawn(4000);
 			mRightHead = NULL;
-			MoonScriptCreatureAI::OnDied(pKiller);
+			ParentClass::OnDied(pKiller);
 		}
 
 		void AIUpdate()
@@ -2251,7 +2251,7 @@ class WarbringerOmroggAI : public MoonScriptCreatureAI
 				RemoveTimer(mBlastWaveTimer);
 				CastSpell(mBlastWave);
 			}
-			MoonScriptCreatureAI::AIUpdate();
+			ParentClass::AIUpdate();
 		}
 
 		void ShiftAggro()
@@ -2323,7 +2323,7 @@ void SpellFunc_Warbringer_BurningMaul(SpellDesc* pThis, MoonScriptCreatureAI* pC
 class HeadAI : public MoonScriptCreatureAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(HeadAI)
+		MOONSCRIPT_FACTORY_FUNCTION(HeadAI, MoonScriptCreatureAI);
 		HeadAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			SetScale(4.0f);
@@ -2338,7 +2338,7 @@ class HeadAI : public MoonScriptCreatureAI
 
 			Emote("I... hate... you!", Text_Yell, 10322);
 			RemoveAIUpdateEvent();								// Dangerous!
-			MoonScriptCreatureAI::AIUpdate();
+			ParentClass::AIUpdate();
 		}
 
 		void Destroy()
@@ -2352,6 +2352,7 @@ class HeadAI : public MoonScriptCreatureAI
 				if(pAI->mRightHead == (MoonScriptCreatureAI*)(this))
 					pAI->mRightHead = NULL;
 			}
+			ParentClass::Destroy();
 		}
 };
 

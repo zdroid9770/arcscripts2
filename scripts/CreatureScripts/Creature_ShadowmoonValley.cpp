@@ -21,13 +21,13 @@
 class EclipsionSpawn : public MoonScriptCreatureAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(EclipsionSpawn)
+		MOONSCRIPT_FACTORY_FUNCTION(EclipsionSpawn, MoonScriptCreatureAI);
 		EclipsionSpawn(Creature *pCreature) : MoonScriptCreatureAI(pCreature) {}
 
 		void OnDied(Unit *mKiller)
 		{
 			_unit->CastSpell(_unit, 38311, true); // Cast spell: "Summon Eclipsion Hawkstrider"
-			MoonScriptCreatureAI::OnDied(mKiller);
+			ParentClass::OnDied(mKiller);
 		}
 };
 

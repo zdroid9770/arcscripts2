@@ -21,7 +21,7 @@
 class MobsGhoulFlayer : public MoonScriptCreatureAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(MobsGhoulFlayer);
+		MOONSCRIPT_FACTORY_FUNCTION(MobsGhoulFlayer, MoonScriptCreatureAI);
 		MobsGhoulFlayer(Creature* c) : MoonScriptCreatureAI(c){}
 
 		void OnDied(Unit *mKiller)
@@ -30,14 +30,14 @@ class MobsGhoulFlayer : public MoonScriptCreatureAI
 				return;
 
 			SpawnCreature(11064, _unit->GetPositionX(), _unit->GetPositionY(), _unit->GetPositionZ(), _unit->GetOrientation());
-			MoonScriptCreatureAI::OnDied(mKiller);
+			ParentClass::OnDied(mKiller);
 		}
 };
 
 class ArajTheSummoner : public MoonScriptCreatureAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(ArajTheSummoner);
+		MOONSCRIPT_FACTORY_FUNCTION(ArajTheSummoner, MoonScriptCreatureAI);
 		ArajTheSummoner(Creature* c) : MoonScriptCreatureAI(c){}
 
 		void OnDied(Unit* mKiller)
@@ -46,14 +46,14 @@ class ArajTheSummoner : public MoonScriptCreatureAI
 				return;
 
 			_unit->GetMapMgr()->GetInterface()->SpawnGameObject(177241, _unit->GetPositionX(), _unit->GetPositionY(), _unit->GetPositionZ(), _unit->GetOrientation(), true, 0, 0, 1);
-			MoonScriptCreatureAI::OnDied(mKiller);
+			ParentClass::OnDied(mKiller);
 		}
 };
 
 class CursedMageAI : public MoonScriptCreatureAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(CursedMageAI);
+		MOONSCRIPT_FACTORY_FUNCTION(CursedMageAI, MoonScriptCreatureAI);
 		CursedMageAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			AddSpell(20829, Target_Current, 20, 1, -1);
@@ -62,14 +62,14 @@ class CursedMageAI : public MoonScriptCreatureAI
 		void OnDied(Unit* mKiller)
 		{
 			_unit->CastSpell(mKiller, 16567, true);	//Tainted Mind
-			MoonScriptCreatureAI::OnDied(mKiller);
+			ParentClass::OnDied(mKiller);
 		}
 };
 
 class CarrionDevourerAI : public MoonScriptCreatureAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(CarrionDevourerAI);
+		MOONSCRIPT_FACTORY_FUNCTION(CarrionDevourerAI, MoonScriptCreatureAI);
 		CarrionDevourerAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			AddSpell(16449, Target_Current, 20, 0, -1);
@@ -78,7 +78,7 @@ class CarrionDevourerAI : public MoonScriptCreatureAI
 		void OnDied(Unit* mKiller)
 		{
 			_unit->CastSpell(mKiller, 17197, true);	//Maggot Goo
-			MoonScriptCreatureAI::OnDied(mKiller);
+			ParentClass::OnDied(mKiller);
 		}
 };
 

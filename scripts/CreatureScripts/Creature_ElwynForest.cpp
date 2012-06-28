@@ -21,7 +21,7 @@
 class StormwindGuardAI : public MoonScriptCreatureAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(StormwindGuardAI)
+		MOONSCRIPT_FACTORY_FUNCTION(StormwindGuardAI, MoonScriptCreatureAI);
 		StormwindGuardAI(Creature *pCreature) : MoonScriptCreatureAI(pCreature) 
 		{
 			//Getting default equiped item
@@ -35,6 +35,7 @@ class StormwindGuardAI : public MoonScriptCreatureAI
 		void OnLoad()
 		{
 			RegisterAIUpdateEvent(0);
+			ParentClass::OnLoad();
 		}
 
 		void AIUpdate()
@@ -55,9 +56,9 @@ class StormwindGuardAI : public MoonScriptCreatureAI
 					SetDisplayWeaponIds(MainHand, _unit->GetEquippedItem(OFFHAND));
 					IsNightItemSet = false;
 				}
-				SetAIUpdateFreq(MINUTE*5*SEC_IN_MS);
+				SetAIUpdateFreq(SEC_IN_MS);
 			}
-			MoonScriptCreatureAI::AIUpdate();
+			ParentClass::AIUpdate();
 		}
 
 	private:

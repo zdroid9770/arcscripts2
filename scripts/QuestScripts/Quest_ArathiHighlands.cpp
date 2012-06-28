@@ -77,7 +77,7 @@ class SunkenTreasure : public QuestScript
 class Professor_Phizzlethorpe : public MoonScriptCreatureAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(Professor_Phizzlethorpe)
+		MOONSCRIPT_FACTORY_FUNCTION(Professor_Phizzlethorpe, MoonScriptCreatureAI);
 		Professor_Phizzlethorpe(Creature * pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			AddEmote(Event_OnCombatStart, "Help!!! Get these things off me so I can get my work done!", Text_Yell, 0);

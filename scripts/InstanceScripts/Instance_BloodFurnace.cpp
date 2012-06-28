@@ -34,7 +34,7 @@
 class KelidanTheBreakerAI : public MoonScriptCreatureAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(KelidanTheBreakerAI)
+		MOONSCRIPT_FACTORY_FUNCTION(KelidanTheBreakerAI, MoonScriptCreatureAI);
 		KelidanTheBreakerAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			//spells
@@ -58,7 +58,7 @@ class KelidanTheBreakerAI : public MoonScriptCreatureAI
 		void OnCombatStart(Unit* pTarget)
 		{
 			mBurningNovaTimer = AddTimer(15000);
-			MoonScriptCreatureAI::OnCombatStart(pTarget);
+			ParentClass::OnCombatStart(pTarget);
 		}
 
 		void AIUpdate()
@@ -72,7 +72,7 @@ class KelidanTheBreakerAI : public MoonScriptCreatureAI
 
 				ResetTimer(mBurningNovaTimer, 30000);
 			}
-			MoonScriptCreatureAI::AIUpdate();
+			ParentClass::AIUpdate();
 		}
 
 		SpellDesc*      mShadowBoltVolley;
@@ -94,7 +94,7 @@ class KelidanTheBreakerAI : public MoonScriptCreatureAI
 class BroggokAI : public MoonScriptCreatureAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(BroggokAI);
+		MOONSCRIPT_FACTORY_FUNCTION(BroggokAI, MoonScriptCreatureAI);
 		BroggokAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			AddSpell(POISON_BOLT, Target_Self, 12.0f, 0, 15);
@@ -106,7 +106,7 @@ class BroggokAI : public MoonScriptCreatureAI
 		{
 			if(GameObject* pDoor = _unit->GetMapMgr()->GetInterface()->GetGameObjectNearestCoords(456.157349f, 34.248005f, 9.559463f, 181819))
 				pDoor->SetState(GAMEOBJECT_STATE_OPEN);
-			MoonScriptCreatureAI::OnDied(pKiller);
+			ParentClass::OnDied(pKiller);
 		}
 };
 
@@ -122,7 +122,7 @@ class BroggokAI : public MoonScriptCreatureAI
 class TheMakerAI : public MoonScriptCreatureAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(TheMakerAI);
+		MOONSCRIPT_FACTORY_FUNCTION(TheMakerAI, MoonScriptCreatureAI);
 		TheMakerAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			AddEmote(Event_OnCombatStart, "My work must not be interrupted.", Text_Yell, 10286);
@@ -141,7 +141,7 @@ class TheMakerAI : public MoonScriptCreatureAI
 		{
 			if(GameObject* pDoor = _unit->GetMapMgr()->GetInterface()->GetGameObjectNearestCoords(327.155487f, 149.753418f, 9.559869f, 181812))
 				pDoor->SetState(GAMEOBJECT_STATE_OPEN);
-			MoonScriptCreatureAI::OnDied(pKiller);
+			ParentClass::OnDied(pKiller);
 		}
 };
 

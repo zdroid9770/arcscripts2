@@ -73,7 +73,7 @@ static LocationExtra FelCrystals[] =
 class SelinFireheartAI : public MoonScriptCreatureAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(SelinFireheartAI)
+		MOONSCRIPT_FACTORY_FUNCTION(SelinFireheartAI, MoonScriptCreatureAI);
 		SelinFireheartAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			AddSpell(SF_DRAINLIFE, Target_RandomPlayer, 8, 0, 35);
@@ -93,7 +93,7 @@ class SelinFireheartAI : public MoonScriptCreatureAI
 				- ToDo: Set it so mana regen is off
 			*/
 			_unit->SetUInt32Value(UNIT_FIELD_POWER1, 0);
-			MoonScriptCreatureAI::OnCombatStart(pTarget);
+			ParentClass::OnCombatStart(pTarget);
 		}
 
 		/*
@@ -107,7 +107,7 @@ class SelinFireheartAI : public MoonScriptCreatureAI
 				Mana();
 			else if(!IsCasting())// Mana is greater than 10%
 				CastFelExplosion();
-			MoonScriptCreatureAI::AIUpdate();
+			ParentClass::AIUpdate();
 		}
 
 		void Mana()
@@ -209,7 +209,7 @@ class SelinFireheartAI : public MoonScriptCreatureAI
 class VexallusAI : public MoonScriptBossAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(VexallusAI)
+		MOONSCRIPT_FACTORY_FUNCTION(VexallusAI, MoonScriptBossAI);
 		VexallusAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
 		{
 			AddPhaseSpell(1, AddSpell(VEXALLUS_CHAIN_LIGHTNING, Target_Current, 19, 0, 8, 0, 0));
@@ -226,7 +226,7 @@ class VexallusAI : public MoonScriptBossAI
 		{
 			Emote("Drain... life...", Text_Yell, 12389);
 			SetPhase(1);
-			MoonScriptBossAI::OnCombatStop(pTarget);
+			ParentClass::OnCombatStop(pTarget);
 		}
 
 		void AIUpdate()
@@ -244,7 +244,8 @@ class VexallusAI : public MoonScriptBossAI
 
 			if(GetHealthPercent() <= 10 && GetPhase() == 1)
 				SetPhase(2);
-			MoonScriptBossAI::AIUpdate();
+
+			ParentClass::AIUpdate();
 		}
 
 		SpellDesc*	mPureEnergy;
@@ -263,7 +264,7 @@ class VexallusAI : public MoonScriptBossAI
 class Priestess_DelrissaAI : public MoonScriptCreatureAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(Priestess_DelrissaAI)
+		MOONSCRIPT_FACTORY_FUNCTION(Priestess_DelrissaAI, MoonScriptCreatureAI);
 		Priestess_DelrissaAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			AddSpell(PRIESTESS_DELRISSA_DISPEL_MAGIC, Target_RandomFriendly, 35, 0, 5, 0, 30);
@@ -283,7 +284,7 @@ class Priestess_DelrissaAI : public MoonScriptCreatureAI
 			Emote("Annihilate them!", Text_Yell, 12395);
 			//AggroRandomUnit();	// Want to aggro random unit ? Set it instead of calling premade
 			// method that in this case recursively loops this procedure
-			MoonScriptCreatureAI::OnCombatStart(pTarget);
+			ParentClass::OnCombatStart(pTarget);
 		}
 
 		void OnTargetDied(Unit* pTarget)
@@ -303,14 +304,14 @@ class Priestess_DelrissaAI : public MoonScriptCreatureAI
 				Emote("One is such a lonely number.", Text_Yell, 12410);
 			else if(mKilledPlayers == 5)
 				Emote("It's been a kick, really.", Text_Yell, 12411);
-			MoonScriptCreatureAI::OnTargetDied(pTarget);
+			ParentClass::OnTargetDied(pTarget);
 		}
 
 		void OnCombatStop(Unit* pTarget)
 		{
 			Emote("It's been a kick, really.", Text_Yell, 12411);
 			mKilledPlayers = 0;
-			MoonScriptCreatureAI::OnCombatStop(pTarget);
+			ParentClass::OnCombatStop(pTarget);
 		}
 
 		void AIUpdate()
@@ -321,7 +322,7 @@ class Priestess_DelrissaAI : public MoonScriptCreatureAI
 				AggroRandomUnit();
 				ResetTimer(mClearHateList, 15000);
 			}
-			MoonScriptCreatureAI::AIUpdate();
+			ParentClass::AIUpdate();
 		}
 
 	protected:

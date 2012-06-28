@@ -196,7 +196,7 @@ enum GENERAL_STANCES
 class GeneralBjarngrimAI : public MoonScriptBossAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(GeneralBjarngrimAI)
+		MOONSCRIPT_FACTORY_FUNCTION(GeneralBjarngrimAI, MoonScriptBossAI);
 		GeneralBjarngrimAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
 		{
 			mInstance = GetInstanceScript();
@@ -223,9 +223,8 @@ class GeneralBjarngrimAI : public MoonScriptBossAI
 		void OnLoad()
 		{
 			if (!_unit->HasAura(52098))
-			{
-			_unit->CastSpell(_unit, 52098, true); // Charge up is on him when he loads and gives his allies buffs 
-		}
+				_unit->CastSpell(_unit, 52098, true); // Charge up is on him when he loads and gives his allies buffs
+			ParentClass::OnLoad();
 		}
 
 		void OnCombatStart(Unit* pTarget)
@@ -235,14 +234,14 @@ class GeneralBjarngrimAI : public MoonScriptBossAI
 
 			if(mInstance)
 				mInstance->SetInstanceData(Data_EncounterState, _unit->GetEntry(), State_InProgress);
-			MoonScriptBossAI::OnCombatStart(pTarget);
+			ParentClass::OnCombatStart(pTarget);
 		}
 
 		void OnCombatStop(Unit* pTarget)
 		{
 			if(mInstance)
 				mInstance->SetInstanceData(Data_EncounterState, _unit->GetEntry(), State_Performed);
-			MoonScriptBossAI::OnCombatStop(pTarget);
+			ParentClass::OnCombatStop(pTarget);
 		}
 
 		void AIUpdate()
@@ -257,7 +256,7 @@ class GeneralBjarngrimAI : public MoonScriptBossAI
 				}
 				ResetTimer(mStanceTimer, TIMER_STANCE_CHANGE + (RandomUInt(7) * 1000));
 			}
-			MoonScriptBossAI::AIUpdate();
+			ParentClass::AIUpdate();
 		}
 
 		void switchStance(int32 pStance)
@@ -324,7 +323,7 @@ class GeneralBjarngrimAI : public MoonScriptBossAI
 class Volkhan : public MoonScriptCreatureAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(Volkhan)
+		MOONSCRIPT_FACTORY_FUNCTION(Volkhan, MoonScriptCreatureAI);
 		Volkhan(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			mInstance = GetInstanceScript();
@@ -360,14 +359,14 @@ class Volkhan : public MoonScriptCreatureAI
 
 			if(mInstance)
 				mInstance->SetInstanceData(Data_EncounterState, _unit->GetEntry(), State_InProgress);
-			MoonScriptCreatureAI::OnCombatStart(pTarget);
+			ParentClass::OnCombatStart(pTarget);
 		}
 
 		void OnCombatStop(Unit* pTarget)
 		{
 			if(mInstance)
 				mInstance->SetInstanceData(Data_EncounterState, _unit->GetEntry(), State_Performed);
-			MoonScriptCreatureAI::OnCombatStop(pTarget);
+			ParentClass::OnCombatStop(pTarget);
 		}
 
 		void AIUpdate()
@@ -394,7 +393,7 @@ class Volkhan : public MoonScriptCreatureAI
 				Announce("Volkhan runs to his anvil!");
 				++mPhase;
 			}
-			MoonScriptCreatureAI::AIUpdate();
+			ParentClass::AIUpdate();
 		}
 
 		void OnReachWP(uint32 iWaypointId, bool bForwards)
@@ -413,6 +412,7 @@ class Volkhan : public MoonScriptCreatureAI
 				SetCanEnterCombat(true);
 				_unit->GetAIInterface()->AttackReaction(GetNearestPlayer() , 1);   // hackfix
 			}
+			ParentClass::OnReachWP(iWaypointId, bForwards);
 		}
 
 		void DoStomp()
@@ -442,7 +442,7 @@ class Volkhan : public MoonScriptCreatureAI
 class MoltenGolem : public MoonScriptCreatureAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(MoltenGolem)
+		MOONSCRIPT_FACTORY_FUNCTION(MoltenGolem, MoonScriptCreatureAI);
 		MoltenGolem(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			AddSpell(SPELL_BLAST_WAVE, Target_Self, 25, 0, 20);
@@ -453,14 +453,14 @@ class MoltenGolem : public MoonScriptCreatureAI
 		{
 			SpawnCreature(CN_BRITTLE_GOLEM);
 			Despawn(1);
-			MoonScriptCreatureAI::OnDied(pKiller);
+			ParentClass::OnDied(pKiller);
 		}
 };
 
 class BrittleGolem : public MoonScriptCreatureAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(BrittleGolem)
+		MOONSCRIPT_FACTORY_FUNCTION(BrittleGolem, MoonScriptCreatureAI);
 		BrittleGolem(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			SetCanEnterCombat(false);
@@ -471,7 +471,7 @@ class BrittleGolem : public MoonScriptCreatureAI
 class VolkhansAnvil : public MoonScriptCreatureAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(VolkhansAnvil)
+		MOONSCRIPT_FACTORY_FUNCTION(VolkhansAnvil, MoonScriptCreatureAI);
 		VolkhansAnvil(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			_unit->GetAIInterface()->SetAllowedToEnterCombat(false);
@@ -501,7 +501,7 @@ class VolkhansAnvil : public MoonScriptCreatureAI
 class IonarAI : public MoonScriptCreatureAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(IonarAI)
+		MOONSCRIPT_FACTORY_FUNCTION(IonarAI, MoonScriptCreatureAI);
 		IonarAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			mInstance = GetInstanceScript();
@@ -520,14 +520,14 @@ class IonarAI : public MoonScriptCreatureAI
 		{
 			if(mInstance)
 				mInstance->SetInstanceData(Data_EncounterState, _unit->GetEntry(), State_InProgress);
-			MoonScriptCreatureAI::OnCombatStart(pTarget);
+			ParentClass::OnCombatStart(pTarget);
 		}
 
 		void OnCombatStop(Unit* pTarget)
 		{
 			if(mInstance)
 				mInstance->SetInstanceData(Data_EncounterState, _unit->GetEntry(), State_Performed);
-			MoonScriptCreatureAI::OnCombatStop(pTarget);
+			ParentClass::OnCombatStop(pTarget);
 		}
 
 		MoonInstanceScript* mInstance;
@@ -553,7 +553,7 @@ class IonarAI : public MoonScriptCreatureAI
 class LokenAI : public MoonScriptCreatureAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(LokenAI)
+		MOONSCRIPT_FACTORY_FUNCTION(LokenAI, MoonScriptCreatureAI);
 		LokenAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			mInstance = GetInstanceScript();
@@ -583,7 +583,7 @@ class LokenAI : public MoonScriptCreatureAI
 
 			if(mInstance)
 				mInstance->SetInstanceData(Data_EncounterState, _unit->GetEntry(), State_InProgress);
-			MoonScriptCreatureAI::OnCombatStart(pTarget);
+			ParentClass::OnCombatStart(pTarget);
 		}
 
 		void OnCombatStop(Unit* pTarget)
@@ -592,13 +592,13 @@ class LokenAI : public MoonScriptCreatureAI
 
 			if(mInstance)
 				mInstance->SetInstanceData(Data_EncounterState, _unit->GetEntry(), State_Performed);
-			MoonScriptCreatureAI::OnCombatStop(pTarget);
+			ParentClass::OnCombatStop(pTarget);
 		}
 
 		void OnDied(Unit* pKiller)
 		{
 			RemoveAuraOnPlayers(PULSING_SHOCKWAVE_AURA);
-			MoonScriptCreatureAI::OnDied(pKiller);
+			ParentClass::OnDied(pKiller);
 		}
 
 		void AIUpdate()
@@ -637,7 +637,7 @@ class LokenAI : public MoonScriptCreatureAI
 				RemoveTimer(mRespondTimer);
 				RemoveAIUpdateEvent();
 			}
-			MoonScriptCreatureAI::AIUpdate();
+			ParentClass::AIUpdate();
 		}
 
 		SpellDesc*	mNova;

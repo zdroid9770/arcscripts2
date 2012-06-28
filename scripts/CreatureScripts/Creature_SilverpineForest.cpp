@@ -21,13 +21,13 @@
 class CorruptMinorManifestationWater : public MoonScriptCreatureAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(CorruptMinorManifestationWater)
+		MOONSCRIPT_FACTORY_FUNCTION(CorruptMinorManifestationWater, MoonScriptCreatureAI);
 		CorruptMinorManifestationWater(Creature *pCreature) : MoonScriptCreatureAI(pCreature) {}
 
 		void OnDied(Unit *mKiller)
 		{
 			SpawnCreature(5895, _unit->GetPositionX()+2, _unit->GetPositionY()+2, _unit->GetPositionZ(), _unit->GetOrientation());
-			MoonScriptCreatureAI::OnDied(mKiller);
+			ParentClass::OnDied(mKiller);
 		}
 };
 

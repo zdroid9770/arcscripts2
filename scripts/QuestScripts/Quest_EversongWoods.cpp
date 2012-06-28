@@ -58,7 +58,7 @@ class ProspectorAnvilwardGossip : public Arcemu::Gossip::Script
 class ProspectorAnvilwardAI : public MoonScriptCreatureAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(ProspectorAnvilwardAI)
+		MOONSCRIPT_FACTORY_FUNCTION(ProspectorAnvilwardAI, MoonScriptCreatureAI);
 		ProspectorAnvilwardAI(Creature * pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			for(uint8 i = 0; i<8; i++)
@@ -75,16 +75,19 @@ class ProspectorAnvilwardAI : public MoonScriptCreatureAI
 				case 5: Emote("What manner of trick is this, $R? If you seek to ambush me, I warn you I will not go down quietly!", Text_Yell, 0);
 				case 6: _unit->SetFaction(24); break;
 			}
+			ParentClass::OnReachWP(Id, bForwards);
 		}
 
 		void OnDied(Unit* mKiller)
 		{
 			_unit->SetFaction(35);
+			ParentClass::OnDied(mKiller);
 		}
 
 		void OnCombatStop(Unit* pTarget)
 		{
 			_unit->SetFaction(35);
+			ParentClass::OnCombatStop(pTarget);
 		}
 };
 

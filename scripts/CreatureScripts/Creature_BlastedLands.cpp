@@ -21,7 +21,7 @@
 class KirithAI : public MoonScriptCreatureAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(KirithAI)
+		MOONSCRIPT_FACTORY_FUNCTION(KirithAI, MoonScriptCreatureAI);
 		KirithAI(Creature* c) : MoonScriptCreatureAI(c)
 		{
 			PieceArmorTimer = (rand()%3+4)*1000;
@@ -30,8 +30,8 @@ class KirithAI : public MoonScriptCreatureAI
 
 		void OnDied(Unit *mKiller)
 		{
-			MoonScriptCreatureAI::OnDied(mKiller);
 			_unit->CastSpell(_unit, 10853, true);	//Spirit of Kirith
+			ParentClass::OnDied(mKiller);
 		}
 
 		void AIUpdate()
@@ -48,6 +48,7 @@ class KirithAI : public MoonScriptCreatureAI
 				_unit->CastSpell(GetBestPlayerTarget(TargetFilter_NotCurrent), 12745, true);
 				ManaBurnTimer = (rand()%3+2)*1000;
 			}else ManaBurnTimer -= mAIUpdateFrequency;
+			ParentClass::AIUpdate();
 		}
 
 	private:

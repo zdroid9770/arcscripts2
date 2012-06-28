@@ -21,7 +21,7 @@
 class thekaAI : public MoonScriptCreatureAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(thekaAI)
+		MOONSCRIPT_FACTORY_FUNCTION(thekaAI, MoonScriptCreatureAI);
 		thekaAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			AddSpell(8600, Target_Current, 20, 4.5f, -1);	//Fevered Plague
@@ -35,7 +35,7 @@ class thekaAI : public MoonScriptCreatureAI
 				morph = true;
 				_unit->CastSpell(_unit, 11089, true);	//Theka Transform
 			}
-			MoonScriptCreatureAI::AIUpdate();
+			ParentClass::AIUpdate();
 		}
 
 	protected:
@@ -49,7 +49,7 @@ class thekaAI : public MoonScriptCreatureAI
 class antusulAI : public MoonScriptCreatureAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(antusulAI)
+		MOONSCRIPT_FACTORY_FUNCTION(antusulAI, MoonScriptCreatureAI);
 		antusulAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			AddEmote(Event_OnCombatStart, "Lunch has arrived, my beutiful childern. Tear them to pieces!", Text_Yell, 0);
@@ -74,7 +74,7 @@ class antusulAI : public MoonScriptCreatureAI
 				_unit->CastSpell(_unit, servants, true);
 				SpawnCount++;
 			}
-			MoonScriptCreatureAI::AIUpdate();
+			ParentClass::AIUpdate();
 		}
 
 	protected:
@@ -85,7 +85,7 @@ class antusulAI : public MoonScriptCreatureAI
 class WitchDoctorZumrahAI : public MoonScriptCreatureAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(WitchDoctorZumrahAI)
+		MOONSCRIPT_FACTORY_FUNCTION(WitchDoctorZumrahAI, MoonScriptCreatureAI);
 		WitchDoctorZumrahAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			AddSpell(12491, Target_WoundedFriendly, 15, 3, -1);	//Healing Wave
@@ -98,7 +98,7 @@ class WitchDoctorZumrahAI : public MoonScriptCreatureAI
 		{
 			_unit->CastSpell(_unit, 11086, true); //Ward of Zum'rah
 			TotemTimer = AddTimer(20*SEC_IN_MS);
-			MoonScriptCreatureAI::OnCombatStart(mAttacker);
+			ParentClass::OnCombatStart(mAttacker);
 		}
 
 		void AIUpdate()
@@ -108,7 +108,7 @@ class WitchDoctorZumrahAI : public MoonScriptCreatureAI
 				_unit->CastSpell(_unit, 11086, true); //Ward of Zum'rah
 				ResetTimer(TotemTimer, 20*SEC_IN_MS);
 			}
-			MoonScriptCreatureAI::AIUpdate();
+			ParentClass::AIUpdate();
 		}
 
 	protected:

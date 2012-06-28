@@ -93,7 +93,7 @@ void SpellFunc_BerserkerStance(SpellDesc* pThis, MoonScriptCreatureAI* pCreature
 class ShadowmoonWeaponMasterAI : public MoonScriptBossAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(ShadowmoonWeaponMasterAI)
+		MOONSCRIPT_FACTORY_FUNCTION(ShadowmoonWeaponMasterAI, MoonScriptBossAI);
 		ShadowmoonWeaponMasterAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
 		{
 			AddPhaseSpell(1, AddSpell(SHADOWMOON_WEAPON_MASTER_KNOCK_AWAY, Target_Current, 9, 0, 25, 0, 10));
@@ -120,7 +120,7 @@ class ShadowmoonWeaponMasterAI : public MoonScriptBossAI
 				ApplyAura(SHADOWMOON_WEAPON_MASTER_BATTLE_STANCE);
 				ApplyAura(SHADOWMOON_WEAPON_MASTER_BATTLE_AURA);
 			}
-			MoonScriptBossAI::OnCombatStop(pTarget);
+			ParentClass::OnCombatStop(pTarget);
 		}
 
 		void AIUpdate()
@@ -136,7 +136,7 @@ class ShadowmoonWeaponMasterAI : public MoonScriptBossAI
 				SetPhase(3, mBerserkerStance);
 				return;
 			}
-			MoonScriptBossAI::AIUpdate();
+			ParentClass::AIUpdate();
 		}
 
 	private:
@@ -182,7 +182,7 @@ void SpellFunc_BerserkerStance(SpellDesc* pThis, MoonScriptCreatureAI* pCreature
 class NajentusAI : public MoonScriptBossAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(NajentusAI)
+		MOONSCRIPT_FACTORY_FUNCTION(NajentusAI, MoonScriptBossAI);
 		NajentusAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
 		{
 			AddEmote(Event_OnCombatStart, "You will die, in the name of Lady Vashj!", Text_Yell, 11450);
@@ -881,7 +881,7 @@ class GurtoggAI : public CreatureAIScript
 class EssenceOfSufferingAI : public MoonScriptCreatureAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(EssenceOfSufferingAI)
+		MOONSCRIPT_FACTORY_FUNCTION(EssenceOfSufferingAI, MoonScriptCreatureAI);
 		EssenceOfSufferingAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 
@@ -901,6 +901,7 @@ class EssenceOfSufferingAI : public MoonScriptCreatureAI
 		void OnCombatStart(Unit* mTarget)
 		{
 			CastSpellNowNoScheduling(mAuraOfSuffering);
+			ParentClass::OnCombatStart(mTarget);
 		}
 
 		void AIUpdate()
@@ -918,6 +919,7 @@ class EssenceOfSufferingAI : public MoonScriptCreatureAI
 				if(mRoS != NULL && mRoS->IsAlive())
 					MoveTo(mRoS);
 			}
+			ParentClass::AIUpdate();
 		}
 
 		SpellDesc*	mAuraOfSuffering;
@@ -936,7 +938,7 @@ class EssenceOfSufferingAI : public MoonScriptCreatureAI
 class EssenceOfDesireAI : public MoonScriptCreatureAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(EssenceOfDesireAI)
+		MOONSCRIPT_FACTORY_FUNCTION(EssenceOfDesireAI, MoonScriptCreatureAI);
 		EssenceOfDesireAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			AddSpell(EOD_RUNE_SHIELD, Target_Self, 6, 0, 15);
@@ -955,6 +957,7 @@ class EssenceOfDesireAI : public MoonScriptCreatureAI
 		void OnCombatStart(Unit* mTarget)
 		{
 			CastSpellNowNoScheduling(mAuraOfDesire);
+			ParentClass::OnCombatStart(mTarget);
 		}
 
 		void AIUpdate()
@@ -973,6 +976,7 @@ class EssenceOfDesireAI : public MoonScriptCreatureAI
 				if(mRoS != NULL && mRoS->IsAlive())
 					MoveTo(mRoS);
 			}
+			ParentClass::AIUpdate();
 		}
 
 		SpellDesc*	mAuraOfDesire;
@@ -991,7 +995,7 @@ class EssenceOfDesireAI : public MoonScriptCreatureAI
 class EssenceOfAngerAI : public MoonScriptCreatureAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(EssenceOfAngerAI)
+		MOONSCRIPT_FACTORY_FUNCTION(EssenceOfAngerAI, MoonScriptCreatureAI);
 		EssenceOfAngerAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			mTaunt = AddSpell(EOA_SEETHE, Target_Current, 0, 0, 0); // on Taunt
@@ -1011,20 +1015,20 @@ class EssenceOfAngerAI : public MoonScriptCreatureAI
 		void OnCombatStart(Unit* mTarget)
 		{
 			CastSpellNowNoScheduling(mAuraOfAnger);
-			MoonScriptCreatureAI::OnCombatStart(mTarget);
+			ParentClass::OnCombatStart(mTarget);
 		}
 
 		void OnDied(Unit* mKiller)
 		{
 			RemoveAuraOnPlayers(EOD_AURA_OF_DESIRE);
-			MoonScriptCreatureAI::OnDied(mKiller);
+			ParentClass::OnDied(mKiller);
 		}
 
 		void AIUpdate()
 		{
 			if(_unit->GetAIInterface()->GetIsTaunted())
 				CastSpellNowNoScheduling(mTaunt);
-			MoonScriptCreatureAI::AIUpdate();
+			ParentClass::AIUpdate();
 		}
 
 		SpellDesc*	mSoulScream;
@@ -1042,7 +1046,7 @@ class EssenceOfAngerAI : public MoonScriptCreatureAI
 class ReliquaryOfSoulsAI : public MoonScriptCreatureAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(ReliquaryOfSoulsAI)
+		MOONSCRIPT_FACTORY_FUNCTION(ReliquaryOfSoulsAI, MoonScriptCreatureAI);
 		ReliquaryOfSoulsAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			mSummonSuffering = AddSpell(ROS_SUMMON_SUFFERING, Target_Self, 0, 0, 0);
@@ -1070,7 +1074,7 @@ class ReliquaryOfSoulsAI : public MoonScriptCreatureAI
 				Phase = 1;
 			}
 			RegisterAIUpdateEvent(1000);
-			MoonScriptCreatureAI::OnCombatStart(mTarget);
+			ParentClass::OnCombatStart(mTarget);
 		}
 
 		void AIUpdate()
@@ -1193,7 +1197,7 @@ class ReliquaryOfSoulsAI : public MoonScriptCreatureAI
 					}
 					break;
 			}
-			MoonScriptCreatureAI::AIUpdate();
+			ParentClass::AIUpdate();
 		}
 
 		bool					SpawnedEnsalvedSoul;
@@ -1560,7 +1564,7 @@ typedef std::vector<Creature*> EncounterVector;
 class GathiosAI : public MoonScriptCreatureAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(GathiosAI)
+		MOONSCRIPT_FACTORY_FUNCTION(GathiosAI, MoonScriptCreatureAI);
 		GathiosAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			AddSpell(HAMMER_OF_JUSTICE, Target_RandomPlayer, 15, 0, 14);
@@ -1578,12 +1582,13 @@ class GathiosAI : public MoonScriptCreatureAI
 		void OnCombatStart(Unit* pTarget)
 		{
 			ApplyAura(DEVOTION_AURA);
-			MoonScriptCreatureAI::OnCombatStart(pTarget);
+			ParentClass::OnCombatStart(pTarget);
 		}
 
 		void OnDamageTaken(Unit* mAttacker, uint32 fAmount)
 		{
 			DealDamageToFriends(fAmount, _unit->GetEntry());
+			ParentClass::OnDamageTaken(mAttacker, fAmount);
 		}
 
 		void AddEncounterCreature(Creature* pCreature)
@@ -1606,7 +1611,7 @@ class GathiosAI : public MoonScriptCreatureAI
 		void Destroy()
 		{
 			mEncounterVector.clear();
-			delete this;
+			ParentClass::Destroy();
 		}
 
 	private:
@@ -1625,7 +1630,7 @@ class GathiosAI : public MoonScriptCreatureAI
 class VerasAI : public MoonScriptCreatureAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(VerasAI)
+		MOONSCRIPT_FACTORY_FUNCTION(VerasAI, MoonScriptCreatureAI);
 		VerasAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			AddSpell(DEADLY_POISON, Target_RandomPlayer, 15.0f, 0, 20);
@@ -1643,6 +1648,7 @@ class VerasAI : public MoonScriptCreatureAI
 		void OnDamageTaken(Unit* mAttacker, uint32 fAmount)
 		{
 			pGethois->DealDamageToFriends(fAmount, _unit->GetEntry());
+			ParentClass::OnDamageTaken(mAttacker, fAmount);
 		}
 
 		GathiosAI* pGethois;
@@ -1662,7 +1668,7 @@ class VerasAI : public MoonScriptCreatureAI
 class ZerevorAI : public MoonScriptCreatureAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(ZerevorAI)
+		MOONSCRIPT_FACTORY_FUNCTION(ZerevorAI, MoonScriptCreatureAI);
 		ZerevorAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			AddSpell(ARCANE_BOLT, Target_Current, 65.0f, 2, 6);
@@ -1682,6 +1688,7 @@ class ZerevorAI : public MoonScriptCreatureAI
 		void OnDamageTaken(Unit* mAttacker, uint32 fAmount)
 		{
 			pGethois->DealDamageToFriends(fAmount, _unit->GetEntry());
+			ParentClass::OnDamageTaken(mAttacker, fAmount);
 		}
 
 		GathiosAI* pGethois;
@@ -1700,7 +1707,7 @@ class ZerevorAI : public MoonScriptCreatureAI
 class MalandeAI : public MoonScriptCreatureAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(MalandeAI)
+		MOONSCRIPT_FACTORY_FUNCTION(MalandeAI, MoonScriptCreatureAI);
 		MalandeAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			AddSpell(DIVINE_WRATH, Target_RandomPlayer, 15, 0, 14);
@@ -1721,6 +1728,7 @@ class MalandeAI : public MoonScriptCreatureAI
 		{
 			if(pGethois != NULL)
 				pGethois->DealDamageToFriends(fAmount, _unit->GetEntry());
+			ParentClass::OnDamageTaken(mAttacker, fAmount);
 		}
 
 		GathiosAI* pGethois;
@@ -2459,7 +2467,7 @@ uint32 DeathSceneTimers[] =
 class UnselectableTriggerAI : public MoonScriptCreatureAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(UnselectableTriggerAI)
+		MOONSCRIPT_FACTORY_FUNCTION(UnselectableTriggerAI, MoonScriptCreatureAI);
 		UnselectableTriggerAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			_unit->SetUInt64Value(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
@@ -2491,7 +2499,7 @@ class UnselectableTriggerAI : public MoonScriptCreatureAI
 class GenericTriggerAI : public MoonScriptCreatureAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(GenericTriggerAI)
+		MOONSCRIPT_FACTORY_FUNCTION(GenericTriggerAI, MoonScriptCreatureAI);
 		GenericTriggerAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			SetCanMove(false);
@@ -2548,9 +2556,8 @@ class GenericTriggerAI : public MoonScriptCreatureAI
 			RemoveAIUpdateEvent();
 
 			if(_unit->GetEntry() == CN_FLAME_BURST)
-			{
 				_unit->SetUInt64Value(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
-			}
+			ParentClass::AIUpdate();
 		}
 
 		uint32	mDespawnTimer;
@@ -2565,7 +2572,7 @@ class GenericTriggerAI : public MoonScriptCreatureAI
 class EyeBeamTriggerAI : public MoonScriptCreatureAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(EyeBeamTriggerAI)
+		MOONSCRIPT_FACTORY_FUNCTION(EyeBeamTriggerAI, MoonScriptCreatureAI);
 		EyeBeamTriggerAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			_unit->SetUInt64Value(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_ATTACKABLE_2);
@@ -2582,7 +2589,7 @@ class EyeBeamTriggerAI : public MoonScriptCreatureAI
 		{
 			_unit->GetAIInterface()->setCurrentAgent(AGENT_NULL);
 			_unit->GetAIInterface()->SetAIState(STATE_IDLE);
-			MoonScriptCreatureAI::OnCombatStop(mTarget);
+			ParentClass::OnCombatStop(mTarget);
 		}
 
 		void AIUpdate()
@@ -2601,7 +2608,7 @@ class EyeBeamTriggerAI : public MoonScriptCreatureAI
 			}
 
 			ApplyAura(EYE_BLAST);
-			MoonScriptCreatureAI::AIUpdate();
+			ParentClass::AIUpdate();
 		}
 
 		int32	mPosition;
@@ -2620,7 +2627,7 @@ class EyeBeamTriggerAI : public MoonScriptCreatureAI
 class ShadowDemonAI : public MoonScriptCreatureAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(ShadowDemonAI)
+		MOONSCRIPT_FACTORY_FUNCTION(ShadowDemonAI, MoonScriptCreatureAI);
 		ShadowDemonAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			mParalyze = AddSpell(SHADOW_DEMON_PARALYZE, Target_Current, 0, 0, 0);
@@ -2648,13 +2655,13 @@ class ShadowDemonAI : public MoonScriptCreatureAI
 				Unit* pUnit = GetTargetToChannel();
 				pUnit->RemoveAura(SHADOW_DEMON_PARALYZE);
 			}
-			MoonScriptCreatureAI::OnDied(pKiller);
+			ParentClass::OnDied(pKiller);
 		}
 
 		void OnTargetDied(Unit*  pTarget)
 		{
 			Despawn(2000, 0);
-			MoonScriptCreatureAI::OnTargetDied(pTarget);
+			ParentClass::OnTargetDied(pTarget);
 		}
 
 		void AIUpdate()
@@ -2675,7 +2682,7 @@ class ShadowDemonAI : public MoonScriptCreatureAI
 			}
 			else
 				Despawn(500, 0);
-			MoonScriptCreatureAI::AIUpdate();
+			ParentClass::AIUpdate();
 		}
 
 		SpellDesc*	mParalyze;
@@ -2693,7 +2700,7 @@ void SpellFunc_Parasitic(SpellDesc* pThis, MoonScriptCreatureAI* pCreatureAI, Un
 class ParasiticShadowfiendAI : public MoonScriptCreatureAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(ParasiticShadowfiendAI)
+		MOONSCRIPT_FACTORY_FUNCTION(ParasiticShadowfiendAI, MoonScriptCreatureAI);
 		ParasiticShadowfiendAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			mParasiticDmg = AddSpell(PARASITIC_SHADOWFIEND_WITH_DAMAGE, Target_Current, 0, 0, 0);
@@ -2721,6 +2728,7 @@ class ParasiticShadowfiendAI : public MoonScriptCreatureAI
 		{
 			if(!pTarget->HasAura(PARASITIC_SHADOWFIEND_PASSIVE))
 				CastSpellNowNoScheduling(mParasitic);
+			ParentClass::OnHit(pTarget, pAmount);
 		}
 
 		void AIUpdate()
@@ -2743,7 +2751,7 @@ class ParasiticShadowfiendAI : public MoonScriptCreatureAI
 				else
 					Despawn(0);
 			}
-			MoonScriptCreatureAI::AIUpdate();
+			ParentClass::AIUpdate();
 		}
 
 		SpellDesc*	mParasiticDmg;
@@ -2839,7 +2847,7 @@ class AkamaGossip : public GossipScript
 class AkamaAI : public MoonScriptBossAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(AkamaAI)
+		MOONSCRIPT_FACTORY_FUNCTION(AkamaAI, MoonScriptBossAI);
 		AkamaAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
 		{
 			AddPhaseSpell(2, AddSpell(AKAMA_BLESSING_OF_KINGS, Target_Self, 15, 0, 60));
@@ -2871,7 +2879,7 @@ class AkamaAI : public MoonScriptBossAI
 		{
 			SetWieldWeapon(true);
 			CancelAllCooldowns();
-			MoonScriptBossAI::OnCombatStart(pTarget);
+			ParentClass::OnCombatStart(pTarget);
 		}
 
 		void OnCombatStop(Unit*  pTarget)
@@ -2879,7 +2887,7 @@ class AkamaAI : public MoonScriptBossAI
 			_unit->GetAIInterface()->setCurrentAgent(AGENT_NULL);
 			_unit->GetAIInterface()->SetAIState(STATE_IDLE);
 			SetWieldWeapon(false);
-			MoonScriptBossAI::OnCombatStop(pTarget);
+			ParentClass::OnCombatStop(pTarget);
 		}
 
 		void AIUpdate()
@@ -2896,15 +2904,13 @@ class AkamaAI : public MoonScriptBossAI
 					EncounterEnd();
 					break;
 			}
-			MoonScriptBossAI::AIUpdate();
+			ParentClass::AIUpdate();
 		}
 
 		void ToIllidanEvent()
 		{
 			if(mScenePart > 6 && mScenePart < 15 && (mUdaloAI == NULL || mOlumAI == NULL))
-			{
 				mScenePart = -1;
-			}
 
 			GameObject* pGate = _unit->GetMapMgr()->GetInterface()->GetGameObjectNearestCoords(774.7f, 304.6f, 314.85f, 185905);
 			Unit* pDoorTrigger = ForceCreatureFind(CN_DOOR_EVENT_TRIGGER, 771.5f, 304.7f, 319.0f);
@@ -2915,13 +2921,10 @@ class AkamaAI : public MoonScriptBossAI
 				ForceWaypointMove(7);
 
 				if(mUdaloAI != NULL)
-				{
 					mUdaloAI->SetTargetToChannel(NULL, 0);
-				}
+
 				if(mOlumAI != NULL)
-				{
 					mOlumAI->SetTargetToChannel(NULL, 0);
-				}
 
 				RemoveAIUpdateEvent();
 				mUdaloAI = mOlumAI = NULL;
@@ -3110,13 +3113,10 @@ class AkamaAI : public MoonScriptBossAI
 					GameObject* pRightGate = _unit->GetMapMgr()->GetInterface()->GetGameObjectNearestCoords(745.07f, 241.802f, 354.292f, 200000);
 					GameObject* pLeftGate  = _unit->GetMapMgr()->GetInterface()->GetGameObjectNearestCoords(744.829f, 369.276f, 354.324f, 200001);
 					if(pRightGate != NULL)
-					{
 						pRightGate->SetState(1);
-					}
+
 					if(pLeftGate != NULL)
-					{
 						pLeftGate->SetState(1);
-					}
 
 					SetCanMove(true);
 					SetCanEnterCombat(true);
@@ -3133,9 +3133,7 @@ class AkamaAI : public MoonScriptBossAI
 
 					Unit* pTarget = FindClosestTargetToUnit(mIllidanAI->GetUnit());
 					if(pTarget == NULL)
-					{
 						pTarget = _unit;
-					}
 
 					mIllidanAI->GetUnit()->GetAIInterface()->AttackReaction(pTarget, 500, 0);
 
@@ -3153,35 +3151,28 @@ class AkamaAI : public MoonScriptBossAI
 			if(mScenePart != 0)
 			{
 				if(GetCurrentWaypoint() == 6 || GetCurrentWaypoint() == 16)
-				{
 					ToIllidanEvent();
-				}
+
 				else if(GetCurrentWaypoint() == 17)
-				{
 					IllidanDialogEvent();
-				}
 			}
 		}
 
 		void FightWithIllidan()
 		{
 			if(GetHealthPercent() <= 15 && !IsCasting())
-			{
 				CastSpellNowNoScheduling(mHealingPotion);
-			}
+
 			if(mIllidanAI != NULL && !mIllidanAI->IsAlive())
-			{
 				mIllidanAI = NULL;
-			}
+
 			if(mScenePart <= 2)
 			{
 				if(mIllidanAI == NULL)
 				{
 					Emote("Not this time my friends.", Text_Say, 0);
 					if(!IsCasting())
-					{
 						CastSpellNowNoScheduling(mDespawn);
-					}
 
 					Despawn(0);
 					return;
@@ -3202,11 +3193,13 @@ class AkamaAI : public MoonScriptBossAI
 				else
 					_unit->SetEmoteState(EMOTE_ONESHOT_READY1H);
 			}
+
 			if(mScenePart == 0 && mIllidanAI != NULL && mIllidanAI->GetHealthPercent() <= 85)
 			{
 				mTimeLeft = AkamaEscapeTimers[0];
 				mScenePart = 1;
 			}
+
 			if(GetCurrentWaypoint() < 18 && mScenePart != 0)
 			{
 				mTimeLeft -= mAIUpdateFrequency;
@@ -3284,9 +3277,7 @@ class AkamaAI : public MoonScriptBossAI
 
 						Unit* pIllidan = ForceCreatureFind(22917);
 						if(pIllidan != NULL)
-						{
 							_unit->GetAIInterface()->setNextTarget(pIllidan);
-						}
 
 						_unit->Emote(EMOTE_ONESHOT_TALK);
 					}
@@ -3407,7 +3398,7 @@ class AkamaAI : public MoonScriptBossAI
 class MaievAI : public MoonScriptBossAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(MaievAI)
+		MOONSCRIPT_FACTORY_FUNCTION(MaievAI, MoonScriptBossAI);
 		MaievAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
 		{
 			AddPhaseSpell(1, AddSpell(MAIEV_SHADOW_STRIKE, Target_Current, 10, 0, 30));
@@ -3433,7 +3424,7 @@ class MaievAI : public MoonScriptBossAI
 		{
 			SetWieldWeapon(true);
 			CancelAllCooldowns();
-			MoonScriptBossAI::OnCombatStop(pTarget);
+			ParentClass::OnCombatStop(pTarget);
 		}
 
 		void OnCombatStop(Unit*  pTarget)
@@ -3459,12 +3450,13 @@ class MaievAI : public MoonScriptBossAI
 				RemoveAIUpdateEvent();
 				Despawn(500, 0);
 			}
-			MoonScriptBossAI::OnCombatStop(pTarget);
+			ParentClass::OnCombatStop(pTarget);
 		}
 
 		void OnDamageTaken(Unit* mAttacker, uint32 fAmount)
 		{
 			_unit->SetHealth(_unit->GetUInt32Value(UNIT_FIELD_MAXHEALTH));
+			ParentClass::OnDamageTaken(mAttacker, fAmount);
 		}
 
 		void AIUpdate()
@@ -3481,7 +3473,7 @@ class MaievAI : public MoonScriptBossAI
 					DeathScene();
 					break;
 			}
-			MoonScriptBossAI::AIUpdate();
+			ParentClass::AIUpdate();
 		}
 
 		void FightWithIllidan()
@@ -3792,7 +3784,7 @@ void SpellFunc_Illidan_Parasitic(SpellDesc* pThis, MoonScriptCreatureAI* pCreatu
 class IllidanStormrageAI : public MoonScriptBossAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(IllidanStormrageAI)
+		MOONSCRIPT_FACTORY_FUNCTION(IllidanStormrageAI, MoonScriptBossAI);
 		IllidanStormrageAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
 		{
 			//Phase 1 spells
@@ -3861,7 +3853,7 @@ class IllidanStormrageAI : public MoonScriptBossAI
 			CancelAllCooldowns();
 
 			mParasitic->mEnabled = false;
-			MoonScriptBossAI::OnCombatStart(pTarget);
+			ParentClass::OnCombatStart(pTarget);
 		}
 
 		void OnCombatStop(Unit*  pTarget)
@@ -3920,7 +3912,7 @@ class IllidanStormrageAI : public MoonScriptBossAI
 				if(Creature* pMaiev = TO_CREATURE(ForceCreatureFind(CN_MAIEV)))
 					pMaiev->Despawn(0, 0);
 			}
-			MoonScriptBossAI::OnCombatStop(pTarget);
+			ParentClass::OnCombatStop(pTarget);
 		}
 
 		void OnDied(Unit*  pKiller)
@@ -3946,7 +3938,7 @@ class IllidanStormrageAI : public MoonScriptBossAI
 				if(GameObject* pLeftGate = _unit->GetMapMgr()->GetInterface()->GetGameObjectNearestCoords(744.829f, 369.276f, 354.324f, 200001))
 					pLeftGate->SetState(GAMEOBJECT_STATE_OPEN);
 			}
-			MoonScriptBossAI::OnDied(pKiller);
+			ParentClass::OnDied(pKiller);
 		}
 
 		// Does not work until it's hooked
@@ -3972,6 +3964,7 @@ class IllidanStormrageAI : public MoonScriptBossAI
 				_unit->GetAIInterface()->modThreatByPtr(pTarget, (int32)(fAmount * 2));
 				_unit->GetAIInterface()->RemoveThreatByPtr(mVictim);
 			}
+			ParentClass::OnHit(mVictim, fAmount);
 		}
 
 		void OnDamageTaken(Unit* mAttacker, uint32 fAmount)
@@ -3993,6 +3986,7 @@ class IllidanStormrageAI : public MoonScriptBossAI
 
 				_unit->GetAIInterface()->RemoveThreatByPtr(mAttacker);
 			}
+			ParentClass::OnDamageTaken(mAttacker, fAmount);
 		}
 
 		void AIUpdate()
@@ -4020,7 +4014,7 @@ class IllidanStormrageAI : public MoonScriptBossAI
 				default:
 					return;
 			}
-			MoonScriptBossAI::AIUpdate();
+			ParentClass::AIUpdate();
 		}
 
 		void PhaseOne()
@@ -4955,7 +4949,7 @@ float PositionAdds[8][2] =
 class CageTrapTriggerAI : public MoonScriptCreatureAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(CageTrapTriggerAI)
+		MOONSCRIPT_FACTORY_FUNCTION(CageTrapTriggerAI, MoonScriptCreatureAI);
 		CageTrapTriggerAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			_unit->SetUInt64Value(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
@@ -4968,13 +4962,11 @@ class CageTrapTriggerAI : public MoonScriptCreatureAI
 			mHasTrapped = false;
 		}
 
-		void OnCombatStart(Unit*  pTarget) {}
-
 		void OnCombatStop(Unit*  pTarget)
 		{
 			_unit->GetAIInterface()->setCurrentAgent(AGENT_NULL);
 			_unit->GetAIInterface()->SetAIState(STATE_IDLE);
-			MoonScriptCreatureAI::OnCombatStart(pTarget);
+			ParentClass::OnCombatStart(pTarget);
 		}
 
 		void AIUpdate()
@@ -5090,7 +5082,7 @@ class CageTrapTriggerAI : public MoonScriptCreatureAI
 				RemoveAIUpdateEvent();
 				Despawn(0);
 			}
-			MoonScriptCreatureAI::AIUpdate();
+			ParentClass::AIUpdate();
 		}
 
 		std::vector<MoonScriptCreatureAI *>	mTriggerAIList;
@@ -5129,7 +5121,7 @@ class CageTrapGO : public GameObjectAIScript
 class DranaeiSpiritAI : public MoonScriptCreatureAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(DranaeiSpiritAI)
+		MOONSCRIPT_FACTORY_FUNCTION(DranaeiSpiritAI, MoonScriptCreatureAI);
 		DranaeiSpiritAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			Despawn(45000);
@@ -5151,8 +5143,7 @@ class DranaeiSpiritAI : public MoonScriptCreatureAI
 						pAI->mOlumAI = NULL;
 				}
 			}
-
-			delete this;
+			ParentClass::Destroy();
 		}
 };
 
@@ -5170,7 +5161,7 @@ void SpellFunc_FlameOfAzzinothCharge(SpellDesc* pThis, MoonScriptCreatureAI* pCr
 class FlameOfAzzinothAI : public MoonScriptCreatureAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(FlameOfAzzinothAI)
+		MOONSCRIPT_FACTORY_FUNCTION(FlameOfAzzinothAI, MoonScriptCreatureAI);
 		FlameOfAzzinothAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			mFlameBlast = AddSpell(FLAME_OF_AZZINOTH_FLAME_BLAST, Target_Self, 0, 0, 0);
@@ -5193,7 +5184,7 @@ class FlameOfAzzinothAI : public MoonScriptCreatureAI
 		void OnCombatStart(Unit*  pTarget)
 		{
 			CancelAllCooldowns();
-			MoonScriptCreatureAI::OnCombatStart(pTarget);
+			ParentClass::OnCombatStart(pTarget);
 		}
 
 		void AIUpdate()
@@ -5217,7 +5208,7 @@ class FlameOfAzzinothAI : public MoonScriptCreatureAI
 					}
 				}
 			}
-			MoonScriptCreatureAI::AIUpdate();
+			ParentClass::AIUpdate();
 		}
 
 		void Destroy()
@@ -5234,8 +5225,7 @@ class FlameOfAzzinothAI : public MoonScriptCreatureAI
 						pAI->mFoA2 = NULL;
 				}
 			}
-
-			delete this;
+			ParentClass::Destroy();
 		}
 
 		// Flame Blast Spell Function

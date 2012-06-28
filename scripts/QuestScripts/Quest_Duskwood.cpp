@@ -28,7 +28,7 @@
 class ElizaAI : public MoonScriptCreatureAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(ElizaAI)
+		MOONSCRIPT_FACTORY_FUNCTION(ElizaAI, MoonScriptCreatureAI);
 		ElizaAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			mElizaCombatTimer = INVALIDATE_TIMER;
@@ -42,6 +42,7 @@ class ElizaAI : public MoonScriptCreatureAI
 
 			RegisterAIUpdateEvent(1000);
 		}
+
 		void AIUpdate()
 		{
 			if(IsTimerFinished(mElizaCombatTimer))
@@ -59,6 +60,7 @@ class ElizaAI : public MoonScriptCreatureAI
 					CastSpellNowNoScheduling(mSummonGuard);
 				}
 			}
+			ParentClass::AIUpdate();
 		}
 
 		int32		mElizaCombatTimer;
@@ -79,7 +81,6 @@ class SummonElizaQuest : public QuestScript
 
 void SetupDuskwood(ScriptMgr* mgr)
 {
-	QuestScript* SummonEliza = new SummonElizaQuest();
-	mgr->register_quest_script(254, SummonEliza);
+	mgr->register_quest_script(254, new SummonElizaQuest());
 	mgr->register_creature_script(CN_ELIZA, &ElizaAI::Create);
 }

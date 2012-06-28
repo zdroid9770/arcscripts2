@@ -22,7 +22,7 @@
 class ArmyofDeadGhoul : public MoonScriptCreatureAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(ArmyofDeadGhoul)
+		MOONSCRIPT_FACTORY_FUNCTION(ArmyofDeadGhoul, MoonScriptCreatureAI);
 		ArmyofDeadGhoul(Creature * pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			GetUnit()->GetAIInterface()->m_canMove = false;
@@ -31,6 +31,7 @@ class ArmyofDeadGhoul : public MoonScriptCreatureAI
 		void OnLoad()
 		{
 			RegisterAIUpdateEvent(200);
+			ParentClass::OnLoad();
 		}
 
 		void AIUpdate()
@@ -38,7 +39,7 @@ class ArmyofDeadGhoul : public MoonScriptCreatureAI
 			_unit->CastSpell(_unit, 20480, false);
 			_unit->GetAIInterface()->m_canMove = true;
 			RemoveAIUpdateEvent();
-			MoonScriptCreatureAI::AIUpdate();
+			ParentClass::AIUpdate();
 		}
 };
 

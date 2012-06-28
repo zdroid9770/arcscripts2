@@ -24,7 +24,7 @@
 class Glutton : public MoonScriptCreatureAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(Glutton)
+		MOONSCRIPT_FACTORY_FUNCTION(Glutton, MoonScriptCreatureAI);
 		Glutton(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			//spells

@@ -36,7 +36,7 @@
 class NalorakkAI : public MoonScriptBossAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(NalorakkAI)
+		MOONSCRIPT_FACTORY_FUNCTION(NalorakkAI, MoonScriptBossAI);
 		NalorakkAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
 		{
 			AddPhaseSpell(1, AddSpell(NALORAKK_BRUTAL_SWIPE, Target_Current, 2, 0, 35));
@@ -62,21 +62,21 @@ class NalorakkAI : public MoonScriptBossAI
 		{
 			// 45 Seconds until switch to Bear Form
 			MorphTimer = AddTimer(45000);
-			MoonScriptBossAI::OnCombatStart(pTarget);
+			ParentClass::OnCombatStart(pTarget);
 		}
 
 		void OnCombatStop(Unit* pTarget)
 		{
 			// On leaving combat he changes back to a troll
 			SetDisplayId(21631);
-			MoonScriptBossAI::OnCombatStop(pTarget);
+			ParentClass::OnCombatStop(pTarget);
 		}
 
 		void OnDied(Unit* pKiller)
 		{
 			// On death he changes back to a troll
 			SetDisplayId(21631);
-			MoonScriptBossAI::OnDied(pKiller);
+			ParentClass::OnDied(pKiller);
 		}
 
 		void AIUpdate()
@@ -104,7 +104,7 @@ class NalorakkAI : public MoonScriptBossAI
 
 				Emote("Make way for Nalorakk!", Text_Yell, 12073);
 			}
-			MoonScriptBossAI::AIUpdate();
+			ParentClass::AIUpdate();
 		}
 
 		SpellDesc* Morph;
@@ -123,7 +123,7 @@ class NalorakkAI : public MoonScriptBossAI
 class AkilzonAI : public MoonScriptCreatureAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(AkilzonAI)
+		MOONSCRIPT_FACTORY_FUNCTION(AkilzonAI, MoonScriptCreatureAI);
 		AkilzonAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			AddSpell(AKILZON_STATIC_DISRUPTION, Target_Self, 2, 0, 60);
@@ -141,7 +141,7 @@ class AkilzonAI : public MoonScriptCreatureAI
 		{
 			// 2 Minute timer till Soaring Eagles are spawned
 			mSummonTime = AddTimer(120000);
-			MoonScriptCreatureAI::OnCombatStart(pTarget);
+			ParentClass::OnCombatStart(pTarget);
 		}
 
 		void AIUpdate()
@@ -165,7 +165,7 @@ class AkilzonAI : public MoonScriptCreatureAI
 				// Restart the timer
 				ResetTimer(mSummonTime, 120000);
 			}
-			MoonScriptCreatureAI::AIUpdate();
+			ParentClass::AIUpdate();
 		}
 
 		int32 mSummonTime;
@@ -177,7 +177,7 @@ class AkilzonAI : public MoonScriptCreatureAI
 class SoaringEagleAI : public MoonScriptCreatureAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(SoaringEagleAI)
+		MOONSCRIPT_FACTORY_FUNCTION(SoaringEagleAI, MoonScriptCreatureAI);
 		SoaringEagleAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			AddSpell(EAGLE_SWOOP, Target_Destination, 5, 0, 0);
@@ -202,7 +202,7 @@ class SoaringEagleAI : public MoonScriptCreatureAI
 class HalazziAI : public MoonScriptBossAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(HalazziAI)
+		MOONSCRIPT_FACTORY_FUNCTION(HalazziAI, MoonScriptBossAI);
 		HalazziAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
 		{
 			AddPhaseSpell(1, AddSpell(HALAZZI_SABER_LASH, Target_Destination, 0.5, 0, 0, 0, 0, false, "Me gonna carve ya now!", Text_Yell, 12023));
@@ -231,13 +231,13 @@ class HalazziAI : public MoonScriptBossAI
 			SplitCount = 1;
 			MaxHealth = _unit->GetUInt32Value(UNIT_FIELD_MAXHEALTH);
 			mLynx = NULL;
-			MoonScriptBossAI::OnCombatStart(pTarget);
+			ParentClass::OnCombatStart(pTarget);
 		}
 
 		void OnCombatStop(Unit* pTarget)
 		{
 			Merge();
-			MoonScriptBossAI::OnCombatStop(pTarget);
+			ParentClass::OnCombatStop(pTarget);
 		}
 
 		void AIUpdate()
@@ -280,7 +280,7 @@ class HalazziAI : public MoonScriptBossAI
 					}
 				}
 			}
-			MoonScriptBossAI::AIUpdate();
+			ParentClass::AIUpdate();
 		}
 
 		void Split()
@@ -330,7 +330,7 @@ class HalazziAI : public MoonScriptBossAI
 class LynxSpiritAI : public MoonScriptCreatureAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(LynxSpiritAI)
+		MOONSCRIPT_FACTORY_FUNCTION(LynxSpiritAI, MoonScriptCreatureAI);
 		LynxSpiritAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			// Lynx Flurry

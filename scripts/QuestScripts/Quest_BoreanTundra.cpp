@@ -92,7 +92,7 @@ class ColdarraGeoMonitorWest : public GameObjectAIScript
 class PurifyingTotemAI : public MoonScriptCreatureAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(PurifyingTotemAI);
+		MOONSCRIPT_FACTORY_FUNCTION(PurifyingTotemAI, MoonScriptCreatureAI);
 		PurifyingTotemAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			SetCanEnterCombat(false);
@@ -127,7 +127,7 @@ class NerubarEggSac : public GameObjectAIScript
 class SeaforiumDepthCharge : public MoonScriptCreatureAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(SeaforiumDepthCharge)
+		MOONSCRIPT_FACTORY_FUNCTION(SeaforiumDepthCharge, MoonScriptCreatureAI);
 		SeaforiumDepthCharge(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			SetCanMove(false);
@@ -172,6 +172,7 @@ class SeaforiumDepthCharge : public MoonScriptCreatureAI
 				}
 			}
 			_unit->Despawn(500, 0);
+			ParentClass::OnLoad();
 		}
 };
 

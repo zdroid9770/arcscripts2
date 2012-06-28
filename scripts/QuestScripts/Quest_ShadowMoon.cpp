@@ -99,16 +99,14 @@ const WPWaitTimes DeathbringerJovaanWP[] =
 class DeathbringerJovaanAI : public MoonScriptCreatureAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(DeathbringerJovaanAI)
+		MOONSCRIPT_FACTORY_FUNCTION(DeathbringerJovaanAI, MoonScriptCreatureAI);
 		DeathbringerJovaanAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			mJovaanTimer = INVALIDATE_TIMER;
 			mJovaanPhase = -1;
 
 			for(int i = 1; i < 5; ++i)
-			{
 				AddWaypoint(CreateWaypoint(i, DeathbringerJovaanWP[i].WaitTime, DeathbringerJovaanWP[i].mCoords.addition, DeathbringerJovaanWP[i].mCoords));
-			}
 		}
 
 		void AIUpdate()
@@ -174,6 +172,7 @@ class DeathbringerJovaanAI : public MoonScriptCreatureAI
 						break;
 				}
 			}
+			ParentClass::AIUpdate();
 		}
 
 		void OnReachWP(uint32 iWaypointId, bool bForwards)
@@ -194,6 +193,7 @@ class DeathbringerJovaanAI : public MoonScriptCreatureAI
 					}
 					break;
 			}
+			ParentClass::OnReachWP(iWaypointId, bForwards);
 		}
 
 		int32	mJovaanTimer;
@@ -207,7 +207,7 @@ class DeathbringerJovaanAI : public MoonScriptCreatureAI
 class WarbringerRazuunAI : public MoonScriptCreatureAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(WarbringerRazuunAI)
+		MOONSCRIPT_FACTORY_FUNCTION(WarbringerRazuunAI, MoonScriptCreatureAI);
 		WarbringerRazuunAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			RegisterAIUpdateEvent(1000);
@@ -263,6 +263,7 @@ class WarbringerRazuunAI : public MoonScriptCreatureAI
 						break;
 				}
 			}
+			ParentClass::AIUpdate();
 		}
 
 		int32	mRazuunTimer;
@@ -341,7 +342,7 @@ class NeltharakusTale_Gossip : public GossipScript
 class EnslavedNetherwingDrakeAI : public MoonScriptCreatureAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(EnslavedNetherwingDrakeAI)
+		MOONSCRIPT_FACTORY_FUNCTION(EnslavedNetherwingDrakeAI, MoonScriptCreatureAI);
 		EnslavedNetherwingDrakeAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			LocationExtra WayPoint = { _unit->GetPositionX(), _unit->GetPositionY() + 30, _unit->GetPositionZ() + 100, _unit->GetOrientation(), Flag_Fly };
@@ -353,9 +354,8 @@ class EnslavedNetherwingDrakeAI : public MoonScriptCreatureAI
 		void OnReachWP(uint32 iWaypointId, bool bForwards)
 		{
 			if(iWaypointId == 1)
-			{
 				Despawn(0, 3 * 60 * 1000);
-			}
+			ParentClass::OnReachWP(iWaypointId, bForwards);
 		}
 };
 

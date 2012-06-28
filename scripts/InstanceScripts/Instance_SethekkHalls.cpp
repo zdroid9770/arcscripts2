@@ -1476,7 +1476,7 @@ static LocationExtra LakkaWaypoint[] =
 class LakkaAI : public MoonScriptCreatureAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(LakkaAI);
+		MOONSCRIPT_FACTORY_FUNCTION(LakkaAI, MoonScriptCreatureAI);
 		LakkaAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			SetMoveType(Move_DontMoveWP);
@@ -1526,6 +1526,7 @@ class LakkaAI : public MoonScriptCreatureAI
 						SetWaypointToMove(1);
 					}
 			}
+			ParentClass::OnReachWP(iWaypointId, bForwards);
 		}
 };
 

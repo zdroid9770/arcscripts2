@@ -22,7 +22,7 @@
 class NihilTheBanished : public MoonScriptCreatureAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(NihilTheBanished)
+		MOONSCRIPT_FACTORY_FUNCTION(NihilTheBanished, MoonScriptCreatureAI);
 		NihilTheBanished(Creature *pCreature) : MoonScriptCreatureAI(pCreature) {}
 
 		void OnLoad()
@@ -37,6 +37,7 @@ class NihilTheBanished : public MoonScriptCreatureAI
 			Emote("All of Draenor shall quake beneath my feet! i Will destroy this world and reshape it in my immage!", Text_Yell, 0, EMOTE_ONESHOT_NONE, 10000);
 			Emote("Where shall i Begin? i cannot bother myself with a worm such as yourself. Theres a World to be Conquered!", Text_Yell, 0, EMOTE_ONESHOT_NONE, 15000);
 			Emote("No doubt the fools that banished me are long dead. i shall take the wing and survey my new demense, Pray to whatever gods you hold dear that we do not meet again.", Text_Yell, 0, EMOTE_ONESHOT_NONE, 20000);
+			ParentClass::OnLoad();
 		}
 };
 
@@ -44,7 +45,7 @@ class NihilTheBanished : public MoonScriptCreatureAI
 class BrutebaneStoutTrigger : public MoonScriptCreatureAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(BrutebaneStoutTrigger)
+		MOONSCRIPT_FACTORY_FUNCTION(BrutebaneStoutTrigger, MoonScriptCreatureAI);
 		BrutebaneStoutTrigger(Creature *pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			_unit->Root();
@@ -87,6 +88,7 @@ class BrutebaneStoutTrigger : public MoonScriptCreatureAI
 				}
 				_unit->Despawn(0, 0);
 			}
+			ParentClass::AIUpdate();
 		}
 
 	private:

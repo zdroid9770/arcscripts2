@@ -31,7 +31,7 @@
 class WatchkeeperGargolmarAI : public MoonScriptCreatureAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(WatchkeeperGargolmarAI)
+		MOONSCRIPT_FACTORY_FUNCTION(WatchkeeperGargolmarAI, MoonScriptCreatureAI);
 		WatchkeeperGargolmarAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			AddSpell(SURGE, Target_RandomUnit, 20.0f, 0, 15, 5, 40, false, "Back off, pup!", Text_Yell, 10330);
@@ -64,7 +64,7 @@ class WatchkeeperGargolmarAI : public MoonScriptCreatureAI
 				_unit->setAttackTimer(1500, false);
 				CastSpellNowNoScheduling(mRetaliation);
 			}
-			MoonScriptCreatureAI::AIUpdate();
+			ParentClass::AIUpdate();
 		}
 
 	protected:
@@ -85,7 +85,7 @@ class WatchkeeperGargolmarAI : public MoonScriptCreatureAI
 class OmorTheUnscarredAI : public MoonScriptCreatureAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(OmorTheUnscarredAI)
+		MOONSCRIPT_FACTORY_FUNCTION(OmorTheUnscarredAI, MoonScriptCreatureAI);
 		OmorTheUnscarredAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			AddEmote(Event_OnCombatStart, "I will not be defeated!", Text_Yell, 10279);
@@ -108,7 +108,7 @@ class OmorTheUnscarredAI : public MoonScriptCreatureAI
 		{
 			if(GetHealthPercent() <= 20 && !pShield->mEnabled)
 				pShield->mEnabled = true;
-			MoonScriptCreatureAI::AIUpdate();
+			ParentClass::AIUpdate();
 		}
 
 	protected:

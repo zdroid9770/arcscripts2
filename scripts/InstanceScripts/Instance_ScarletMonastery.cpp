@@ -33,7 +33,7 @@
 class VishasAI : public MoonScriptCreatureAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(VishasAI)
+		MOONSCRIPT_FACTORY_FUNCTION(VishasAI, MoonScriptCreatureAI);
 		VishasAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			AddSpell(SHADOW_WORD, Target_RandomPlayer, 20, 0, 8);
@@ -47,7 +47,7 @@ class VishasAI : public MoonScriptCreatureAI
 		void OnCombatStop(Unit* pTarget)
 		{
 			m_uiSay = 0;
-			MoonScriptCreatureAI::OnCombatStop(pTarget);
+			ParentClass::OnCombatStop(pTarget);
 		}
 
 		void AIUpdate()
@@ -63,7 +63,7 @@ class VishasAI : public MoonScriptCreatureAI
 				Emote("I'll rip the secrets from your flesh!", Text_Yell, 5850);
 				m_uiSay++;
 			}
-			MoonScriptCreatureAI::AIUpdate();
+			ParentClass::AIUpdate();
 		}
 
 	private:
@@ -78,7 +78,7 @@ class VishasAI : public MoonScriptCreatureAI
 class ThalnosAI : public MoonScriptCreatureAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(ThalnosAI)
+		MOONSCRIPT_FACTORY_FUNCTION(ThalnosAI, MoonScriptCreatureAI);
 		ThalnosAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			AddSpell(SHADOW_BOLT, Target_RandomPlayer, 20, 3.0f, 2);
@@ -97,7 +97,7 @@ class ThalnosAI : public MoonScriptCreatureAI
 				Emote("No rest, for the angry dead.", Text_Yell, 5846);
 				m_bEmoted = true;
 			}
-			MoonScriptCreatureAI::AIUpdate();
+			ParentClass::AIUpdate();
 		}
 
 	private:
@@ -114,7 +114,7 @@ class ThalnosAI : public MoonScriptCreatureAI
 class LokseyAI : public MoonScriptCreatureAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(LokseyAI)
+		MOONSCRIPT_FACTORY_FUNCTION(LokseyAI, MoonScriptCreatureAI);
 		LokseyAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			AddSpell(6742, Target_Self, 5, 0, 40);
@@ -134,7 +134,7 @@ class LokseyAI : public MoonScriptCreatureAI
 class DoanAI : public MoonScriptCreatureAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(DoanAI)
+		MOONSCRIPT_FACTORY_FUNCTION(DoanAI, MoonScriptCreatureAI);
 		DoanAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			AddSpell(SILENCE, Target_Self, 25, 1.5f, 14);
@@ -155,6 +155,7 @@ class DoanAI : public MoonScriptCreatureAI
 				_unit->CastSpell(_unit, NOVA, false);
 				m_bShielded = true;
 			}
+			ParentClass::OnDamageTaken(mAttacker, fAmount);
 		}
 
 	private:
@@ -178,7 +179,7 @@ class DoanAI : public MoonScriptCreatureAI
 class HerodAI : public MoonScriptCreatureAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(HerodAI)
+		MOONSCRIPT_FACTORY_FUNCTION(HerodAI, MoonScriptCreatureAI);
 		HerodAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			AddSpell(WHIRLWINDSPELL, Target_Self, 12, 0, 12)->AddEmote("Blades of Light!", Text_Yell, 5832);
@@ -194,7 +195,7 @@ class HerodAI : public MoonScriptCreatureAI
 		{
 			m_bEnraged = false;
 			RemoveAura(ENRAGESPELL);
-			MoonScriptCreatureAI::OnCombatStop(pTarget);
+			ParentClass::OnCombatStop(pTarget);
 		}
 
 		void AIUpdate()
@@ -204,7 +205,7 @@ class HerodAI : public MoonScriptCreatureAI
 				ApplyAura(ENRAGESPELL);
 				Emote("Light, give me strength!", Text_Yell,  5833);
 			}
-			MoonScriptCreatureAI::AIUpdate();
+			ParentClass::AIUpdate();
 		}
 
 	protected:
@@ -225,7 +226,7 @@ class HerodAI : public MoonScriptCreatureAI
 class MograineAI : public MoonScriptCreatureAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(MograineAI)
+		MOONSCRIPT_FACTORY_FUNCTION(MograineAI, MoonScriptCreatureAI);
 		MograineAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			AddEmote(Event_OnCombatStart, "Infidels. They must be purified!", Text_Yell, 5835);
@@ -240,14 +241,14 @@ class MograineAI : public MoonScriptCreatureAI
 			_unit->GetAIInterface()->setCurrentAgent(AGENT_NULL);
 			_unit->GetAIInterface()->SetAIState(STATE_IDLE);
 			RemoveAIUpdateEvent();
-			MoonScriptCreatureAI::OnCombatStop(mTarget);
+			ParentClass::OnCombatStop(mTarget);
 		}
 
 		void OnDied(Unit* mKiller)
 		{
 			if(GameObject * pDoor = _unit->GetMapMgr()->GetInterface()->GetGameObjectNearestCoords(1173.01f, 1389.91f, 31.9723f, 104600))
 				pDoor->SetState(GAMEOBJECT_STATE_OPEN);
-			MoonScriptCreatureAI::OnDied(mKiller);
+			ParentClass::OnDied(mKiller);
 		}
 };
 
@@ -261,7 +262,7 @@ class MograineAI : public MoonScriptCreatureAI
 class WhitemaneAI : public MoonScriptBossAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(WhitemaneAI)
+		MOONSCRIPT_FACTORY_FUNCTION(WhitemaneAI, MoonScriptBossAI);
 		WhitemaneAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
 		{
 			AddEmote(Event_OnCombatStart, "Mograine has fallen? You shall pay for this treachery!", Text_Yell, 5838);
@@ -284,7 +285,7 @@ class WhitemaneAI : public MoonScriptBossAI
 				Emote("Arise, my champion!", Text_Yell, 5840);
 				_unit->CastSpell(_unit, RESURRECTION, false);				
 			}
-			MoonScriptBossAI::AIUpdate();
+			ParentClass::AIUpdate();
 		}
 
 	protected:
@@ -305,7 +306,7 @@ class WhitemaneAI : public MoonScriptBossAI
 class FairbanksAI : public MoonScriptCreatureAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(FairbanksAI)
+		MOONSCRIPT_FACTORY_FUNCTION(FairbanksAI, MoonScriptCreatureAI);
 		FairbanksAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			AddEmote(Event_OnTargetDied, "Ha! Had enough?", Text_Yell, 0);

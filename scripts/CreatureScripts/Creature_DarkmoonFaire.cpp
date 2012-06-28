@@ -29,7 +29,7 @@
 class Sayge : public MoonScriptCreatureAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(Sayge)
+		MOONSCRIPT_FACTORY_FUNCTION(Sayge, MoonScriptCreatureAI);
 		Sayge(Creature *pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			RegisterAIUpdateEvent(135000); // Start initial update after: 2.25mins
@@ -45,7 +45,7 @@ class Sayge : public MoonScriptCreatureAI
 				case 3: _unit->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, BARK_SAYGE_4); break;
 			}
 			ModifyAIUpdateEvent( rand() % 180000 + 300000 ); // Modify timer to a random value between: 3-5mins
-			MoonScriptCreatureAI::AIUpdate();
+			ParentClass::AIUpdate();
 		}
 };
 
@@ -60,7 +60,7 @@ class Sayge : public MoonScriptCreatureAI
 class SilasDarkmoon : public MoonScriptCreatureAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(SilasDarkmoon)
+		MOONSCRIPT_FACTORY_FUNCTION(SilasDarkmoon, MoonScriptCreatureAI);
 		SilasDarkmoon(Creature *pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			RegisterAIUpdateEvent(180000); // Start initial update after: 3mins
@@ -78,7 +78,7 @@ class SilasDarkmoon : public MoonScriptCreatureAI
 				case 5: _unit->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, BARK_SILAS_DARKMOON_6); break;
 			}
 			ModifyAIUpdateEvent(rand()%300000 + 240000); // Modify timer to a random value between: 3-5mins
-			MoonScriptCreatureAI::AIUpdate();
+			ParentClass::AIUpdate();
 		}
 };
 
@@ -91,7 +91,7 @@ class SilasDarkmoon : public MoonScriptCreatureAI
 class GevasGrimegate : public MoonScriptCreatureAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(GevasGrimegate)
+		MOONSCRIPT_FACTORY_FUNCTION(GevasGrimegate, MoonScriptCreatureAI);
 		GevasGrimegate(Creature *pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			RegisterAIUpdateEvent(60000); // Start initial update after: 1mins
@@ -107,7 +107,7 @@ class GevasGrimegate : public MoonScriptCreatureAI
 				case 3: _unit->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, BARK_GEVAS_GRIMEGATE_4); break;
 			}
 			ModifyAIUpdateEvent(rand() % 300000 + 180000); // Modify timer to a random value between: 3-5mins
-			MoonScriptCreatureAI::AIUpdate();
+			ParentClass::AIUpdate();
 		}
 };
 
@@ -120,7 +120,7 @@ class GevasGrimegate : public MoonScriptCreatureAI
 class Sylannia : public MoonScriptCreatureAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(Sylannia)
+		MOONSCRIPT_FACTORY_FUNCTION(Sylannia, MoonScriptCreatureAI);
 		Sylannia(Creature *pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			RegisterAIUpdateEvent(120000); // Start initial update after: 2mins
@@ -136,7 +136,7 @@ class Sylannia : public MoonScriptCreatureAI
 				case 3: _unit->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, BARK_SYLANNIA_4); break;
 			}
 			ModifyAIUpdateEvent( rand() % 360000 + 180000 ); // Modify timer to a random value between: 3-6mins
-			MoonScriptCreatureAI::AIUpdate();
+			ParentClass::AIUpdate();
 		}
 };
 
@@ -150,7 +150,7 @@ class Sylannia : public MoonScriptCreatureAI
 class StampThunderhorn : public MoonScriptCreatureAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(StampThunderhorn)
+		MOONSCRIPT_FACTORY_FUNCTION(StampThunderhorn, MoonScriptCreatureAI);
 		StampThunderhorn(Creature *pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			RegisterAIUpdateEvent(180000); // Start initial update after: 3mins
@@ -167,7 +167,7 @@ class StampThunderhorn : public MoonScriptCreatureAI
 				case 4: _unit->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, BARK_STAMP_THUNDERHORN_5); break;
 			}
 			ModifyAIUpdateEvent( rand() % 300000 + 180000 ); // Modify timer to a random value between: 3-5mins
-			MoonScriptCreatureAI::AIUpdate();
+			ParentClass::AIUpdate();
 		}
 };
 
@@ -180,7 +180,7 @@ class StampThunderhorn : public MoonScriptCreatureAI
 class Lhara : public MoonScriptCreatureAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(Lhara)
+		MOONSCRIPT_FACTORY_FUNCTION(Lhara, MoonScriptCreatureAI);
 		Lhara(Creature *pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			RegisterAIUpdateEvent( 90000 ); // Start initial update after: 1.5mins
@@ -196,7 +196,7 @@ class Lhara : public MoonScriptCreatureAI
 				case 3: _unit->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, BARK_LHARA_4); break;
 			}
 			ModifyAIUpdateEvent(rand()%360000 + 240000); // Modify timer to a random value between: 4-6mins
-			MoonScriptCreatureAI::AIUpdate();
+			ParentClass::AIUpdate();
 		}
 };
 
@@ -209,7 +209,7 @@ class Lhara : public MoonScriptCreatureAI
 class ProfessorThaddeusPaleo : public MoonScriptCreatureAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(ProfessorThaddeusPaleo)
+		MOONSCRIPT_FACTORY_FUNCTION(ProfessorThaddeusPaleo, MoonScriptCreatureAI);
 		ProfessorThaddeusPaleo(Creature *pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			RegisterAIUpdateEvent(210000); // Start initial update after: 3.5mins
@@ -225,7 +225,7 @@ class ProfessorThaddeusPaleo : public MoonScriptCreatureAI
 				case 3: _unit->SendChatMessage(CHAT_MSG_MONSTER_SAY, LANG_UNIVERSAL, BARK_PROFESSOR_THADDEUS_PALEO_4); break;
 			}
 			ModifyAIUpdateEvent(rand()%180000 + 300000); // Modify timer to a random value between: 3-5mins
-			MoonScriptCreatureAI::AIUpdate();
+			ParentClass::AIUpdate();
 		}
 };
 
@@ -245,7 +245,7 @@ class ProfessorThaddeusPaleo : public MoonScriptCreatureAI
 class Carnies : public MoonScriptCreatureAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(Carnies)
+		MOONSCRIPT_FACTORY_FUNCTION(Carnies, MoonScriptCreatureAI);
 		Carnies(Creature *pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			RegisterAIUpdateEvent(120000); // Start initial update after: 2mins
@@ -261,7 +261,7 @@ class Carnies : public MoonScriptCreatureAI
 				case 3: Emote(BARK_CARNIES_4, Text_Say, 0); break;
 			}
 			ModifyAIUpdateEvent(rand()%300000 + 120000); // Modify timer to a random value between: 2-5mins
-			MoonScriptCreatureAI::AIUpdate();
+			ParentClass::AIUpdate();
 		}
 };
 
@@ -269,7 +269,7 @@ class Carnies : public MoonScriptCreatureAI
 class Flik : public MoonScriptCreatureAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(Flik)
+		MOONSCRIPT_FACTORY_FUNCTION(Flik, MoonScriptCreatureAI);
 		Flik(Creature *pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			RegisterAIUpdateEvent( 180000 ); // Start initial update after: 3mins
@@ -285,7 +285,7 @@ class Flik : public MoonScriptCreatureAI
 				case 3: Emote("Frogs and leather balls for sale!", Text_Say, 0); break;
 			}
 			ModifyAIUpdateEvent(rand()%240000 + 120000); // Modify timer to a random value between: 2-4mins
-			MoonScriptCreatureAI::AIUpdate();
+			ParentClass::AIUpdate();
 		}
 };
 
@@ -293,7 +293,7 @@ class Flik : public MoonScriptCreatureAI
 class Morja : public MoonScriptCreatureAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(Morja)
+		MOONSCRIPT_FACTORY_FUNCTION(Morja, MoonScriptCreatureAI);
 		Morja(Creature *pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			RegisterAIUpdateEvent(240000); // Start initial update after: 4mins
@@ -303,7 +303,7 @@ class Morja : public MoonScriptCreatureAI
 		{
 			Emote("Jubjub? Where are you, Jubjub? Oh no! Where did you go this time!", Text_Say, 0);
 			ModifyAIUpdateEvent(rand()%360000 + 240000); // Modify timer to a random value between: 4-6mins
-			MoonScriptCreatureAI::AIUpdate();
+			ParentClass::AIUpdate();
 		}
 };
 

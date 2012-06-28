@@ -348,7 +348,7 @@ class GundrakScript : public MoonInstanceScript
 class SladranAI : public MoonScriptCreatureAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(SladranAI)
+		MOONSCRIPT_FACTORY_FUNCTION(SladranAI, MoonScriptCreatureAI);
 		SladranAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			mInstance = GetInstanceScript();
@@ -370,14 +370,14 @@ class SladranAI : public MoonScriptCreatureAI
 		{
 			if(mInstance)
 				mInstance->SetInstanceData(Data_EncounterState, _unit->GetEntry(), State_InProgress);
-			MoonScriptCreatureAI::OnCombatStart(pTarget);
+			ParentClass::OnCombatStart(pTarget);
 		}
 
 		void OnCombatStop(Unit* pTarget)
 		{
 			if(mInstance)
 				mInstance->SetInstanceData(Data_EncounterState, _unit->GetEntry(), State_Performed);
-			MoonScriptCreatureAI::OnCombatStop(pTarget);
+			ParentClass::OnCombatStop(pTarget);
 		}
 
 		MoonInstanceScript* mInstance;
@@ -392,7 +392,7 @@ class SladranAI : public MoonScriptCreatureAI
 class GalDarahAI : public MoonScriptCreatureAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(GalDarahAI)
+		MOONSCRIPT_FACTORY_FUNCTION(GalDarahAI, MoonScriptCreatureAI);
 		GalDarahAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			mInstance = mInstance = GetInstanceScript();;
@@ -410,14 +410,14 @@ class GalDarahAI : public MoonScriptCreatureAI
 		{
 			if(mInstance)
 				mInstance->SetInstanceData(Data_EncounterState, _unit->GetEntry(), State_InProgress);
-			MoonScriptCreatureAI::OnCombatStart(pTarget);
+			ParentClass::OnCombatStart(pTarget);
 		}
 
 		void OnCombatStop(Unit* pTarget)
 		{
 			if(mInstance)
 				mInstance->SetInstanceData(Data_EncounterState, _unit->GetEntry(), State_Performed);
-			MoonScriptCreatureAI::OnCombatStop(pTarget);
+			ParentClass::OnCombatStop(pTarget);
 		}
 
 		MoonInstanceScript* mInstance;

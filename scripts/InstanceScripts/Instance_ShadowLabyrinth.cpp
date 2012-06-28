@@ -29,7 +29,7 @@
 class AMBASSADORHELLMAWAI : public MoonScriptCreatureAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(AMBASSADORHELLMAWAI)
+		MOONSCRIPT_FACTORY_FUNCTION(AMBASSADORHELLMAWAI, MoonScriptCreatureAI);
 		AMBASSADORHELLMAWAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			AddSpell(CORROSIVE_ACID, Target_Self, 10, 2, 15);
@@ -58,7 +58,7 @@ class AMBASSADORHELLMAWAI : public MoonScriptCreatureAI
 class BLACKHEARTTHEINCITERAI : public MoonScriptCreatureAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(BLACKHEARTTHEINCITERAI)
+		MOONSCRIPT_FACTORY_FUNCTION(BLACKHEARTTHEINCITERAI, MoonScriptCreatureAI);
 		BLACKHEARTTHEINCITERAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			AddSpell(CHARGE, Target_RandomPlayer, 10, 0, 15);
@@ -91,7 +91,7 @@ faster rate as the battle progresses.*/
 class GRANDMASTERVORPILAI : public MoonScriptCreatureAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(GRANDMASTERVORPILAI)
+		MOONSCRIPT_FACTORY_FUNCTION(GRANDMASTERVORPILAI, MoonScriptCreatureAI);
 		GRANDMASTERVORPILAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			AddSpell(SHADOW_BOLT_VOLLEY, Target_Self, 15, 0, 10);
@@ -128,7 +128,7 @@ class GRANDMASTERVORPILAI : public MoonScriptCreatureAI
 class MURMURAI : public MoonScriptCreatureAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(MURMURAI);
+		MOONSCRIPT_FACTORY_FUNCTION(MURMURAI, MoonScriptCreatureAI);
 		MURMURAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			_unit->SetHealthPct(40);

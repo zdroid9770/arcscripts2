@@ -70,7 +70,7 @@ class Berthold : public GossipScript
 class AttumenTheHuntsmanAI : public MoonScriptBossAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(AttumenTheHuntsmanAI)
+		MOONSCRIPT_FACTORY_FUNCTION(AttumenTheHuntsmanAI, MoonScriptBossAI);
 		AttumenTheHuntsmanAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
 		{
 			//All phase spells
@@ -94,12 +94,13 @@ class AttumenTheHuntsmanAI : public MoonScriptBossAI
 		void OnLoad()
 		{
 			AggroNearestUnit(); //Aggro on spawn
+			ParentClass::OnLoad();
 		}
 
 		void OnCombatStop(Unit* pTarget)
 		{
 			Despawn(10000);
-			MoonScriptBossAI::OnCombatStop(pTarget);
+			ParentClass::OnCombatStop(pTarget);
 		}
 
 		void AIUpdate()
@@ -118,14 +119,14 @@ class AttumenTheHuntsmanAI : public MoonScriptBossAI
 					midnight->SetAllowMelee(false);
 				}
 			}
-			MoonScriptBossAI::AIUpdate();
+			ParentClass::AIUpdate();
 		}
 };
 
 class MidnightAI : public MoonScriptBossAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(MidnightAI)
+		MOONSCRIPT_FACTORY_FUNCTION(MidnightAI, MoonScriptBossAI);
 		MidnightAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
 		{
 		}
@@ -134,13 +135,14 @@ class MidnightAI : public MoonScriptBossAI
 		{
 			SetAllowMelee(true);
 			SetAllowSpell(true);
+			ParentClass::OnCombatStop(pTarget);
 		}
 
 		void OnTargetDied(Unit* pTarget)
 		{
 			if(GetLinkedCreature() && GetLinkedCreature()->IsAlive())
 				TO< MoonScriptCreatureAI *>(GetLinkedCreature())->Emote("Well done Midnight!", Text_Yell, 9173);
-			MoonScriptBossAI::OnTargetDied(pTarget);
+			ParentClass::OnTargetDied(pTarget);
 		}
 
 		void AIUpdate()
@@ -187,7 +189,7 @@ class MidnightAI : public MoonScriptBossAI
 					else MoveTo(attumen);
 				}
 			}
-			MoonScriptBossAI::AIUpdate();
+			ParentClass::AIUpdate();
 		}
 };
 
@@ -203,7 +205,7 @@ class MidnightAI : public MoonScriptBossAI
 class MoroesAI : public MoonScriptBossAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(MoroesAI)
+		MOONSCRIPT_FACTORY_FUNCTION(MoroesAI, MoonScriptBossAI);
 		MoroesAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
 		{
 			//Initialize timers
@@ -232,13 +234,13 @@ class MoroesAI : public MoonScriptBossAI
 		{
 			mEnrage->mEnabled = true;
 			mVanishTimer = AddTimer(35000);	//First vanish after 35sec
-			MoonScriptBossAI::OnCombatStart(pTarget);
+			ParentClass::OnCombatStart(pTarget);
 		}
 
 		void OnDied(Unit* pKiller)
 		{
 			RemoveAuraOnPlayers(MOROES_GARROTE);
-			MoonScriptBossAI::OnDied(pKiller);
+			ParentClass::OnDied(pKiller);
 		}
 
 		void AIUpdate()
@@ -266,7 +268,7 @@ class MoroesAI : public MoonScriptBossAI
 					RemoveTimer(mGarroteTimer);
 				}
 			}
-			MoonScriptBossAI::AIUpdate();
+			ParentClass::AIUpdate();
 		}
 
 		SpellDesc*	mVanish;
@@ -286,7 +288,7 @@ class MoroesAI : public MoonScriptBossAI
 class MaidenOfVirtueAI : public MoonScriptCreatureAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(MaidenOfVirtueAI)
+		MOONSCRIPT_FACTORY_FUNCTION(MaidenOfVirtueAI, MoonScriptCreatureAI);
 		MaidenOfVirtueAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			//Spells
@@ -308,7 +310,7 @@ class MaidenOfVirtueAI : public MoonScriptCreatureAI
 		void OnCombatStart(Unit* pTarget)
 		{
 			mRepentance->TriggerCooldown();	//No repentance at the beginning of the fight
-			MoonScriptCreatureAI::OnCombatStart(pTarget);
+			ParentClass::OnCombatStart(pTarget);
 		}
 
 		SpellDesc* mRepentance;
@@ -1339,7 +1341,7 @@ class CuratorAI : public CreatureAIScript
 class AstralFlareAI : public MoonScriptCreatureAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(AstralFlareAI)
+		MOONSCRIPT_FACTORY_FUNCTION(AstralFlareAI, MoonScriptCreatureAI);
 		AstralFlareAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			AddSpell(ASTRAL_FLARE_PASSIVE, Target_Self, 100, 0, 3);
@@ -2718,7 +2720,7 @@ AXETOSS2? - 9317
 class MalchezaarAI : public MoonScriptCreatureAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(MalchezaarAI);
+		MOONSCRIPT_FACTORY_FUNCTION(MalchezaarAI, MoonScriptCreatureAI);
 		bool m_spellcheck[9];
 		SP_AI_Spell spells[9];
 
@@ -3218,7 +3220,7 @@ class MalchezaarAI : public MoonScriptCreatureAI
 class NetherInfernalAI : public MoonScriptCreatureAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(NetherInfernalAI)
+		MOONSCRIPT_FACTORY_FUNCTION(NetherInfernalAI, MoonScriptCreatureAI);
 		NetherInfernalAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature) {};
 
 		void OnLoad()
@@ -3235,6 +3237,7 @@ class NetherInfernalAI : public MoonScriptCreatureAI
 		void AIUpdate()
 		{
 			_unit->CastSpell(_unit, dbcSpell.LookupEntry(HELLFIRE), true);
+			ParentClass::AIUpdate();
 		}
 };
 

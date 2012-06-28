@@ -76,7 +76,7 @@ enum eWardenUnits
 class ZerekethAI : public MoonScriptCreatureAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(ZerekethAI)
+		MOONSCRIPT_FACTORY_FUNCTION(ZerekethAI, MoonScriptCreatureAI);
 		ZerekethAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			SpeechTimer = (40+rand()%11) * 1000;
@@ -107,7 +107,7 @@ class ZerekethAI : public MoonScriptCreatureAI
 			}
 			else 
 				SpeechTimer -= mAIUpdateFrequency;
-			MoonScriptCreatureAI::AIUpdate();
+			ParentClass::AIUpdate();
 		}
 
 	protected:
@@ -120,7 +120,7 @@ class ZerekethAI : public MoonScriptCreatureAI
 class VoidZoneARC : public MoonScriptCreatureAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(VoidZoneARC)
+		MOONSCRIPT_FACTORY_FUNCTION(VoidZoneARC, MoonScriptCreatureAI);
 		VoidZoneARC(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			_unit->Unroot();
@@ -132,7 +132,7 @@ class VoidZoneARC : public MoonScriptCreatureAI
 		{
 			_unit->CastSpell(_unit, dbcSpell.LookupEntry(CONSUMPTION), true);
 			RemoveAIUpdateEvent();
-			MoonScriptCreatureAI::AIUpdate();
+			ParentClass::AIUpdate();
 		}
 };
 
@@ -145,7 +145,7 @@ class VoidZoneARC : public MoonScriptCreatureAI
 class DalliahTheDoomsayerAI : public MoonScriptCreatureAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(DalliahTheDoomsayerAI)
+		MOONSCRIPT_FACTORY_FUNCTION(DalliahTheDoomsayerAI, MoonScriptCreatureAI);
 		DalliahTheDoomsayerAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			AddSpell(GIFT_OF_THE_DOOMSAYER, Target_Current, 8.0f, 0.0f, -1);
@@ -177,7 +177,7 @@ class DalliahTheDoomsayerAI : public MoonScriptCreatureAI
 class WrathScryerSoccothratesAI : public MoonScriptCreatureAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(WrathScryerSoccothratesAI)
+		MOONSCRIPT_FACTORY_FUNCTION(WrathScryerSoccothratesAI, MoonScriptCreatureAI);
 		WrathScryerSoccothratesAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			AddEmote(Event_OnCombatStart, "At last, a target for my frustrations!", Text_Yell, 11238);
@@ -209,7 +209,7 @@ class WrathScryerSoccothratesAI : public MoonScriptCreatureAI
 class HarbringerSkyrissAI : public MoonScriptCreatureAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(HarbringerSkyrissAI)
+		MOONSCRIPT_FACTORY_FUNCTION(HarbringerSkyrissAI, MoonScriptCreatureAI);
 		HarbringerSkyrissAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			AddEmote(Event_OnCombatStart, "Bear witness to the agent of your demise!", Text_Yell, 11123);
@@ -232,6 +232,7 @@ class HarbringerSkyrissAI : public MoonScriptCreatureAI
 		void OnCombatStop(Unit* pUnit)
 		{
 			IllusionCount = 0;
+			ParentClass::OnCombatStart(pUnit);
 		}
 
 		void AIUpdate()
@@ -248,6 +249,7 @@ class HarbringerSkyrissAI : public MoonScriptCreatureAI
 				_unit->PlaySoundToSet(11131);
 				IllusionCount++;
 			}
+			ParentClass::AIUpdate();
 		}
 
 	private:
@@ -268,7 +270,7 @@ enum eWardenSpells
 class WardenMellicharAI : public MoonScriptBossAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(WardenMellicharAI)
+		MOONSCRIPT_FACTORY_FUNCTION(WardenMellicharAI, MoonScriptBossAI);
 		WardenMellicharAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
 		{
 			SetCanMove(false);
@@ -297,7 +299,7 @@ class WardenMellicharAI : public MoonScriptBossAI
 			if(mInstance)
 				mInstance->SetInstanceData(Data_UnspecifiedType, WARDEN_MELLICHAR, 0);
 
-			MoonScriptBossAI::OnCombatStop(mTarget);
+			ParentClass::OnCombatStop(mTarget);
 		}
 
 		void AIUpdate()
@@ -368,6 +370,7 @@ class WardenMellicharAI : public MoonScriptBossAI
 				case 5: Emote("Yes, O great one, right away!", Text_Yell, 11228); break;	//need correction
 			}
 			_unit->CastSpell(_unit, dbcSpell.LookupEntryForced(SPELL_TARGET_OMEGA), true);
+			ParentClass::AIUpdate();
 		}
 
 	protected:

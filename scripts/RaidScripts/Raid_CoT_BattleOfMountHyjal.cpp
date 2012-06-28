@@ -186,7 +186,7 @@ class ThrallGS : public GossipScript
 class RageWinterchillAI : public MoonScriptCreatureAI
 {
 public:
-	ADD_CREATURE_FACTORY_FUNCTION(RageWinterchillAI)
+	MOONSCRIPT_FACTORY_FUNCTION(RageWinterchillAI, MoonScriptCreatureAI);
 	RageWinterchillAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 	{
 		AddEmote(Event_OnCombatStart, "The Legion's final conquest has begun! Once again the subjugation of this world is within our grasp. Let none survive!", Text_Yell, 11022);
@@ -217,7 +217,7 @@ public:
 class AnetheronAI : public MoonScriptBossAI
 {
 public:
-	ADD_CREATURE_FACTORY_FUNCTION(AnetheronAI)
+	MOONSCRIPT_FACTORY_FUNCTION(AnetheronAI, MoonScriptBossAI);
 	AnetheronAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
 	{
 		AddEmote(Event_OnCombatStart, "You are defenders of a doomed world. Flee here and perhaps you will prolong your pathetic lives!", Text_Yell, 10977);
@@ -247,7 +247,7 @@ public:
 class KazrogalAI : public MoonScriptCreatureAI
 {
 public:
-	ADD_CREATURE_FACTORY_FUNCTION(KazrogalAI)
+	MOONSCRIPT_FACTORY_FUNCTION(KazrogalAI, MoonScriptCreatureAI);
 	KazrogalAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 	{
 		AddEmote(Event_OnCombatStart, "Cry for mercy! Your meaningless lives will soon be forfeit.", Text_Yell, 11015);
@@ -287,7 +287,7 @@ public:
 			if(MarkDeto == 3)
 				MarkDeto = 0;
 		}
-		MoonScriptCreatureAI::AIUpdate();
+		ParentClass::AIUpdate();
 	}
 
 protected:
@@ -307,7 +307,7 @@ protected:
 class AzgalorAI : public MoonScriptCreatureAI
 {
 public:
-	ADD_CREATURE_FACTORY_FUNCTION(AzgalorAI)
+	MOONSCRIPT_FACTORY_FUNCTION(AzgalorAI, MoonScriptCreatureAI);
 	AzgalorAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 	{
 		AddEmote(Event_OnCombatStart, "Abandon all hope! The legion has returned to finish what was begun so many years ago. This time there will be no escape!", Text_Yell, 10999);

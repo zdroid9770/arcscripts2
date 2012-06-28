@@ -139,14 +139,14 @@ protected:
 
 class RhahkZorAI : public MoonScriptCreatureAI
 {
-public:
-	ADD_CREATURE_FACTORY_FUNCTION(RhahkZorAI)
-	RhahkZorAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
-	{
-		// Rhahk'Zor Slam
-		AddSpell(6304, Target_Current, 8, 0, 3);
-		AddEmote(Event_OnCombatStart, "Van Cleef pay big for your heads!", Text_Yell, 5774);
-	}
+	public:
+		MOONSCRIPT_FACTORY_FUNCTION(RhahkZorAI, MoonScriptCreatureAI);
+		RhahkZorAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
+		{
+			// Rhahk'Zor Slam
+			AddSpell(6304, Target_Current, 8, 0, 3);
+			AddEmote(Event_OnCombatStart, "Van Cleef pay big for your heads!", Text_Yell, 5774);
+		}
 };
 
 enum MrSmiteSpells
@@ -158,179 +158,179 @@ enum MrSmiteSpells
 
 class MrSmiteAI : public MoonScriptBossAI
 {
-public:
-	ADD_CREATURE_FACTORY_FUNCTION(MrSmiteAI)
-	MrSmiteAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
-	{
-		AddSpell(SMITE_SLAM, Target_Current, 25, 0.0f, 15, 0.0f, 8.0f, true);
-		mStomp = AddSpell(SMITE_STOMP, Target_Self, 0, 0, 0);
-		mWaitAtChest = INVALIDATE_TIMER;
-		SetWieldWeapon(true);
-	}
-
-	void OnCombatStop(Unit* pTarget)
-	{
-		if(GetPhase() == 4)
-			RemoveAura(SMITES_HAMMER);
-
-		if(!IsAlive())
-			SetWieldWeapon(false);
-
-		SetPhase(1);
-		SwitchWeapons();
-		RemoveTimer(mWaitAtChest);
-		MoonScriptBossAI::OnCombatStop(pTarget);
-	}
-
-	void AIUpdate()
-	{
-		if(GetHealthPercent() <= 66 && GetPhase() == 1)
+	public:
+		MOONSCRIPT_FACTORY_FUNCTION(MrSmiteAI, MoonScriptBossAI);
+		MrSmiteAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
 		{
-			Emote("You landlubbers are tougher than I thought. I'll have to improvise!", Text_Yell, 5778);
-			SetPhase(2, mStomp);
-		}
-		else if(GetHealthPercent() <= 33 && GetPhase() == 3)
-		{
-			Emote("D'ah! Now you're making me angry!", Text_Yell, 5779);
-			SetPhase(4, mStomp);
+			AddSpell(SMITE_SLAM, Target_Current, 25, 0.0f, 15, 0.0f, 8.0f, true);
+			mStomp = AddSpell(SMITE_STOMP, Target_Self, 0, 0, 0);
+			mWaitAtChest = INVALIDATE_TIMER;
+			SetWieldWeapon(true);
 		}
 
-		if(GetPhase() == 2 || GetPhase() == 4)
+		void OnCombatStop(Unit* pTarget)
 		{
-			if(NearChest())
-				SwitchWeapons();
-			else if(_unit->GetAIInterface()->getAIState() != STATE_SCRIPTMOVE)
-				MoveToChest();
+			if(GetPhase() == 4)
+				RemoveAura(SMITES_HAMMER);
+
+			if(!IsAlive())
+				SetWieldWeapon(false);
+
+			SetPhase(1);
+			SwitchWeapons();
+			RemoveTimer(mWaitAtChest);
+			ParentClass::OnCombatStop(pTarget);
 		}
 
-		if(IsTimerFinished(mWaitAtChest))
-			MoveToPlayer();
-
-		MoonScriptBossAI::AIUpdate();
-	}
-
-	void MoveToChest()
-	{
-		if(GetCanEnterCombat())
-			_unit->GetAIInterface()->SetAllowedToEnterCombat(false);
-
-		StopMovement();
-		_unit->GetAIInterface()->SetAIState(STATE_SCRIPTMOVE);
-		MoveTo(1.100060f, -780.026367f, 9.811194f);
-	}
-
-	void MoveToPlayer()
-	{
-		_unit->GetAIInterface()->SetAllowedToEnterCombat(true);
-		_unit->GetAIInterface()->SetAIState(STATE_SCRIPTIDLE);
-	}
-
-	bool NearChest()
-	{
-		if(_unit->GetPositionX() == 1.100060f && _unit->GetPositionY() == -780.026367f)
-			return true;
-		else if(_unit->GetAIInterface()->getAIState() != STATE_SCRIPTMOVE)
+		void AIUpdate()
 		{
-			// Too small distance - let's prevent from blocking
-			float XDiff, YDiff;
-			XDiff = _unit->GetPositionX() - 1.100060f;
-			YDiff = _unit->GetPositionY() + 780.026367f;
-			float Distance = static_cast< float >(sqrt(XDiff * XDiff + YDiff * YDiff));
-			if(Distance <= 5.0f)
+			if(GetHealthPercent() <= 66 && GetPhase() == 1)
+			{
+				Emote("You landlubbers are tougher than I thought. I'll have to improvise!", Text_Yell, 5778);
+				SetPhase(2, mStomp);
+			}
+			else if(GetHealthPercent() <= 33 && GetPhase() == 3)
+			{
+				Emote("D'ah! Now you're making me angry!", Text_Yell, 5779);
+				SetPhase(4, mStomp);
+			}
+
+			if(GetPhase() == 2 || GetPhase() == 4)
+			{
+				if(NearChest())
+					SwitchWeapons();
+				else if(_unit->GetAIInterface()->getAIState() != STATE_SCRIPTMOVE)
+					MoveToChest();
+			}
+
+			if(IsTimerFinished(mWaitAtChest))
+				MoveToPlayer();
+
+			ParentClass::AIUpdate();
+		}
+
+		void MoveToChest()
+		{
+			if(GetCanEnterCombat())
+				_unit->GetAIInterface()->SetAllowedToEnterCombat(false);
+
+			StopMovement();
+			_unit->GetAIInterface()->SetAIState(STATE_SCRIPTMOVE);
+			MoveTo(1.100060f, -780.026367f, 9.811194f);
+		}
+
+		void MoveToPlayer()
+		{
+			_unit->GetAIInterface()->SetAllowedToEnterCombat(true);
+			_unit->GetAIInterface()->SetAIState(STATE_SCRIPTIDLE);
+		}
+
+		bool NearChest()
+		{
+			if(_unit->GetPositionX() == 1.100060f && _unit->GetPositionY() == -780.026367f)
 				return true;
+			else if(_unit->GetAIInterface()->getAIState() != STATE_SCRIPTMOVE)
+			{
+				// Too small distance - let's prevent from blocking
+				float XDiff, YDiff;
+				XDiff = _unit->GetPositionX() - 1.100060f;
+				YDiff = _unit->GetPositionY() + 780.026367f;
+				float Distance = static_cast< float >(sqrt(XDiff * XDiff + YDiff * YDiff));
+				if(Distance <= 5.0f)
+					return true;
+			}
+
+			return false;
 		}
 
-		return false;
-	}
-
-	void SwitchWeapons()
-	{
-		// CREDITS to Skyboat on ascentemu.com/forums  he had some of this info on one of his releases
-		switch(GetPhase())
+		void SwitchWeapons()
 		{
-			case 1: // Phase 1 (Default)
+			// CREDITS to Skyboat on ascentemu.com/forums  he had some of this info on one of his releases
+			switch(GetPhase())
 			{
-				SetDisplayWeaponIds(5192, 0);
-				_unit->SetBaseAttackTime(MELEE, _unit->GetBaseAttackTime(MELEE));	// 1483 is taken from NCDB creature_proto
-			}break;
-			case 2: // Phase 2
-			{
-				SetDisplayWeaponIds(5196, 5196);
-				_unit->SetBaseAttackTime(MELEE, _unit->GetBaseAttackTime(MELEE) / 2);
-			}break;
-			case 4: // Phase 4
-			{// Is base attack time change needed if we use aura ?
-				SetDisplayWeaponIds(7230, 0);
-				_unit->SetBaseAttackTime(MELEE, _unit->GetBaseAttackTime(MELEE) * 2);
-				ApplyAura(SMITES_HAMMER);
-			}break;
+				case 1: // Phase 1 (Default)
+				{
+					SetDisplayWeaponIds(5192, 0);
+					_unit->SetBaseAttackTime(MELEE, _unit->GetBaseAttackTime(MELEE));	// 1483 is taken from NCDB creature_proto
+				}break;
+				case 2: // Phase 2
+				{
+					SetDisplayWeaponIds(5196, 5196);
+					_unit->SetBaseAttackTime(MELEE, _unit->GetBaseAttackTime(MELEE) / 2);
+				}break;
+				case 4: // Phase 4
+				{// Is base attack time change needed if we use aura ?
+					SetDisplayWeaponIds(7230, 0);
+					_unit->SetBaseAttackTime(MELEE, _unit->GetBaseAttackTime(MELEE) * 2);
+					ApplyAura(SMITES_HAMMER);
+				}break;
+			}
+
+			// Wait at the chest for 4.5seconds -- Still needs work
+			_unit->setAttackTimer(4500, false);
+			mWaitAtChest = AddTimer(4500);
+			SetPhase(GetPhase() + 1);
 		}
 
-		// Wait at the chest for 4.5seconds -- Still needs work
-		_unit->setAttackTimer(4500, false);
-		mWaitAtChest = AddTimer(4500);
-		SetPhase(GetPhase() + 1);
-	}
-
-protected:
-	SpellDesc*	mStomp;
-	int		mWaitAtChest;
+	protected:
+		SpellDesc*	mStomp;
+		int		mWaitAtChest;
 };
 
 // VanCleef
 class VanCleefAI : public MoonScriptBossAI
 {
-public:
-	ADD_CREATURE_FACTORY_FUNCTION(VanCleefAI)
-	VanCleefAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
-	{
-		AddEmote(Event_OnCombatStart, "None may challenge the brotherhood.", Text_Yell, 5780);
-		AddEmote(Event_OnDied, "The Brotherhood will prevail!", Text_Yell, 5784);
-		AddSpell(3391, Target_Self, 25, 0, 0);	//Thrash (Gives the caster 2 extra attacks.)
-	}
-
-	void OnTargetDied(Unit* pTarget)
-	{
-		char msg[200];
-		if(pTarget->IsPlayer())
-			sprintf(msg, "And stay down, %s.", TO_PLAYER(pTarget)->GetName());
-		else if(pTarget->GetTypeFromGUID() == HIGHGUID_TYPE_PET)
-			sprintf(msg, "And stay down, %s.", TO_PET(pTarget)->GetName().c_str());
-
-		Emote(msg, Text_Yell, 5781);
-		MoonScriptBossAI::OnTargetDied(pTarget);
-	}
-
-	void AIUpdate()
-	{
-		if(GetHealthPercent() <= 75 && GetPhase() == 1)
+	public:
+		MOONSCRIPT_FACTORY_FUNCTION(VanCleefAI, MoonScriptBossAI);
+		VanCleefAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
 		{
-			Emote("Lap dogs, all of you.", Text_Yell, 5782);
-			SetPhase(2);
+			AddEmote(Event_OnCombatStart, "None may challenge the brotherhood.", Text_Yell, 5780);
+			AddEmote(Event_OnDied, "The Brotherhood will prevail!", Text_Yell, 5784);
+			AddSpell(3391, Target_Self, 25, 0, 0);	//Thrash (Gives the caster 2 extra attacks.)
 		}
-		else if(GetHealthPercent() <= 50 && GetPhase() == 2)
+
+		void OnTargetDied(Unit* pTarget)
 		{
-			Emote("Fools! Our cause is righteous.", Text_Yell, 5783);
-			// Defias Blackguard x 2
-			for(int x = 0; x < 2; x++)
+			char msg[200];
+			if(pTarget->IsPlayer())
+				sprintf(msg, "And stay down, %s.", TO_PLAYER(pTarget)->GetName());
+			else if(pTarget->GetTypeFromGUID() == HIGHGUID_TYPE_PET)
+				sprintf(msg, "And stay down, %s.", TO_PET(pTarget)->GetName().c_str());
+
+			Emote(msg, Text_Yell, 5781);
+			MoonScriptBossAI::OnTargetDied(pTarget);
+		}
+
+		void AIUpdate()
+		{
+			if(GetHealthPercent() <= 75 && GetPhase() == 1)
 			{
-				MoonScriptCreatureAI* Guard = SpawnCreature(636);
-				if( Guard != NULL ){
-					Guard->SetDespawnWhenInactive(true);
-					Guard->GetUnit()->m_noRespawn = true;
-				}
+				Emote("Lap dogs, all of you.", Text_Yell, 5782);
+				SetPhase(2);
 			}
+			else if(GetHealthPercent() <= 50 && GetPhase() == 2)
+			{
+				Emote("Fools! Our cause is righteous.", Text_Yell, 5783);
+				// Defias Blackguard x 2
+				for(int x = 0; x < 2; x++)
+				{
+					MoonScriptCreatureAI* Guard = SpawnCreature(636);
+					if( Guard != NULL ){
+						Guard->SetDespawnWhenInactive(true);
+						Guard->GetUnit()->m_noRespawn = true;
+					}
+				}
 
-			SetPhase(3);
+				SetPhase(3);
 
+			}
+			else if(GetHealthPercent() <= 25 && GetPhase() == 3)
+			{
+				Emote("The brotherhood shall remain.", Text_Yell, 5784);
+				SetPhase(4);
+			}
+			ParentClass::AIUpdate();
 		}
-		else if(GetHealthPercent() <= 25 && GetPhase() == 3)
-		{
-			Emote("The brotherhood shall remain.", Text_Yell, 5784);
-			SetPhase(4);
-		}
-		MoonScriptBossAI::AIUpdate();
-	}
 };
 
 void SetupDeadmines(ScriptMgr* mgr)

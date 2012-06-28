@@ -21,13 +21,13 @@
 class RottedOneAI : public MoonScriptCreatureAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(RottedOneAI);
+		MOONSCRIPT_FACTORY_FUNCTION(RottedOneAI, MoonScriptCreatureAI);
 		RottedOneAI(Creature* c) : MoonScriptCreatureAI(c){}
 
 		void OnDied(Unit *mKiller)
 		{
 			_unit->CastSpell(_unit, 3428, true);
-			MoonScriptCreatureAI::OnDied(mKiller);
+			ParentClass::OnDied(mKiller);
 		}
 };
 

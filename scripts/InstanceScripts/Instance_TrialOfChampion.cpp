@@ -26,7 +26,7 @@ ISSUES: Need to have a check if alliance or horde player than spawn the correct 
 class BrightStarAI : public MoonScriptCreatureAI
 {
 public:
-	ADD_CREATURE_FACTORY_FUNCTION(BrightStarAI)
+	MOONSCRIPT_FACTORY_FUNCTION(BrightStarAI, MoonScriptCreatureAI);
 	BrightStarAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 	{
 	}
@@ -100,7 +100,7 @@ enum BlackKnightData{
 class BlackKnightAI : public MoonScriptBossAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(BlackKnightAI)
+		MOONSCRIPT_FACTORY_FUNCTION(BlackKnightAI, MoonScriptBossAI);
 		BlackKnightAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
 		{
 			AddPhaseSpell(1, AddSpell(SPELL_ICYTOUCH, Target_Current, 30, 0, 0));
@@ -121,6 +121,7 @@ class BlackKnightAI : public MoonScriptBossAI
 		void OnLoad()
 		{
 			SetDisplayWeaponIds(40343, 0);
+			ParentClass::OnLoad();
 		}
 
 		void AIUpdate()
@@ -142,7 +143,7 @@ class BlackKnightAI : public MoonScriptBossAI
 				Emote("I have no need for bones to best you!", Text_Yell, 0);// need sound
 				SetPhase(3);
 			}
-			MoonScriptBossAI::AIUpdate();
+			ParentClass::AIUpdate();
 		}
 private:
 	SpellDesc * Army;
@@ -158,7 +159,7 @@ enum PUREData{
 class PureAI : public MoonScriptBossAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(PureAI)
+		MOONSCRIPT_FACTORY_FUNCTION(PureAI, MoonScriptBossAI);
 		PureAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
 		{
 			AddPhaseSpell(1, AddSpell(SPELL_HOJ, Target_Current, 30, 0, 8));
@@ -173,8 +174,9 @@ class PureAI : public MoonScriptBossAI
 		void OnLoad()
 		{
 			Emote("Are you up to the challenge? I will not hold back.", Text_Say, 16134);
-				// Weapon & Shield
-				SetDisplayWeaponIds(40395, 30882);
+			// Weapon & Shield
+			SetDisplayWeaponIds(40395, 30882);
+			ParentClass::OnLoad();
 		}
 
 		void AIUpdate()
@@ -190,7 +192,7 @@ class PureAI : public MoonScriptBossAI
 				_unit->Despawn(10000, 0);
 				SetPhase(4);
 			}
-			MoonScriptBossAI::AIUpdate();
+			ParentClass::AIUpdate();
 		}
 };
 
@@ -207,7 +209,7 @@ enum PALETRESSData{
 class PaletressAI : public MoonScriptBossAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(PaletressAI)
+		MOONSCRIPT_FACTORY_FUNCTION(PaletressAI, MoonScriptBossAI);
 		PaletressAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
 		{
 			AddSpell(SPELL_HOLYSMITE, Target_RandomPlayer, 60, 2, 0);
@@ -223,6 +225,7 @@ class PaletressAI : public MoonScriptBossAI
 		void OnLoad()
 		{
 			SetDisplayWeaponIds(812, 0);// Isn't the right staff but it will for now can't find her real staff
+			ParentClass::OnLoad();
 		}
 
 		void AIUpdate()
@@ -247,7 +250,7 @@ class PaletressAI : public MoonScriptBossAI
 				_unit->Despawn(10000, 0);
 				SetPhase(4);
 			}
-			MoonScriptBossAI::AIUpdate();
+			ParentClass::AIUpdate();
 		}
 
 	private:
@@ -257,7 +260,7 @@ class PaletressAI : public MoonScriptBossAI
 class MemoryAI : public MoonScriptBossAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(MemoryAI)
+		MOONSCRIPT_FACTORY_FUNCTION(MemoryAI, MoonScriptBossAI);
 		MemoryAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
 		{
 		}
@@ -271,7 +274,7 @@ class MemoryAI : public MoonScriptBossAI
 				pBoss->Emote("Even the darkest memory fades when confronted.", Text_Yell, 16249);
 				pBoss->SetPhase(3);
 			}
-			MoonScriptBossAI::OnDied(mKiller);
+			ParentClass::OnDied(mKiller);
 		}
 };
 

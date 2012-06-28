@@ -21,7 +21,7 @@
 class QuetzLunGate : public MoonScriptCreatureAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(QuetzLunGate)
+		MOONSCRIPT_FACTORY_FUNCTION(QuetzLunGate, MoonScriptCreatureAI);
 		QuetzLunGate(Creature* pCreature) : MoonScriptCreatureAI(pCreature){};
 
 		void OnLoad()
@@ -52,16 +52,17 @@ class QuetzLunGate : public MoonScriptCreatureAI
 
 				pPlayer->CastSpell(pPlayer, 51671, true);
 			}
+			ParentClass::OnLoad();
 		}
 };
 
 class QuetzLunWorshipper : public MoonScriptCreatureAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(QuetzLunWorshipper)
+		MOONSCRIPT_FACTORY_FUNCTION(QuetzLunWorshipper, MoonScriptCreatureAI);
 		QuetzLunWorshipper(Creature* pCreature) : MoonScriptCreatureAI(pCreature){};
 
-		void OnDeath(Unit * killer)
+		void OnDied(Unit * killer)
 		{
 			Player * p = TO_PLAYER(killer);
 
@@ -80,13 +81,14 @@ class QuetzLunWorshipper : public MoonScriptCreatureAI
 					q->UpdatePlayerFields();
 				}
 			}
+			ParentClass::OnDied(killer);
 		}
 };
 
 class TheLeaders : public MoonScriptCreatureAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(TheLeaders)
+		MOONSCRIPT_FACTORY_FUNCTION(TheLeaders, MoonScriptCreatureAI);
 		TheLeaders(Creature* pCreature) : MoonScriptCreatureAI(pCreature){};
 
 		void OnDied(Unit * killer)
@@ -133,13 +135,14 @@ class TheLeaders : public MoonScriptCreatureAI
 					case 193770: SpawnCreature(28494, 5552.57f, -3465.25f, 350.33f, 0.78f); break; // spawn Kutube'sa
 				}
 			}
+			ParentClass::OnDied(killer);
 		}
 };
 
 class LeadersSpawnChest : public MoonScriptCreatureAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(LeadersSpawnChest)
+		MOONSCRIPT_FACTORY_FUNCTION(LeadersSpawnChest, MoonScriptCreatureAI);
 		LeadersSpawnChest(Creature* pCreature) : MoonScriptCreatureAI(pCreature){};
 
 		void OnDied(Unit * killer)
@@ -166,6 +169,7 @@ class LeadersSpawnChest : public MoonScriptCreatureAI
 				break;
 			}
 			*/
+			ParentClass::OnDied(killer);
 		}
 };
 
@@ -207,7 +211,7 @@ public:
 class BloodroseQuestAI : public MoonScriptCreatureAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(BloodroseQuestAI)
+		MOONSCRIPT_FACTORY_FUNCTION(BloodroseQuestAI, MoonScriptCreatureAI);
 		BloodroseQuestAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			phase = 1;
@@ -291,6 +295,7 @@ class BloodroseQuestAI : public MoonScriptCreatureAI
 				phase = 1;
 				RemoveAIUpdateEvent();
 			}
+			ParentClass::AIUpdate();
 		}
 
 	private:
@@ -301,7 +306,7 @@ class BloodroseQuestAI : public MoonScriptCreatureAI
 class DecaingGhoulQuestAI : public MoonScriptCreatureAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(DecaingGhoulQuestAI)
+		MOONSCRIPT_FACTORY_FUNCTION(DecaingGhoulQuestAI, MoonScriptCreatureAI);
 		DecaingGhoulQuestAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			running = false;
@@ -311,6 +316,7 @@ class DecaingGhoulQuestAI : public MoonScriptCreatureAI
 		{
 			// we must do it this way :/
 			RegisterAIUpdateEvent(1000);
+			ParentClass::OnLoad();
 		}
 
 		void AIUpdate()
@@ -375,6 +381,7 @@ class DecaingGhoulQuestAI : public MoonScriptCreatureAI
 			SetCanEnterCombat(false);
 			// move to bowl destination
 			MoveTo(x,y,z);
+			ParentClass::AIUpdate();
 		}
 
 		void Return()
@@ -443,7 +450,7 @@ bool SummonStefan(uint32 i, Spell * pSpell)
 class StefanVaduQuestAI : public MoonScriptCreatureAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(StefanVaduQuestAI)
+		MOONSCRIPT_FACTORY_FUNCTION(StefanVaduQuestAI, MoonScriptCreatureAI);
 		StefanVaduQuestAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature){};
 
 		void OnLoad()
@@ -461,6 +468,7 @@ class StefanVaduQuestAI : public MoonScriptCreatureAI
 				RegisterAIUpdateEvent(1000);
 				timer = AddTimer(45000);
 			}
+			ParentClass::OnLoad();
 		}
 
 		void AIUpdate()
@@ -472,6 +480,7 @@ class StefanVaduQuestAI : public MoonScriptCreatureAI
 				RemoveAIUpdateEvent();
 				return;
 			}
+			ParentClass::AIUpdate();
 		}
 
 	private:
@@ -497,7 +506,7 @@ class HebJinDrum : public GameObjectAIScript
 class HebJinAI : public MoonScriptCreatureAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(HebJinAI)
+		MOONSCRIPT_FACTORY_FUNCTION(HebJinAI, MoonScriptCreatureAI);
 		HebJinAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			phase = 1;
@@ -515,11 +524,13 @@ class HebJinAI : public MoonScriptCreatureAI
 			timer = AddTimer(8000);
 			RegisterAIUpdateEvent(1000);
 			Emote("Who's that beatin' on my drum?", Text_Yell, 0);
+			ParentClass::OnLoad();
 		}
 
 		void OnCombatStop(Unit * pTarget)
 		{
 			phase = 1;
+			ParentClass::OnCombatStop(pTarget);
 		}
 
 		void AIUpdate()
@@ -545,6 +556,7 @@ class HebJinAI : public MoonScriptCreatureAI
 					pSummon->Despawn(MINUTE*6*SEC_IN_MS);
 				AggroNearestPlayer();
 			}
+			ParentClass::AIUpdate();
 		}
 
 	private:

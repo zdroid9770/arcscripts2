@@ -90,7 +90,7 @@ class DreadmaulRock : public GameObjectAIScript
 class BroodlingAI : public MoonScriptCreatureAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(BroodlingAI)
+		MOONSCRIPT_FACTORY_FUNCTION(BroodlingAI, MoonScriptCreatureAI);
 		BroodlingAI(Creature* c) : MoonScriptCreatureAI(c)
 		{
 			GotSpell = false;
@@ -100,12 +100,14 @@ class BroodlingAI : public MoonScriptCreatureAI
 		{
 			if(_unit->HasAura(16007) && !GotSpell)
 				GotSpell = true;
+			ParentClass::AIUpdate();
 		}
 
 		void OnDied(Unit *mKiller)
 		{
 			if(TO_PLAYER(mKiller)->HasQuest(4726) && GotSpell)
 				_unit->CastSpell(_unit, 16027, true);	//Create Broodling Essence
+			ParentClass::OnDied(mKiller);
 		}
 
 	private:

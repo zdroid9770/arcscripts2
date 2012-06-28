@@ -21,7 +21,7 @@
 class PeonSleepingAI : public MoonScriptCreatureAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(PeonSleepingAI)
+		MOONSCRIPT_FACTORY_FUNCTION(PeonSleepingAI, MoonScriptCreatureAI);
 		PeonSleepingAI(Creature *pCreature) : MoonScriptCreatureAI(pCreature) 
 		{
 			RegisterAIUpdateEvent(3000 + RandomUInt(180000));
@@ -31,7 +31,7 @@ class PeonSleepingAI : public MoonScriptCreatureAI
 		{
 			_unit->CastSpell(_unit, 17743, true);
 			RemoveAIUpdateEvent();
-			MoonScriptCreatureAI::AIUpdate();
+			ParentClass::AIUpdate();
 		}
 };
 

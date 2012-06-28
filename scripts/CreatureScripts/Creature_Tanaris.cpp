@@ -21,7 +21,7 @@
 class PirateTreasureTrigger : public MoonScriptCreatureAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(PirateTreasureTrigger)
+		MOONSCRIPT_FACTORY_FUNCTION(PirateTreasureTrigger, MoonScriptCreatureAI);
 		PirateTreasureTrigger(Creature *pCreature) : MoonScriptCreatureAI(pCreature) {}
 
 		void OnLoad()
@@ -31,6 +31,7 @@ class PirateTreasureTrigger : public MoonScriptCreatureAI
 			_unit->CastSpell(_unit, 11487, true); // Cast spell: "Summon Treasure Hunting Swashbuckler".
 			_unit->CastSpell(_unit, 11463, true); // Cast spell: "Summon Treasure Hunting Pirate".
 			_unit->CastSpell(_unit, 11463, true); // Cast spell: "Summon Treasure Hunting Pirate".
+			ParentClass::OnLoad();
 		}
 };
 

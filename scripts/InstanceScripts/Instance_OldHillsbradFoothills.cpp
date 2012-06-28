@@ -266,9 +266,8 @@ class BrazenGossip : public GossipScript
 class LieutenantDrakeAI : public MoonScriptCreatureAI
 {
 		OldHilsbradInstance* pInstance;
-
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(LieutenantDrakeAI)
+		MOONSCRIPT_FACTORY_FUNCTION(LieutenantDrakeAI, MoonScriptCreatureAI);
 		LieutenantDrakeAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			pInstance = dynamic_cast<OldHilsbradInstance*>(GetInstanceScript());
@@ -277,26 +276,28 @@ class LieutenantDrakeAI : public MoonScriptCreatureAI
 		void OnLoad()
 		{
 			Emote("I know what your doing and I won't let that happen!", Text_Yell, 0); // Need right text ID & sound
+			ParentClass::OnLoad();
 		}
 
 		void OnCombatStart(Unit* pTarget)
 		{
 			if(pInstance)
 				pInstance->SetData(OHF_PHASE_2, OHF_DATA_IN_PROGRESS);
-			MoonScriptCreatureAI::OnCombatStart(pTarget);
+			ParentClass::OnCombatStart(pTarget);
 		}
 
 		void OnCombatStop(Unit* pTarget)
 		{
 			if(pInstance)
 				pInstance->SetData(OHF_PHASE_2, OHF_DATA_PERFORMED);
+			ParentClass::OnCombatStop(pTarget);
 		}
 };
 
 class ThrallAI : public MoonScriptCreatureAI // this will be replaced with escortAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(ThrallAI)
+		MOONSCRIPT_FACTORY_FUNCTION(ThrallAI, MoonScriptCreatureAI);
 		ThrallAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			SetMoveType(Move_DontMoveWP);
@@ -317,12 +318,13 @@ class ThrallAI : public MoonScriptCreatureAI // this will be replaced with escor
 		void OnCombatStop(Unit* pTarget)
 		{
 			SetWaypointToMove(m_currentWp);
-			MoonScriptCreatureAI::OnCombatStop(pTarget);
+			ParentClass::OnCombatStop(pTarget);
 		}
 
 		void OnReachWP(uint32 iWaypointId, bool bForwards)
 		{
 			m_currentWp = iWaypointId;
+			ParentClass::OnReachWP(iWaypointId, bForwards);
 		}
 
 		uint32 m_currentWp;

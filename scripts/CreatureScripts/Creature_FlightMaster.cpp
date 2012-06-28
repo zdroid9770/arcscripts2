@@ -21,84 +21,84 @@
 class GryponMasters : public MoonScriptCreatureAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(GryponMasters)
+		MOONSCRIPT_FACTORY_FUNCTION(GryponMasters, MoonScriptCreatureAI);
 		GryponMasters(Creature *pCreature) : MoonScriptCreatureAI(pCreature) {}
 
 		void OnCombatStart(Unit *mTarget)
 		{
 			for(int i = 0; i < 2; ++i)
 				SpawnCreature(9526, _unit->GetPositionX()+RandomFloat(2.0f), _unit->GetPositionY()+RandomFloat(2.0f), _unit->GetPositionZ(), _unit->GetOrientation());
-			MoonScriptCreatureAI::OnCombatStart(mTarget);
+			ParentClass::OnCombatStart(mTarget);
 		}
 };
 
 class HippogryphMasters : public MoonScriptCreatureAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(HippogryphMasters)
+		MOONSCRIPT_FACTORY_FUNCTION(HippogryphMasters, MoonScriptCreatureAI);
 		HippogryphMasters(Creature *pCreature) : MoonScriptCreatureAI(pCreature) {}
 
 		void OnCombatStart(Unit *mTarget)
 		{
 			for(int i = 0; i < 2; ++i)
 				SpawnCreature(9527, _unit->GetPositionX()+RandomFloat(2.0f), _unit->GetPositionY()+RandomFloat(2.0f), _unit->GetPositionZ(), _unit->GetOrientation());
-			MoonScriptCreatureAI::OnCombatStart(mTarget);
+			ParentClass::OnCombatStart(mTarget);
 		}
 };
 
 class WyvernMasters : public MoonScriptCreatureAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(WyvernMasters)
+		MOONSCRIPT_FACTORY_FUNCTION(WyvernMasters, MoonScriptCreatureAI);
 		WyvernMasters(Creature *pCreature) : MoonScriptCreatureAI(pCreature) {}
 
 		void OnCombatStart(Unit *mTarget)
 		{
 			for(int i = 0; i < 2; ++i)
 				SpawnCreature(9527, _unit->GetPositionX()+RandomFloat(2.0f), _unit->GetPositionY()+RandomFloat(2.0f), _unit->GetPositionZ(), _unit->GetOrientation());
-			MoonScriptCreatureAI::OnCombatStart(mTarget);
+			ParentClass::OnCombatStart(mTarget);
 		}
 };
 
 class BatMasters : public MoonScriptCreatureAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(BatMasters)
+		MOONSCRIPT_FACTORY_FUNCTION(BatMasters, MoonScriptCreatureAI);
 		BatMasters(Creature *pCreature) : MoonScriptCreatureAI(pCreature) {}
 
 		void OnCombatStart(Unit *mTarget)
 		{
 			for(int i = 0; i < 2; ++i)
 				SpawnCreature(9521, _unit->GetPositionX()+RandomFloat(2.0f), _unit->GetPositionY()+RandomFloat(2.0f), _unit->GetPositionZ(), _unit->GetOrientation());
-			MoonScriptCreatureAI::OnCombatStart(mTarget);
+			ParentClass::OnCombatStart(mTarget);
 		}
 };
 
 class DragonhawkMasters : public MoonScriptCreatureAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(DragonhawkMasters)
+		MOONSCRIPT_FACTORY_FUNCTION(DragonhawkMasters, MoonScriptCreatureAI);
 		DragonhawkMasters(Creature *pCreature) : MoonScriptCreatureAI(pCreature) {}
 
 		void OnCombatStart(Unit *mTarget)
 		{
 			for(int i = 0; i < 2; ++i)
 				SpawnCreature(27946, _unit->GetPositionX()+RandomFloat(2.0f), _unit->GetPositionY()+RandomFloat(2.0f), _unit->GetPositionZ(), _unit->GetOrientation());
-			MoonScriptCreatureAI::OnCombatStart(mTarget);
+			ParentClass::OnCombatStart(mTarget);
 		}
 };
 
 class NeutralMasters : public MoonScriptCreatureAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(NeutralMasters)
+		MOONSCRIPT_FACTORY_FUNCTION(NeutralMasters, MoonScriptCreatureAI);
 		NeutralMasters(Creature *pCreature) : MoonScriptCreatureAI(pCreature) {}
 
 		void OnCombatStart(Unit *mTarget)
 		{
 			for(int i = 0; i < 2; ++i)
 				SpawnCreature(9526+i, _unit->GetPositionX()+RandomFloat(2.0f), _unit->GetPositionY()+RandomFloat(2.0f), _unit->GetPositionZ(), _unit->GetOrientation());
-			MoonScriptCreatureAI::OnCombatStart(mTarget);
+			ParentClass::OnCombatStart(mTarget);
 		}
 };
 

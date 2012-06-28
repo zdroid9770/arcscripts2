@@ -47,7 +47,7 @@ enum BronjahmData{
 class BronjahmAI : public MoonScriptBossAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(BronjahmAI)
+		MOONSCRIPT_FACTORY_FUNCTION(BronjahmAI, MoonScriptBossAI);
 		BronjahmAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
 		{
 			AddSpell(SPELL_MAGICBANE, Target_Current, 35, 0, 5);
@@ -65,7 +65,7 @@ class BronjahmAI : public MoonScriptBossAI
 		void OnCombatStart(Unit * pAttacker)
 		{
 			CorruptedSoulTimer = AddTimer(25+rand()%11);
-			MoonScriptBossAI::OnCombatStart(pAttacker);
+			ParentClass::OnCombatStart(pAttacker);
 		}
 
 		void AIUpdate()
@@ -92,7 +92,7 @@ class BronjahmAI : public MoonScriptBossAI
 				_unit->CastSpell(_unit, SPELL_TELEPORT, true);
 				SetPhase(2, SoulStorm);
 			}
-			MoonScriptBossAI::AIUpdate();
+			ParentClass::AIUpdate();
 		}
 
 	private:
@@ -103,7 +103,7 @@ class BronjahmAI : public MoonScriptBossAI
 class SoulFragmentAI : public MoonScriptCreatureAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(SoulFragmentAI)
+		MOONSCRIPT_FACTORY_FUNCTION(SoulFragmentAI, MoonScriptCreatureAI);
 		SoulFragmentAI(Creature* c) : MoonScriptCreatureAI(c){}
 
 		void OnLoad()
@@ -115,6 +115,7 @@ class SoulFragmentAI : public MoonScriptCreatureAI
 			}
 			else
 				Despawn();
+			ParentClass::OnLoad();
 		}
 
 		void AIUpdate()
@@ -127,7 +128,7 @@ class SoulFragmentAI : public MoonScriptCreatureAI
 					Despawn();
 				}
 			}
-			MoonScriptCreatureAI::AIUpdate();
+			ParentClass::AIUpdate();
 		}
 };
 
@@ -145,7 +146,7 @@ enum DevourerData{
 class DevourerAI : public MoonScriptBossAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(DevourerAI)
+		MOONSCRIPT_FACTORY_FUNCTION(DevourerAI, MoonScriptBossAI);
 		DevourerAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
 		{
 			AddSpell(SPELL_BLAST, Target_RandomPlayer, 45, 0, 3);
@@ -171,7 +172,7 @@ class DevourerAI : public MoonScriptBossAI
 				Emote("Stare into the abyss, and see your end!", Text_Yell, 16889);
 				SetPhase(3);
 			}
-			MoonScriptBossAI::AIUpdate();
+			ParentClass::AIUpdate();
 		}
 };
 

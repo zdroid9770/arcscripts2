@@ -62,7 +62,7 @@ class ThreatFromAboveQAI : public CreatureAIScript
 class TheInfestedProtectorsQAI : public MoonScriptCreatureAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(TheInfestedProtectorsQAI)
+		MOONSCRIPT_FACTORY_FUNCTION(TheInfestedProtectorsQAI, MoonScriptCreatureAI)
 		TheInfestedProtectorsQAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 		}
@@ -106,6 +106,7 @@ class TheInfestedProtectorsQAI : public MoonScriptCreatureAI
 					}
 				}
 			}
+			ParentClass::OnDied(mKiller);
 		}
 };
 

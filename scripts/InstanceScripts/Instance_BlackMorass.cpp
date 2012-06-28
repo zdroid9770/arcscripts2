@@ -29,7 +29,7 @@
 class ChronoLordDejaAI : public MoonScriptCreatureAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(ChronoLordDejaAI)
+		MOONSCRIPT_FACTORY_FUNCTION(ChronoLordDejaAI, MoonScriptCreatureAI);
 		ChronoLordDejaAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			Emote("Why do you aid the Magus? Just think of how many lives could be saved if the portal is never opened, if the resulting wars could be erased ...", Text_Yell, 10412);
@@ -58,7 +58,7 @@ class ChronoLordDejaAI : public MoonScriptCreatureAI
 class TemporusAI : public MoonScriptCreatureAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(TemporusAI)
+		MOONSCRIPT_FACTORY_FUNCTION(TemporusAI, MoonScriptCreatureAI);
 		TemporusAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			Emote("Why do you persist? Surely you can see the futility of it all. It is not too late! You may still leave with your lives ...", Text_Yell, 10442);
@@ -85,7 +85,7 @@ class TemporusAI : public MoonScriptCreatureAI
 class AeonusAI : public MoonScriptCreatureAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(AeonusAI)
+		MOONSCRIPT_FACTORY_FUNCTION(AeonusAI, MoonScriptCreatureAI);
 		AeonusAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			Emote("The time has come to shatter this clockwork universe forever! Let us no longer be slaves of the hourglass! I warn you: those who do not embrace the greater path shall become victims of its passing!", Text_Yell, 10400);

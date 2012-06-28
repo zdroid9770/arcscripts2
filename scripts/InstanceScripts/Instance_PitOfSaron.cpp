@@ -51,7 +51,7 @@ static Location JumpCords[]=
 class GarfrostAI : public MoonScriptBossAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(GarfrostAI)
+		MOONSCRIPT_FACTORY_FUNCTION(GarfrostAI, MoonScriptBossAI);
 		GarfrostAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
 		{
 			AddSpell(SPELL_THROWSARONITE, Target_RandomPlayerDestination, 20, 2, 15);
@@ -83,7 +83,7 @@ class GarfrostAI : public MoonScriptBossAI
 				SetPhase(GetPhase()+1);
 			}
 			_unit->CastSpell(_unit, SPELL_PERMAFROST, true);
-			MoonScriptBossAI::AIUpdate();
+			ParentClass::AIUpdate();
 		}
 };
 
@@ -102,7 +102,7 @@ enum TyrannusData{
 class TyrannusAI : public MoonScriptCreatureAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(TyrannusAI)
+		MOONSCRIPT_FACTORY_FUNCTION(TyrannusAI, MoonScriptCreatureAI);
 		TyrannusAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			AddSpell(SPELL_FORCESMASH, Target_Current, 55, 0, 13);

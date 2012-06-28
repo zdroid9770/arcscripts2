@@ -21,20 +21,20 @@
 class RottingCadaver : public MoonScriptCreatureAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(RottingCadaver)
+		MOONSCRIPT_FACTORY_FUNCTION(RottingCadaver, MoonScriptCreatureAI);
 		RottingCadaver(Creature *pCreature) : MoonScriptCreatureAI(pCreature) {}
 
 		void OnDied(Unit *mKiller)
 		{
 			_unit->CastSpell(_unit, dbcSpell.LookupEntry(17064), true); // Cast spell: "Summon Rotting Worms".
-			MoonScriptCreatureAI::OnDied(mKiller);
+			ParentClass::OnDied(mKiller);
 		}
 };
 
 class SummonOozeling : public MoonScriptCreatureAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(SummonOozeling)
+		MOONSCRIPT_FACTORY_FUNCTION(SummonOozeling, MoonScriptCreatureAI);
 		SummonOozeling(Creature *pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			AddSpell(12745, Target_RandomPlayer, 20, 3, -1);
@@ -43,7 +43,7 @@ class SummonOozeling : public MoonScriptCreatureAI
 		void OnDied(Unit *mKiller)
 		{
 			_unit->CastSpell(_unit, dbcSpell.LookupEntry(12018), true); // Cast spell: "Summon Oozeling".
-			MoonScriptCreatureAI::OnDied(mKiller);
+			ParentClass::OnDied(mKiller);
 		}
 };
 

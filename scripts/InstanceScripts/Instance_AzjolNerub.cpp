@@ -33,40 +33,40 @@
 
 class KrikthirAI : public MoonScriptCreatureAI
 {
-public:
-	ADD_CREATURE_FACTORY_FUNCTION(KrikthirAI)
-	KrikthirAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
-	{
-		AddEmote(Event_OnCombatStart, "This kingdom belongs to the Scourge! Only the dead may enter.", Text_Yell, 14075);
-		AddEmote(Event_OnTargetDied, "You were foolish to come.", Text_Yell, 14077);
-		AddEmote(Event_OnTargetDied, "As Anub'Arak commands!", Text_Yell, 14078);
-		AddEmote(Event_OnDied, "I should be grateful. But I long ago lost the capacity.", Text_Yell, 14087);
-
-		AddSpell(KRIKTHIR_CURSEOFFATIGUE, Target_Self, 100, 0, 10);
-		AddSpell(KRIKTHIR_MINDFLAY, Target_RandomPlayer, 100, 0, 7, 0, 30);
-
-		mEnraged = false;
-	}
-
-	void AIUpdate()
-	{
-		if(GetHealthPercent() <= 10 && !mEnraged)
+	public:
+		MOONSCRIPT_FACTORY_FUNCTION(KrikthirAI, MoonScriptCreatureAI);
+		KrikthirAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
-			ApplyAura(KRIKTHIR_ENRAGE);
-			mEnraged = true;
+			AddEmote(Event_OnCombatStart, "This kingdom belongs to the Scourge! Only the dead may enter.", Text_Yell, 14075);
+			AddEmote(Event_OnTargetDied, "You were foolish to come.", Text_Yell, 14077);
+			AddEmote(Event_OnTargetDied, "As Anub'Arak commands!", Text_Yell, 14078);
+			AddEmote(Event_OnDied, "I should be grateful. But I long ago lost the capacity.", Text_Yell, 14087);
+
+			AddSpell(KRIKTHIR_CURSEOFFATIGUE, Target_Self, 100, 0, 10);
+			AddSpell(KRIKTHIR_MINDFLAY, Target_RandomPlayer, 100, 0, 7, 0, 30);
+
+			mEnraged = false;
 		}
-		MoonScriptCreatureAI::AIUpdate();
-	}
 
-	void OnDied(Unit* pKiller)
-	{
-		if(GameObject* Doors = GetNearestGameObject(192395))
-			Doors->SetState(GAMEOBJECT_STATE_OPEN);
-		MoonScriptCreatureAI::OnDied(pKiller);
-	}
+		void AIUpdate()
+		{
+			if(GetHealthPercent() <= 10 && !mEnraged)
+			{
+				ApplyAura(KRIKTHIR_ENRAGE);
+				mEnraged = true;
+			}
+			ParentClass::AIUpdate();
+		}
 
-protected:
-	bool mEnraged;
+		void OnDied(Unit* pKiller)
+		{
+			if(GameObject* Doors = GetNearestGameObject(192395))
+				Doors->SetState(GAMEOBJECT_STATE_OPEN);
+			ParentClass::OnDied(pKiller);
+		}
+
+	protected:
+		bool mEnraged;
 };
 
 //boss Hadronox
@@ -78,22 +78,22 @@ protected:
 
 class HadronoxAI : public MoonScriptCreatureAI
 {
-public:
-	ADD_CREATURE_FACTORY_FUNCTION(HadronoxAI)
-	HadronoxAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
-	{
-		AddSpell(HADRONOX_WEBGRAB, Target_RandomPlayer, 22.0f, 0, 14);
-		AddSpell(HADRONOX_LEECHPOISON, Target_Self, 14.0f, 0, 25, 0, 20);
-		AddSpell(HADRONOX_ACIDCLOUD, Target_RandomPlayer, 18.0f, 0, 20, 0, 60);
-		AddSpell(HADRONOX_PIERCEARMOR, Target_ClosestPlayer, 20.0f, 0, 5);
-	}
+	public:
+		MOONSCRIPT_FACTORY_FUNCTION(HadronoxAI, MoonScriptCreatureAI);
+		HadronoxAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
+		{
+			AddSpell(HADRONOX_WEBGRAB, Target_RandomPlayer, 22.0f, 0, 14);
+			AddSpell(HADRONOX_LEECHPOISON, Target_Self, 14.0f, 0, 25, 0, 20);
+			AddSpell(HADRONOX_ACIDCLOUD, Target_RandomPlayer, 18.0f, 0, 20, 0, 60);
+			AddSpell(HADRONOX_PIERCEARMOR, Target_ClosestPlayer, 20.0f, 0, 5);
+		}
 
-	void OnTargetDied(Unit* pTarget)
-	{
-		if(pTarget!=NULL && pTarget->HasAura(HADRONOX_LEECHPOISON) && IsAlive())
-			_unit->SetHealthPct(_unit->GetHealthPct()+10.0f);
-		MoonScriptCreatureAI::OnTargetDied(pTarget);
-	}
+		void OnTargetDied(Unit* pTarget)
+		{
+			if(pTarget!=NULL && pTarget->HasAura(HADRONOX_LEECHPOISON) && IsAlive())
+				_unit->SetHealthPct(_unit->GetHealthPct()+10.0f);
+			ParentClass::OnTargetDied(pTarget);
+		}
 };
 
 void SetupAzjolNerub(ScriptMgr* mgr)

@@ -23,7 +23,7 @@
 class DruidFangAI : public MoonScriptCreatureAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(DruidFangAI)
+		MOONSCRIPT_FACTORY_FUNCTION(DruidFangAI, MoonScriptCreatureAI);
 		DruidFangAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			SerpentForm = AddSpell(8041, Target_Self, 0, 0, 0);
@@ -54,7 +54,7 @@ class DruidFangAI : public MoonScriptCreatureAI
 				CastSpellNowNoScheduling(HealingTouch);
 				HealingTouch->mEnabled = false;
 			}
-			MoonScriptCreatureAI::AIUpdate();
+			ParentClass::AIUpdate();
 		}
 
 	protected:
@@ -74,7 +74,7 @@ class DruidFangAI : public MoonScriptCreatureAI
 class LadyAnacondraAI : public MoonScriptCreatureAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(LadyAnacondraAI)
+		MOONSCRIPT_FACTORY_FUNCTION(LadyAnacondraAI, MoonScriptCreatureAI);
 		LadyAnacondraAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			AddEmote(Event_OnCombatStart, "None can stand against the Serpent Lords!", Text_Yell, 5786);
@@ -92,7 +92,7 @@ class LadyAnacondraAI : public MoonScriptCreatureAI
 class LordCobrahnAI : public MoonScriptCreatureAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(LordCobrahnAI)
+		MOONSCRIPT_FACTORY_FUNCTION(LordCobrahnAI, MoonScriptCreatureAI);
 		LordCobrahnAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			AddEmote(Event_OnCombatStart, "You will never wake the dreamer!", Text_Yell, 5785);
@@ -112,7 +112,7 @@ class LordCobrahnAI : public MoonScriptCreatureAI
 			}
 			else if(GetHealthPercent() <= 20 && SerpentForm->mEnabled == false && !GetUnit()->HasAura(7965))
 				LightningBolt->mEnabled = true;
-			MoonScriptCreatureAI::AIUpdate();
+			ParentClass::AIUpdate();
 		}
 
 	protected:
@@ -125,7 +125,7 @@ class LordCobrahnAI : public MoonScriptCreatureAI
 class LordPythasAI : public MoonScriptCreatureAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(LordPythasAI)
+		MOONSCRIPT_FACTORY_FUNCTION(LordPythasAI, MoonScriptCreatureAI);
 		LordPythasAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			AddEmote(Event_OnCombatStart, "The coils of death... Will crush you!", Text_Yell, 5787);
@@ -141,7 +141,7 @@ class LordPythasAI : public MoonScriptCreatureAI
 class LordSerpentisAI : public MoonScriptCreatureAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(LordSerpentisAI)
+		MOONSCRIPT_FACTORY_FUNCTION(LordSerpentisAI, MoonScriptCreatureAI);
 		LordSerpentisAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			AddEmote(Event_OnCombatStart, "I am the serpent king, i can do anything!", Text_Yell, 5788);
@@ -155,7 +155,7 @@ class LordSerpentisAI : public MoonScriptCreatureAI
 class SkumAI : public MoonScriptCreatureAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(SkumAI)
+		MOONSCRIPT_FACTORY_FUNCTION(SkumAI, MoonScriptCreatureAI);
 		SkumAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			AddSpell(6254, Target_Current, 50.0f, 1.8f, 0);	// Chained Bolt
@@ -172,7 +172,7 @@ class SkumAI : public MoonScriptCreatureAI
 				SetAllowSpell(false);
 				MoveTo(-262.829742f, -299.363159f, -68.293579f, 0.0f, true);
 			}
-			MoonScriptCreatureAI::AIUpdate();
+			ParentClass::AIUpdate();
 		}
 };
 
@@ -297,7 +297,7 @@ static Location Ectoplasm[]=
 class DofNaralexAI : public MoonScriptBossAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(DofNaralexAI)
+		MOONSCRIPT_FACTORY_FUNCTION(DofNaralexAI, MoonScriptBossAI)
 		DofNaralexAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
 		{
 			// --- Initialization ---
@@ -321,6 +321,7 @@ class DofNaralexAI : public MoonScriptBossAI
 				SetPhase(2, Awakening);
 				SpawnTimer = AddTimer(100000);
 			}
+			ParentClass::OnReachWP(iWaypointId, bForwards);
 		}
 
 		void AIUpdate()
@@ -370,7 +371,7 @@ class DofNaralexAI : public MoonScriptBossAI
 				}
 				SetPhase(6);
 			}
-			MoonScriptBossAI::AIUpdate();
+			ParentClass::AIUpdate();
 		}
 
 	protected:
@@ -383,7 +384,7 @@ class DofNaralexAI : public MoonScriptBossAI
 class Naralex : public MoonScriptCreatureAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(Naralex)
+		MOONSCRIPT_FACTORY_FUNCTION(Naralex, MoonScriptCreatureAI);
 		Naralex(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			_unit->SetUInt32Value(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);

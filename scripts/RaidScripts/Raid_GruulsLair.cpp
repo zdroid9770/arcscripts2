@@ -32,7 +32,7 @@ void SpellFunc_LairBrute_Charge(SpellDesc* pThis, MoonScriptCreatureAI* pCreatur
 class LairBruteAI : public MoonScriptCreatureAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(LairBruteAI)
+		MOONSCRIPT_FACTORY_FUNCTION(LairBruteAI, MoonScriptBossAI);
 		LairBruteAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			AddSpell(LAIR_BRUTE_CLEAVE, Target_Current, 20, 0, 15, 0, 7);
@@ -69,7 +69,7 @@ void SpellFunc_LairBrute_Charge(SpellDesc* pThis, MoonScriptCreatureAI* pCreatur
 class GronnPriestAI : public MoonScriptCreatureAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(GronnPriestAI)
+		MOONSCRIPT_FACTORY_FUNCTION(GronnPriestAI, MoonScriptCreatureAI);
 		GronnPriestAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			AddSpell(GRONN_PRIEST_PSYCHICSCREAM, Target_Self, 8, 0, 20);
@@ -95,7 +95,7 @@ uint32 Adds[4] = { 18832, 18834, 18836, 18835 };
 class HighKingMaulgarAI : public MoonScriptBossAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(HighKingMaulgarAI)
+		MOONSCRIPT_FACTORY_FUNCTION(HighKingMaulgarAI, MoonScriptBossAI);
 		HighKingMaulgarAI(Creature* pCreature) : MoonScriptBossAI(pCreature)
 		{
 			AddPhaseSpell(2, AddSpell(HIGH_KING_MAULGAR_BERSERKER_CHARGE, Target_RandomPlayer, 10, 0, 25, 0, 40));
@@ -137,20 +137,20 @@ class HighKingMaulgarAI : public MoonScriptBossAI
 				SetBehavior(Behavior_Spell);
 				SetCanMove(false);
 			}
-			MoonScriptBossAI::OnCombatStart(pTarget);
+			ParentClass::OnCombatStart(pTarget);
 		}
 
 		void OnCombatStop(Unit* pTarget)
 		{
 			SetCanEnterCombat(true);
-			MoonScriptBossAI::OnCombatStop(pTarget);
+			ParentClass::OnCombatStop(pTarget);
 		}
 
 		void OnDied(Unit* mKiller)
 		{
 			if(GameObject* pDoor = mKiller->GetMapMgr()->GetInterface()->GetGameObjectNearestCoords(95.26f, 251.836f, 0.47f, 183817))
 				pDoor->SetState(GAMEOBJECT_STATE_OPEN);
-			MoonScriptBossAI::OnDied(mKiller);
+			ParentClass::OnDied(mKiller);
 		}
 
 		void AIUpdate()
@@ -160,7 +160,7 @@ class HighKingMaulgarAI : public MoonScriptBossAI
 
 			if(GetPhase() == 1 && GetHealthPercent() <= 50)
 				SetPhase(2, mEnrage);
-			MoonScriptBossAI::AIUpdate();
+			ParentClass::AIUpdate();
 		}
 
 		void OnAddDied()
@@ -209,7 +209,7 @@ void SpellFunc_Maulgar_Enrage(SpellDesc* pThis, MoonScriptCreatureAI* pCreatureA
 class KigglerTheCrazedAI : public MoonScriptCreatureAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(KigglerTheCrazedAI)
+		MOONSCRIPT_FACTORY_FUNCTION(KigglerTheCrazedAI, MoonScriptCreatureAI)
 		KigglerTheCrazedAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			AddSpell(KIGGLER_THE_CRAZED_LIGHTNING_BOLT, Target_Current, 70, 2, 0, 0, 40);
@@ -225,7 +225,7 @@ class KigglerTheCrazedAI : public MoonScriptCreatureAI
 				SetBehavior(Behavior_Spell);
 				SetCanMove(false);
 			}
-			MoonScriptCreatureAI::OnCombatStart(pTarget);
+			ParentClass::OnCombatStart(pTarget);
 		}
 
 		void OnDied(Unit* mKiller)
@@ -236,7 +236,7 @@ class KigglerTheCrazedAI : public MoonScriptCreatureAI
 				HighKingMaulgarAI* pMaulgarAI = TO< HighKingMaulgarAI* >(pMaulgar->GetScript());
 				pMaulgarAI->OnAddDied();
 			}
-			MoonScriptCreatureAI::OnDied(mKiller);
+			ParentClass::OnDied(mKiller);
 		}
 
 		void AIUpdate()
@@ -249,7 +249,7 @@ class KigglerTheCrazedAI : public MoonScriptCreatureAI
 					SetCanMove(false);
 				}
 			}
-			MoonScriptCreatureAI::AIUpdate();
+			ParentClass::AIUpdate();
 		}
 };
 
@@ -261,7 +261,7 @@ class KigglerTheCrazedAI : public MoonScriptCreatureAI
 class BlindeyeTheSeerAI : public MoonScriptCreatureAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(BlindeyeTheSeerAI)
+		MOONSCRIPT_FACTORY_FUNCTION(BlindeyeTheSeerAI, MoonScriptCreatureAI);
 		BlindeyeTheSeerAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			AddSpell(BLINDEYE_THE_SEER_PRAYER_OF_HEALING, Target_Self, 5, 4, 30);				// Affects players? Core bugzor?
@@ -277,7 +277,7 @@ class BlindeyeTheSeerAI : public MoonScriptCreatureAI
 				HighKingMaulgarAI* pMaulgarAI = TO< HighKingMaulgarAI* >(pMaulgar->GetScript());
 				pMaulgarAI->OnAddDied();
 			}
-			MoonScriptCreatureAI::OnDied(mKiller);
+			ParentClass::OnDied(mKiller);
 		}
 };
 
@@ -289,7 +289,7 @@ class BlindeyeTheSeerAI : public MoonScriptCreatureAI
 class OlmTheSummonerAI : public MoonScriptCreatureAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(OlmTheSummonerAI)
+		MOONSCRIPT_FACTORY_FUNCTION(OlmTheSummonerAI, MoonScriptCreatureAI);
 		OlmTheSummonerAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			AddSpell(OLM_THE_SUMMONER_DEATH_COIL, Target_RandomPlayer, 7, 0, 10, 0, 30);
@@ -305,7 +305,7 @@ class OlmTheSummonerAI : public MoonScriptCreatureAI
 				HighKingMaulgarAI* pMaulgarAI = TO< HighKingMaulgarAI* >(pMaulgar->GetScript());
 				pMaulgarAI->OnAddDied();
 			}
-			MoonScriptCreatureAI::OnDied(mKiller);
+			ParentClass::OnDied(mKiller);
 		}
 };
 
@@ -315,7 +315,7 @@ class OlmTheSummonerAI : public MoonScriptCreatureAI
 class WildFelStalkerAI : public MoonScriptCreatureAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(WildFelStalkerAI)
+		MOONSCRIPT_FACTORY_FUNCTION(WildFelStalkerAI, MoonScriptCreatureAI);
 		WildFelStalkerAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			AddSpell(WILD_FEL_STALKER_WILD_BITE, Target_Current, 10, 0, 10, 0, 5);
@@ -337,7 +337,7 @@ class WildFelStalkerAI : public MoonScriptCreatureAI
 class KroshFirehandAI : public MoonScriptCreatureAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(KroshFirehandAI)
+		MOONSCRIPT_FACTORY_FUNCTION(KroshFirehandAI, MoonScriptCreatureAI);
 		KroshFirehandAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			//spells
@@ -353,7 +353,7 @@ class KroshFirehandAI : public MoonScriptCreatureAI
 		void OnCombatStart(Unit* pTarget)
 		{
 			CastSpellNowNoScheduling(mSpellShield);
-			MoonScriptCreatureAI::OnCombatStart(pTarget);
+			ParentClass::OnCombatStart(pTarget);
 		}
 
 		void AIUpdate()
@@ -380,7 +380,7 @@ class KroshFirehandAI : public MoonScriptCreatureAI
 					CastSpellNowNoScheduling(mSpellShield);
 				}
 			}
-			MoonScriptCreatureAI::AIUpdate();
+			ParentClass::AIUpdate();
 		}
 
 		void OnDied(Unit* mKiller)
@@ -391,7 +391,7 @@ class KroshFirehandAI : public MoonScriptCreatureAI
 				HighKingMaulgarAI* pMaulgarAI = TO< HighKingMaulgarAI* >(pMaulgar->GetScript());
 				pMaulgarAI->OnAddDied();
 			}
-			MoonScriptCreatureAI::OnDied(mKiller);
+			ParentClass::OnDied(mKiller);
 		}
 
 		SpellDesc*      mSpellShield;
@@ -418,7 +418,7 @@ void SpellFunc_Gruul_Shatter(SpellDesc* pThis, MoonScriptCreatureAI* pCreatureAI
 class GruulTheDragonkillerAI : public MoonScriptCreatureAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(GruulTheDragonkillerAI)
+		MOONSCRIPT_FACTORY_FUNCTION(GruulTheDragonkillerAI, MoonScriptCreatureAI);
 		GruulTheDragonkillerAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			mHurtfulStrike = AddSpell(GRUUL_THE_DRAGONKILLER_HURTFUL_STRIKE, Target_Current, 0, 0, 0, 0, 8);
@@ -452,21 +452,21 @@ class GruulTheDragonkillerAI : public MoonScriptCreatureAI
 
 			if(GameObject* pGate = _unit->GetMapMgr()->GetInterface()->GetGameObjectNearestCoords(166.897f, 368.226f, 16.9209f, 184662))
 				pGate->SetState(GAMEOBJECT_STATE_CLOSED);
-			MoonScriptCreatureAI::OnCombatStart(pTarget);
+			ParentClass::OnCombatStart(pTarget);
 		}
 
 		void OnCombatStop(Unit* pTarget)
 		{
 			if(GameObject* pGate = _unit->GetMapMgr()->GetInterface()->GetGameObjectNearestCoords(166.897f, 368.226f, 16.9209f, 184662))
 				pGate->SetState(GAMEOBJECT_STATE_OPEN);
-			MoonScriptCreatureAI::OnCombatStop(pTarget);
+			ParentClass::OnCombatStop(pTarget);
 		}
 
 		void OnDied(Unit* mKiller)
 		{
 			if(GameObject* pGate = _unit->GetMapMgr()->GetInterface()->GetGameObjectNearestCoords(166.897f, 368.226f, 16.9209f, 184662))
 				pGate->SetState(GAMEOBJECT_STATE_OPEN);
-			MoonScriptCreatureAI::OnDied(mKiller);
+			ParentClass::OnDied(mKiller);
 		}
 
 		void AIUpdate()
@@ -520,7 +520,7 @@ class GruulTheDragonkillerAI : public MoonScriptCreatureAI
 					ResetTimer(mHurtfulTimer, 8000);
 				}
 			}
-			MoonScriptCreatureAI::AIUpdate();
+			ParentClass::AIUpdate();
 		}
 
 		UnitArray GetInRangePlayers()

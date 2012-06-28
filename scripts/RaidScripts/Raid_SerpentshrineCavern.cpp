@@ -1360,7 +1360,7 @@ class KarathressAI : public CreatureAIScript
 class FathomGuardSharkissAI : public MoonScriptCreatureAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(FathomGuardSharkissAI);
+		MOONSCRIPT_FACTORY_FUNCTION(FathomGuardSharkissAI, MoonScriptCreatureAI);
 		FathomGuardSharkissAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			AddSpell(MULTI_SHOT, Target_Current, 10.0f, 0, 0);
@@ -1372,7 +1372,7 @@ class FathomGuardSharkissAI : public MoonScriptCreatureAI
 		{
 			CurrentPet = NULL;
 			SummonPetTimer = 5;
-			MoonScriptCreatureAI::OnCombatStart(pTarget);
+			ParentClass::OnCombatStart(pTarget);
 		}
 
 		void OnDied(Unit* pKiller)
@@ -1387,7 +1387,7 @@ class FathomGuardSharkissAI : public MoonScriptCreatureAI
 					TO< KarathressAI* >(FLK->GetScript())->AdvisorsLeft--;
 				FLK->RemoveAura(BLESSING_OF_THE_TIDES);
 			}
-			MoonScriptCreatureAI::OnDied(pKiller);
+			ParentClass::OnDied(pKiller);
 		}
 
 		void AIUpdate()
@@ -1412,7 +1412,7 @@ class FathomGuardSharkissAI : public MoonScriptCreatureAI
 					SummonPetTimer = 5;
 				}
 			}
-			MoonScriptCreatureAI::AIUpdate();
+			ParentClass::AIUpdate();
 		}
 
 	private:
@@ -1430,7 +1430,7 @@ class FathomGuardSharkissAI : public MoonScriptCreatureAI
 class FathomGuardTidalvessAI : public MoonScriptCreatureAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(FathomGuardTidalvessAI);
+		MOONSCRIPT_FACTORY_FUNCTION(FathomGuardTidalvessAI, MoonScriptCreatureAI);
 		FathomGuardTidalvessAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			//totems
@@ -1454,7 +1454,7 @@ class FathomGuardTidalvessAI : public MoonScriptCreatureAI
 					TO< KarathressAI* >(FLK->GetScript())->AdvisorsLeft--;
 				FLK->RemoveAura(BLESSING_OF_THE_TIDES);
 			}
-			MoonScriptCreatureAI::OnDied(pKiller);
+			ParentClass::OnDied(pKiller);
 		}
 };
 
@@ -1466,7 +1466,7 @@ class FathomGuardTidalvessAI : public MoonScriptCreatureAI
 class FathomGuardCaribdisAI : public MoonScriptCreatureAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(FathomGuardCaribdisAI);
+		MOONSCRIPT_FACTORY_FUNCTION(FathomGuardCaribdisAI, MoonScriptCreatureAI);
 		FathomGuardCaribdisAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			AddSpell(TIDAL_SURGE, Target_Self, 20.0f, 0, 10);
@@ -1476,7 +1476,7 @@ class FathomGuardCaribdisAI : public MoonScriptCreatureAI
 		void OnCombatStart(Unit* pTarget)
 		{
 			HealingWaveTimer = 15;
-			MoonScriptCreatureAI::OnCombatStart(pTarget);
+			ParentClass::OnCombatStart(pTarget);
 		}
 
 		void AIUpdate()
@@ -1493,6 +1493,7 @@ class FathomGuardCaribdisAI : public MoonScriptCreatureAI
 
 				HealingWaveTimer = 15;
 			}*/
+			ParentClass::AIUpdate();
 		}
 
 		void OnDied(Unit*  pKiller)
@@ -1507,7 +1508,7 @@ class FathomGuardCaribdisAI : public MoonScriptCreatureAI
 					TO< KarathressAI* >(FLK->GetScript())->AdvisorsLeft--;
 				FLK->RemoveAura(BLESSING_OF_THE_TIDES);
 			}
-			MoonScriptCreatureAI::OnDied(pKiller);
+			ParentClass::OnDied(pKiller);
 		}
 
 	private:
@@ -2937,7 +2938,7 @@ class CoilfangAmbusherAI : public MoonScriptCreatureAI
 class CoilfangFathomWitchAI : public MoonScriptCreatureAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(CoilfangFathomWitchAI);
+		MOONSCRIPT_FACTORY_FUNCTION(CoilfangFathomWitchAI, MoonScriptCreatureAI);
 		CoilfangFathomWitchAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			AddSpell(SHADOW_BOLT, Target_Current, 2.0f, 0, 0);
@@ -2952,7 +2953,7 @@ class CoilfangFathomWitchAI : public MoonScriptCreatureAI
 class CoilfangGuardianAI : public MoonScriptCreatureAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(CoilfangGuardianAI);
+		MOONSCRIPT_FACTORY_FUNCTION(CoilfangGuardianAI, MoonScriptCreatureAI);
 		CoilfangGuardianAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			AddSpell(CLEAVE, Target_Destination, 3.0f, 0, 0);
@@ -2968,7 +2969,7 @@ class CoilfangGuardianAI : public MoonScriptCreatureAI
 class CoilfangPriestessAI : public MoonScriptCreatureAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(CoilfangPriestessAI);
+		MOONSCRIPT_FACTORY_FUNCTION(CoilfangPriestessAI, MoonScriptCreatureAI);
 		CoilfangPriestessAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			AddSpell(HOLY_NOVA, Target_Self, 2.0f, 0, 0);
@@ -2990,7 +2991,7 @@ class CoilfangPriestessAI : public MoonScriptCreatureAI
 class UnderbogColossusAI : public MoonScriptCreatureAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(UnderbogColossusAI);
+		MOONSCRIPT_FACTORY_FUNCTION(UnderbogColossusAI, MoonScriptCreatureAI);
 		UnderbogColossusAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			//these mobs pick from a random set of abilities
@@ -3048,7 +3049,7 @@ class UnderbogColossusAI : public MoonScriptCreatureAI
 class TidewalkerWarriorAI : public MoonScriptCreatureAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(TidewalkerWarriorAI);
+		MOONSCRIPT_FACTORY_FUNCTION(TidewalkerWarriorAI, MoonScriptCreatureAI);
 		TidewalkerWarriorAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			AddSpell(TW_CLEAVE, Target_Destination, 1.0f, 0, 0);
@@ -3066,7 +3067,7 @@ class TidewalkerWarriorAI : public MoonScriptCreatureAI
 class CoilfangSerpentguardAI : public MoonScriptCreatureAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(CoilfangSerpentguardAI);
+		MOONSCRIPT_FACTORY_FUNCTION(CoilfangSerpentguardAI, MoonScriptCreatureAI);
 		CoilfangSerpentguardAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			AddSpell(CSERP_CLEAVE, Target_Destination, 1.0f, 0, 0);
@@ -3082,7 +3083,7 @@ class CoilfangSerpentguardAI : public MoonScriptCreatureAI
 class CoilfangShattererAI : public MoonScriptCreatureAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(CoilfangShattererAI);
+		MOONSCRIPT_FACTORY_FUNCTION(CoilfangShattererAI, MoonScriptCreatureAI);
 		CoilfangShattererAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			AddSpell(CSHATT_ARMOR, Target_Current, 2.0f, 0, 0);
@@ -3096,7 +3097,7 @@ class CoilfangShattererAI : public MoonScriptCreatureAI
 class CoilfangStriderAI : public MoonScriptCreatureAI
 {
 	public:
-		ADD_CREATURE_FACTORY_FUNCTION(CoilfangStriderAI);
+		MOONSCRIPT_FACTORY_FUNCTION(CoilfangStriderAI, MoonScriptCreatureAI);
 		CoilfangStriderAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			AddSpell(CSTRID_SCREAM, Target_Current, 2.0f, 0, 0);
