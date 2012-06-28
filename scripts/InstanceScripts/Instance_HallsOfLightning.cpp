@@ -312,7 +312,7 @@ class Slag : public MoonScriptCreatureAI
 		void OnDied(Unit* pKiller)
 		{
 			Unit* Volkhan = ForceCreatureFind(CN_VOLKHAN, 1338.949f, -124.431f, 57.358f);
-			if (Volkhan->isAlive())
+			if (Volkhan && Volkhan->isAlive())
 			_unit->Despawn(1000, 10000);
 			ParentClass::OnDied(pKiller);
 		}
