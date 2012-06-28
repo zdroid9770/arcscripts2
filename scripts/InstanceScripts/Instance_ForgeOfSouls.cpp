@@ -165,11 +165,13 @@ class DevourerAI : public MoonScriptBossAI
 			if(GetHealthPercent() == 75 && GetPhase() == 1)
 			{
 				Emote("SUFFERING! ANGUISH! CHAOS! RISE AND FEED!", Text_Yell, 16888);
+				Announce("Devourer of Souls begins to Unleash Souls!");
 				SetPhase(2);
 			}
 			else if(GetHealthPercent() == 50 && GetPhase() == 2)
 			{
 				Emote("Stare into the abyss, and see your end!", Text_Yell, 16889);
+				Announce("Devourer of Souls begins to cast Wailing Souls!");
 				SetPhase(3);
 			}
 			ParentClass::AIUpdate();
