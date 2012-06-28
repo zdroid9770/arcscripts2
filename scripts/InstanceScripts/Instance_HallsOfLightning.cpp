@@ -297,6 +297,28 @@ class GeneralBjarngrimAI : public MoonScriptBossAI
 };
 
 /////////////////////////////////////////////////////////////////////////////////
+////// Slag Respawn Script
+// Slag in retail respawns if the boss Volkhan is not dead every 10 seconds. so we'll have a check if boss is alive keep spawning.
+
+#define CN_SLAG			28585	
+
+class Slag : public MoonScriptCreatureAI
+{
+	public:
+		ADD_CREATURE_FACTORY_FUNCTION(Slag)
+			Slag(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
+		{
+		}
+
+		void OnDied()
+		{
+			Unit* Volkhan = ForceCreatureFind(CN_VOLKHAN, 1338.949, -124.431, 57.358);
+			if (Volkhan->isAlive())
+			_unit->Despawn(1000, 10000);
+		}
+};
+
+/////////////////////////////////////////////////////////////////////////////////
 ////// Volkhan Script
 
 /*static Location MoltenGolemCoords[]=
@@ -653,6 +675,8 @@ void SetupHallsOfLightning(ScriptMgr* mgr)
 	mgr->register_instance_script(MAP_HALLS_OF_LIGHTNING, &HallsOfLightningScript::Create);
 
 	mgr->register_creature_script(CN_GENERAL_BJARNGRIM, &GeneralBjarngrimAI::Create);
+
+	mgr->register_creature_script(CN_SLAG, &Slag::Create);
 
 	mgr->register_creature_script(CN_VOLKHAN, &Volkhan::Create);
 	mgr->register_creature_script(CN_MOLTEN_GOLEM, &MoltenGolem::Create);
