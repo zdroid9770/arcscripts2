@@ -19,7 +19,6 @@
 #include "StdAfx.h"
 #include "System.h"
 #include "../dependencies/MoonInstanceScript.h"
-#include "../dependencies/CreatureAI.h"
 #include "../dependencies/MoonScriptCreatureAI.h"
 #include "../dependencies/MoonScriptBossAI.h"
 #include "../dependencies/EasyFunctions.h"
