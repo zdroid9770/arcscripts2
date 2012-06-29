@@ -27,8 +27,7 @@ class IrradiatedPillagerAI : public MoonScriptCreatureAI
 		MOONSCRIPT_FACTORY_FUNCTION(IrradiatedPillagerAI, MoonScriptCreatureAI);
 		IrradiatedPillagerAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
-			AddSpell(9771, Target_Current, 100, 3, rand()%5 + 3);
-			AddSpell(9770, Target_Self, 100, 0, 4);
+			AddSpell(9771, Target_RandomPlayer, 100, 0, 4);
 		}
 
 		void AIUpdate()
@@ -39,6 +38,7 @@ class IrradiatedPillagerAI : public MoonScriptCreatureAI
 				_unit->CastSpell(_unit, 8269, true);
 				Emote("Your bones will break under my boot, $R!", Text_Yell, 0);
 			}
+			_unit->CastSpell(_unit, 9770, false);
 			ParentClass::AIUpdate();
 		}
 		
@@ -51,7 +51,27 @@ class IrradiatedPillagerAI : public MoonScriptCreatureAI
 		}
 };
 
+/****************************************/
+/*********************************BOSSES*/
+/****************************************/
+class Electrocutioner6000AI : public MoonScriptCreatureAI
+{
+	public:
+		MOONSCRIPT_FACTORY_FUNCTION(Electrocutioner6000AI, MoonScriptCreatureAI);
+		Electrocutioner6000AI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
+		{
+			AddEmote(Event_OnCombatStart, "Electric justice!", Text_Yell, 5811);
+			AddSpell(11082, Target_Current, 100, 2, 15); //megavolt
+			AddSpell(11084, Target_RandomPlayer, 100, 0, 10); //shock
+			AddSpell(11085, Target_RandomPlayer, 100, 2.5f, 17); //Chain Bolt
+		}
+};
+
 void SetupGnomeregan(ScriptMgr* mgr)
 {
+	//trashes
 	mgr->register_creature_script(6329, &IrradiatedPillagerAI::Create);
+
+	//bosses
+	mgr->register_creature_script(6235, &Electrocutioner6000AI::Create);
 }
