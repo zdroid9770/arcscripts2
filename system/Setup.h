@@ -69,6 +69,7 @@ void SetupEasternPlaguelandsCreatures(ScriptMgr * mgr);
 void SetupSHolozarBasinCreature(ScriptMgr * mgr);
 void SetupBurningStepesCreature(ScriptMgr * mgr);
 void SetupDuskwoodCreature(ScriptMgr * mgr);
+void SetupWestfallCreature(ScriptMgr * mgr);
 
 //EVENT
 void SetupWinterVeil(ScriptMgr* mgr);
