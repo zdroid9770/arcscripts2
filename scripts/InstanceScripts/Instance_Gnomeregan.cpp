@@ -51,6 +51,50 @@ class IrradiatedPillagerAI : public MoonScriptCreatureAI
 		}
 };
 
+class MobileAlertSystemAI : public MoonScriptCreatureAI
+{
+	public:
+		MOONSCRIPT_FACTORY_FUNCTION(MobileAlertSystemAI, MoonScriptCreatureAI);
+		MobileAlertSystemAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
+		{
+			AddEmote(Event_OnCombatStart, "Warning! Warning! Intruder alert! Intruder alert!", Text_Yell, 5805);
+			SummonTimer = -1;
+			AlertTimer = -1;
+			SetBehavior(Behavior_Flee);
+		}
+
+		void OnCombatStart(Unit* pUnit)
+		{
+			SummonTimer = AddTimer(60*SEC_IN_MS);
+			AlertTimer = AddTimer(3*SEC_IN_MS);
+			ParentClass::OnCombatStart(pUnit);
+		}
+
+		void AIUpdate()
+		{
+			if(IsTimerFinished(SummonTimer))
+			{
+				_unit->PlaySoundToSet(5806);
+				//summoning 2x Mechanized Sentry
+				SpawnCreature(6233, _unit->GetPositionX()+rand()%5, _unit->GetPositionY()+rand()%5, _unit->GetPositionZ(), _unit->GetOrientation());
+				SpawnCreature(6233, _unit->GetPositionX()+rand()%5, _unit->GetPositionY()+rand()%5, _unit->GetPositionZ(), _unit->GetOrientation());
+				ResetTimer(SummonTimer, 60*SEC_IN_MS);
+			}
+
+			if(IsTimerFinished(AlertTimer))
+			{
+				Emote("Warning! Warning! Intruder alert! Intruder alert!", Text_Yell, 5805);
+				_unit->CastSpell(_unit, 1543, false);
+				ResetTimer(AlertTimer, 3*SEC_IN_MS);
+			}
+			ParentClass::AIUpdate();
+		}
+
+	private:
+		int32 SummonTimer;
+		int32 AlertTimer;
+};
+
 /****************************************/
 /*********************************BOSSES*/
 /****************************************/
@@ -71,6 +115,7 @@ void SetupGnomeregan(ScriptMgr* mgr)
 {
 	//trashes
 	mgr->register_creature_script(6329, &IrradiatedPillagerAI::Create);
+	mgr->register_creature_script(7849, &MobileAlertSystemAI::Create);
 
 	//bosses
 	mgr->register_creature_script(6235, &Electrocutioner6000AI::Create);
