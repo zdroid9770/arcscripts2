@@ -28,13 +28,13 @@ class IrradiatedPillagerAI : public MoonScriptCreatureAI
 		IrradiatedPillagerAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
 		{
 			AddSpell(9771, Target_Current, 100, 3, rand()%5 + 3);
-			AddSpell(9770, Target_self, 100, 0, 4);
+			AddSpell(9770, Target_Self, 100, 0, 4);
 		}
 
 		void AIUpdate()
 		{
 			//casts fenzy at 50% health
-			if(_unit->GetHealthPch() <= 50 && !_unit->HasAura(8269))
+			if(_unit->GetHealthPct() <= 50 && !_unit->HasAura(8269))
 			{
 				_unit->CastSpell(_unit, 8269, true);
 				Emote("Your bones will break under my boot, $R!", Text_Yell, 0);
