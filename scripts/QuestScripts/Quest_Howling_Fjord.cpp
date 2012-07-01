@@ -56,8 +56,7 @@ class DarkRangerLyanaGossip : public Arcemu::Gossip::Script
 			plr->Gossip_Complete();
 		}
 };
-
-//Quest 
+ 
 //Quest 11230
 class NorthFleet : public CreatureAIScript
 {
@@ -112,28 +111,43 @@ class ChillmereScourge : public CreatureAIScript
 		}
 };
 
-/*
-// QUest 11154
-class DarkClawBat : public MoonScriptCreatureAI
+// Quest 11154
+class FeknutsFirecrackersBunnyAI : public MoonScriptCreatureAI
 {
     public:
-		MOONSCRIPT_FACTORY_FUNCTION(DarkClawBat, MoonScriptCreatureAI);
-		DarkClawBat(Creature* pCreature) : MoonScriptCreatureAI(pCreature) {}
+		MOONSCRIPT_FACTORY_FUNCTION(FeknutsFirecrackersBunnyAI, MoonScriptCreatureAI);
+		FeknutsFirecrackersBunnyAI(Creature* pCreature) : MoonScriptCreatureAI(pCreature)
+		{
+			isContainerSpawned = false;
+		}
 
 		void OnLoad()
 		{
+			DarkClawBat = GetNearestCreature(23959);
+			if(DarkClawBat && GetRange(DarkClawBat) <= 20.0f)
+				DarkClawBat->MoveTo(_unit->GetPositionX(), _unit->GetPositionY(), _unit->GetPositionZ(), _unit->GetOrientation());
+			RegisterAIUpdateEvent(0);
+			ParentClass::OnLoad();
 		}
 
 		void AIUpdate()
 		{
-			Unit* DarkClawBat = ForceCreatureFind(24230);
-			if(DarkClawBat)
+			do
 			{
-				
-			}
+				if(GetRange(DarkClawBat) <= 10.0f)
+				{
+					_unit->GetMapMgr()->MapScriptInterface()->SpawnGameObject(186325, _unit->GetPositionX(), _unit->GetPositionY(), _unit->getPositionZ(), _unit->getOrientation(), true, 0, 0);
+					isContainerSpawned = true;
+				}
+			}while(!isContainerSpawned && DarkClawBat);
+
+			ParentClass::AIUpdate();
 		}
+
+	private:
+		bool isContainerSpawned;
+		MoonScriptCreatureAI* DarkClawBat;
 };
-*/
 
 //Quest 11283
 class Baleheim : public CreatureAIScript
@@ -230,4 +244,5 @@ void SetupHowlingFjord(ScriptMgr* mgr)
 	mgr->register_creature_script(23946, &NorthFleet::Create);
 	mgr->register_creature_script(23794, &NorthFleet::Create);
 	mgr->register_creature_script(23793, &NorthFleet::Create);
+	mgr->register_creature_script(24230, &FeknutsFirecrackersBunnyAI::Create);
 }
