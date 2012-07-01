@@ -110,6 +110,29 @@ class ChillmereScourge : public CreatureAIScript
 		}
 };
 
+/*
+// QUest 11154
+class DarkClawBat : public MoonScriptCreatureAI
+{
+    public:
+		MOONSCRIPT_FACTORY_FUNCTION(DarkClawBat, MoonScriptCreatureAI);
+		DarkClawBat(Creature* pCreature) : MoonScriptCreatureAI(pCreature) {}
+
+		void OnLoad()
+		{
+		}
+
+		void AIUpdate()
+		{
+			Unit* DarkClawBat = ForceCreatureFind(24230);
+			if(DarkClawBat)
+			{
+				
+			}
+		}
+};
+*/
+
 //Quest 11283
 class Baleheim : public CreatureAIScript
 {
