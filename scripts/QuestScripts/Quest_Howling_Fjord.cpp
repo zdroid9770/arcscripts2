@@ -34,6 +34,7 @@ class DeathstalkerRazaelGossip : public Arcemu::Gossip::Script
 		{
 			if(Id == 0)
 				TO_CREATURE(pObject)->CastSpell(plr, 42756, true);
+			plr->Gossip_Complete();
 		}
 };
 
@@ -52,6 +53,7 @@ class DarkRangerLyanaGossip : public Arcemu::Gossip::Script
 		{
 			if(Id == 0)
 				TO_CREATURE(pObject)->CastSpell(plr, 42799, true);
+			plr->Gossip_Complete();
 		}
 };
 
@@ -204,6 +206,7 @@ class Plaguethis_Gossip : public Arcemu::Gossip::Script
 					}break;
 				case 2: plr->GetSession()->SendTaxiList(TO_CREATURE(pObject)); break;
 			}
+			plr->Gossip_Complete();
 		}
 
 };
