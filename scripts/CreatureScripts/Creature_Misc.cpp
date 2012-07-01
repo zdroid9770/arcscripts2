@@ -18,7 +18,7 @@
 
 #include "Setup.h"
 
-
+/*
 class ArmyofDeadGhoul : public MoonScriptCreatureAI
 {
 	public:
@@ -42,9 +42,9 @@ class ArmyofDeadGhoul : public MoonScriptCreatureAI
 			ParentClass::AIUpdate();
 		}
 };
-
+*/
 void SetupMiscCreatures(ScriptMgr * mgr)
 {
-	mgr->register_creature_script(24207, &ArmyofDeadGhoul::Create);		// Army of the Dead Ghoul
+	//mgr->register_creature_script(24207, &ArmyofDeadGhoul::Create);		// Army of the Dead Ghoul
 }
 
