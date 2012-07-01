@@ -173,6 +173,6 @@ void mOnEmote(Player *pPlayer, uint32 Emote, Unit *pUnit)
 
 void SetupOnEmoteHooks(ScriptMgr* mgr)
 {
-	mgr->register_hook(SERVER_HOOK_EVENT_ON_EMOTE, &scriptOnEmote);
-	mgr->register_hook(SERVER_HOOK_EVENT_ON_EMOTE, &mOnEmote);
+	mgr->register_hook(SERVER_HOOK_EVENT_ON_EMOTE, (void*)&scriptOnEmote);
+	mgr->register_hook(SERVER_HOOK_EVENT_ON_EMOTE, (void*)&mOnEmote);
 }

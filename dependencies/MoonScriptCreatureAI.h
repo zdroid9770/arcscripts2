@@ -495,4 +495,4 @@ template <class Type> inline void DeleteItem(std::vector<Type> pVector, Type pIt
 	}
 }
 
-#endif MOON_SCRIPT_CREATURE_AI
+#endif /*MOON_SCRIPT_CREATURE_AI*/

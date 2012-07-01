@@ -16,7 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
  
-#include "setup.h"
+#include "Setup.h"
 #include "Raid_IcecrownCitadel.h"
 
 //Thanks for HolyStone, Mangos, MangosR2, TrinityCore and Scriptdev2 teams for some information

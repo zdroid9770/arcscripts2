@@ -52,7 +52,7 @@ class BrutebaneStoutTrigger : public MoonScriptCreatureAI
 			Plr = _unit->GetMapMgr()->GetInterface()->GetPlayerNearestCoords(_unit->GetPositionX(), _unit->GetPositionY(), _unit->GetPositionZ());
 
 			uint32 BladespireOgres[] = {19995, 19998, 20756, 0};
-			Ogre = _unit->GetMapMgr()->GetInterface()->GetCreatureNearestCoords(_unit->GetPositionX(), _unit->GetPositionY(), _unit->GetPositionZ(), (uint32)BladespireOgres);
+			Ogre = _unit->GetMapMgr()->GetInterface()->GetCreatureNearestCoords(_unit->GetPositionX(), _unit->GetPositionY(), _unit->GetPositionZ(), BladespireOgres[0]);
 			if(Ogre)
 				Ogre->GetAIInterface()->_CalcDestinationAndMove(_unit, 0.3f);
 

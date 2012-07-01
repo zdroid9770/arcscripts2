@@ -30,17 +30,11 @@ MoonInstanceScript::~MoonInstanceScript()
 
 Creature* MoonInstanceScript::GetCreatureBySqlId(uint32 pSqlId)
 {
-	if(pSqlId == NULL)
-		return NULL;
-
 	return mInstance->GetSqlIdCreature(pSqlId);
 }
 
 Creature* MoonInstanceScript::GetCreatureByGuid(uint32 pGuid)
 {
-	if(pGuid == NULL)
-		return NULL;
-
 	return mInstance->GetCreature(pGuid);
 }
 
@@ -48,7 +42,7 @@ Creature*	MoonInstanceScript::FindClosestCreatureOnMap(uint32 pEntry, float pX, 
 {
 	CreatureSet Creatures = FindCreaturesOnMap(pEntry);
 
-	if(Creatures.size() == NULL)
+	if(Creatures.size() == 0)
 		return NULL;
 
 	if(Creatures.size() == 1)
@@ -104,7 +98,7 @@ GameObject* MoonInstanceScript::FindClosestGameObjectOnMap(uint32 pEntry, float 
 {
 	GameObjectSet GameObjects = FindGameObjectsOnMap(pEntry);
 
-	if(GameObjects.size() == NULL)
+	if(GameObjects.size() == 0)
 		return NULL;
 
 	if(GameObjects.size() == 1)
@@ -148,23 +142,17 @@ GameObjectSet MoonInstanceScript::FindGameObjectsOnMap(uint32 pEntry)
 
 GameObject* MoonInstanceScript::GetGameObjectBySqlId(uint32 pSqlId)
 {
-	if(pSqlId == NULL)
-		return NULL;
-
 	return mInstance->GetSqlIdGameObject(pSqlId);
 }
 
 GameObject* MoonInstanceScript::GetGameObjectByGuid(uint32 pGuid)
 {
-	if(pGuid == NULL)
-		return NULL;
-
 	return mInstance->GetGameObject(pGuid);
 }
 
 void MoonInstanceScript::AddGameObjectStateByEntry(uint32 pEntry, GO_STATE pState, bool pUseQuery)
 {
-	if(pEntry == NULL)
+	if(pEntry == 0)
 		return;
 
 	GameObjectEntryMap::iterator Iter = mGameObjects.find(pEntry);
@@ -205,9 +193,6 @@ void MoonInstanceScript::AddGameObjectStateByEntry(uint32 pEntry, GO_STATE pStat
 
 void MoonInstanceScript::AddGameObjectStateById(uint32 pId, GO_STATE pState)
 {
-	if(pId == NULL)
-		return;
-
 	GameObject* StateObject = GetGameObjectBySqlId(pId);
 	GameObjectEntryMap::iterator Iter;
 	if(StateObject != NULL)

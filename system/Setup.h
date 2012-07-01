@@ -323,4 +323,4 @@ enum
     //.....add
 };
 
-#endif SETUP
+#endif /*SETUP*/

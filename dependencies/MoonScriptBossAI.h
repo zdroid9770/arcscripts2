@@ -54,4 +54,4 @@ class MoonScriptBossAI : public MoonScriptCreatureAI
 		int32			mEnrageTimer;
 };
 
-#endif MOON_SCRIPT_BOSS_AI
+#endif /*MOON_SCRIPT_BOSS_AI*/
