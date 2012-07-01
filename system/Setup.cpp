@@ -41,7 +41,7 @@ extern "C" SCRIPT_DECL void _exp_script_register(ScriptMgr* mgr)	// Comment any 
 	SetupElwynForestCreature(mgr);
 	SetupFlightMasterCreatures(mgr);
 	SetupHellfireCreatures(mgr);
-	SetupMiscCreatures(mgr);
+	SetupGeneralCreatures(mgr);
 	SetupOrgrimmarCreature(mgr);
 	SetupShadowmoonValleyCreature(mgr);
 	SetupSilverpineForestCreature(mgr);
@@ -54,7 +54,6 @@ extern "C" SCRIPT_DECL void _exp_script_register(ScriptMgr* mgr)	// Comment any 
 	SetupBurningStepesCreature(mgr);
 	SetupDuskwoodCreature(mgr);
 	SetupWestfallCreature(mgr);
-	SetupCreatureWeapons(mgr);
 
 	//EVENTS
 	SetupWinterVeil(mgr);

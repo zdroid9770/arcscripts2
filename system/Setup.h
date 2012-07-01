@@ -56,7 +56,7 @@ void SetupDurotarCreature(ScriptMgr * mgr);
 void SetupElwynForestCreature(ScriptMgr * mgr);
 void SetupFlightMasterCreatures(ScriptMgr * mgr);
 void SetupHellfireCreatures(ScriptMgr * mgr);
-void SetupMiscCreatures(ScriptMgr * mgr);
+void SetupGeneralCreatures(ScriptMgr * mgr);
 void SetupOrgrimmarCreature(ScriptMgr * mgr);
 void SetupShadowmoonValleyCreature(ScriptMgr * mgr);
 void SetupSilverpineForestCreature(ScriptMgr * mgr);
@@ -69,7 +69,6 @@ void SetupSHolozarBasinCreature(ScriptMgr * mgr);
 void SetupBurningStepesCreature(ScriptMgr * mgr);
 void SetupDuskwoodCreature(ScriptMgr * mgr);
 void SetupWestfallCreature(ScriptMgr * mgr);
-void SetupCreatureWeapons(ScriptMgr * mgr);
 
 //EVENT
 void SetupWinterVeil(ScriptMgr* mgr);
