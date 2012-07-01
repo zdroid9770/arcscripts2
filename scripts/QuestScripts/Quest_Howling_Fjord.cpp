@@ -136,7 +136,7 @@ class FeknutsFirecrackersBunnyAI : public MoonScriptCreatureAI
 			{
 				if(GetRange(DarkClawBat) <= 10.0f)
 				{
-					_unit->GetMapMgr()->MapScriptInterface()->SpawnGameObject(186325, _unit->GetPositionX(), _unit->GetPositionY(), _unit->getPositionZ(), _unit->getOrientation(), true, 0, 0);
+					_unit->GetMapMgr()->GetInterface()->SpawnGameObject(186325, _unit->GetPositionX(), _unit->GetPositionY(), _unit->GetPositionZ(), _unit->GetOrientation(), true, 0, 0);
 					isContainerSpawned = true;
 				}
 			}while(!isContainerSpawned && DarkClawBat);
