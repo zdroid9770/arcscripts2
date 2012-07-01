@@ -43,8 +43,25 @@ class ArmyofDeadGhoul : public MoonScriptCreatureAI
 		}
 };
 */
+
+class LaughingSkullRogue : public MoonScriptCreatureAI
+{
+	public:
+		MOONSCRIPT_FACTORY_FUNCTION(LaughingSkullRogue, MoonScriptCreatureAI);
+		LaughingSkullRogue(Creature * pCreature) : MoonScriptCreatureAI(pCreature)
+		{
+		}
+
+		void OnLoad()
+		{
+			_unit->CastSpell(_unit, 30991, true);
+			ParentClass::OnLoad();
+		}
+};
+
 void SetupMiscCreatures(ScriptMgr * mgr)
 {
 	//mgr->register_creature_script(24207, &ArmyofDeadGhoul::Create);		// Army of the Dead Ghoul
+	mgr->register_creature_script(17491, &LaughingSkullRogue::Create); // Stealth
 }
 
