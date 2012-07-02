@@ -101,8 +101,6 @@ class PurifyingTotemAI : public MoonScriptCreatureAI
 		}
 };
 
-
-
 // Cutting Off the Source
 class NerubarEggSac : public GameObjectAIScript
 {
@@ -121,7 +119,6 @@ class NerubarEggSac : public GameObjectAIScript
 			_gameobject->Despawn(500, 60000);
 		}
 };
-
 
 // Bury Those Cockroaches!
 class SeaforiumDepthCharge : public MoonScriptCreatureAI
@@ -194,9 +191,6 @@ class BlueDragonEgg : public GameObjectAIScript
 			_gameobject->Despawn(500, 60000);
 		}
 };
-
-
-
 
 enum eFizzcrank
 {
@@ -330,6 +324,26 @@ class SurristraszGossip : public GossipScript
 		};
 };
 
+class IrukGossip : public Arcemu::Gossip::Script
+{
+	public:
+		void OnHello(Object* pObject, Player* Plr)
+		{
+			Arcemu::Gossip::Menu menu(pObject->GetGUID(), objmgr.GetGossipTextForNpc(pObject->GetEntry()), Plr->GetSession()->language);
+			if(Plr->HasQuest(11961))
+				menu.AddItem(Arcemu::Gossip::ICON_CHAT, "<Search corpse for Issliruk's Totem.>", 0);
+			menu.Send(Plr);
+		}
+
+		void OnSelectOption(Object* pObject, Player* Plr, uint32 Id, const char * Code)
+		{
+			if(Id == 0)
+				TO_CREATURE(pObject)->CastSpell(Plr, 46816, true);
+
+			Plr->Gossip_Complete();
+		}
+};
+
 void SetupBoreanTundra(ScriptMgr* mgr)
 {
 	// Call to Arms!
@@ -352,10 +366,10 @@ void SetupBoreanTundra(ScriptMgr* mgr)
 
 	// Mechagnomes
 	// Fizzcrank Fullthrottle
-	GossipScript* fGossip = new FizzcrankGossip;
-	mgr->register_gossip_script(NPC_FIZZCRANK, fGossip);
+	mgr->register_gossip_script(NPC_FIZZCRANK, new FizzcrankGossip);
 
 	// Surristrasz
-	GossipScript* sGossip = new SurristraszGossip;
-	mgr->register_gossip_script(NPC_SURRISTRASZ, sGossip);
+	mgr->register_gossip_script(NPC_SURRISTRASZ, new SurristraszGossip);
+
+	mgr->register_creature_gossip(26219, new IrukGossip);
 }
