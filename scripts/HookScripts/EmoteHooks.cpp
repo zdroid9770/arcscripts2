@@ -121,6 +121,19 @@ void InnkeeperChicken(Player* pPlayer, Unit* pUnit)
 		qle->UpdatePlayerFields();
 	}
 }
+
+void CatrinaDance(Player* pPlayer, Unit* pUnit)
+{
+	if(pUnit->GetEntry() == 34383)
+	{
+		if(!pPlayer->HasAura(65386))
+			pUnit->CastSpell(pPlayer, 65386, true);
+
+		if(!pPlayer->GetAchievementMgr().HasCompleted(3456))
+			pPlayer->GetAchievementMgr().GMCompleteAchievement(NULL, achievementID);
+	}
+}
+
 //=========================================================================================
 
 void scriptOnEmote(Player* pPlayer, uint32 Emote, Unit* pUnit)
@@ -131,21 +144,11 @@ void scriptOnEmote(Player* pPlayer, uint32 Emote, Unit* pUnit)
 
 	switch(Emote)
 	{
-		case EMOTE_ONESHOT_FLEX:
-			InnkeeperFlex(pPlayer, pUnit);
-			break;
-
-		case EMOTE_STATE_DANCE:
-			InnkeeperDance(pPlayer, pUnit);
-			break;
-
-		case EMOTE_ONESHOT_TRAIN:
-			InnkeeperTrain(pPlayer, pUnit);
-			break;
-
-		case EMOTE_ONESHOT_CHICKEN:
-			InnkeeperChicken(pPlayer, pUnit);
-			break;
+		case EMOTE_STATE_DANCE: CatrinaDance(pPlayer, pUnit); break;
+		case EMOTE_ONESHOT_FLEX: InnkeeperFlex(pPlayer, pUnit); break;
+		case EMOTE_STATE_DANCE: InnkeeperDance(pPlayer, pUnit); break;
+		case EMOTE_ONESHOT_TRAIN: InnkeeperTrain(pPlayer, pUnit); break;
+		case EMOTE_ONESHOT_CHICKEN: InnkeeperChicken(pPlayer, pUnit); break;
 	}
 }
 
