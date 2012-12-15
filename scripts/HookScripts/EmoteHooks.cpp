@@ -144,9 +144,11 @@ void scriptOnEmote(Player* pPlayer, uint32 Emote, Unit* pUnit)
 
 	switch(Emote)
 	{
-		case EMOTE_STATE_DANCE: CatrinaDance(pPlayer, pUnit); break;
 		case EMOTE_ONESHOT_FLEX: InnkeeperFlex(pPlayer, pUnit); break;
-		case EMOTE_STATE_DANCE: InnkeeperDance(pPlayer, pUnit); break;
+		case EMOTE_STATE_DANCE:
+			InnkeeperDance(pPlayer, pUnit);
+			CatrinaDance(pPlayer, pUnit);
+			break;
 		case EMOTE_ONESHOT_TRAIN: InnkeeperTrain(pPlayer, pUnit); break;
 		case EMOTE_ONESHOT_CHICKEN: InnkeeperChicken(pPlayer, pUnit); break;
 	}
